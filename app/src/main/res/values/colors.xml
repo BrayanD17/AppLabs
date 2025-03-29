@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="splashBackground">#002854</color>
+    <color name="textColor">#333333</color>
+    <color name="hintColor">#808080</color>
+    <color name="inputBackground">#F5F5F5</color>
+    <color name="marineBlue">#002854</color>
+    <color name="borderColor">#D1D1D1</color>
 </resources>
