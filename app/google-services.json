@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037476329551",
+    "project_id": "compulab-ea5eb",
+    "storage_bucket": "compulab-ea5eb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037476329551:android:66d44cd53be7183887923a",
+        "android_client_info": {
+          "package_name": "com.labs.applabs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaTzXPy2y6jHg7gwafaXpUQX0mvnejyvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
