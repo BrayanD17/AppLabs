@@ -1,4 +1,4 @@
-package com.labs.applabs.studentForm
+package com.labs.applabs.student
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
