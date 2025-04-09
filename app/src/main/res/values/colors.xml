@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#11110A</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="splashBackground">#002854</color>
+    <color name="red">#C00F0C</color>
+    <color name="green">#009951</color>
+    <color name="splashBackground">#002855</color>
     <color name="textColor">#333333</color>
     <color name="hintColor">#808080</color>
     <color name="inputBackground">#F5F5F5</color>
-    <color name="marineBlue">#002854</color>
+    <color name="marineBlue">#002855</color>
     <color name="borderColor">#D1D1D1</color>
-    <color name="principalWhite">#E6E3DE</color>
+    <color name="baseActivityColor">#E6E3DE</color>
 </resources>

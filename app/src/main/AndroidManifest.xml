@@ -17,6 +17,11 @@
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
+        <activity
+            android:name=".administrator.DetailFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -26,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".login.MainActivity"
             android:exported="true" />
     </application>
 
