@@ -1,17 +1,15 @@
 package com.labs.applabs.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.R
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    //private lateinit var firebaseAuth: FirebaseAuth
 
     // Campos del formulario
     private lateinit var emailEditText: EditText
@@ -28,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        firebaseAuth = FirebaseAuth.getInstance()
+        //firebaseAuth = FirebaseAuth.getInstance()
 
         // Asociar vistas
         emailEditText = findViewById(R.id.etMail)
@@ -54,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
 
             // Verificación básica
             //Las funciones para CRUD de los datos debe ir por fuera del fronted en el provider
-            if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()
+            /*if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()
                 && surnames.isNotEmpty() && card.isNotEmpty() && phone.isNotEmpty()
                 && bankAccount.isNotEmpty()
             ) {
@@ -70,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             } else {
                 Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }
     }
 }
