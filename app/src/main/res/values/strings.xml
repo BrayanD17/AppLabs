@@ -8,4 +8,13 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+
+    <!--Student Form-->
+    <string name="application_form">Boleta de Solicitud</string>
+    <string name="descriptionTitleForm">El siguiente formulario es para todos aquellos estudiantes interesados en obtener una asistencia (Horas Estudiantes - HE)</string>
+    <string name="descripcionForm1">El Comité de Becas nos indica que es importante que cada estudiante tenga un respaldo de su participación y consideración para el Programa de Asistencias Estudiantiles (por ejemplo: para efectos de reclamo, en caso de que no se le brindara oportunidad de participar).</string>
+    <string name="descripcionForm2">Para ello, se utiliza la Boleta de Solicitud de Asistencia Estudiantil. Posterior al envío de este formulario, se le solicita que descargue la boleta y la remita a las oficinas de la Carrera de Computación:</string>
+    <string name="nameForm">Formulario de Operadores</string>
+    <!-- General -->
+    <string name="next">Siguiente</string>
 </resources>
