@@ -1,4 +1,4 @@
-package com.labs.applabs
+package com.labs.applabs.login
 
 import android.content.Intent
 import android.os.Bundle

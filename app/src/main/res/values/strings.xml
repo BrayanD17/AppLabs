@@ -1,10 +1,11 @@
 <resources>
+    <!--Login and register-->
     <string name="app_name">AppLabs</string>
-    <string name="usuario">Usuario</string>
-    <string name="contrase_a">Contraseña</string>
-    <string name="olvidaste_tu_contrase_a">¿Olvidaste tu contraseña?</string>
-    <string name="iniciar_sesi_n">Iniciar sesión</string>
-    <string name="reg_strate">Regístrate</string>
-    <string name="introduce_tu_correo">Introduce tu correo</string>
-    <string name="introduce_tu_contrase_a">Introduce tu contraseña</string>
+    <string name="users">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="forgetPassword">¿Olvidaste tu contraseña?</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="register">Regístrate</string>
+    <string name="introduceEmail">Introduce tu correo</string>
+    <string name="introducePassword">Introduce tu contraseña</string>
 </resources>
