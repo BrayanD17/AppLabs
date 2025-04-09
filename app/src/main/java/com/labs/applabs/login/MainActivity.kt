@@ -7,6 +7,11 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.login.RegisterActivity
+package com.labs.applabs.login
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.labs.applabs.R
 
 
 class MainActivity : AppCompatActivity() {
