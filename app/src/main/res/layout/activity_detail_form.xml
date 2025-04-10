@@ -322,26 +322,26 @@
                 android:id="@+id/textViewBankAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/infoBankAccount"
-                app:layout_constraintBottom_toTopOf="@+id/view6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDataBankAccount"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textDataBankAccount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="CR154156545421"
+                android:text="@string/infoBankAccount"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textViewCardDigit"
                 app:layout_constraintHorizontal_bias="0.238"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view5"
                 app:layout_constraintVertical_bias="0.011" />
+
+            <TextView
+                android:id="@+id/textDataBankAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CR123456789"
+                app:layout_constraintBottom_toTopOf="@+id/view6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.133"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBankAccount"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textViewCardDigit"
@@ -352,7 +352,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textViewBankAccount"
+                app:layout_constraintStart_toEndOf="@+id/textDataBankAccount"
                 app:layout_constraintTop_toBottomOf="@+id/view5"
                 app:layout_constraintVertical_bias="0.011" />
 
@@ -364,7 +364,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/view6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textViewBankAccount"
+                app:layout_constraintStart_toEndOf="@+id/textDataBankAccount"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCardDigit"
                 app:layout_constraintVertical_bias="0.0" />
 
