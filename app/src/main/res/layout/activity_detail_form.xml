@@ -399,10 +399,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/view7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.128"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewOperatorSemester" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewOperatorSemester"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textViewPsychology"
@@ -423,10 +425,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/view7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.689"
                 app:layout_constraintStart_toEndOf="@+id/textDataOperatorSemester"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPsychology" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewPsychology"
+                app:layout_constraintVertical_bias="0.125" />
 
             <View
                 android:id="@+id/view7"
@@ -439,6 +443,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view6"
                 app:layout_constraintVertical_bias="0.242" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view7"
+                app:layout_constraintVertical_bias="0.006" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
