@@ -8,4 +8,21 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+    <!--Request history details (administrator view)-->
+    <string name="infoName">Nombre del estudiante</string>
+    <string name="infoId">Cédula</string>
+    <string name="infoCardStudent">Carnet</string>
+    <string name="infoEmailStudent">Correo estudiantil</string>
+    <string name="infoCellPhone">Teléfono</string>
+    <string name="infoCareer">Carrera</string>
+    <string name="infoWeightedAverage">Promedio</string>
+    <string name="inforShifts">Turnos</string>
+    <string name="infoBankAccount">Cuenta bancaria</string>
+    <string name="infoLastDigitCard">Digitos carnet</string>
+    <string name="infoSemesterOperator">Semestres como operador</string>
+    <string name="infoNamePsychology">Psicología</string>
+    <string name="infoScheduleAvailability">Disponibilidad horaria</string>
+    <string name="infoApplicationStatus">Estado de la solicitud</string>
+    <string name="infoComment">Comentario</string>
+
 </resources>

@@ -102,18 +102,18 @@
 
     <Button
         android:id="@+id/btn2"
+        style="@style/ButtonStyle"
         android:layout_width="234dp"
         android:layout_height="56dp"
         android:layout_marginTop="4dp"
+        android:onClick="activy"
         android:text="@string/login"
-        style="@style/ButtonStyle"
         app:backgroundTint="@color/marineBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn1"
-        app:layout_constraintVertical_bias="0.0"
-        />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn3"

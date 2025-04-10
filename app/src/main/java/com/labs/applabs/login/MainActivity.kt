@@ -1,12 +1,14 @@
 package com.labs.applabs
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.login.RegisterActivity
+import com.labs.applabs.administrator.DetailFormActivity
 import com.labs.applabs.R
 
 
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Iniciar sesión
-        loginButton.setOnClickListener {
+        /*loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val pass = passwordEditText.text.toString()
 
@@ -53,14 +55,19 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "No se permiten campos vacíos", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
     }
 
-    override fun onStart() {
+   /* override fun onStart() {
         super.onStart()
         if (firebaseAuth.currentUser != null) {
             Toast.makeText(this, "Sesión iniciada automáticamente", Toast.LENGTH_SHORT).show()
             // Si ya estoy logueada saltar a la vista siguiente despues de log in
         }
+    }*/
+
+    fun activy(view:View){
+        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.administrator.DetailFormActivity::class.java)
+        startActivity(intent)
     }
 }
