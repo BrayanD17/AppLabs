@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.labs.applabs.MainActivity
 
 class SplashActivity : AppCompatActivity() {
     private val SPLASH_TIME_OUT: Long = 2000 // 2 segundos
