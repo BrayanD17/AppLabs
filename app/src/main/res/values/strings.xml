@@ -9,7 +9,7 @@
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
 
-    <!--Student Form-->
+    <!--Student Form -->
     <string name="application_form">Boleta de Solicitud</string>
     <string name="descriptionTitleForm">El siguiente formulario es para todos aquellos estudiantes interesados en obtener una asistencia (Horas Estudiantes - HE)</string>
     <string name="descripcionForm1">El Comité de Becas nos indica que es importante que cada estudiante tenga un respaldo de su participación y consideración para el Programa de Asistencias Estudiantiles (por ejemplo: para efectos de reclamo, en caso de que no se le brindara oportunidad de participar).</string>
@@ -19,15 +19,30 @@
     // Form
     <string name="idStudent">Cedula</string>
     <string name="weightedAverage">Promedio Ponderado del semestre anterior</string>
+    <string name="descriotionAverage">se puede consultar en el Tec Digital, en la seccion de Reportes. Recuerda que paras las modalidades HE el promedio debe de ser mayor a 70</string>
     <string name="degree">Carrera</string>
     <string name="phoneNumber">Teléfono</string>
     <string name="idSchoolNumber">Digitos detras del carnet</string>
-    <string name="scheduleAvailability">Disponibilidad de Horario</string>
+    <string name="idSchoolNumberDesc">Últimos 5 dígitos</string>
+    <string name="scheduleAvailability">Disponibilidad de Horario: Seleccionar TODAS las posibilidades que tenga</string>
     <string name="schueduleDescription">Seleccionar TODAS las posibilidades que tengas</string>
+    <string name="shifts">Turnos</string>
     <string name="hours1">80 horaas al semestre (5 Horas semanales)</string>
     <string name="hours2">160 horaas al semestre (10 Horas semanales)</string>
     <string name="schueduleHours">Disponbilidad de horarios para sus turnos</string>
+    <string name="semesters">¿Cuántos semestres ha sido operador(a)?</string>
+    <string name="psychology">¿Tiene seguimiento en psicología?</string>
+    <string name="psychologyName">Nombre del psicologo</string>
+    <string name="ticket">Boleta de Solicitud de Asistencia Estudiantil - Si ha completado la Boleta en formato digital, la puede adjuntar en este apartado</string>
+    <string name="archive">Añadir archivo</string>
+    <string name="archiveDesc">Sube 1 archivo compatible. Tamaño máximo: 10 MB.</string>
 
+
+    <string name="Requires">Requisitos y beneficios.</string>
+    <string name="DescriptionR1">- Horas estudiantes</string>
+    <string name="DescriptionR2">- Promedio ponderado igual o superior a 70 en el ultimo semestre.</string>
+    <string name="DescriptionR3">- Exoneración tortal del pago de derechos de estudio.</string>
+    <string name="DescriptionR4">- Renumeración económica de ₡900 por hora realizada al finalizar el semestre.</string>
 
 
     <!-- General -->

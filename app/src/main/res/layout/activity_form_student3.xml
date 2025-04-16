@@ -6,91 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/baseActivityColor"
-    tools:context=".student.FormStudent">
-
-
-    <ImageView
-        android:id="@+id/ivRectangle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/blue_rectangle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/tVRequires"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/Requires"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivRectangle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
-        app:layout_constraintStart_toStartOf="@+id/ivRectangle"
-        app:layout_constraintTop_toTopOf="@+id/ivRectangle"
-        app:layout_constraintVertical_bias="0.36" />
-
-    <TextView
-        android:id="@+id/tvRequieresDesc1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_light"
-        android:text="@string/DescriptionR1"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivRectangle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.128"
-        app:layout_constraintStart_toStartOf="@+id/ivRectangle"
-        app:layout_constraintTop_toBottomOf="@+id/tVRequires"
-        app:layout_constraintVertical_bias="0.125" />
-
-    <TextView
-        android:id="@+id/tvRequiresDesc2"
-        android:layout_width="351dp"
-        android:layout_height="36dp"
-        android:fontFamily="@font/montserrat_light"
-        android:text="@string/DescriptionR2"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRequieresDesc1" />
-
-    <TextView
-        android:id="@+id/tvRequiresDesc3"
-        android:layout_width="351dp"
-        android:layout_height="17dp"
-        android:fontFamily="@font/montserrat_light"
-        android:text="@string/DescriptionR3"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRequiresDesc2" />
-
-    <TextView
-        android:id="@+id/tvRequiresDesc4"
-        android:layout_width="351dp"
-        android:layout_height="35dp"
-        android:fontFamily="@font/montserrat_light"
-        android:text="@string/DescriptionR4"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRequiresDesc3" />
+    tools:context=".student.FormStudent3">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -205,19 +121,5 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btnNext"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:backgroundTint="@color/marineBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2"
-        app:layout_constraintVertical_bias="0.514" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

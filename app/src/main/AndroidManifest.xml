@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AppLabs"
         tools:targetApi="31">
         <activity
+            android:name=".student.FormStudent3"
+            android:exported="false" />
+        <activity
+            android:name=".student.FormStudent2"
+            android:exported="false" />
+        <activity
             android:name=".student.FormStudent"
             android:exported="false" />
         <activity
