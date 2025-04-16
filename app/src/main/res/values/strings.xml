@@ -31,9 +31,11 @@
     <string name="hours2">160 horaas al semestre (10 Horas semanales)</string>
     <string name="schueduleHours">Disponbilidad de horarios para sus turnos</string>
     <string name="semesters">¿Cuántos semestres ha sido operador(a)?</string>
+    <string name="totalSemesters">Total de Semestres</string>
     <string name="psychology">¿Tiene seguimiento en psicología?</string>
+    <string name="psychologyDesc">Si tiene, anotar el nombre del psicologo (a)</string>
     <string name="psychologyName">Nombre del psicologo</string>
-    <string name="ticket">Boleta de Solicitud de Asistencia Estudiantil - Si ha completado la Boleta en formato digital, la puede adjuntar en este apartado</string>
+    <string name="ticket">Boleta de Solicitud de Asistencia Estudiantil: Si ha completado la Boleta en formato digital, la puede adjuntar en este apartado</string>
     <string name="archive">Añadir archivo</string>
     <string name="archiveDesc">Sube 1 archivo compatible. Tamaño máximo: 10 MB.</string>
 
@@ -48,4 +50,5 @@
     <!-- General -->
     <string name="next">Siguiente</string>
     <string name="back">Antes</string>
+    <string name="send">Enviar</string>
 </resources>
