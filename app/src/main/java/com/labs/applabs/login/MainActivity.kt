@@ -1,13 +1,14 @@
 package com.labs.applabs
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.labs.applabs.administrator.AdminMenuActivity
 import com.labs.applabs.login.RegisterActivity
-import com.labs.applabs.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         // Vincular los elementos del layout
         emailEditText = findViewById(R.id.et1)
         passwordEditText = findViewById(R.id.et2)
-        loginButton = findViewById(R.id.btn2)
+        loginButton = findViewById(R.id.btnLogin)
         registerButton = findViewById(R.id.btn3)
 
         // Navegar a la pantalla de registro
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Iniciar sesión
+        /*
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val pass = passwordEditText.text.toString()
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                        // Aquí podría navegar a otra actividad en este caso a la vista después de logueada
+
                     } else {
                         Toast.makeText(this, it.exception?.message ?: "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                     }
@@ -54,6 +56,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "No se permiten campos vacíos", Toast.LENGTH_SHORT).show()
             }
         }
+        */
+    }
+
+    fun menuAdmin(view: View){
+        val intent = Intent(this, AdminMenuActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onStart() {
