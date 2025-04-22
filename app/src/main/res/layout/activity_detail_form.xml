@@ -433,7 +433,7 @@
                 app:layout_constraintVertical_bias="0.242" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/textViewScheduleAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -444,6 +444,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view7"
                 app:layout_constraintVertical_bias="0.006" />
+
+            <EditText
+                android:id="@+id/editComentario"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:background="@drawable/edit_text_comment_border"
+                android:gravity="top|start"
+                android:padding="12dp"
+                android:hint="Escribe un comentario"
+                app:layout_constraintTop_toBottomOf="@+id/textViewScheduleAvailability"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
