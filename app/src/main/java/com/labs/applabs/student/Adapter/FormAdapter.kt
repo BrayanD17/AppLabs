@@ -1,9 +1,11 @@
 package com.labs.applabs.student.Adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.labs.applabs.R
 import com.labs.applabs.student.Form
 
 class FormAdapter (private val forms : List<Form>) : RecyclerView.Adapter<FormAdapter.ViewHolder>() {
@@ -14,7 +16,6 @@ class FormAdapter (private val forms : List<Form>) : RecyclerView.Adapter<FormAd
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
     }
 
     override fun getItemCount(): Int = forms.size
