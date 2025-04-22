@@ -19,7 +19,7 @@
     <string name="inforShifts">Turnos</string>
     <string name="infoBankAccount">Cuenta bancaria</string>
     <string name="infoLastDigitCard">Digitos carnet</string>
-    <string name="infoSemesterOperator">Semestres como operador</string>
+    <string name="infoSemesterOperator">Semestres operando</string>
     <string name="infoNamePsychology">Psicología</string>
     <string name="infoScheduleAvailability">Disponibilidad horaria</string>
     <string name="infoApplicationStatus">Estado de la solicitud</string>
