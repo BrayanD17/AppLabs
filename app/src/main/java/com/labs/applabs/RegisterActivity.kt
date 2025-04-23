@@ -8,6 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.R
+import com.google.firebase.firestore.FirebaseFirestore
+import com.labs.applabs.MainActivity
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -29,19 +32,17 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         firebaseAuth = FirebaseAuth.getInstance()
+        val firestore = FirebaseFirestore.getInstance()
 
-        // Asociar vistas
         emailEditText = findViewById(R.id.etMail)
         passwordEditText = findViewById(R.id.etPassword)
         nameEditText = findViewById(R.id.etName)
         surnamesEditText = findViewById(R.id.etSurnames)
         cardEditText = findViewById(R.id.etCard)
         telephoneEditText = findViewById(R.id.etTelephone)
-        registerButton = findViewById(R.id.btnRegister)
         bankAccountEditText = findViewById(R.id.etBankAccount)
+        registerButton = findViewById(R.id.btnRegister)
 
-
-        // Acción del botón "Registrarse"
         registerButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
@@ -51,23 +52,53 @@ class RegisterActivity : AppCompatActivity() {
             val phone = telephoneEditText.text.toString()
             val bankAccount = bankAccountEditText.text.toString()
 
-
-            // Verificación básica
-            //Las funciones para CRUD de los datos debe ir por fuera del fronted en el provider
             if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()
-                && surnames.isNotEmpty() && card.isNotEmpty() && phone.isNotEmpty()
-                && bankAccount.isNotEmpty()
+                && surnames.isNotEmpty() && card.isNotEmpty()
+                && phone.isNotEmpty() && bankAccount.isNotEmpty()
             ) {
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, RegisterActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this, it.exception?.message ?: "Error al registrar", Toast.LENGTH_SHORT).show()
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val userId =
+                                firebaseAuth.currentUser?.uid ?: return@addOnCompleteListener
+
+                            // Crear un mapa con los datos
+                            val userMap = hashMapOf(
+                                "nombre" to name,
+                                "apellidos" to surnames,
+                                "carnet" to card,
+                                "telefono" to phone,
+                                "cuentaBancaria" to bankAccount,
+                                "correo" to email
+                            )
+
+                            // Guardar en Firestore
+                            firestore.collection("usuarios")
+                                .document(userId)
+                                .set(userMap)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT)
+                                        .show()
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this,
+                                        "Error al guardar datos: ${it.message}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+
+                        } else {
+                            Toast.makeText(
+                                this,
+                                task.exception?.message ?: "Error al registrar",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
             } else {
                 Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             }
