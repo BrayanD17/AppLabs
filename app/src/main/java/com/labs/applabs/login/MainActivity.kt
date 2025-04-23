@@ -1,6 +1,7 @@
 package com.labs.applabs
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Iniciar sesión
-        loginButton.setOnClickListener {
+        /*loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val pass = passwordEditText.text.toString()
 
@@ -53,6 +54,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "No se permiten campos vacíos", Toast.LENGTH_SHORT).show()
             }
+        }*/
+
+        loginButton.setOnClickListener{
+            val intent : Intent = Intent(this@MainActivity, com.labs.applabs.student.FormActivity::class.java)
+            startActivity(intent);
         }
     }
 

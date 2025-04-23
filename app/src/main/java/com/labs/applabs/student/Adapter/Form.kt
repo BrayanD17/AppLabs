@@ -1,4 +1,4 @@
-package com.labs.applabs.student
+package com.labs.applabs.student.Adapter
 
 data class Form(val id: String,
                 val idStudent: String,
