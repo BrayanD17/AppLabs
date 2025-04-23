@@ -15,7 +15,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Forzar que el contenido no invada la barra de estado o navegación
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
