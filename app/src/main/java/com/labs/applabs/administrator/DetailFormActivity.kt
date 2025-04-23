@@ -6,8 +6,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
 import com.labs.applabs.firebase.provider
+import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
 
@@ -19,7 +21,7 @@ class DetailFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
-        showInfo()
+        showInfo("uM18B5gRWOygToYl7Uzy")
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -27,13 +29,28 @@ class DetailFormActivity : AppCompatActivity() {
         }
     }
 
-    fun showInfo(){
-        applicationOperatorTitle=findViewById(R.id.textViewApplicationTitle)
-        typeForm=findViewById(R.id.textViewTypeForm)
+    fun showInfo(formularioId: String) {
+        applicationOperatorTitle = findViewById(R.id.textViewApplicationTitle)
+        typeForm = findViewById(R.id.textViewTypeForm)
 
-        applicationOperatorTitle.text="Solicitud IS 2025"
-        typeForm.text="Formulario Operador"
+
+        // Ejecutar en corrutina
+        lifecycleScope.launch {
+            val info = provider.getFormularioInfoById(formularioId)
+
+            if (info != null) {
+                val nombre = info["nombre"] as? String ?: "Nombre no disponible"
+                val semestre = info["Semestre"] as? String ?: "Semestre no disponible"
+
+                applicationOperatorTitle.text = "$nombre"
+                typeForm.text = "$semestre"
+            } else {
+                applicationOperatorTitle.text = "No se encontró información"
+                typeForm.text = ""
+            }
+        }
     }
+
 
 
 
