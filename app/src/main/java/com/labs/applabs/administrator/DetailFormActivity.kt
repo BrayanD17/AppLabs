@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.R
+import com.labs.applabs.firebase.provider
 
 class DetailFormActivity : AppCompatActivity() {
 
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
+    val provider: provider = provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
