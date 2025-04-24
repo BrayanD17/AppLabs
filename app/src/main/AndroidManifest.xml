@@ -19,6 +19,8 @@
 
         <activity
             android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".administrator.AdminMenuFormActivity"
             android:exported="false" />
         <activity
@@ -45,7 +47,7 @@
             android:name=".student.FormStudent"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".login.MainActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>

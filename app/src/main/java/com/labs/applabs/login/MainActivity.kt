@@ -3,6 +3,7 @@ package com.labs.applabs.login
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.labs.applabs.R
 import com.labs.applabs.RegisterActivity
 import com.labs.applabs.ResetPasswordActivity
+import com.labs.applabs.administrator.AdminMenuActivity
 import com.labs.applabs.models.ValidadorCampos
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         // Referencias de vista
         etCorreo = findViewById(R.id.et1)
         etPassword = findViewById(R.id.et2)
-        btnLogin = findViewById(R.id.btn2)
+        btnLogin = findViewById(R.id.btnLogin)
         btnRegister = findViewById(R.id.btn3)
         cbRecordar = findViewById(R.id.cbRecordar)
         val btnOlvidar = findViewById<Button>(R.id.btn1)
@@ -109,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         btnOlvidar.setOnClickListener {
             startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
-        */
+
     }
 
     fun menuAdmin(view: View){

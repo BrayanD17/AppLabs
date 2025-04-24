@@ -41,7 +41,7 @@
         style="@style/TextViewStyle"
         android:layout_width="60dp"
         android:layout_height="21dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/users"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,12 +115,12 @@
         android:id="@+id/cbRecordar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="92dp"
         android:text="Recordar mis credenciales"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/btn1"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
     <Button
         android:id="@+id/btn1"
@@ -133,10 +133,10 @@
         android:text="@string/forgetPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et2"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnLogin"
