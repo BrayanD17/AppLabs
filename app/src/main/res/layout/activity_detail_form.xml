@@ -36,7 +36,7 @@
         android:id="@+id/cardViewDetailForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_margin="25dp"
         android:focusable="false"
         android:importantForAccessibility="no"
         android:padding="15dp"
@@ -49,13 +49,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="596dp"
             android:background="@color/white"
             android:padding="8dp">
 
 
             <TextView
                 android:id="@+id/textViewInfoName"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/infoName"
@@ -68,8 +69,10 @@
 
             <TextView
                 android:id="@+id/textDataInfoName"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Sandra Rios Orozco"
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
@@ -91,6 +94,7 @@
 
             <TextView
                 android:id="@+id/textViewInfoId"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -104,9 +108,11 @@
 
             <TextView
                 android:id="@+id/textDataId"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:text="7 0855 0471"
                 app:layout_constraintBottom_toTopOf="@+id/view2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.133"
@@ -116,6 +122,7 @@
 
             <TextView
                 android:id="@+id/textViewStudentCard"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/infoCardStudent"
@@ -128,9 +135,11 @@
 
             <TextView
                 android:id="@+id/textDataCardStudent"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:text="2017055486"
                 app:layout_constraintBottom_toTopOf="@+id/view2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
@@ -151,6 +160,7 @@
 
             <TextView
                 android:id="@+id/textViewEmail"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -164,9 +174,11 @@
 
             <TextView
                 android:id="@+id/textDataEmail"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="sandRios@estudiantec.cr"
                 app:layout_constraintBottom_toTopOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
@@ -188,6 +200,7 @@
 
             <TextView
                 android:id="@+id/textViewPhone"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -201,9 +214,11 @@
 
             <TextView
                 android:id="@+id/textDataPhone"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="85647199"
                 app:layout_constraintBottom_toTopOf="@+id/view4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.133"
@@ -213,6 +228,7 @@
 
             <TextView
                 android:id="@+id/textViewCareer"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -226,9 +242,11 @@
 
             <TextView
                 android:id="@+id/textDataCareer"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="Ingeniería en Computación"
                 app:layout_constraintBottom_toTopOf="@+id/view4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
@@ -250,6 +268,7 @@
 
             <TextView
                 android:id="@+id/textViewAverage"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -263,9 +282,11 @@
 
             <TextView
                 android:id="@+id/textDataAverage"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:text="95.75"
                 app:layout_constraintBottom_toTopOf="@+id/view5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.133"
@@ -275,6 +296,7 @@
 
             <TextView
                 android:id="@+id/textViewShifts"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -288,9 +310,11 @@
 
             <TextView
                 android:id="@+id/textDataShifts"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:text="80 horas semanales"
                 app:layout_constraintBottom_toTopOf="@+id/view5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
@@ -312,6 +336,7 @@
 
             <TextView
                 android:id="@+id/textViewBankAccount"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -325,8 +350,10 @@
 
             <TextView
                 android:id="@+id/textDataBankAccount"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="CR11118757895"
                 app:layout_constraintBottom_toTopOf="@+id/view6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.133"
@@ -336,6 +363,7 @@
 
             <TextView
                 android:id="@+id/textViewCardDigit"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -349,8 +377,10 @@
 
             <TextView
                 android:id="@+id/textDataCardDigit"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="5486"
                 app:layout_constraintBottom_toTopOf="@+id/view6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
@@ -372,6 +402,7 @@
 
             <TextView
                 android:id="@+id/textViewOperatorSemester"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -385,9 +416,11 @@
 
             <TextView
                 android:id="@+id/textDataOperatorSemester"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="2 semestres"
                 app:layout_constraintBottom_toTopOf="@+id/view7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.128"
@@ -397,6 +430,7 @@
 
             <TextView
                 android:id="@+id/textViewPsychology"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -410,9 +444,11 @@
 
             <TextView
                 android:id="@+id/textDataPsychology"
+                style="@style/viewDataForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="Carmen Sánchez"
                 app:layout_constraintBottom_toTopOf="@+id/view7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.728"
@@ -434,6 +470,7 @@
 
             <TextView
                 android:id="@+id/textViewScheduleAvailability"
+                style="@style/viewTextForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -448,15 +485,16 @@
             <EditText
                 android:id="@+id/editComentario"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/edit_text_comment_border"
                 android:gravity="top|start"
-                android:padding="12dp"
                 android:hint="Escribe un comentario"
-                app:layout_constraintTop_toBottomOf="@+id/textViewScheduleAvailability"
-                app:layout_constraintStart_toStartOf="parent"
+                style="@style/EditTextStyle"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"/>
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewScheduleAvailability" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
