@@ -23,6 +23,7 @@
     <string name="infoNamePsychology">Psicología</string>
     <string name="infoScheduleAvailability">Disponibilidad horaria</string>
     <string name="infoApplicationStatus">Estado de la solicitud</string>
+    <string name="downloadDocument">Descargar Boleta</string>
     <string name="infoComment">Comentario</string>
 
 </resources>

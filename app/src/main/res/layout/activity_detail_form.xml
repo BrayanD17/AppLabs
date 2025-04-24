@@ -539,19 +539,54 @@
                     app:layout_constraintTop_toBottomOf="@+id/view9"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <EditText
-                    android:id="@+id/editComentario"
-                    style="@style/EditTextStyle"
+                <View
+                    android:id="@+id/view10"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="80dp"
-                    android:background="@drawable/edit_text_comment_border"
-                    android:gravity="top|start"
-                    android:hint="Escribe un comentario"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewScheduleAvailability" />
+                    app:layout_constraintTop_toBottomOf="@+id/view9"
+                    app:layout_constraintVertical_bias="0.0" />
+
+
+                <FrameLayout
+                    android:id="@+id/btnDescargarBoleta"
+                    android:layout_width="275dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view10">
+
+                    <!-- Imagen y texto colocados manualmente usando FrameLayout -->
+                    <ImageView
+                        android:id="@+id/iconDescargar"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/baseline_download_24" />
+
+                    <TextView
+                        android:id="@+id/textDescargar"
+                        style="@style/viewDataForm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/downloadDocument" />
+                </FrameLayout>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
