@@ -3,27 +3,27 @@ package com.labs.applabs.administrator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.MainActivity
 import com.labs.applabs.R
 
-class AdminMenuActivity : AppCompatActivity() {
+class AdminMenuFormActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_admin_menu)
+        setContentView(R.layout.activity_admin_menu_form)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
-        val btnMenu = findViewById<ImageButton>(R.id.btnMenu)
+        val btnMenu = findViewById<ImageButton>(R.id.btnMenu2)
 
         // Abrir el drawer con el botón hamburguesa
         btnMenu.setOnClickListener {
@@ -55,10 +55,5 @@ class AdminMenuActivity : AppCompatActivity() {
             true
         }
 
-    }
-
-    fun callMenuForm(view: View){
-        val intent = Intent(this, AdminMenuFormActivity::class.java)
-        startActivity(intent)
     }
 }

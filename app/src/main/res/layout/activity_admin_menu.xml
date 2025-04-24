@@ -105,7 +105,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/lyForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="38dp"
@@ -114,6 +114,7 @@
             android:layout_marginBottom="166dp"
             android:background="@color/white"
             android:gravity="center"
+            android:onClick="callMenuForm"
             android:orientation="vertical"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -129,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:contentDescription="@string/boton_menu_administrador"
+                android:onClick="callMenuForm"
                 app:srcCompat="@drawable/icon_form" />
 
             <TextView
@@ -136,6 +138,7 @@
                 style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="callMenuForm"
                 android:text="@string/formularios" />
         </LinearLayout>
 
@@ -218,17 +221,16 @@
 
         <ImageButton
             android:id="@+id/btnMenu"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:background="@color/white"
             android:contentDescription="@string/boton_menu_administrador"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.060000002"
+            app:layout_constraintVertical_bias="0.075"
             app:srcCompat="@drawable/icon_menu" />
 
         <ImageView
@@ -236,13 +238,27 @@
             android:layout_width="321dp"
             android:layout_height="156dp"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginTop="128dp"
             android:layout_marginEnd="18dp"
             android:contentDescription="@string/logo_de_la_app"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo_compulabs" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:contentDescription="@string/boton_de_notificaciones"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.075"
+            app:srcCompat="@drawable/icon_notification" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -277,6 +293,5 @@
 
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
