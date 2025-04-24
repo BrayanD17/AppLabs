@@ -1,4 +1,5 @@
 package com.labs.applabs.firebase
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -55,11 +56,16 @@ class Provider {
                 }
             )
 
+
             // Guardamos en Firestore
             db.collection("Forms")
                 .add(dataMap)
-                .addOnSuccessListener { Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener { e -> Toast.makeText(this@Provider, "Error: ${e.message}", Toast.LENGTH_LONG).show()}
+                .addOnSuccessListener {
+                    val context = this@Provider as? Context ?: return@addOnSuccessListener
+                    Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener {
+                    val context = this@Provider as? Context ?: return@addOnFailureListener
+                    Toast.makeText(this@Provider, "Error", Toast.LENGTH_LONG).show()}
 
         } catch (e: Exception) {
             Log.e("Firebase", "Error al guardar", e)
