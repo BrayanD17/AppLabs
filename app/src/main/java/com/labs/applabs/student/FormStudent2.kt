@@ -16,6 +16,7 @@ import com.labs.applabs.R
 class FormStudent2 : AppCompatActivity() {
 
     private lateinit var etIdSchoolNumber: EditText
+    private lateinit var 
     private var shiftSelected: Int = 0
 
     companion object {
@@ -42,6 +43,11 @@ class FormStudent2 : AppCompatActivity() {
 
         etIdSchoolNumber = findViewById(R.id.etIdSchoolNumber)
         updateShiftSelection()
+
+        // Rellenar si hay datos guardados
+        if (FormStudentData.idCard.isNotEmpty()) {
+            etIdSchoolNumber.setText(FormStudentData.idCard)
+        }
     }
 
     fun onShiftSelected(view: View) {
@@ -64,19 +70,17 @@ class FormStudent2 : AppCompatActivity() {
     }
 
 
-
-    private fun validateForm(): Boolean {
-        return when {
-            etIdSchoolNumber.text.isBlank() -> {
-                etIdSchoolNumber.error = "Campo obligatorio"
-                false
-            }
-            FormStudentData.schedule.isEmpty() -> {
-                Toast.makeText(this, "Selecciona al menos un horario", Toast.LENGTH_SHORT).show()
-                false
-            }
-            else -> true
+    private fun validateFields(): Boolean {
+        if (etIdSchoolNumber == null || etIdSchoolNumber.text.toString().trim().isEmpty()) {
+            Toast.makeText(this, "Los dígitos del carnet son obligatorios", Toast.LENGTH_SHORT).show()
+            return false
         }
+
+        if (FormStudentData.schedule.isEmpty()) {
+            Toast.makeText(this, "Seleccione al menos un horario", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun saveFormData() {
@@ -91,7 +95,7 @@ class FormStudent2 : AppCompatActivity() {
     }
 
     fun Next(view: View) {
-        if (validateForm()) {
+        if (validateFields()) {
             saveFormData()
             startActivity(Intent(this, FormStudent3::class.java))
         }
