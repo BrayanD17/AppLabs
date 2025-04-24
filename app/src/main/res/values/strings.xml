@@ -11,4 +11,84 @@
     <string name="icono_exito">Ícono de éxito</string>
     <string name="contraseña_actualizada">Contraseña actualizada</string>
     <string name="btn_cambiar_contrasena">Botón para cambiar la contraseña</string>
+    <string name="bienvenido_a_la_gesti_n_de_laboratorios">¡Bienvenido a la gestión de laboratorios!</string>
+    <string name="formularios">Formularios</string>
+    <string name="horarios">Horarios</string>
+    <string name="operadores">Operadores</string>
+    <string name="reportes">Reportes</string>
+    <string name="visitas">Visitas</string>
+    <string name="cont_ctanos">Contáctanos</string>
+    <string name="boton_menu_administrador">boton menu administrador</string>
+    <string name="logo_de_la_app">Logo de la app</string>
+    <string name="men">Menú</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="icono_del_usuario">icono del usuario</string>
+    <string name="defaut_text_user">Brayan Gutiérrez Dinarte</string>
+    <string name="defaut_rol_usuario">Administrador</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="boton_de_notificaciones">boton de notificaciones</string>
+    <string name="gesti_n_de_formularios">Gestión de formularios</string>
+    <string name="editar_formulario">Editar formulario</string>
+    <string name="nuevo_formulario">Nuevo formulario</string>
+    <string name="ver_formularios">Ver formularios</string>
+
+    <!--Student Form -->
+    <string name="application_form">Boleta de Solicitud</string>
+    <string name="descriptionTitleForm">El siguiente formulario es para todos aquellos estudiantes interesados en obtener una asistencia (Horas Estudiantes - HE)</string>
+    <string name="descripcionForm1">El Comité de Becas nos indica que es importante que cada estudiante tenga un respaldo de su participación y consideración para el Programa de Asistencias Estudiantiles (por ejemplo: para efectos de reclamo, en caso de que no se le brindara oportunidad de participar).</string>
+    <string name="descripcionForm2">Para ello, se utiliza la Boleta de Solicitud de Asistencia Estudiantil. Posterior al envío de este formulario, se le solicita que descargue la boleta y la remita a las oficinas de la Carrera de Computación:</string>
+    <string name="nameForm">Formulario de Operadores</string>
+
+    // Form
+    <string name="idStudent">Cedula</string>
+    <string name="weightedAverage">Promedio Ponderado del semestre anterior</string>
+    <string name="descriotionAverage">se puede consultar en el Tec Digital, en la seccion de Reportes. Recuerda que paras las modalidades HE el promedio debe de ser mayor a 70</string>
+    <string name="degree">Carrera</string>
+    <string name="phoneNumber">Teléfono</string>
+    <string name="idSchoolNumber">Digitos detras del carnet</string>
+    <string name="idSchoolNumberDesc">Últimos 5 dígitos</string>
+    <string name="scheduleAvailability">Disponibilidad de Horario: Seleccionar TODAS las posibilidades que tenga</string>
+    <string name="schueduleDescription">Seleccionar TODAS las posibilidades que tengas</string>
+    <string name="shifts">Turnos</string>
+    <string name="hours1">80 horaas al semestre (5 Horas semanales)</string>
+    <string name="hours2">160 horaas al semestre (10 Horas semanales)</string>
+    <string name="schueduleHours">Disponbilidad de horarios para sus turnos</string>
+    <string name="semesters">¿Cuántos semestres ha sido operador(a)?</string>
+    <string name="totalSemesters">Total de Semestres</string>
+    <string name="psychology">¿Tiene seguimiento en psicología?</string>
+    <string name="psychologyDesc">Si tiene, anotar el nombre del psicologo (a)</string>
+    <string name="psychologyName">Nombre del psicologo</string>
+    <string name="ticket">Boleta de Solicitud de Asistencia Estudiantil: Si ha completado la Boleta en formato digital, la puede adjuntar en este apartado</string>
+    <string name="archive">Añadir archivo</string>
+    <string name="archiveDesc">Sube 1 archivo compatible. Tamaño máximo: 10 MB.</string>
+
+
+    <string name="Requires">Requisitos y beneficios.</string>
+    <string name="DescriptionR1">- Horas estudiantes</string>
+    <string name="DescriptionR2">- Promedio ponderado igual o superior a 70 en el ultimo semestre.</string>
+    <string name="DescriptionR3">- Exoneración tortal del pago de derechos de estudio.</string>
+    <string name="DescriptionR4">- Renumeración económica de ₡900 por hora realizada al finalizar el semestre.</string>
+
+
+    <!-- General -->
+    <string name="next">Siguiente</string>
+    <string name="back">Antes</string>
+    <string name="send">Enviar</string>
+    <!--Request history details (administrator view)-->
+    <string name="infoName">Nombre del estudiante</string>
+    <string name="infoId">Cédula</string>
+    <string name="infoCardStudent">Carnet</string>
+    <string name="infoEmailStudent">Correo estudiantil</string>
+    <string name="infoCellPhone">Teléfono</string>
+    <string name="infoCareer">Carrera</string>
+    <string name="infoWeightedAverage">Promedio</string>
+    <string name="inforShifts">Turnos</string>
+    <string name="infoBankAccount">Cuenta bancaria</string>
+    <string name="infoLastDigitCard">Digitos carnet</string>
+    <string name="infoSemesterOperator">Semestres operando</string>
+    <string name="infoNamePsychology">Psicología</string>
+    <string name="infoScheduleAvailability">Disponibilidad horaria</string>
+    <string name="infoApplicationStatus">Estado de la solicitud</string>
+    <string name="infoComment">Comentario</string>
+
 </resources>

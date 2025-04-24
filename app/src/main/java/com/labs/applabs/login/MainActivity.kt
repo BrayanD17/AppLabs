@@ -109,6 +109,12 @@ class MainActivity : AppCompatActivity() {
         btnOlvidar.setOnClickListener {
             startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
+        */
+    }
+
+    fun menuAdmin(view: View){
+        val intent = Intent(this, AdminMenuActivity::class.java)
+        startActivity(intent)
     }
 
     // Verificar rol y redirigir a vista correspondiente
