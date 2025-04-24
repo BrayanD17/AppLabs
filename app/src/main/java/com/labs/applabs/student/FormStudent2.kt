@@ -16,7 +16,6 @@ import com.labs.applabs.R
 class FormStudent2 : AppCompatActivity() {
 
     private lateinit var etIdSchoolNumber: EditText
-    private lateinit var 
     private var shiftSelected: Int = 0
 
     companion object {
