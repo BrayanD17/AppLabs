@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_home"
+        android:title="@string/men"
+        android:icon="@drawable/icon_home"/>
+    <item
+        android:id="@+id/nav_logout"
+        android:title="@string/cerrar_sesi_n"
+        android:icon="@drawable/icon_logout" />
+</menu>

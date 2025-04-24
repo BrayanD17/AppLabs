@@ -8,6 +8,26 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+    <string name="bienvenido_a_la_gesti_n_de_laboratorios">¡Bienvenido a la gestión de laboratorios!</string>
+    <string name="formularios">Formularios</string>
+    <string name="horarios">Horarios</string>
+    <string name="operadores">Operadores</string>
+    <string name="reportes">Reportes</string>
+    <string name="visitas">Visitas</string>
+    <string name="cont_ctanos">Contáctanos</string>
+    <string name="boton_menu_administrador">boton menu administrador</string>
+    <string name="logo_de_la_app">Logo de la app</string>
+    <string name="men">Menú</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="icono_del_usuario">icono del usuario</string>
+    <string name="defaut_text_user">Brayan Gutiérrez Dinarte</string>
+    <string name="defaut_rol_usuario">Administrador</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="boton_de_notificaciones">boton de notificaciones</string>
+    <string name="gesti_n_de_formularios">Gestión de formularios</string>
+    <string name="editar_formulario">Editar formulario</string>
+    <string name="nuevo_formulario">Nuevo formulario</string>
+    <string name="ver_formularios">Ver formularios</string>
 
     <!--Student Form -->
     <string name="application_form">Boleta de Solicitud</string>
