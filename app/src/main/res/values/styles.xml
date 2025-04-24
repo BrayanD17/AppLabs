@@ -14,11 +14,25 @@
     </style>
 
 
-    <!-- Estilo para TextView -->
+    <!-- Estilo para TextView Labels -->
     <style name="TextViewStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <!-- Estilo para TextView Titulos -->
+    <style name="TextViewStyleTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+    </style>
+
+    <!-- Estilo para TextView Titulos -->
+    <style name="TextViewStyleDescriptions">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
     </style>
 
     <!-- Estilo para EditText -->
