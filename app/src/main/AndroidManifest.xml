@@ -26,8 +26,10 @@
             android:name=".administrator.AdminMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".administrator.DetailFormActivity"
             android:name=".student.FormStudent3"
+            android:exported="false" />
+        <activity
+            android:name=".administrator.DetailFormActivity"
             android:exported="false" />
         <activity
             android:name=".student.FormStudent2"
@@ -45,9 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".administrator.DetailFormActivity"
-            android:exported="false" />
         <activity
             android:name=".student.FormActivity"
             android:exported="false" />
