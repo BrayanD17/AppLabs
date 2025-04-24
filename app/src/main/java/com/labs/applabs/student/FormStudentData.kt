@@ -1,6 +1,7 @@
 package com.labs.applabs.student
 
 object FormStudentData {
+    var uid: String = ""
     var idCard: String = ""
     var weightedAverage: Float = 0f
     var degree: String = ""
