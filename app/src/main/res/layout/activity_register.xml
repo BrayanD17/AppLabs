@@ -8,20 +8,72 @@
     android:layout_height="match_parent"
     android:background="#ECE9E6">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/rectangle" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="399dp"
+        android:layout_height="353dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_labs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/etName"
+        style="@style/EditTextStyle"
+        android:layout_width="363dp"
+        android:layout_height="46dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="Nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
     <EditText
         android:id="@+id/etSurnames"
         style="@style/EditTextStyle"
         android:layout_width="363dp"
         android:layout_height="46dp"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat_regular"
         android:hint="Primer y segundo apellido"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
+
+    <EditText
+        android:id="@+id/etPhone"
+        style="@style/EditTextStyle"
+        android:layout_width="363dp"
+        android:layout_height="46dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="Teléfono"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSurnames" />
 
     <EditText
         android:id="@+id/etBankAccount"
@@ -36,35 +88,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPhone" />
-
-
-    <EditText
-        android:id="@+id/etName"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="120dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Nombre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etPhone"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Teléfono"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSurnames" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -82,7 +105,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etBankAccount"
-        app:layout_constraintVertical_bias="0.262" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

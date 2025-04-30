@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.labs.applabs.firebase.FirebaseUsuarioService
+import com.labs.applabs.firebase.Provider
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.models.ValidadorCampos
@@ -23,6 +23,7 @@ class RegisterActivity2 : AppCompatActivity() {
     private var cuenta = ""
 
     private val validador = object : ValidadorCampos() {}
+    private val provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,34 +48,31 @@ class RegisterActivity2 : AppCompatActivity() {
             val confirm = etConfirmPassword.text.toString().trim()
             val carnet = etCard.text.toString().trim()
 
-            // Validar correo institucional
+            // Validaciones
             val errorCorreo = validador.validarCorreo(correo)
             if (errorCorreo != null) {
                 etMail.error = errorCorreo
                 return@setOnClickListener
             }
 
-            // Validar contraseña segura
             val errorPassword = validador.validarContrasena(password)
             if (errorPassword != null) {
                 etPassword.error = errorPassword
                 return@setOnClickListener
             }
 
-            // Validar coincidencia de contraseñas
             if (password != confirm) {
                 etConfirmPassword.error = "Las contraseñas no coinciden"
                 return@setOnClickListener
             }
 
-            // Validar carnet con 10 dígitos exactos
             val errorCarnet = validador.validarCarnet(carnet)
             if (errorCarnet != null) {
                 etCard.error = errorCarnet
                 return@setOnClickListener
             }
 
-            // Crear usuario
+            // Crear el objeto Usuario
             val nuevoUsuario = Usuario(
                 uid = "",
                 nombre = nombre,
@@ -83,11 +81,11 @@ class RegisterActivity2 : AppCompatActivity() {
                 telefono = telefono,
                 cuentaBancaria = cuenta,
                 carnet = carnet,
-                rol = null
+                rol = null // sin rol, lo asigna el admin luego
             )
 
-            // Registrar usuario usando el servicio centralizado
-            FirebaseUsuarioService.registrarUsuario(
+            //Usar Provider en lugar de FirebaseUsuarioService
+            provider.registrarUsuario(
                 context = this,
                 correo = correo,
                 password = password,

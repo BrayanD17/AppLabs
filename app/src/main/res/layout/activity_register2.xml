@@ -8,34 +8,32 @@
     android:layout_height="match_parent"
     android:background="#ECE9E6">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/rectangle" />
 
-    <EditText
-        android:id="@+id/etPassword"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="413dp"
+        android:layout_height="319dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_labs"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etMail" />
-
-    <EditText
-        android:id="@+id/etconfirmpassword"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Confirmar contraseña"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <FrameLayout
         android:id="@+id/fl_eye2"
@@ -82,36 +80,6 @@
             android:src="@drawable/eye_hide" />
     </FrameLayout>
 
-    <EditText
-        android:id="@+id/etMail"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Correo Institucional"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCard"
-        tools:ignore="MissingConstraints" />
-
-    <!--CAMBIAR-->
-
-    <EditText
-        android:id="@+id/etCard"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="44dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Carnet"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnRegister"
         style="@style/ButtonStyle"
@@ -128,7 +96,64 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etconfirmpassword"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/etCard"
+        style="@style/EditTextStyle"
+        android:layout_width="363dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="Carnet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <EditText
+        android:id="@+id/etconfirmpassword"
+        style="@style/EditTextStyle"
+        android:layout_width="363dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="Confirmar contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+    <EditText
+        android:id="@+id/etMail"
+        style="@style/EditTextStyle"
+        android:layout_width="363dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="Correo Institucional"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCard"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        style="@style/EditTextStyle"
+        android:layout_width="363dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etMail" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

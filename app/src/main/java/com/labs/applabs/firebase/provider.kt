@@ -1,42 +1,72 @@
 package com.labs.applabs.firebase
+
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.labs.applabs.models.Usuario
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
 class Provider {
+
+    private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    // Funcion paraa poder obtener el id de la persona autenticada
+    //Obtener UID del usuario autenticado
     private fun getAuthenticatedUserId(): String {
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUser = auth.currentUser
         return currentUser?.uid ?: throw IllegalStateException("No hay usuario autenticado")
     }
 
-    /*Using coroutines to fetch data asynchronously*/
-    /*Está función es solo de ejemplo, no es funcional dentro del proyecto (solo era una prueba)
-    * Forma de instanciar provider para usarlo en el frontend ( val provider: provider = provider() )*/
-    suspend fun getFormularioInfoById(id: String): Map<String, Any>? {
-        return try {
-            val snapshot = db.collection("prueba").document(id).get().await()
-            if (snapshot.exists()) {
-                snapshot.data
-            } else {
-                null
+    //Registrar usuario en Firebase Authentication y Firestore
+    fun registrarUsuario(
+        context: Context,
+        correo: String,
+        password: String,
+        usuario: Usuario,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        auth.createUserWithEmailAndPassword(correo, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val uid = auth.currentUser?.uid
+                    val usuarioFinal = usuario.copy(uid = uid ?: "")
+
+                    db.collection("usuarios").document(uid!!)
+                        .set(usuarioFinal)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                            onSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            onError("Error al guardar: ${e.message}")
+                        }
+                } else {
+                    onError("Error de registro: ${task.exception?.message}")
+                }
             }
-        } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error al obtener datos: ${e.message}")
-            null
-        }
     }
 
+    //Obtener rol del usuario desde Firestore (por UID)
+    fun verificarRol(uid: String, onResult: (Int) -> Unit) {
+        db.collection("usuarios").document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                val rol = doc.getLong("rol")?.toInt() ?: 3 // Por defecto: estudiante
+                onResult(rol)
+            }
+            .addOnFailureListener {
+                onResult(3)
+            }
+    }
+
+    //Guardar datos de formulario del estudiante
     fun saveStudentData(studentData: FormStudentData) {
         val user = getAuthenticatedUserId()
         try {
-            // Convertimos el objeto completo a un mapa compatible con Firestore
             val dataMap = hashMapOf<String, Any>(
                 "idStudent" to user,
                 "idCard" to studentData.idCard,
@@ -51,27 +81,33 @@ class Provider {
                 "schedule" to studentData.schedule.map { daySchedule ->
                     hashMapOf(
                         "day" to daySchedule.day,
-                        "shifts" to daySchedule.shifts  // Lista de Strings directamente
+                        "shifts" to daySchedule.shifts
                     )
                 }
             )
 
-
-            // Guardamos en Firestore
             db.collection("Forms")
                 .add(dataMap)
                 .addOnSuccessListener {
-                    val context = this@Provider as? Context ?: return@addOnSuccessListener
-                    Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
+                    Log.d("Provider", "Formulario guardado correctamente")
+                }
                 .addOnFailureListener {
-                    val context = this@Provider as? Context ?: return@addOnFailureListener
-                    Toast.makeText(this@Provider, "Error", Toast.LENGTH_LONG).show()}
+                    Log.e("Provider", "Error al guardar formulario: ${it.message}")
+                }
 
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al guardar", e)
+            Log.e("Provider", "Excepción al guardar datos", e)
         }
     }
 
 
-
+    suspend fun getFormularioInfoById(id: String): Map<String, Any>? {
+        return try {
+            val snapshot = db.collection("prueba").document(id).get().await()
+            if (snapshot.exists()) snapshot.data else null
+        } catch (e: Exception) {
+            Log.e("Provider", "Error al obtener datos: ${e.message}")
+            null
+        }
+    }
 }
