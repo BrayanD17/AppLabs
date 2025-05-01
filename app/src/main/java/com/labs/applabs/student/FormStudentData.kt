@@ -13,7 +13,23 @@ object FormStudentData {
     var psychology : String = ""
     var ticketUrl : String = ""
 
+    fun clearAll() {
+        uid = ""
+        idCard = ""
+        weightedAverage = 0f
+        degree = ""
+        phoneNumber = ""
+        IdSchoolNumber = 0
+        shift = 0
+        schedule = emptyList()
+        semester = 0
+        psychology = ""
+        ticketUrl = ""
+    }
+
 }
+
+
 
 data class DaySchedule(
     val day: String,

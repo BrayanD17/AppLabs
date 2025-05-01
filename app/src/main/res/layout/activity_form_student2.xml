@@ -83,12 +83,14 @@
                     android:id="@+id/radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onShiftSelected"
                     android:text="@string/hours1" />
 
                 <RadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onShiftSelected"
                     android:text="@string/hours2" />
             </RadioGroup>
 
@@ -307,6 +309,7 @@
     <Button
         android:id="@+id/btnNext"
         style="@style/ButtonStyle"
+        android:onClick="Next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next"

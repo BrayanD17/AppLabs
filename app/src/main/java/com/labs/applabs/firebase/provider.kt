@@ -36,39 +36,48 @@ class Provider {
     fun saveStudentData(studentData: FormStudentData) {
         val user = getAuthenticatedUserId()
         try {
-            // Convertimos el objeto completo a un mapa compatible con Firestore
-            val dataMap = hashMapOf<String, Any>(
-                "idStudent" to user,
-                "idCard" to studentData.idCard,
-                "weightedAverage" to studentData.weightedAverage,
-                "degree" to studentData.degree,
-                "phoneNumber" to studentData.phoneNumber,
-                "IdSchoolNumber" to studentData.IdSchoolNumber,
-                "shift" to studentData.shift,
-                "semester" to studentData.semester,
-                "psychology" to studentData.psychology,
-                "ticketUrl" to studentData.ticketUrl,
-                "schedule" to studentData.schedule.map { daySchedule ->
+            // 1. Creación del mapa de datos más eficiente
+            val dataMap = hashMapOf<String, Any>().apply {
+                put("idStudent", user)
+                put("idCard", studentData.idCard)
+                put("weightedAverage", studentData.weightedAverage)
+                put("degree", studentData.degree)
+                put("phoneNumber", studentData.phoneNumber)
+                put("IdSchoolNumber", studentData.IdSchoolNumber)
+                put("shift", studentData.shift)
+                put("semester", studentData.semester)
+                put("psychology", studentData.psychology)
+                put("ticketUrl", studentData.ticketUrl)
+                put("schedule", studentData.schedule.map { daySchedule ->
                     hashMapOf(
                         "day" to daySchedule.day,
-                        "shifts" to daySchedule.shifts  // Lista de Strings directamente
+                        "shifts" to daySchedule.shifts
                     )
-                }
-            )
+                })
+            }
 
+            // 2. Guardado con manejo de contexto más seguro
+            val context = (this as? Context) ?: run {
+                Log.e("Provider", "Contexto no disponible")
+                return
+            }
 
-            // Guardamos en Firestore
             db.collection("Forms")
                 .add(dataMap)
                 .addOnSuccessListener {
-                    val context = this@Provider as? Context ?: return@addOnSuccessListener
-                    Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener {
-                    val context = this@Provider as? Context ?: return@addOnFailureListener
-                    Toast.makeText(this@Provider, "Error", Toast.LENGTH_LONG).show()}
+                    Toast.makeText(context, "¡Guardado!", Toast.LENGTH_SHORT).show()
+                    FormStudentData.clearAll()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(context, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                    Log.e("Firestore", "Error al guardar", e)
+                }
 
         } catch (e: Exception) {
             Log.e("Firebase", "Error al guardar", e)
+            (this as? Context)?.let {
+                Toast.makeText(it, "Error inesperado", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

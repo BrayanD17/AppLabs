@@ -18,7 +18,7 @@ class FormStudent2 : AppCompatActivity() {
     private lateinit var etIdSchoolNumber: EditText
     private var shiftSelected: Int = 0
 
-    companion object {
+    private companion object {
         private val daysMap = mapOf(
             "Lunes" to Triple(R.id.lunes_m, R.id.lunes_t, R.id.lunes_n),
             "Martes" to Triple(R.id.martes_m, R.id.martes_t, R.id.martes_n),
@@ -41,11 +41,70 @@ class FormStudent2 : AppCompatActivity() {
         }
 
         etIdSchoolNumber = findViewById(R.id.etIdSchoolNumber)
-        updateShiftSelection()
 
-        // Rellenar si hay datos guardados
+        // Restaurar datos si existen
         if (FormStudentData.idCard.isNotEmpty()) {
             etIdSchoolNumber.setText(FormStudentData.idCard)
+        }
+        if (FormStudentData.shift != 0) {
+            shiftSelected = FormStudentData.shift
+            val radioId = if (shiftSelected == 80) R.id.radioButton else R.id.radioButton2
+            findViewById<RadioButton>(radioId).isChecked = true
+        }
+    }
+
+
+
+    private fun updateShiftSelection() {
+        shiftSelected = if (findViewById<RadioButton>(R.id.radioButton).isChecked) 80 else 160
+    }
+
+    private fun saveSchedules(): Boolean {
+        val schedules = daysMap.mapNotNull { (day, checkboxIds) ->
+            val shifts = mutableListOf<String>().apply {
+                if (findViewById<CheckBox>(checkboxIds.first).isChecked) add("7am a 12pm")
+                if (findViewById<CheckBox>(checkboxIds.second).isChecked) add("12pm a 5pm")
+                if (findViewById<CheckBox>(checkboxIds.third).isChecked) add("5pm a 10pm")
+            }
+            if (shifts.isNotEmpty()) DaySchedule(day, shifts) else null
+        }
+
+        FormStudentData.schedule = schedules
+        return schedules.isNotEmpty()
+    }
+
+    private fun validateFields(): Boolean {
+        val idNumber = etIdSchoolNumber.text.toString().trim()
+
+        if (idNumber.isEmpty()) {
+            etIdSchoolNumber.error = getString(R.string.errorId)
+            return false
+        }
+
+        try {
+            idNumber.toInt()
+        } catch (e: NumberFormatException) {
+            etIdSchoolNumber.error = getString(R.string.errorNumber)
+            return false
+        }
+
+        if (!findViewById<RadioButton>(R.id.radioButton).isChecked &&
+            !findViewById<RadioButton>(R.id.radioButton2).isChecked) {
+            Toast.makeText(this, R.string.errorHours, Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
+    private fun saveFormData(): Boolean {
+        return try {
+            FormStudentData.idCard = etIdSchoolNumber.text.toString()
+            FormStudentData.shift = shiftSelected
+            true
+        } catch (e: Exception) {
+            Toast.makeText(this, R.string.errorSavingData, Toast.LENGTH_SHORT).show()
+            false
         }
     }
 
@@ -53,50 +112,11 @@ class FormStudent2 : AppCompatActivity() {
         updateShiftSelection()
     }
 
-    private fun updateShiftSelection() {
-        shiftSelected = if (findViewById<RadioButton>(R.id.radioButton).isChecked) 80 else 160
-    }
-
-    private fun saveSchedules() {
-        FormStudentData.schedule = daysMap.map { (day, checkboxIds) ->
-            val shifts = mutableListOf<String>().apply {
-                if (findViewById<CheckBox>(checkboxIds.first).isChecked) add("7am a 12pm")
-                if (findViewById<CheckBox>(checkboxIds.second).isChecked) add("12pm a 5pm")
-                if (findViewById<CheckBox>(checkboxIds.third).isChecked) add("5pm a 10pm")
-            }
-            DaySchedule(day, shifts)
-        }.filter { it.shifts.isNotEmpty() }
-    }
-
-
-    private fun validateFields(): Boolean {
-        if (etIdSchoolNumber == null || etIdSchoolNumber.text.toString().trim().isEmpty()) {
-            Toast.makeText(this, "Los dígitos del carnet son obligatorios", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        if (FormStudentData.schedule.isEmpty()) {
-            Toast.makeText(this, "Seleccione al menos un horario", Toast.LENGTH_SHORT).show()
-            return false
-        }
-        return true
-    }
-
-    private fun saveFormData() {
-        try {
-            FormStudentData.IdSchoolNumber = etIdSchoolNumber.text.toString().toInt()
-            FormStudentData.shift = shiftSelected
-            saveSchedules()
-        } catch (e: NumberFormatException) {
-            etIdSchoolNumber.error = "Número inválido"
-            throw e
-        }
-    }
-
     fun Next(view: View) {
-        if (validateFields()) {
-            saveFormData()
+        if (validateFields() && saveSchedules() && saveFormData()) {
             startActivity(Intent(this, FormStudent3::class.java))
+        } else if (!saveSchedules()) {
+            Toast.makeText(this, R.string.errorSchedule, Toast.LENGTH_SHORT).show()
         }
     }
 
