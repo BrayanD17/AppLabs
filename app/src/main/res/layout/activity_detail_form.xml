@@ -565,9 +565,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view10">
+                    app:layout_constraintTop_toBottomOf="@id/view10"
+                    app:layout_constraintVertical_bias="0.0">
 
-                    <!-- Imagen y texto colocados manualmente usando FrameLayout -->
                     <ImageView
                         android:id="@+id/iconDescargar"
                         android:layout_width="32dp"
@@ -585,6 +585,34 @@
                         android:layout_marginBottom="16dp"
                         android:text="@string/downloadDocument" />
                 </FrameLayout>
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta"
+                    app:layout_constraintVertical_bias="0.0">
+
+
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statusAcept" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statusRejected" />
+
+                </RadioGroup>
+
 
 
 
