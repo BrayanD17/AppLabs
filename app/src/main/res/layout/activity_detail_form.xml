@@ -586,6 +586,19 @@
                         android:text="@string/downloadDocument" />
                 </FrameLayout>
 
+                <TextView
+                    android:id="@+id/textStatus"
+                    style="@style/viewTextForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/infoApplicationStatus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta" />
+
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
@@ -603,7 +616,8 @@
                         android:id="@+id/radioButton2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/statusAcept" />
+                        android:text="@string/statusAcept"
+                        android:layout_marginBottom="-15dp" />
 
                     <RadioButton
                         android:id="@+id/radioButton3"
