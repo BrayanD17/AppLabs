@@ -599,7 +599,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta" />
 
-
                 <RadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
@@ -611,21 +610,25 @@
                     app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta"
                     app:layout_constraintVertical_bias="0.0">
 
-
                     <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/radioStatusAcept"
+                        style="@style/viewTextForm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/statusAcept"
                         android:layout_marginBottom="-15dp" />
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/radioStatusRejected"
+                        style="@style/viewTextForm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/statusRejected" />
 
                 </RadioGroup>
+
+                
+
 
 
 
