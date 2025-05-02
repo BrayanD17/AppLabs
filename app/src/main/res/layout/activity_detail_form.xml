@@ -592,7 +592,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginBottom="48dp"
+                    android:layout_marginBottom="70dp"
                     android:text="@string/infoApplicationStatus"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/radioGroup"
@@ -606,7 +606,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.80"
+                    app:layout_constraintHorizontal_bias="0.90"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta"
                     app:layout_constraintVertical_bias="0.0">
@@ -628,8 +628,13 @@
                 </RadioGroup>
 
                 <EditText
+                    android:id="@+id/etComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_comment_border"
+                    android:layout_margin="16dp"
+                    android:hint="@string/infoComment"
+                    style="@style/EditTextStyle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.30"
@@ -638,11 +643,19 @@
                     app:layout_constraintVertical_bias="0.0"
                     />
 
-                
-
-
-
-
+                <Button
+                    android:id="@+id/btn2"
+                    style="@style/ButtonStyle"
+                    android:layout_width="234dp"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/btnSaveStatus"
+                    app:backgroundTint="@color/green"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etComment"
+                    app:layout_constraintVertical_bias="0.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

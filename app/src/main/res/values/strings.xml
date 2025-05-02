@@ -27,5 +27,6 @@
     <string name="statusRejected">Denegada</string>
     <string name="downloadDocument">Descargar Boleta</string>
     <string name="infoComment">Comentario</string>
+    <string name="btnSaveStatus">Guardar estado</string>"
 
 </resources>
