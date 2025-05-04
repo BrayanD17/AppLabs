@@ -1,9 +1,11 @@
 package com.labs.applabs.administrator
 
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -49,6 +51,23 @@ class DetailFormActivity : AppCompatActivity() {
                 typeForm.text = ""
             }
         }
+
+       val container = findViewById<LinearLayout>(R.id.containerData)
+
+// Lista de ejemplo, puedes reemplazar esto con datos reales de Firebase, Room, etc.
+        val horarios = listOf("Lunes 9-11", "Martes 14-16", "Viernes 10-12", "Viernes 10-12","Viernes 10-12","Viernes 10-12","Viernes 10-12")
+        val tipoLetra = ResourcesCompat.getFont(this, R.font.montserrat_light)
+        for (horario in horarios) {
+            val textView = TextView(this).apply {
+                text = horario
+                textSize = 14f
+                typeface = tipoLetra
+                setPadding(0, 8, 0, 8)
+            }
+            container.addView(textView)
+        }
+
+
     }
 
 

@@ -8,6 +8,7 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+
     <!--Request history details (administrator view)-->
     <string name="infoName">Nombre del estudiante</string>
     <string name="infoId">Cédula</string>
