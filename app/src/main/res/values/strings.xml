@@ -87,5 +87,10 @@
     <string name="infoScheduleAvailability">Disponibilidad horaria</string>
     <string name="infoApplicationStatus">Estado de la solicitud</string>
     <string name="infoComment">Comentario</string>
+    <string name="ver_historial">Ver historial</string>
+    <string name="nuevo_formulario_para_operadores">Nuevo formulario para operadores</string>
+    <string name="nuevo_formulario_de_operadores">Nuevo Formulario de Operadores</string>
+    <string name="nombre_de_formulario">Nombre de formulario</string>
+    <string name="link_del_formulario">Link de la boleta</string>
 
 </resources>
