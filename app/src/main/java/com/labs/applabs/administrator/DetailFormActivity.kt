@@ -28,7 +28,7 @@ class DetailFormActivity : AppCompatActivity() {
     private lateinit var typeForm:TextView
     private var idFormOperator: String? = null
     private var idUser: String? = null
-    private var urlApplicationr: String? = null
+    private var urlApplication: String? = null
     private val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,8 +87,8 @@ class DetailFormActivity : AppCompatActivity() {
                     }
                     scheduleAvailability.addView(textView)
                 }
-                urlApplicationr = studentInfo.urlApplication
-                downloadBoleta(urlApplicationr!!)
+                urlApplication = studentInfo.urlApplication
+                downloadBoleta(urlApplication!!)
 
             } ?: run {
                 studentCareer.text = "No disponible"
