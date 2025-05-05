@@ -22,13 +22,15 @@ import kotlinx.coroutines.launch
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
-    val provider: Provider = Provider()
+    private var idFormOperator: String? = null
+    private var idUser: String? = null
+    private val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
-        showInfo("gfTos90dNJeX8kkffqIo")
+        showInfo("pHtKsliS3Zy3iGFvel3j")
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -36,7 +38,7 @@ class DetailFormActivity : AppCompatActivity() {
         }
     }
 
-    fun showInfo(userId: String) {
+    fun showInfo(formId: String) {
         applicationOperatorTitle = findViewById(R.id.textViewApplicationTitle)
         typeForm = findViewById(R.id.textViewTypeForm)
         var studentName = findViewById<TextView>(R.id.textDataInfoName)
@@ -53,6 +55,51 @@ class DetailFormActivity : AppCompatActivity() {
         var namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
         val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
+
+
+        lifecycleScope.launch {
+            //Asignar datos del formulario que pertenece al usuario
+            val formStudent = provider.getFormStudent(formId)
+            formStudent?.let { form ->
+                val studentInfo = form.studentInfo
+                studentCareer.text = studentInfo.studentCareer
+                studentLastDigitCard.text = studentInfo.studentLastDigitCard
+                studentId.text = studentInfo.studentId
+                idFormOperator=studentInfo.idFormOperator
+                idUser=studentInfo.idUser
+                namePsycologist.text = studentInfo.namePsycologist
+                studentSemester.text = studentInfo.studentSemester
+                studentShifts.text = studentInfo.studentShifts
+                studentAverage.text = studentInfo.studentAverage
+            }?:run{
+                studentCareer.text = "No disponible"
+                studentLastDigitCard.text = "No disponible"
+                studentId.text = "No disponible"
+                namePsycologist.text = "No disponible"
+                studentSemester.text = "No disponible"
+                studentShifts.text= "No disponible"
+                studentAverage.text = "No disponible"
+            }
+
+
+            //Asignar datos del usuario
+            val infoUser = provider.getUserInfo(idUser)
+            infoUser?.let { info ->
+                val studentInfo = info.studentInfo
+                studentName.text = "${studentInfo.studentName} ${studentInfo.surNames}"
+                studentCard.text = studentInfo.studentCard
+                studentEmail.text = studentInfo.studentEmail
+                studentPhone.text = studentInfo.studentPhone
+                bankAccount.text = studentInfo.bankAccount
+            } ?: run {
+                studentName.text = "No disponible"
+                studentCard.text = "No disponible"
+                studentEmail.text = "No disponible"
+                studentPhone.text = "No disponible"
+                bankAccount.text = "No disponible"
+            }
+
+        }
 
         //Update application status
         val statusAplication = findViewById<RadioGroup>(R.id.radioGroup)
@@ -73,34 +120,11 @@ class DetailFormActivity : AppCompatActivity() {
         }
 
 
-        lifecycleScope.launch {
-            //Asignar datos del usuario
-            val infoUser = provider.getUserInfo(userId)
-            infoUser?.let { info ->
-                val studentInfo = info.studentInfo
-                studentName.text = "${studentInfo.studentName} ${studentInfo.surNames}"
-                studentCard.text = studentInfo.studentCard
-                studentEmail.text = studentInfo.studentEmail
-                studentPhone.text = studentInfo.studentPhone
-                bankAccount.text = studentInfo.bankAccount
-            } ?: run {
-                studentName.text = "No disponible"
-                studentCard.text = "No disponible"
-                studentEmail.text = "No disponible"
-                studentPhone.text = "No disponible"
-                bankAccount.text = "No disponible"
-            }
-
-            //Asignar datos del formulario que pertenece al usuario
-            val formStudent = provider.getFormStudent(userId)
-        }
 
 
 
-
-
-// Lista de ejemplo, puedes reemplazar esto con datos reales de Firebase, Room, etc.
-        val horarios = listOf("Lunes 9-11", "Martes 14-16", "Viernes 10-12", "Viernes 10-12","Viernes 10-12","Viernes 10-12","Viernes 10-12")
+//Lista de ejemplo, puedes reemplazar esto con datos reales de Firebase, Room, etc.
+       /* val horarios = listOf("Lunes 9-11", "Martes 14-16", "Viernes 10-12", "Viernes 10-12","Viernes 10-12","Viernes 10-12","Viernes 10-12")
         val tipoLetra = ResourcesCompat.getFont(this, R.font.montserrat_light)
         for (horario in horarios) {
             val textView = TextView(this).apply {
@@ -110,7 +134,7 @@ class DetailFormActivity : AppCompatActivity() {
                 setPadding(0, 8, 0, 8)
             }
             scheduleAvailability.addView(textView)
-        }
+        }*/
 
 
     }

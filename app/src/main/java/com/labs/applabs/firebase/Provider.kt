@@ -6,8 +6,9 @@ import kotlinx.coroutines.tasks.await
 class Provider {
     private val db = FirebaseFirestore.getInstance()
 
-    suspend fun getUserInfo(userId: String): DataClass? {
+    suspend fun getUserInfo(userId: String?): DataClass? {
         return try {
+            if (userId == null) return null
             val doc = db.collection("users").document(userId).get().await()
             if (doc.exists()) {
                 val studentInfo = StudentInfo(
@@ -26,29 +27,32 @@ class Provider {
         }
     }
 
-    suspend fun getFormStudent(userId: String): DataClass?  {
+    suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
-            val doc = db.collection("formStudent").document(userId).get().await()
+            val doc = db.collection("formStudent").document(formId).get().await()
             if(doc.exists()){
+                val scheduleAvailability = (doc.get("scheduleAvailability") as? Map<*, *>)?.map {
+                    "${it.key}: ${it.value}"
+                } ?: emptyList()
                 val studentInfo = StudentInfo(
+                    studentCareer= doc.getString("career") ?: "",
+                    comment= doc.getString("comment") ?: "",
+                    studentLastDigitCard= doc.get("digitsCard")?.toString() ?: "",
+                    studentId= doc.get("idCard")?.toString() ?: "",
                     idFormOperator= doc.getString("idFormOperator") ?: "",
-                    /*studentCareer
-                    comment
-                    studentLastDigitCard
-                    studentId
-                    idFormOperator
-                    idUser
-                    namePsycologist
-                    scheduleAvailability
-                    studentSemester
-                    statusApplication
-                    urlApplication
-                    studentAverage*/
+                    idUser= doc.getString("idUser") ?: "",
+                    namePsycologist= doc.getString("psychology") ?: "",
+                    scheduleAvailability= scheduleAvailability,
+                    studentSemester= doc.get("semesterNumber")?.toString() ?: "",
+                    studentShifts= doc.get("shifts")?.toString() ?: "",
+                    statusApplication= doc.get("statusApplicationForm")?.toString() ?: "",
+                    urlApplication= doc.getString("urlApplicationForm") ?: "",
+                    studentAverage= doc.get("weightedAverage")?.toString() ?: "",
                 )
                 DataClass(studentInfo = studentInfo)
             }else null
         } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error al obtener datos para $userId: ${e.message}")
+            Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
             null
         }
     }

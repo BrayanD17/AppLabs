@@ -25,6 +25,7 @@ data class StudentInfo(
     val namePsycologist: String = "",
     val scheduleAvailability: List<String> = emptyList(),
     val studentSemester: String = "",
+    val studentShifts: String="",
     val statusApplication: String = "",
     val urlApplication: String = "",
     val studentAverage: String = "",         // promedio
