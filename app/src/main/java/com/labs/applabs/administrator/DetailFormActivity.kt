@@ -1,6 +1,10 @@
 package com.labs.applabs.administrator
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +28,7 @@ class DetailFormActivity : AppCompatActivity() {
     private lateinit var typeForm:TextView
     private var idFormOperator: String? = null
     private var idUser: String? = null
+    private var urlApplicationr: String? = null
     private val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +59,6 @@ class DetailFormActivity : AppCompatActivity() {
         var studentSemester = findViewById<TextView>(R.id.textDataOperatorSemester)
         var namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
-        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
-
 
         lifecycleScope.launch {
             //Asignar datos del formulario que pertenece al usuario
@@ -84,6 +87,8 @@ class DetailFormActivity : AppCompatActivity() {
                     }
                     scheduleAvailability.addView(textView)
                 }
+                urlApplicationr = studentInfo.urlApplication
+                downloadBoleta(urlApplicationr!!)
 
             } ?: run {
                 studentCareer.text = "No disponible"
@@ -146,7 +151,34 @@ class DetailFormActivity : AppCompatActivity() {
 
 
     }
-    fun downloadBoleta(userId: String) {}
+
+    fun downloadBoleta(urlApplication: String) {
+        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
+        btnDescargar.setOnClickListener {
+            if (urlApplication.isNotEmpty()) {
+                val request = DownloadManager.Request(Uri.parse(urlApplication))
+                    .setTitle("Descargando documento")
+                    .setDescription("Formulario PDF")
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
+                    // ✅ Guarda en carpeta privada (compatible con Android 10+)
+                    .setDestinationInExternalFilesDir(
+                        this,
+                        Environment.DIRECTORY_DOWNLOADS,
+                        "formulario.pdf"
+                    )
+
+                val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                downloadManager.enqueue(request)
+
+                Toast.makeText(this, "Descarga iniciada...", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No se encontró la URL del documento", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
 
 
 
