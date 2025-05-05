@@ -14,19 +14,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
-import com.labs.applabs.firebase.provider
+import com.labs.applabs.firebase.Provider
+import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
-    val provider: provider = provider()
+    val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
-        showInfo("UUli6leBpZyt5GFvHp7o")
+        showInfo("gfTos90dNJeX8kkffqIo")
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -42,13 +44,13 @@ class DetailFormActivity : AppCompatActivity() {
         var studentCard = findViewById<TextView>(R.id.textDataCardStudent) //carnet
         var studentEmail = findViewById<TextView>(R.id.textDataEmail)
         var studentPhone = findViewById<TextView>(R.id.textDataPhone)
+        var bankAccount = findViewById<TextView>(R.id.textDataBankAccount)
         var studentLastDigitCard = findViewById<TextView>(R.id.textDataCardDigit)
         var studentAverage = findViewById<TextView>(R.id.textDataAverage) //promedio
         var studentShifts = findViewById<TextView>(R.id.textDataShifts) //turnos
         var studentCareer = findViewById<TextView>(R.id.textDataCareer)
         var studentSemester = findViewById<TextView>(R.id.textDataOperatorSemester)
         var namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
-        var bankAccount = findViewById<TextView>(R.id.textDataBankAccount)
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
         val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
 
@@ -71,24 +73,29 @@ class DetailFormActivity : AppCompatActivity() {
         }
 
 
-
-        // Ejecutar en corrutina
-     /*  lifecycleScope.launch {
-            val info = provider.getUserInfo(userId)
-            val formStudent = provider.getFormStudent(userId)
-
-
-            if (info != null) {
-                val nombre = info["nombre"] as? String ?: "Nombre no disponible"
-                val semestre = info["Semestre"] as? String ?: "Semestre no disponible"
-
-                applicationOperatorTitle.text = "$nombre"
-                typeForm.text = "$semestre"
-            } else {
-                applicationOperatorTitle.text = "No se encontró información"
-                typeForm.text = ""
+        lifecycleScope.launch {
+            //Asignar datos del usuario
+            val infoUser = provider.getUserInfo(userId)
+            infoUser?.let { info ->
+                val studentInfo = info.studentInfo
+                studentName.text = "${studentInfo.studentName} ${studentInfo.surNames}"
+                studentCard.text = studentInfo.studentCard
+                studentEmail.text = studentInfo.studentEmail
+                studentPhone.text = studentInfo.studentPhone
+                bankAccount.text = studentInfo.bankAccount
+            } ?: run {
+                studentName.text = "No disponible"
+                studentCard.text = "No disponible"
+                studentEmail.text = "No disponible"
+                studentPhone.text = "No disponible"
+                bankAccount.text = "No disponible"
             }
-        }*/
+
+            //Asignar datos del formulario que pertenece al usuario
+            val formStudent = provider.getFormStudent(userId)
+        }
+
+
 
 
 
