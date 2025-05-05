@@ -9,9 +9,14 @@ class provider {
     /*Using coroutines to fetch data asynchronously*/
     /*Está función es solo de ejemplo, no es funcional dentro del proyecto (solo era una prueba)
     * Forma de instanciar provider para usarlo en el frontend ( val provider: provider = provider() )*/
-    suspend fun getFormularioInfoById(id: String): Map<String, Any>? {
+
+    /*suspend fun getUserInfo(userId: String): Map<String, Any>? {}
+
+    suspend fun getFormOperator(formId: String): Map<String, Any>? {}
+
+    suspend fun getFormStudent(userId: String): Map<String, Any>? {
         return try {
-            val snapshot = db.collection("prueba").document(id).get().await()
+            val snapshot = db.collection("formStudent").document(userId).get().await()
             if (snapshot.exists()) {
                 snapshot.data
             } else {
@@ -24,5 +29,8 @@ class provider {
     }
 
 
+    suspend fun updateStatus(formId: String): Map<String, Any>? {}
+
+*/
 
 }

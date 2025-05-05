@@ -74,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="Sandra Rios Orozco"
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -117,7 +116,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="7 0855 0471"
                     app:layout_constraintBottom_toTopOf="@+id/view2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -144,7 +142,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="2017055486"
                     app:layout_constraintBottom_toTopOf="@+id/view2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.54"
@@ -187,7 +184,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="sandRios@estudiantec.cr"
                     app:layout_constraintBottom_toTopOf="@+id/view3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -230,7 +226,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="85647199"
                     app:layout_constraintBottom_toTopOf="@+id/view4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -258,7 +253,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="5486"
                     app:layout_constraintBottom_toTopOf="@+id/view4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.45"
@@ -301,7 +295,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="95.75"
                     app:layout_constraintBottom_toTopOf="@+id/view5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -330,7 +323,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="110dp"
                     android:layout_marginTop="3dp"
-                    android:text="80 horas semanales"
                     app:layout_constraintBottom_toTopOf="@+id/view5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.45"
@@ -373,7 +365,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="Ingeniería en Computación"
                     app:layout_constraintBottom_toTopOf="@+id/view6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -416,7 +407,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="2 semestres"
                     app:layout_constraintBottom_toTopOf="@+id/view7"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -459,7 +449,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="Carmen Sánchez Torres"
                     app:layout_constraintBottom_toTopOf="@+id/view8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -502,7 +491,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="3dp"
-                    android:text="CR11118757895"
                     app:layout_constraintBottom_toTopOf="@+id/view9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -551,7 +539,7 @@
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <LinearLayout
-                        android:id="@+id/containerData"
+                        android:id="@+id/containerDataSchedule"
                         android:layout_marginStart="30dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -644,7 +632,7 @@
                 </RadioGroup>
 
                 <EditText
-                    android:id="@+id/etComment"
+                    android:id="@+id/textDataComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_comment_border"
@@ -660,7 +648,7 @@
                     />
 
                 <Button
-                    android:id="@+id/btn2"
+                    android:id="@+id/btnUpdateStatus"
                     style="@style/ButtonStyle"
                     android:layout_width="234dp"
                     android:layout_height="56dp"
@@ -671,7 +659,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etComment"
+                    app:layout_constraintTop_toBottomOf="@+id/textDataComment"
                     app:layout_constraintVertical_bias="0.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
