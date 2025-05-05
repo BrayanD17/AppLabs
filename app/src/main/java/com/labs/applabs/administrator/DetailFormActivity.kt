@@ -61,7 +61,7 @@ class DetailFormActivity : AppCompatActivity() {
             val layout = inflater.inflate(R.layout.toast_succes, null)
 
             val text: TextView = layout.findViewById(R.id.toast_text)
-            text.text = "Contraseña actualizada"
+            text.text = "Estado actualizado con éxito"
 
             val toast = Toast(applicationContext)
             toast.duration = Toast.LENGTH_SHORT
