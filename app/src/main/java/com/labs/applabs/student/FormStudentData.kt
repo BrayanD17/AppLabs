@@ -28,9 +28,6 @@ object FormStudentData {
     }
 
 }
-
-
-
 data class DaySchedule(
     val day: String,
     val shifts: List<String> = emptyList()

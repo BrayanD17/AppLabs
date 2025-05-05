@@ -1,11 +1,17 @@
 package com.labs.applabs.firebase
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
+
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
@@ -33,6 +39,7 @@ class Provider {
         }
     }
 
+    //
     fun saveStudentData(studentData: FormStudentData) {
         val user = getAuthenticatedUserId()
         try {
@@ -79,6 +86,41 @@ class Provider {
                 Toast.makeText(it, "Error inesperado", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    //
+    fun SolicitudURL(context: Context) {
+
+        db.collection("formOperator")
+            .whereEqualTo("activityStatus", 1)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { queryDocumentSnapshots ->
+                if (!queryDocumentSnapshots.isEmpty) {
+                    val document = queryDocumentSnapshots.documents[0]
+                    val originalUrl = document.getString("urlApplicationForm")
+
+                    if (!originalUrl.isNullOrEmpty()) {
+                        // Convertir a enlace de descarga directa si es de Google Drive
+                        val directDownloadUrl = if (originalUrl.contains("drive.google.com/open?id=")) {
+                            val fileId = originalUrl.substringAfter("id=")
+                            "https://drive.google.com/uc?export=download&id=$fileId"
+                        } else {
+                            originalUrl // si ya es descarga directa
+                        }
+
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(directDownloadUrl))
+                        context.startActivity(intent)
+                    } else {
+                        Toast.makeText(context, "El documento no tiene URL", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "No hay documentos habilitados", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Error al consultar Firestore", Toast.LENGTH_SHORT).show()
+            }
     }
 
 

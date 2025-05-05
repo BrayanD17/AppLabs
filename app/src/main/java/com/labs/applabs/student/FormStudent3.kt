@@ -34,7 +34,7 @@ class FormStudent3 : AppCompatActivity() {
 
         // Restaurar datos si existen
         if (FormStudentData.idCard.isNotEmpty()) {
-            semesters.setText(FormStudentData.semester)
+            semesters.setText(FormStudentData.semester.toString())
             psychology.setText(FormStudentData.psychology)
         }
 

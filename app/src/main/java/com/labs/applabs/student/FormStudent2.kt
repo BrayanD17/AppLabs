@@ -44,7 +44,7 @@ class FormStudent2 : AppCompatActivity() {
 
         // Restaurar datos si existen
         if (FormStudentData.idCard.isNotEmpty()) {
-            etIdSchoolNumber.setText(FormStudentData.idCard)
+            etIdSchoolNumber.setText(FormStudentData.IdSchoolNumber.toString())
         }
         if (FormStudentData.shift != 0) {
             shiftSelected = FormStudentData.shift

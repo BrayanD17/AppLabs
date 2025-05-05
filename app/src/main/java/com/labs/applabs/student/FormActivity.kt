@@ -3,11 +3,13 @@ package com.labs.applabs.student
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.R
+import com.labs.applabs.firebase.Provider
 
 class FormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +21,15 @@ class FormActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val buttonURL : Button = findViewById(R.id.buttonURL)
+
+        buttonURL.setOnClickListener {
+            val context = this // o requireContext() si estás en un Fragment
+            Provider().SolicitudURL(context) }
     }
+
+
 
     fun Siguiente(view: View){
         val intent : Intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
