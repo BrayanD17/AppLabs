@@ -9,6 +9,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.administrator.AdminMenuActivity
 import com.labs.applabs.login.RegisterActivity
+import com.labs.applabs.administrator.DetailFormActivity
+import com.labs.applabs.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,11 +70,16 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (firebaseAuth.currentUser != null) {
-            Toast.makeText(this, "Sesión iniciada automáticamente", Toast.LENGTH_SHORT).show()
-            // Si ya estoy logueada saltar a la vista siguiente despues de log in
-        }
+    /* override fun onStart() {
+         super.onStart()
+         if (firebaseAuth.currentUser != null) {
+             Toast.makeText(this, "Sesión iniciada automáticamente", Toast.LENGTH_SHORT).show()
+             // Si ya estoy logueada saltar a la vista siguiente despues de log in
+         }
+     }*/
+
+    fun activy(view:View){
+        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.administrator.DetailFormActivity::class.java)
+        startActivity(intent)
     }
 }

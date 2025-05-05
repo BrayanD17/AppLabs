@@ -9,7 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
-
 class Provider {
     private val db = FirebaseFirestore.getInstance()
 
@@ -32,6 +31,62 @@ class Provider {
             }
         } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener datos: ${e.message}")
+    fun saveStudentData(studentData: FormStudentData) {
+        val user = getAuthenticatedUserId()
+        try {
+            // Convertimos el objeto completo a un mapa compatible con Firestore
+            val dataMap = hashMapOf<String, Any>(
+                "idStudent" to user,
+                "idCard" to studentData.idCard,
+                "weightedAverage" to studentData.weightedAverage,
+                "degree" to studentData.degree,
+                "phoneNumber" to studentData.phoneNumber,
+                "IdSchoolNumber" to studentData.IdSchoolNumber,
+                "shift" to studentData.shift,
+                "semester" to studentData.semester,
+                "psychology" to studentData.psychology,
+                "ticketUrl" to studentData.ticketUrl,
+                "schedule" to studentData.schedule.map { daySchedule ->
+                    hashMapOf(
+                        "day" to daySchedule.day,
+                        "shifts" to daySchedule.shifts  // Lista de Strings directamente
+                    )
+                }
+            )
+
+
+            // Guardamos en Firestore
+            db.collection("Forms")
+                .add(dataMap)
+                .addOnSuccessListener {
+                    val context = this@Provider as? Context ?: return@addOnSuccessListener
+                    Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener {
+                    val context = this@Provider as? Context ?: return@addOnFailureListener
+                    Toast.makeText(this@Provider, "Error", Toast.LENGTH_LONG).show()}
+
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error al guardar", e)
+        }
+    }
+
+    suspend fun getUserInfo(userId: String?): DataClass? {
+        return try {
+            if (userId == null) return null
+            val doc = db.collection("users").document(userId).get().await()
+            if (doc.exists()) {
+                val studentInfo = StudentInfo(
+                    studentName = doc.getString("name") ?: "",
+                    surNames= doc.getString("surnames") ?: "",
+                    studentCard = doc.get("studentCard")?.toString() ?: "",
+                    studentEmail = doc.getString("email") ?: "",
+                    studentPhone = doc.get("phone")?.toString() ?: "",
+                    bankAccount = doc.getString("bankAccount") ?: "",
+                )
+                DataClass(studentInfo = studentInfo)
+            } else null
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $userId: ${e.message}")
             null
         }
     }
@@ -118,7 +173,60 @@ class Provider {
             .addOnFailureListener {
                 Toast.makeText(context, "Error al consultar Firestore", Toast.LENGTH_SHORT).show()
             }
+    suspend fun getFormStudent(formId: String): DataClass?  {
+        return try {
+            val doc = db.collection("formStudent").document(formId).get().await()
+            if(doc.exists()){
+                val scheduleAvailability = (doc.get("scheduleAvailability") as? Map<*, *>)?.map {
+                    "${it.key}: ${it.value}"
+                } ?: emptyList()
+                val studentInfo = StudentInfo(
+                    studentCareer= doc.getString("career") ?: "",
+                    comment= doc.getString("comment") ?: "",
+                    studentLastDigitCard= doc.get("digitsCard")?.toString() ?: "",
+                    studentId= doc.get("idCard")?.toString() ?: "",
+                    idFormOperator= doc.getString("idFormOperator") ?: "",
+                    idUser= doc.getString("idUser") ?: "",
+                    namePsycologist= doc.getString("psychology") ?: "",
+                    scheduleAvailability= scheduleAvailability,
+                    studentSemester= doc.get("semesterNumber")?.toString() ?: "",
+                    studentShifts= doc.get("shifts")?.toString() ?: "",
+                    statusApplication= doc.get("statusApplicationForm")?.toString() ?: "",
+                    urlApplication= doc.getString("urlApplicationForm") ?: "",
+                    studentAverage= doc.get("weightedAverage")?.toString() ?: "",
+                )
+                DataClass(studentInfo = studentInfo)
+            }else null
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
+            null
+        }
     }
+
+
+    suspend fun getFormOperator(formId: String?): DataClass? {
+        return try {
+            if (formId == null) return null
+            val doc = db.collection("formOperator").document(formId).get().await()
+            if(doc.exists()){
+                val formOperator = FormOperator(
+                    applicationOperatorTitle = doc.getString("nameForm") ?: "",
+                    typeForm = doc.getString("semester") ?: "",
+                    year = doc.get("year")?.toString() ?: "",
+                )
+                DataClass(formOperator = formOperator)
+            }else null
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
+            null
+        }
+
+    }
+
+
+
+
+    //suspend fun updateStatus(formId: String): Map<String, Any>? {}
 
 
 

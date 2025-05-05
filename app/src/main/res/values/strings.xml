@@ -8,6 +8,7 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+
     <string name="bienvenido_a_la_gesti_n_de_laboratorios">¡Bienvenido a la gestión de laboratorios!</string>
     <string name="formularios">Formularios</string>
     <string name="horarios">Horarios</string>
@@ -98,6 +99,10 @@
     <string name="infoNamePsychology">Psicología</string>
     <string name="infoScheduleAvailability">Disponibilidad horaria</string>
     <string name="infoApplicationStatus">Estado de la solicitud</string>
+    <string name="statusAcept">Aceptada</string>
+    <string name="statusRejected">Denegada</string>
+    <string name="downloadDocument">Descargar Boleta</string>
     <string name="infoComment">Comentario</string>
+    <string name="btnSaveStatus">Guardar estado</string>"
 
 </resources>
