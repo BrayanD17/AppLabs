@@ -58,7 +58,24 @@ class Provider {
     }
 
 
-    //suspend fun getFormOperator(formId: String): Map<String, Any>? {}
+    suspend fun getFormOperator(formId: String?): DataClass? {
+        return try {
+            if (formId == null) return null
+            val doc = db.collection("formOperator").document(formId).get().await()
+            if(doc.exists()){
+                val formOperator = FormOperator(
+                    applicationOperatorTitle = doc.getString("nameForm") ?: "",
+                    typeForm = doc.getString("semester") ?: "",
+                    year = doc.get("year")?.toString() ?: "",
+                )
+                DataClass(formOperator = formOperator)
+            }else null
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
+            null
+        }
+
+    }
 
 
 

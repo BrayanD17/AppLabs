@@ -65,19 +65,33 @@ class DetailFormActivity : AppCompatActivity() {
                 studentCareer.text = studentInfo.studentCareer
                 studentLastDigitCard.text = studentInfo.studentLastDigitCard
                 studentId.text = studentInfo.studentId
-                idFormOperator=studentInfo.idFormOperator
-                idUser=studentInfo.idUser
+                idFormOperator = studentInfo.idFormOperator
+                idUser = studentInfo.idUser
                 namePsycologist.text = studentInfo.namePsycologist
-                studentSemester.text = studentInfo.studentSemester
-                studentShifts.text = studentInfo.studentShifts
+                studentSemester.text = "${studentInfo.studentSemester} semestres"
+                studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
-            }?:run{
+                // Mostrar horarios disponibles
+                val tipoLetra =
+                    ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
+                scheduleAvailability.removeAllViews()
+                studentInfo.scheduleAvailability.forEach { horario ->
+                    val textView = TextView(this@DetailFormActivity).apply {
+                        text = horario
+                        textSize = 14f
+                        typeface = tipoLetra
+                        setPadding(0, 8, 0, 8)
+                    }
+                    scheduleAvailability.addView(textView)
+                }
+
+            } ?: run {
                 studentCareer.text = "No disponible"
                 studentLastDigitCard.text = "No disponible"
                 studentId.text = "No disponible"
                 namePsycologist.text = "No disponible"
                 studentSemester.text = "No disponible"
-                studentShifts.text= "No disponible"
+                studentShifts.text = "No disponible"
                 studentAverage.text = "No disponible"
             }
 
@@ -97,6 +111,17 @@ class DetailFormActivity : AppCompatActivity() {
                 studentEmail.text = "No disponible"
                 studentPhone.text = "No disponible"
                 bankAccount.text = "No disponible"
+            }
+
+            //Asignar nombre del formulario
+            val formOperator = provider.getFormOperator(idFormOperator)
+            formOperator?.let { form ->
+                val formOperator = form.formOperator
+                applicationOperatorTitle.text = formOperator.applicationOperatorTitle
+                typeForm.text = "${formOperator.typeForm} ${formOperator.year}"
+            } ?: run {
+                applicationOperatorTitle.text = "No disponible"
+                typeForm.text = "No disponible"
             }
 
         }
@@ -120,25 +145,7 @@ class DetailFormActivity : AppCompatActivity() {
         }
 
 
-
-
-
-//Lista de ejemplo, puedes reemplazar esto con datos reales de Firebase, Room, etc.
-       /* val horarios = listOf("Lunes 9-11", "Martes 14-16", "Viernes 10-12", "Viernes 10-12","Viernes 10-12","Viernes 10-12","Viernes 10-12")
-        val tipoLetra = ResourcesCompat.getFont(this, R.font.montserrat_light)
-        for (horario in horarios) {
-            val textView = TextView(this).apply {
-                text = horario
-                textSize = 14f
-                typeface = tipoLetra
-                setPadding(0, 8, 0, 8)
-            }
-            scheduleAvailability.addView(textView)
-        }*/
-
-
     }
-
     fun downloadBoleta(userId: String) {}
 
 
