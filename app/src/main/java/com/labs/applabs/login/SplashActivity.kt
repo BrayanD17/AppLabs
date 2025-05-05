@@ -10,7 +10,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.MainActivity
 
 class SplashActivity : AppCompatActivity() {
-    private val SPLASH_TIME_OUT: Long = 2000 // 2 segundos
+    //Iniciar el SharedPreference y Firebase
+    private val SPLASH_TIME_OUT: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

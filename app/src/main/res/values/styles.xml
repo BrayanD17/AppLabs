@@ -28,6 +28,13 @@
         <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
+    <!-- Estilo para TextView Titulos -->
+    <style name="TextViewStyleDescriptions">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
+    </style>
+
     <!-- Estilo para EditText -->
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/montserrat_regular</item>
