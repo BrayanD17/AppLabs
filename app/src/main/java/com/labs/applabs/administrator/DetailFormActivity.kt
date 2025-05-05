@@ -14,10 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
 import com.labs.applabs.firebase.provider
-import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
@@ -60,7 +58,7 @@ class DetailFormActivity : AppCompatActivity() {
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
             val inflater = layoutInflater
-            val layout = inflater.inflate(R.layout.custom_layout, null)
+            val layout = inflater.inflate(R.layout.toast_succes, null)
 
             val text: TextView = layout.findViewById(R.id.toast_text)
             text.text = "Contraseña actualizada"
