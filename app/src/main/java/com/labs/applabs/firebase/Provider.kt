@@ -3,12 +3,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
