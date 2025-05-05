@@ -5,21 +5,27 @@ data class DataClass(
 )
 
 data class StudentInfo(
-    val applicationOperatorTitle: String = "",
-    val typeForm: String = "",
+    //Data users
     val studentName: String = "",
     val surNames: String = "",
-    val studentId: String = "",              // cédula
     val studentCard: String = "",            // carnet
     val studentEmail: String = "",
     val studentPhone: String = "",
     val bankAccount: String = "",
-    val accountClient: String = "",
-    val studentLastDigitCard: String = "",
-    val studentAverage: String = "",         // promedio
-    val studentShifts: String = "",          // turnos
+    //Data formOperator
+    val applicationOperatorTitle: String = "",
+    val typeForm: String = "",
+    //Data formStudent
     val studentCareer: String = "",
+    val comment: String = "",
+    val studentLastDigitCard: String = "",
+    val studentId: String = "",              // cédula
+    val idFormOperator: String = "",
+    val idUser: String = "",
+    val namePsycologist: String = "",
+    val scheduleAvailability: List<String> = emptyList(),
     val studentSemester: String = "",
-    val namePsycologist: String = "",        // nombre del psicólogo
-    val scheduleAvailability: List<String> = emptyList()  // Suponiendo lista de horarios
+    val statusApplication: String = "",
+    val urlApplication: String = "",
+    val studentAverage: String = "",         // promedio
 )
