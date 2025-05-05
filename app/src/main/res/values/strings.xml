@@ -72,6 +72,7 @@
     <string name="next">Siguiente</string>
     <string name="back">Antes</string>
     <string name="send">Enviar</string>
+
     <!--Request history details (administrator view)-->
     <string name="infoName">Nombre del estudiante</string>
     <string name="infoId">Cédula</string>
@@ -92,5 +93,10 @@
     <string name="downloadDocument">Descargar Boleta</string>
     <string name="infoComment">Comentario</string>
     <string name="btnSaveStatus">Guardar estado</string>"
+    <string name="dataNotAvailable">No disponible</string>
+    <string name="dataSemester">semestres</string>
+    <string name="hoursWeekly">horas semanales</string>
+
+
 
 </resources>
