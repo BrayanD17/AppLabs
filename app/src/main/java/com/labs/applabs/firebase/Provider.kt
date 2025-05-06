@@ -1,14 +1,17 @@
 package com.labs.applabs.firebase
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
+    private val storageRef = FirebaseStorage.getInstance().reference
 
     // Funcion paraa poder obtener el id de la persona autenticada
     private fun getAuthenticatedUserId(): String {
@@ -154,6 +157,22 @@ class Provider {
             null
         }
 
+    }
+
+    // Esta función será suspendida para poder usarse con coroutines
+    suspend fun uploadPdfToFirebase(pdfUri: Uri): String {
+
+        val fileName = "${System.currentTimeMillis()}.pdf"
+        val pdfRef = storageRef.child(fileName)
+
+        try {
+            // Subir el archivo de manera asíncrona y obtener el URL de descarga
+            pdfRef.putFile(pdfUri).await()
+            val downloadUrl = pdfRef.downloadUrl.await()
+            return downloadUrl.toString() // Devuelves el URL del archivo subido
+        } catch (e: Exception) {
+            throw Exception("Error al subir el archivo: ${e.message}")
+        }
     }
 
     //suspend fun updateStatus(formId: String): Map<String, Any>? {}

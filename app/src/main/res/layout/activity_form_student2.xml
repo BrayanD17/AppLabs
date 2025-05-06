@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_marginRight="15dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
@@ -316,7 +316,7 @@
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:onClick="Next"
             android:text="@string/next"
             app:backgroundTint="@color/marineBlue"
@@ -324,14 +324,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
             app:layout_constraintTop_toBottomOf="@+id/cardView2"
-            app:layout_constraintVertical_bias="0.505" />
+            app:layout_constraintVertical_bias="0.505"
+            tools:ignore="OnClick" />
 
         <Button
             android:id="@+id/btnBack"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:onClick="Back"
             android:text="@string/back"
             app:backgroundTint="@color/marineBlue"
@@ -339,7 +340,8 @@
             app:layout_constraintEnd_toStartOf="@+id/btnNext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2"
-            app:layout_constraintVertical_bias="0.505" />
+            app:layout_constraintVertical_bias="0.505"
+            tools:ignore="OnClick" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 
