@@ -215,7 +215,7 @@ class DetailFormActivity : AppCompatActivity() {
         }
 
         val updateData = dataUpdateStatus(
-            newStatusApplication = statusText,
+            newStatusApplication = statusText.toInt(),
             newComment = commentText
         )
 
@@ -228,9 +228,6 @@ class DetailFormActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 
 
 }

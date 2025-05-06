@@ -42,6 +42,6 @@ data class FormOperator(
 )
 
 data class dataUpdateStatus(
-    val newStatusApplication: String = "",
+    val newStatusApplication: Int,
     val newComment: String = "",
 )

@@ -134,7 +134,7 @@ class Provider {
         return try {
             val formRef = db.collection("formStudent").document(formId)
             formRef.update(
-                "statusApplication", updateData.newStatusApplication,
+                "statusApplicationForm", updateData.newStatusApplication,
                 "comment", updateData.newComment
             ).await()
             true
