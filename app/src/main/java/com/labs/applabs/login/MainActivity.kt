@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.administrator.AdminMenuActivity
-import com.labs.applabs.login.RegisterActivity
+//import com.labs.applabs.login.RegisterActivity
 import com.labs.applabs.administrator.DetailFormActivity
 import com.labs.applabs.R
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         // Navegar a la pantalla de registro
         registerButton.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            //val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
      }*/
 
     fun activy(view:View){
-        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.administrator.DetailFormActivity::class.java)
+        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.student.studentMenuActivity::class.java)
         startActivity(intent)
     }
 }

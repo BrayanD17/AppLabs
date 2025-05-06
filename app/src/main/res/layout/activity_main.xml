@@ -112,7 +112,7 @@
         android:layout_width="234dp"
         android:layout_height="56dp"
         android:layout_marginTop="4dp"
-        android:onClick="menuAdmin"
+        android:onClick="activy"
         android:text="@string/login"
         app:backgroundTint="@color/marineBlue"
         app:layout_constraintBottom_toBottomOf="parent"

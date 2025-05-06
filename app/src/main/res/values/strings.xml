@@ -97,6 +97,9 @@
     <string name="dataSemester">semestres</string>
     <string name="hoursWeekly">horas semanales</string>
 
+    <!--Form student (menu, and others views)-->
+    <string name="messageWelcome">Bienvenidos a \nCompuLabs</string>
+    <string name="notification">Notificaciones</string>
 
 
 </resources>
