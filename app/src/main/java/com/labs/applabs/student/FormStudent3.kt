@@ -9,8 +9,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
 import com.labs.applabs.firebase.Provider
+import kotlinx.coroutines.launch
 
 
 class FormStudent3 : AppCompatActivity() {
@@ -18,6 +20,7 @@ class FormStudent3 : AppCompatActivity() {
     private lateinit var semesters: EditText
     private lateinit var psychology: EditText
     var ticket : String = "boleta.pdf"
+    val provider: Provider= Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class FormStudent3 : AppCompatActivity() {
         psychology = findViewById(R.id.etPsychology)
 
         // Restaurar datos si existen
-        if (FormStudentData.idCard.isNotEmpty()) {
+        if (FormStudentData.idCard.toString().isNotEmpty()) {
             semesters.setText(FormStudentData.semester.toString())
             psychology.setText(FormStudentData.psychology)
         }
@@ -57,7 +60,7 @@ class FormStudent3 : AppCompatActivity() {
 
     private fun saveFormData(): Boolean {
         return try {
-            FormStudentData.semester = semesters.text.toString().toInt()
+            FormStudentData.semester = semesters.text.toString()
             FormStudentData.psychology = psychology.text.toString()
             FormStudentData.ticketUrl = ticket
             true
@@ -68,16 +71,21 @@ class FormStudent3 : AppCompatActivity() {
     }
 
 
-
     fun Next(view: View) {
-        if (validateFields() && saveFormData()) {
-            Provider().saveStudentData(FormStudentData)
-            startActivity(Intent(this, FormStudent::class.java))
-
-        } else {
-            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            if (validateFields() && saveFormData()) {
+                val saved = provider.saveStudentData(FormStudentData)
+                if (saved) {
+                    startActivity(Intent(this@FormStudent3, FormActivity::class.java))
+                } else {
+                    Toast.makeText(this@FormStudent3, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this@FormStudent3, R.string.error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
 
     fun Back(view: View) {
         finish()

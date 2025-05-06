@@ -1,7 +1,5 @@
 package com.labs.applabs.firebase
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -31,42 +29,17 @@ class Provider {
             }
         } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener datos: ${e.message}")
-    fun saveStudentData(studentData: FormStudentData) {
-        val user = getAuthenticatedUserId()
-        try {
-            // Convertimos el objeto completo a un mapa compatible con Firestore
-            val dataMap = hashMapOf<String, Any>(
-                "idStudent" to user,
-                "idCard" to studentData.idCard,
-                "weightedAverage" to studentData.weightedAverage,
-                "degree" to studentData.degree,
-                "phoneNumber" to studentData.phoneNumber,
-                "IdSchoolNumber" to studentData.IdSchoolNumber,
-                "shift" to studentData.shift,
-                "semester" to studentData.semester,
-                "psychology" to studentData.psychology,
-                "ticketUrl" to studentData.ticketUrl,
-                "schedule" to studentData.schedule.map { daySchedule ->
-                    hashMapOf(
-                        "day" to daySchedule.day,
-                        "shifts" to daySchedule.shifts  // Lista de Strings directamente
-                    )
-                }
-            )
+            null
+        }
+    }
 
-
-            // Guardamos en Firestore
-            db.collection("Forms")
-                .add(dataMap)
-                .addOnSuccessListener {
-                    val context = this@Provider as? Context ?: return@addOnSuccessListener
-                    Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener {
-                    val context = this@Provider as? Context ?: return@addOnFailureListener
-                    Toast.makeText(this@Provider, "Error", Toast.LENGTH_LONG).show()}
-
+    suspend fun getCareerNames(): List<String> {
+        return try {
+            val snapshot = db.collection("dataDefault").document("careers").get().await()
+            snapshot.get("career") as? List<String> ?: emptyList()
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al guardar", e)
+            Log.e("Firebase", "Error al cargar escuelas", e)
+            emptyList()
         }
     }
 
@@ -92,22 +65,25 @@ class Provider {
     }
 
     //
-    fun saveStudentData(studentData: FormStudentData) {
-        val user = getAuthenticatedUserId()
-        try {
-            // 1. Creación del mapa de datos más eficiente
+    suspend fun saveStudentData(studentData: FormStudentData): Boolean {
+        return try {
+            // val user = getAuthenticatedUserId()
+            val user = "gfTos90dNJeX8kkffqIo"
+
             val dataMap = hashMapOf<String, Any>().apply {
                 put("idStudent", user)
-                put("idCard", studentData.idCard)
-                put("weightedAverage", studentData.weightedAverage)
+                put("idCard", studentData.idCard.toInt())
+                put("weightedAverage", studentData.weightedAverage.toInt())
                 put("degree", studentData.degree)
-                put("phoneNumber", studentData.phoneNumber)
-                put("IdSchoolNumber", studentData.IdSchoolNumber)
-                put("shift", studentData.shift)
-                put("semester", studentData.semester)
+                put("digitsCard", studentData.digitsCard.toInt())
+                put("shift", studentData.shift.toInt())
+                put("semester", studentData.semester.toInt())
                 put("psychology", studentData.psychology)
-                put("ticketUrl", studentData.ticketUrl)
-                put("schedule", studentData.schedule.map { daySchedule ->
+                put("urlApplicationForm", studentData.ticketUrl)
+                put("comment", studentData.comment)
+                put("idFormOperator ", studentData.idFormOperator)
+                put("statusApplicationForm", 0 )
+                put("scheduleAvailability", studentData.schedule.map { daySchedule ->
                     hashMapOf(
                         "day" to daySchedule.day,
                         "shifts" to daySchedule.shifts
@@ -115,64 +91,21 @@ class Provider {
                 })
             }
 
-            // 2. Guardado con manejo de contexto más seguro
-            val context = (this as? Context) ?: run {
-                Log.e("Provider", "Contexto no disponible")
-                return
-            }
+            db.collection("formStudent")
+            .add(dataMap)
+            .await()
 
-            db.collection("Forms")
-                .add(dataMap)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "¡Guardado!", Toast.LENGTH_SHORT).show()
-                    FormStudentData.clearAll()
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(context, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
-                    Log.e("Firestore", "Error al guardar", e)
-                }
+            FormStudentData.clearAll()
+            true
 
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al guardar", e)
-            (this as? Context)?.let {
-                Toast.makeText(it, "Error inesperado", Toast.LENGTH_LONG).show()
-            }
+            Log.e("Firebase", "Error al guardar: ${e.message}", e)
+            false
         }
     }
 
-    //
-    fun SolicitudURL(context: Context) {
 
-        db.collection("formOperator")
-            .whereEqualTo("activityStatus", 1)
-            .limit(1)
-            .get()
-            .addOnSuccessListener { queryDocumentSnapshots ->
-                if (!queryDocumentSnapshots.isEmpty) {
-                    val document = queryDocumentSnapshots.documents[0]
-                    val originalUrl = document.getString("urlApplicationForm")
 
-                    if (!originalUrl.isNullOrEmpty()) {
-                        // Convertir a enlace de descarga directa si es de Google Drive
-                        val directDownloadUrl = if (originalUrl.contains("drive.google.com/open?id=")) {
-                            val fileId = originalUrl.substringAfter("id=")
-                            "https://drive.google.com/uc?export=download&id=$fileId"
-                        } else {
-                            originalUrl // si ya es descarga directa
-                        }
-
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(directDownloadUrl))
-                        context.startActivity(intent)
-                    } else {
-                        Toast.makeText(context, "El documento no tiene URL", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(context, "No hay documentos habilitados", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Error al consultar Firestore", Toast.LENGTH_SHORT).show()
-            }
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
             val doc = db.collection("formStudent").document(formId).get().await()
@@ -223,11 +156,10 @@ class Provider {
 
     }
 
-
-
-
     //suspend fun updateStatus(formId: String): Map<String, Any>? {}
-
-
-
 }
+
+
+
+
+

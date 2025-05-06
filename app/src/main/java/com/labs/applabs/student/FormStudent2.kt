@@ -2,6 +2,7 @@ package com.labs.applabs.student
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
@@ -16,7 +17,7 @@ import com.labs.applabs.R
 class FormStudent2 : AppCompatActivity() {
 
     private lateinit var etIdSchoolNumber: EditText
-    private var shiftSelected: Int = 0
+    private var shiftSelected: String = ""
 
     private companion object {
         private val daysMap = mapOf(
@@ -43,20 +44,19 @@ class FormStudent2 : AppCompatActivity() {
         etIdSchoolNumber = findViewById(R.id.etIdSchoolNumber)
 
         // Restaurar datos si existen
-        if (FormStudentData.idCard.isNotEmpty()) {
-            etIdSchoolNumber.setText(FormStudentData.IdSchoolNumber.toString())
+        if (FormStudentData.idCard.toString().isNotEmpty()) {
+            etIdSchoolNumber.setText(FormStudentData.digitsCard)
         }
-        if (FormStudentData.shift != 0) {
+
+        if (FormStudentData.shift.isNotEmpty()) {
             shiftSelected = FormStudentData.shift
-            val radioId = if (shiftSelected == 80) R.id.radioButton else R.id.radioButton2
+            val radioId = if (shiftSelected == "80") R.id.radioButton else R.id.radioButton2
             findViewById<RadioButton>(radioId).isChecked = true
         }
     }
 
-
-
     private fun updateShiftSelection() {
-        shiftSelected = if (findViewById<RadioButton>(R.id.radioButton).isChecked) 80 else 160
+        shiftSelected = if (findViewById<RadioButton>(R.id.radioButton).isChecked) "80" else "160"
     }
 
     private fun saveSchedules(): Boolean {
@@ -99,11 +99,11 @@ class FormStudent2 : AppCompatActivity() {
 
     private fun saveFormData(): Boolean {
         return try {
-            FormStudentData.idCard = etIdSchoolNumber.text.toString()
+            FormStudentData.digitsCard = etIdSchoolNumber.text.toString()
             FormStudentData.shift = shiftSelected
             true
         } catch (e: Exception) {
-            Toast.makeText(this, R.string.errorSavingData, Toast.LENGTH_SHORT).show()
+            Log.e("Error Información", "Error al guardar la información")
             false
         }
     }
@@ -116,7 +116,7 @@ class FormStudent2 : AppCompatActivity() {
         if (validateFields() && saveSchedules() && saveFormData()) {
             startActivity(Intent(this, FormStudent3::class.java))
         } else if (!saveSchedules()) {
-            Toast.makeText(this, R.string.errorSchedule, Toast.LENGTH_SHORT).show()
+            Log.e("Error Horarios", "Eroor con los horarios")
         }
     }
 

@@ -24,9 +24,7 @@ class FormActivity : AppCompatActivity() {
 
         val buttonURL : Button = findViewById(R.id.buttonURL)
 
-        buttonURL.setOnClickListener {
-            val context = this // o requireContext() si estás en un Fragment
-            Provider().SolicitudURL(context) }
+        buttonURL.setOnClickListener {}
     }
 
 
