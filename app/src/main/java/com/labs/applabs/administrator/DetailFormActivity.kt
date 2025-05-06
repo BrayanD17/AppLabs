@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
@@ -29,7 +30,7 @@ class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
     private var idForm: String? = null
-    private var idFormOperator: String? = null
+    private var formIdOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
     private val provider: Provider = Provider()
@@ -38,7 +39,7 @@ class DetailFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
-        idForm="pHtKsliS3Zy3iGFvel3j"
+        idForm="LBnb7LT7Pu2YTMz4CdJG"
         showInfo(idForm!!)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -73,35 +74,37 @@ class DetailFormActivity : AppCompatActivity() {
                 studentCareer.text = studentInfo.studentCareer
                 studentLastDigitCard.text = studentInfo.studentLastDigitCard
                 studentId.text = studentInfo.studentId
-                idFormOperator = studentInfo.idFormOperator
+                formIdOperator = studentInfo.idFormOperator
                 idUser = studentInfo.idUser
                 namePsycologist.text = studentInfo.namePsycologist
-                studentSemester.text = "${studentInfo.studentSemester} @string/dataSemester"
-                studentShifts.text = "${studentInfo.studentShifts} @string/hoursWeekly"
+                studentSemester.text = "${studentInfo.studentSemester} semestres"
+                studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
                 // Schedule availability
                 val styleLetter = ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
                 studentInfo.scheduleAvailability.forEach { schedule ->
                     val textView = TextView(this@DetailFormActivity).apply {
-                        text = schedule
+                        text = "${schedule.day}: ${schedule.shift.joinToString(", ")}"
                         textSize = 14f
                         typeface = styleLetter
                         setPadding(0, 8, 0, 8)
                     }
                     scheduleAvailability.addView(textView)
                 }
+
                 urlApplication = studentInfo.urlApplication
                 downloadBoleta(urlApplication!!)
+                //comment.text = studentInfo.comment
 
             } ?: run {
-                studentCareer.text = "@string/dataNotAvailable"
-                studentLastDigitCard.text = "@string/dataNotAvailable"
-                studentId.text = "@string/dataNotAvailable"
-                namePsycologist.text = "@string/dataNotAvailable"
-                studentSemester.text = "@string/dataNotAvailable"
-                studentShifts.text = "@string/dataNotAvailable"
-                studentAverage.text = "@string/dataNotAvailable"
+                studentCareer.text = "No disponible"
+                studentLastDigitCard.text = "No disponible"
+                studentId.text = "No disponible"
+                namePsycologist.text = "No disponible"
+                studentSemester.text = "No disponible"
+                studentShifts.text = "No disponible"
+                studentAverage.text = "No disponible"
             }
 
 
@@ -115,22 +118,22 @@ class DetailFormActivity : AppCompatActivity() {
                 studentPhone.text = studentInfo.studentPhone
                 bankAccount.text = studentInfo.bankAccount
             } ?: run {
-                studentName.text = "@string/dataNotAvailable"
-                studentCard.text = "@string/dataNotAvailable"
-                studentEmail.text = "@string/dataNotAvailable"
-                studentPhone.text = "@string/dataNotAvailable"
-                bankAccount.text = "@string/dataNotAvailable"
+                studentName.text = "No disponible"
+                studentCard.text = "No disponible"
+                studentEmail.text = "No disponible"
+                studentPhone.text = "No disponible"
+                bankAccount.text = "No disponible"
             }
 
             //Assign form name
-            val formOperator = provider.getFormOperator(idFormOperator)
-            formOperator?.let { form ->
+            val formDataOperator = provider.getFormOperator(formIdOperator)
+            formDataOperator?.let { form ->
                 val dataformOperator = form.formOperator
                 applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
                 typeForm.text = "${dataformOperator.typeForm} ${dataformOperator.year}"
             } ?: run {
-                applicationOperatorTitle.text = "@string/dataNotAvailable"
-                typeForm.text = "@string/dataNotAvailable"
+                applicationOperatorTitle.text = "No disponible"
+                typeForm.text = "No disponible"
             }
 
         }
@@ -140,26 +143,27 @@ class DetailFormActivity : AppCompatActivity() {
         var dataComment = findViewById<EditText>(R.id.textDataComment)
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
-
+           // updateApplicationStatus(statusAplication, dataComment)
         }
 
 
     }
 
-    fun downloadBoleta(urlApplication: String) {
+    private fun downloadBoleta(urlApplication: String) {
         val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
+        val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
         btnDescargar.setOnClickListener {
             if (urlApplication.isNotEmpty()) {
                 val request = DownloadManager.Request(Uri.parse(urlApplication))
                     .setTitle("Descargando documento")
-                    .setDescription("Formulario PDF")
+                    .setDescription(fileName)
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     .setAllowedOverMetered(true)
                     .setAllowedOverRoaming(true)
                     .setDestinationInExternalFilesDir(
                         this,
                         Environment.DIRECTORY_DOWNLOADS,
-                        "formulario.pdf"
+                        fileName
                     )
 
                 val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -169,6 +173,10 @@ class DetailFormActivity : AppCompatActivity() {
                 toastMessage("No se encontró la URL del documento", ToastType.ERROR)
             }
         }
+
+    }
+
+    private fun updateApplicationStatus(status: String, comment: String) {
 
     }
 
