@@ -178,8 +178,9 @@ class Provider {
     suspend fun getFormOperatorUrl() : String? {
         try {
             val doc = db.collection("formOperator").whereEqualTo("activityStatus", 1).get().await()
-            return doc.documents.firstOrNull()?.getString("fileUrl")
-
+            return doc.documents.firstOrNull()?.getString("urlApplicationForm")
+        } catch (e: Exception){
+            throw Exception("Error ${e.message}")
         }
     }
 
