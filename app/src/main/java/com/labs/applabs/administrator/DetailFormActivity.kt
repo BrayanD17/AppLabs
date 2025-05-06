@@ -24,6 +24,7 @@ import com.labs.applabs.R
 import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
+import com.labs.applabs.firebase.dataUpdateStatus
 import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
@@ -33,6 +34,8 @@ class DetailFormActivity : AppCompatActivity() {
     private var formIdOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
+    private var comment: String? = null
+    private var statusApplication: String? = null
     private val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +98,20 @@ class DetailFormActivity : AppCompatActivity() {
 
                 urlApplication = studentInfo.urlApplication
                 downloadBoleta(urlApplication!!)
-                //comment.text = studentInfo.comment
+                // Mostrar el comentario en el EditText
+                val dataComment = findViewById<EditText>(R.id.textDataComment)
+                comment = studentInfo.comment
+                dataComment.setText(comment)
+
+                // Mostrar el estado en el RadioGroup
+                val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+                when (studentInfo.statusApplication) {
+                    "0" -> statusRadioGroup.check(R.id.radioStatusPending)
+                    "1" -> statusRadioGroup.check(R.id.radioStatusAcept)
+                    "2" -> statusRadioGroup.check(R.id.radioStatusRejected)
+                    else -> statusRadioGroup.clearCheck()
+                }
+                statusApplication = studentInfo.statusApplication
 
             } ?: run {
                 studentCareer.text = "No disponible"
@@ -139,11 +155,9 @@ class DetailFormActivity : AppCompatActivity() {
         }
 
         //Update application status
-        val statusAplication = findViewById<RadioGroup>(R.id.radioGroup)
-        var dataComment = findViewById<EditText>(R.id.textDataComment)
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
-           // updateApplicationStatus(statusAplication, dataComment)
+           updateApplicationStatus(comment!!, statusApplication!!)
         }
 
 
@@ -176,9 +190,46 @@ class DetailFormActivity : AppCompatActivity() {
 
     }
 
-    private fun updateApplicationStatus(status: String, comment: String) {
+    private fun updateApplicationStatus(originalComment: String, originalStatus: String) {
+        val dataComment = findViewById<EditText>(R.id.textDataComment)
+        var commentText = dataComment.text.toString().trim()
 
+        val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        val selectedStatusId = statusRadioGroup.checkedRadioButtonId
+        val statusText = when (selectedStatusId) {
+            R.id.radioStatusPending -> "0"
+            R.id.radioStatusAcept -> "1"
+            R.id.radioStatusRejected -> "2"
+            else -> "0"
+        }
+
+        val isStatusChanged = statusText != originalStatus
+        val isCommentUnchangedOrEmpty = commentText.isEmpty() || commentText == originalComment
+
+        if (isStatusChanged && isCommentUnchangedOrEmpty) {
+            commentText = when (statusText) {
+                "1" -> "Aprobado"
+                "2" -> "Cupo lleno"
+                else -> commentText
+            }
+        }
+
+        val updateData = dataUpdateStatus(
+            newStatusApplication = statusText,
+            newComment = commentText
+        )
+
+        lifecycleScope.launch {
+            val updateSuccess = provider.updateFormStatusAndComment(idForm!!, updateData)
+            if (updateSuccess) {
+                toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
+            } else {
+                toastMessage("Error al actualizar los datos", ToastType.ERROR)
+            }
+        }
     }
+
+
 
 
 

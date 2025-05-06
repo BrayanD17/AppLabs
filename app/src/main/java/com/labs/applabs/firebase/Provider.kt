@@ -129,12 +129,21 @@ class Provider {
 
     }
 
+    // Método para actualizar el estado y comentario en Firebase usando dataUpdateStatus
+    suspend fun updateFormStatusAndComment(formId: String, updateData: dataUpdateStatus): Boolean {
+        return try {
+            val formRef = db.collection("formStudent").document(formId)
+            formRef.update(
+                "statusApplication", updateData.newStatusApplication,
+                "comment", updateData.newComment
+            ).await()
+            true
+        } catch (e: Exception) {
+            Log.e("FirebaseError", "Error al actualizar los datos", e)
+            false
+        }
+    }
 
-
-
-   /* suspend fun updateStatus(formId: String, newStatusApplication: String, newComment: String): DataClass? {
-
-    }*/
 
 
 
