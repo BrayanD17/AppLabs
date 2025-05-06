@@ -73,6 +73,17 @@
     <string name="back">Antes</string>
     <string name="send">Enviar</string>
 
+    <!-- Errors -->
+    <string name="errorId">Los digitos del carnet son requeridos</string>
+    <string name="errorNumber">Los digitos deben de ser números</string>
+    <string name="errorHours">Seleccione las horas deseadas en el semestre</string>
+    <string name="errorSavingData">Error al guardar los datos</string>
+    <string name="errorSchedule">Error con la disponibilidad de horarios</string>
+    <string name="errorSemester">El número de semestres es requerido</string>
+    <string name="errorPsychology">El campo es requerido, si no tiene pone N/A</string>
+    <string name="error">Error</string>
+
+
     <!--Request history details (administrator view)-->
     <string name="infoName">Nombre del estudiante</string>
     <string name="infoId">Cédula</string>
