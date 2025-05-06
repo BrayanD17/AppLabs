@@ -12,7 +12,6 @@
         android:id="@+id/toast_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/check_circle"
         android:layout_marginEnd="12dp" />
 
     <TextView

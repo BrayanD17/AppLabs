@@ -20,12 +20,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
+import com.labs.applabs.elements.ToastType
+import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
+    private var idForm: String? = null
     private var idFormOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
@@ -35,7 +38,8 @@ class DetailFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
-        showInfo("pHtKsliS3Zy3iGFvel3j")
+        idForm="pHtKsliS3Zy3iGFvel3j"
+        showInfo(idForm!!)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -43,25 +47,26 @@ class DetailFormActivity : AppCompatActivity() {
         }
     }
 
-    fun showInfo(formId: String) {
+    //Function to show form data of the user and the application
+    private fun showInfo(formId: String) {
         applicationOperatorTitle = findViewById(R.id.textViewApplicationTitle)
         typeForm = findViewById(R.id.textViewTypeForm)
-        var studentName = findViewById<TextView>(R.id.textDataInfoName)
-        var studentId = findViewById<TextView>(R.id.textDataId) //cedula
-        var studentCard = findViewById<TextView>(R.id.textDataCardStudent) //carnet
-        var studentEmail = findViewById<TextView>(R.id.textDataEmail)
-        var studentPhone = findViewById<TextView>(R.id.textDataPhone)
-        var bankAccount = findViewById<TextView>(R.id.textDataBankAccount)
-        var studentLastDigitCard = findViewById<TextView>(R.id.textDataCardDigit)
-        var studentAverage = findViewById<TextView>(R.id.textDataAverage) //promedio
-        var studentShifts = findViewById<TextView>(R.id.textDataShifts) //turnos
-        var studentCareer = findViewById<TextView>(R.id.textDataCareer)
-        var studentSemester = findViewById<TextView>(R.id.textDataOperatorSemester)
-        var namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
+        val studentName = findViewById<TextView>(R.id.textDataInfoName)
+        val studentId = findViewById<TextView>(R.id.textDataId)
+        val studentCard = findViewById<TextView>(R.id.textDataCardStudent)
+        val studentEmail = findViewById<TextView>(R.id.textDataEmail)
+        val studentPhone = findViewById<TextView>(R.id.textDataPhone)
+        val bankAccount = findViewById<TextView>(R.id.textDataBankAccount)
+        val studentLastDigitCard = findViewById<TextView>(R.id.textDataCardDigit)
+        val studentAverage = findViewById<TextView>(R.id.textDataAverage)
+        val studentShifts = findViewById<TextView>(R.id.textDataShifts)
+        val studentCareer = findViewById<TextView>(R.id.textDataCareer)
+        val studentSemester = findViewById<TextView>(R.id.textDataOperatorSemester)
+        val namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
 
         lifecycleScope.launch {
-            //Asignar datos del formulario que pertenece al usuario
+            //Assign form data that belongs to the user
             val formStudent = provider.getFormStudent(formId)
             formStudent?.let { form ->
                 val studentInfo = form.studentInfo
@@ -71,18 +76,17 @@ class DetailFormActivity : AppCompatActivity() {
                 idFormOperator = studentInfo.idFormOperator
                 idUser = studentInfo.idUser
                 namePsycologist.text = studentInfo.namePsycologist
-                studentSemester.text = "${studentInfo.studentSemester} semestres"
-                studentShifts.text = "${studentInfo.studentShifts} horas semanales"
+                studentSemester.text = "${studentInfo.studentSemester} @string/dataSemester"
+                studentShifts.text = "${studentInfo.studentShifts} @string/hoursWeekly"
                 studentAverage.text = studentInfo.studentAverage
-                // Mostrar horarios disponibles
-                val tipoLetra =
-                    ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
+                // Schedule availability
+                val styleLetter = ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
-                studentInfo.scheduleAvailability.forEach { horario ->
+                studentInfo.scheduleAvailability.forEach { schedule ->
                     val textView = TextView(this@DetailFormActivity).apply {
-                        text = horario
+                        text = schedule
                         textSize = 14f
-                        typeface = tipoLetra
+                        typeface = styleLetter
                         setPadding(0, 8, 0, 8)
                     }
                     scheduleAvailability.addView(textView)
@@ -91,17 +95,17 @@ class DetailFormActivity : AppCompatActivity() {
                 downloadBoleta(urlApplication!!)
 
             } ?: run {
-                studentCareer.text = "No disponible"
-                studentLastDigitCard.text = "No disponible"
-                studentId.text = "No disponible"
-                namePsycologist.text = "No disponible"
-                studentSemester.text = "No disponible"
-                studentShifts.text = "No disponible"
-                studentAverage.text = "No disponible"
+                studentCareer.text = "@string/dataNotAvailable"
+                studentLastDigitCard.text = "@string/dataNotAvailable"
+                studentId.text = "@string/dataNotAvailable"
+                namePsycologist.text = "@string/dataNotAvailable"
+                studentSemester.text = "@string/dataNotAvailable"
+                studentShifts.text = "@string/dataNotAvailable"
+                studentAverage.text = "@string/dataNotAvailable"
             }
 
 
-            //Asignar datos del usuario
+            //Assign user data
             val infoUser = provider.getUserInfo(idUser)
             infoUser?.let { info ->
                 val studentInfo = info.studentInfo
@@ -111,22 +115,22 @@ class DetailFormActivity : AppCompatActivity() {
                 studentPhone.text = studentInfo.studentPhone
                 bankAccount.text = studentInfo.bankAccount
             } ?: run {
-                studentName.text = "No disponible"
-                studentCard.text = "No disponible"
-                studentEmail.text = "No disponible"
-                studentPhone.text = "No disponible"
-                bankAccount.text = "No disponible"
+                studentName.text = "@string/dataNotAvailable"
+                studentCard.text = "@string/dataNotAvailable"
+                studentEmail.text = "@string/dataNotAvailable"
+                studentPhone.text = "@string/dataNotAvailable"
+                bankAccount.text = "@string/dataNotAvailable"
             }
 
-            //Asignar nombre del formulario
+            //Assign form name
             val formOperator = provider.getFormOperator(idFormOperator)
             formOperator?.let { form ->
-                val formOperator = form.formOperator
-                applicationOperatorTitle.text = formOperator.applicationOperatorTitle
-                typeForm.text = "${formOperator.typeForm} ${formOperator.year}"
+                val dataformOperator = form.formOperator
+                applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
+                typeForm.text = "${dataformOperator.typeForm} ${dataformOperator.year}"
             } ?: run {
-                applicationOperatorTitle.text = "No disponible"
-                typeForm.text = "No disponible"
+                applicationOperatorTitle.text = "@string/dataNotAvailable"
+                typeForm.text = "@string/dataNotAvailable"
             }
 
         }
@@ -136,17 +140,7 @@ class DetailFormActivity : AppCompatActivity() {
         var dataComment = findViewById<EditText>(R.id.textDataComment)
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
-            val inflater = layoutInflater
-            val layout = inflater.inflate(R.layout.toast_succes, null)
 
-            val text: TextView = layout.findViewById(R.id.toast_text)
-            text.text = "Estado actualizado con éxito"
-
-            val toast = Toast(applicationContext)
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = layout
-            toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 100)
-            toast.show()
         }
 
 
@@ -162,7 +156,6 @@ class DetailFormActivity : AppCompatActivity() {
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     .setAllowedOverMetered(true)
                     .setAllowedOverRoaming(true)
-                    // ✅ Guarda en carpeta privada (compatible con Android 10+)
                     .setDestinationInExternalFilesDir(
                         this,
                         Environment.DIRECTORY_DOWNLOADS,
@@ -171,16 +164,13 @@ class DetailFormActivity : AppCompatActivity() {
 
                 val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 downloadManager.enqueue(request)
-
-                Toast.makeText(this, "Descarga iniciada...", Toast.LENGTH_SHORT).show()
+                toastMessage("Descarga iniciada", ToastType.SUCCESS)
             } else {
-                Toast.makeText(this, "No se encontró la URL del documento", Toast.LENGTH_SHORT).show()
+                toastMessage("No se encontró la URL del documento", ToastType.ERROR)
             }
         }
 
     }
-
-
 
 
 
