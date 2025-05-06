@@ -100,6 +100,7 @@
     <!--Form student (menu, and others views)-->
     <string name="messageWelcome">Bienvenidos a \nCompuLabs</string>
     <string name="notification">Notificaciones</string>
+    <string name="formAvailability">Formularios Disponibles"</string>>
 
 
 </resources>
