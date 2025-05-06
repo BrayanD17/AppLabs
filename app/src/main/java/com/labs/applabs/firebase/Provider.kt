@@ -175,6 +175,14 @@ class Provider {
         }
     }
 
+    suspend fun getFormOperatorUrl() : String? {
+        try {
+            val doc = db.collection("formOperator").whereEqualTo("activityStatus", 1).get().await()
+            return doc.documents.firstOrNull()?.getString("fileUrl")
+
+        }
+    }
+
     //suspend fun updateStatus(formId: String): Map<String, Any>? {}
 }
 

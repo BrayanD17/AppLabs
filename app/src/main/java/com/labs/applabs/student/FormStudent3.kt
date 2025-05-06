@@ -1,11 +1,13 @@
 package com.labs.applabs.student
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
+import android.provider.OpenableColumns
 
 
 class FormStudent3 : AppCompatActivity() {
@@ -27,6 +30,7 @@ class FormStudent3 : AppCompatActivity() {
     private lateinit var card : CardView
     val provider: Provider= Provider()
     private val PICK_PDF_REQUEST = 1
+    private var selectedPdfUri: Uri? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +58,17 @@ class FormStudent3 : AppCompatActivity() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_PDF_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            selectedPdfUri = data.data
+
+            val fileName = getFileNameFromUri(this ,selectedPdfUri!!)
+            findViewById<TextView>(R.id.tvPdfFileName).text = "Seleccionado: $fileName"
+        }
+    }
+
     private fun validateFields(): Boolean {
 
         if (semesters.text.toString().trim().isEmpty()) {
@@ -63,6 +78,11 @@ class FormStudent3 : AppCompatActivity() {
 
         if (psychology.text.toString().trim().isEmpty()) {
             Toast.makeText(this, R.string.errorPsychology, Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (selectedPdfUri == null) {
+            Toast.makeText(this, "Debe seleccionar un archivo PDF", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -81,24 +101,18 @@ class FormStudent3 : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == PICK_PDF_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            val pdfUri = data.data!!
-            // Llamamos a la función suspendida dentro de una coroutine
-            lifecycleScope.launch {
-                try {
-                    val downloadUrl = provider.uploadPdfToFirebase(pdfUri)  // Espera el resultado de la subida
-                    FormStudentData.ticketUrl = downloadUrl  // Asigna el URL del archivo subido
-                    Log.d("Firebase", "URL del PDF subido: $downloadUrl")
-                } catch (e: Exception) {
-                    toastMessage("Error al subir el archivo", ToastType.ERROR)
+    private fun getFileNameFromUri(context: Context, uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = context.contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    result = it.getString(it.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
                 }
             }
         }
+        return result ?: uri.path?.substringAfterLast('/') ?: "Archivo PDF"
     }
-
 
     private fun selectPdfFile() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -111,17 +125,24 @@ class FormStudent3 : AppCompatActivity() {
     fun Next(view: View) {
         lifecycleScope.launch {
             if (validateFields() && saveFormData()) {
-                val saved = provider.saveStudentData(FormStudentData)
-                if (saved) {
-                    startActivity(Intent(this@FormStudent3, FormActivity::class.java))
-                    toastMessage("Formulario guardado exitosamente",ToastType.SUCCESS)
-                } else {
-                    toastMessage("Error al guardar formulario",ToastType.ERROR)
+                try {
+                    if (selectedPdfUri != null) {
+                        val url = provider.uploadPdfToFirebase(selectedPdfUri!!)
+                        FormStudentData.ticketUrl = url
+                    }
+                    val saved = provider.saveStudentData(FormStudentData)
+                    if (saved) {
+                        startActivity(Intent(this@FormStudent3, FormActivity::class.java))
+                        toastMessage("Formulario guardado exitosamente", ToastType.SUCCESS)
+                    } else {
+                        toastMessage("Error al guardar formulario", ToastType.ERROR)
+                    }
+                } catch (e: Exception) {
+                    toastMessage("Error al subir el PDF: ${e.message}", ToastType.ERROR)
                 }
             }
         }
     }
-
 
     fun Back(view: View) {
         finish()
