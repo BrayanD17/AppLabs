@@ -17,7 +17,9 @@ import kotlinx.coroutines.launch
 class NotificationsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var withoutMessage: ImageView
     private lateinit var noNotificationsText: TextView
+    private lateinit var messageNotification: TextView
 
     private val provider = Provider()
     private val userId = "gfTos90dNJeX8kkffqIo"
@@ -33,6 +35,8 @@ class NotificationsFragment : Fragment() {
         val backButton = view.findViewById<ImageView>(R.id.backView)
         recyclerView = view.findViewById(R.id.recyclerView)
         noNotificationsText = view.findViewById(R.id.noNotificationsText)
+        messageNotification = view.findViewById(R.id.messageNotification)
+        withoutMessage = view.findViewById(R.id.withoutMessage)
 
         backButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -48,11 +52,15 @@ class NotificationsFragment : Fragment() {
             if (messages.isEmpty()) {
                 recyclerView.visibility = View.GONE
                 noNotificationsText.visibility = View.VISIBLE
+                withoutMessage.visibility = View.VISIBLE
+                messageNotification.visibility = View.VISIBLE
             } else {
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
                 recyclerView.adapter = NotificationAdapter(messages)
                 recyclerView.visibility = View.VISIBLE
                 noNotificationsText.visibility = View.GONE
+                withoutMessage.visibility = View.GONE
+                messageNotification.visibility = View.GONE
             }
         }
     }
