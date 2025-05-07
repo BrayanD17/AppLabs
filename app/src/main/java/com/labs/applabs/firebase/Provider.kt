@@ -4,10 +4,12 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
+import java.util.Date
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
@@ -170,12 +172,35 @@ class Provider {
                 "statusApplicationForm", updateData.newStatusApplication,
                 "comment", updateData.newComment
             ).await()
+            generateNotificationMessage(updateData)
             true
         } catch (e: Exception) {
             Log.e("FirebaseError", "Error al actualizar los datos", e)
             false
         }
     }
+
+    suspend fun generateNotificationMessage(updateData: dataUpdateStatus) {
+        val messageRef = db.collection("message").document(updateData.userId)
+
+        val newNotification = hashMapOf(
+            "subject" to "Proceso de solicitud",
+            "message" to updateData.message,
+            "timestamp" to Date(),
+            "status" to 0
+        )
+
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(messageRef)
+            if (snapshot.exists()) {
+                transaction.update(messageRef, "notifications", FieldValue.arrayUnion(newNotification))
+            } else {
+                val data = hashMapOf("notifications" to arrayListOf(newNotification))
+                transaction.set(messageRef, data)
+            }
+        }.await()
+    }
+
 
     // Esta función será suspendida para poder usarse con coroutines
     suspend fun uploadPdfToFirebase(pdfUri: Uri): String {

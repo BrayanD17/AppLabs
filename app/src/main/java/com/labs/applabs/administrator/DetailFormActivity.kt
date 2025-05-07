@@ -36,6 +36,8 @@ class DetailFormActivity : AppCompatActivity() {
     private var urlApplication: String? = null
     private var comment: String? = null
     private var statusApplication: String? = null
+    private var nameFormOperator: String? = null
+    private var semesterFormOperator: String? = null
     private val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,6 +147,8 @@ class DetailFormActivity : AppCompatActivity() {
             val formDataOperator = provider.getFormOperator(formIdOperator)
             formDataOperator?.let { form ->
                 val dataformOperator = form.formOperator
+                nameFormOperator = dataformOperator.applicationOperatorTitle
+                semesterFormOperator = "${dataformOperator.typeForm} ${dataformOperator.year}"
                 applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
                 typeForm.text = "${dataformOperator.typeForm} ${dataformOperator.year}"
             } ?: run {
@@ -157,7 +161,7 @@ class DetailFormActivity : AppCompatActivity() {
         //Update application status
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
-           updateApplicationStatus(comment!!, statusApplication!!)
+           updateApplicationStatus(idUser!!,comment!!, statusApplication!!,nameFormOperator!!, semesterFormOperator!!)
         }
 
 
@@ -190,9 +194,10 @@ class DetailFormActivity : AppCompatActivity() {
 
     }
 
-    private fun updateApplicationStatus(originalComment: String, originalStatus: String) {
+    private fun updateApplicationStatus(userId: String,originalComment: String, originalStatus: String, nameFormOperator: String, semesterFormOperator: String) {
         val dataComment = findViewById<EditText>(R.id.textDataComment)
         var commentText = dataComment.text.toString().trim()
+        var newMessage: String
 
         val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         val selectedStatusId = statusRadioGroup.checkedRadioButtonId
@@ -214,9 +219,19 @@ class DetailFormActivity : AppCompatActivity() {
             }
         }
 
+        val estadoMensaje = when (statusText) {
+            "1" -> "aprobada"
+            "2" -> "rechazada"
+            else -> "en revisión"
+        }
+
+        newMessage = "Su solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator ha sido $estadoMensaje."
+
         val updateData = dataUpdateStatus(
             newStatusApplication = statusText.toInt(),
-            newComment = commentText
+            newComment = commentText,
+            userId = userId,
+            message = newMessage
         )
 
         lifecycleScope.launch {
@@ -228,6 +243,5 @@ class DetailFormActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }
