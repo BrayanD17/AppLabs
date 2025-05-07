@@ -201,6 +201,58 @@ class Provider {
         }.await()
     }
 
+    suspend fun getUserMessages(userId: String): List<getMessage> {
+        val db = FirebaseFirestore.getInstance()
+        val messageRef = db.collection("message").document(userId)
+
+        val snapshot = messageRef.get().await()
+
+        if (!snapshot.exists()) return emptyList()
+
+        val notifications = snapshot.get("notifications") as? List<Map<String, Any>> ?: return emptyList()
+
+        return notifications.mapNotNull { notif ->
+            try {
+                val subject = notif["subject"] as? String ?: ""
+                val message = notif["message"] as? String ?: ""
+                val timestamp = notif["timestamp"]
+                val status = (notif["status"] as? Long)?.toInt() ?: 0
+
+                val timestampStr = when (timestamp) {
+                    is com.google.firebase.Timestamp -> timestamp.toDate().toString()
+                    is Date -> timestamp.toString()
+                    else -> ""
+                }
+
+                getMessage(subject, message, timestampStr, status)
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    suspend fun markMessagesAsSeen(userId: String) {
+        val db = FirebaseFirestore.getInstance()
+        val messageRef = db.collection("message").document(userId)
+
+        val snapshot = messageRef.get().await()
+        if (!snapshot.exists()) return
+
+        val notifications = snapshot.get("notifications") as? MutableList<Map<String, Any>> ?: return
+
+        var updated = false
+
+        val updatedList = notifications.map { notif ->
+            if ((notif["status"] as? Long ?: 0L) == 0L) {
+                updated = true
+                notif.toMutableMap().apply { this["status"] = 1 }
+            } else notif
+        }
+
+        if (updated) {
+            messageRef.update("notifications", updatedList).await()
+        }
+    }
 
     // Esta función será suspendida para poder usarse con coroutines
     suspend fun uploadPdfToFirebase(pdfUri: Uri): String {

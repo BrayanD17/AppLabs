@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
      }*/
 
     fun activy(view:View){
-        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.administrator.DetailFormActivity::class.java)
+        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.student.studentMenuActivity::class.java)
         startActivity(intent)
     }
 }

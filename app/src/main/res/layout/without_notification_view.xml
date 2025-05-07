@@ -62,6 +62,7 @@
         android:layout_below="@id/backView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/backView"
         android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

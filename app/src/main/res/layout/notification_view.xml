@@ -14,7 +14,6 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Processo de solicitud"
         android:textColor="#FFFF"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -42,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="¡Buenas tardes! Su solicitud para operador durante el 1 Semestre del 2025 ha sido aprobada."
             android:textColor="#FFFF"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -58,7 +56,6 @@
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16:04"
             android:textColor="#FFFF"
             android:textSize="12sp"/>
     </LinearLayout>
