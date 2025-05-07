@@ -1,14 +1,17 @@
 package com.labs.applabs.firebase
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
+    private val storageRef = FirebaseStorage.getInstance().reference
 
     // Funcion paraa poder obtener el id de la persona autenticada
     private fun getAuthenticatedUserId(): String {
@@ -16,42 +19,30 @@ class Provider {
         return currentUser?.uid ?: throw IllegalStateException("No hay usuario autenticado")
     }
 
-    fun saveStudentData(studentData: FormStudentData) {
-        val user = getAuthenticatedUserId()
-        try {
-            // Convertimos el objeto completo a un mapa compatible con Firestore
-            val dataMap = hashMapOf<String, Any>(
-                "idStudent" to user,
-                "idCard" to studentData.idCard,
-                "weightedAverage" to studentData.weightedAverage,
-                "degree" to studentData.degree,
-                "phoneNumber" to studentData.phoneNumber,
-                "IdSchoolNumber" to studentData.IdSchoolNumber,
-                "shift" to studentData.shift,
-                "semester" to studentData.semester,
-                "psychology" to studentData.psychology,
-                "ticketUrl" to studentData.ticketUrl,
-                "schedule" to studentData.schedule.map { daySchedule ->
-                    hashMapOf(
-                        "day" to daySchedule.day,
-                        "shifts" to daySchedule.shifts  // Lista de Strings directamente
-                    )
-                }
-            )
-
-
-            // Guardamos en Firestore
-            db.collection("Forms")
-                .add(dataMap)
-                .addOnSuccessListener {
-                    val context = this@Provider as? Context ?: return@addOnSuccessListener
-                    Toast.makeText(this@Provider, "¡Guardado!", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener {
-                    val context = this@Provider as? Context ?: return@addOnFailureListener
-                    Toast.makeText(this@Provider, "Error", Toast.LENGTH_LONG).show()}
-
+    /*Using coroutines to fetch data asynchronously*/
+    /*Está función es solo de ejemplo, no es funcional dentro del proyecto (solo era una prueba)
+    * Forma de instanciar provider para usarlo en el frontend ( val provider: provider = provider() )*/
+    suspend fun getFormularioInfoById(id: String): Map<String, Any>? {
+        return try {
+            val snapshot = db.collection("prueba").document(id).get().await()
+            if (snapshot.exists()) {
+                snapshot.data
+            } else {
+                null
+            }
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al guardar", e)
+            Log.e("FirestoreProvider", "Error al obtener datos: ${e.message}")
+            null
+        }
+    }
+
+    suspend fun getCareerNames(): List<String> {
+        return try {
+            val snapshot = db.collection("dataDefault").document("careers").get().await()
+            snapshot.get("career") as? List<String> ?: emptyList()
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error al cargar escuelas", e)
+            emptyList()
         }
     }
 
@@ -75,6 +66,48 @@ class Provider {
             null
         }
     }
+
+    //
+    suspend fun saveStudentData(studentData: FormStudentData): Boolean {
+        return try {
+            // val user = getAuthenticatedUserId()
+            val user = "gfTos90dNJeX8kkffqIo"
+
+            val dataMap = hashMapOf<String, Any>().apply {
+                put("idStudent", user)
+                put("idCard", studentData.idCard.toInt())
+                put("weightedAverage", studentData.weightedAverage.toInt())
+                put("degree", studentData.degree)
+                put("digitsCard", studentData.digitsCard.toInt())
+                put("shift", studentData.shift.toInt())
+                put("semester", studentData.semester.toInt())
+                put("psychology", studentData.psychology)
+                put("urlApplicationForm", studentData.ticketUrl)
+                put("comment", studentData.comment)
+                put("idFormOperator ", studentData.idFormOperator)
+                put("statusApplicationForm", 0 )
+                put("scheduleAvailability", studentData.schedule.map { daySchedule ->
+                    hashMapOf(
+                        "day" to daySchedule.day,
+                        "shifts" to daySchedule.shifts
+                    )
+                })
+            }
+
+            db.collection("formStudent")
+            .add(dataMap)
+            .await()
+
+            FormStudentData.clearAll()
+            true
+
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error al guardar: ${e.message}", e)
+            false
+        }
+    }
+
+
 
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
@@ -144,7 +177,31 @@ class Provider {
         }
     }
 
+    // Esta función será suspendida para poder usarse con coroutines
+    suspend fun uploadPdfToFirebase(pdfUri: Uri): String {
 
+        val fileName = "${System.currentTimeMillis()}.pdf"
+        val pdfRef = storageRef.child(fileName)
 
+        try {
+            // Subir el archivo de manera asíncrona y obtener el URL de descarga
+            pdfRef.putFile(pdfUri).await()
+            val downloadUrl = pdfRef.downloadUrl.await()
+            return downloadUrl.toString() // Devuelves el URL del archivo subido
+        } catch (e: Exception) {
+            throw Exception("Error al subir el archivo: ${e.message}")
+        }
+    }
 
+    suspend fun getFormOperatorUrl() : String? {
+        try {
+            val doc = db.collection("formOperator").whereEqualTo("activityStatus", 1).get().await()
+            return doc.documents.firstOrNull()?.getString("urlApplicationForm")
+        } catch (e: Exception){
+            throw Exception("Error ${e.message}")
+        }
+    }
+    
 }
+
+
