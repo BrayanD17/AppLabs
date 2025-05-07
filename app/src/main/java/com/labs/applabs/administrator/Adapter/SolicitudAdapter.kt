@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
-import com.labs.applabs.administrator.Solicitud
+import com.labs.applabs.firebase.Solicitud
 
 class SolicitudAdapter(private var lista: List<Solicitud>) :
     RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder>() {

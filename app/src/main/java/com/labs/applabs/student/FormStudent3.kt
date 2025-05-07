@@ -128,7 +128,9 @@ class FormStudent3 : AppCompatActivity() {
                 try {
                     if (selectedPdfUri != null) {
                         val url = provider.uploadPdfToFirebase(selectedPdfUri!!)
-                        FormStudentData.ticketUrl = url
+                        if (url != null) {
+                            FormStudentData.ticketUrl = url
+                        }
                     }
                     val saved = provider.saveStudentData(FormStudentData)
                     if (saved) {

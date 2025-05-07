@@ -40,8 +40,10 @@ class FormActivity : AppCompatActivity() {
         buttonURL.setOnClickListener {
             Log.e("Click", "Click")
             lifecycleScope.launch {
-                val urlBoleta = provider.getFormOperatorUrl()
-                downloadBoleta(urlBoleta!!)
+                val form = provider.getFormOperatorData()
+                if (form != null) {
+                    downloadBoleta(form.urlApplicationForm!!)
+                }
             }
         }
     }

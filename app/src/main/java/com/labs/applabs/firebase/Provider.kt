@@ -84,7 +84,7 @@ class Provider {
                 put("psychology", studentData.psychology)
                 put("urlApplicationForm", studentData.ticketUrl)
                 put("comment", studentData.comment)
-                put("idFormOperator ", studentData.idFormOperator)
+                put("idFormOperator", studentData.idFormOperator)
                 put("statusApplicationForm", 0 )
                 put("scheduleAvailability", studentData.schedule.map { daySchedule ->
                     hashMapOf(
@@ -160,7 +160,7 @@ class Provider {
     }
 
     // Esta función será suspendida para poder usarse con coroutines
-    suspend fun uploadPdfToFirebase(pdfUri: Uri): String {
+    suspend fun uploadPdfToFirebase(pdfUri: Uri): String? {
 
         val fileName = "${System.currentTimeMillis()}.pdf"
         val pdfRef = storageRef.child(fileName)
@@ -175,12 +175,51 @@ class Provider {
         }
     }
 
-    suspend fun getFormOperatorUrl() : String? {
-        try {
-            val doc = db.collection("formOperator").whereEqualTo("activityStatus", 1).get().await()
-            return doc.documents.firstOrNull()?.getString("urlApplicationForm")
-        } catch (e: Exception){
-            throw Exception("Error ${e.message}")
+    suspend fun getFormOperatorData(): FormOperatorData? {
+        return try {
+            val doc = db.collection("formOperator")
+                .whereEqualTo("activityStatus", 1)
+                .get()
+                .await()
+
+            val document = doc.documents.firstOrNull()
+            if (document != null) {
+                FormOperatorData(
+                    urlApplicationForm = document.getString("urlApplicationForm"),
+                    iud = document.getString("iud")
+                )
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            throw Exception("Error: ${e.message}")
+        }
+    }
+
+    suspend fun getSolicitudes(): List<Solicitud> {
+        return try {
+            // val activeFormId = getFormOperatorData()?.iud ?: return emptyList()
+
+            val snapshot = db.collection("formStudent")
+                .whereEqualTo("idFormOperator ", "0OyPvJVUXD7aamtEHR1a")
+                .get()
+                .await()
+
+            snapshot.documents.mapNotNull { doc ->
+                val idUser = doc.getString("idStudent") ?: return@mapNotNull null
+
+                val userDoc = db.collection("users").document(idUser).get().await()
+                if (!userDoc.exists()) return@mapNotNull null
+
+                val nombre = userDoc.getString("name") ?: ""
+                val correo = userDoc.getString("email") ?: ""
+
+                Solicitud(nombre = nombre, correo = correo)
+            }
+
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener solicitudes: ${e.message}")
+            emptyList()
         }
     }
 

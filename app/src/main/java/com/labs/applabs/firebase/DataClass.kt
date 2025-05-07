@@ -3,6 +3,7 @@ package com.labs.applabs.firebase
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
     val formOperator: FormOperator = FormOperator()
+
 )
 
 data class StudentInfo(
@@ -33,4 +34,15 @@ data class FormOperator(
     val applicationOperatorTitle: String = "",
     val typeForm: String = "",
     val year: String = "",
+)
+
+data class FormOperatorData(
+    val urlApplicationForm: String?,
+    val iud: String?
+)
+
+data class Solicitud(
+    val nombre: String = "",
+    val correo: String = "",
+    val uid : String = "",
 )

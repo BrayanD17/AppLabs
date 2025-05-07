@@ -108,6 +108,10 @@
     <string name="dataSemester">semestres</string>
     <string name="hoursWeekly">horas semanales</string>
 
+    <string name="semesterFilter">Cantidad de semestres siendo operador</string>
+    <string name="status">Estado</string>
+    <string name="name">Nombre</string>
+
 
 
 </resources>
