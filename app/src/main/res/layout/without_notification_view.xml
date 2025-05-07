@@ -6,7 +6,7 @@
     android:background="@color/baseActivityColor">
 
     <ImageView
-        android:id="@+id/notificationIcon"
+        android:id="@+id/backView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="20dp"
@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationIcon">
+        app:layout_constraintTop_toBottomOf="@+id/backView">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
     <!-- Lista de notificaciones -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_below="@id/notificationIcon"
+        android:layout_below="@id/backView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
