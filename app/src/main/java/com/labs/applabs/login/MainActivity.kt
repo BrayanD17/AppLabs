@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun menuAdmin(view: View){
-        val intent = Intent(this, com.labs.applabs.administrator.AdminMenuActivity::class.java)
+        val intent = Intent(this, com.labs.applabs.administrator.DetailFormActivity::class.java)
         startActivity(intent)
     }
 
