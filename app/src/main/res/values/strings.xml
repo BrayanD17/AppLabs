@@ -112,6 +112,8 @@
     <string name="messageWelcome">Bienvenidos a \nCompuLabs</string>
     <string name="notification">Notificaciones</string>
     <string name="formAvailability">Formularios Disponibles"</string>>
+    <string name="withoutMessage">Sin notificaciones</string>
+    <string name="messageNotification">Te avisaremos cuando tengas \nuna notificación.</string>
 
 
 </resources>

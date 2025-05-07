@@ -12,4 +12,5 @@
     <color name="borderColor">#D1D1D1</color>
     <color name="baseActivityColor">#E6E3DE</color>
     <color name="gray">#666666</color>
+    <color name="grayText">#797979</color>
 </resources>
