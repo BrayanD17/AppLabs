@@ -11,6 +11,7 @@ import com.labs.applabs.administrator.AdminMenuActivity
 //import com.labs.applabs.login.RegisterActivity
 import com.labs.applabs.administrator.DetailFormActivity
 import com.labs.applabs.R
+import com.labs.applabs.firebase.Provider
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
+    private val provider: Provider = Provider()
+    private val userId = "gfTos90dNJeX8kkffqIo"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,5 +84,6 @@ class MainActivity : AppCompatActivity() {
     fun activy(view:View){
         val intent: Intent=Intent(this@MainActivity,com.labs.applabs.student.studentMenuActivity::class.java)
         startActivity(intent)
+        provider.saveFcmToken(userId)
     }
 }

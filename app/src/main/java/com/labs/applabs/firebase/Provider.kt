@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
@@ -277,6 +278,29 @@ class Provider {
         } catch (e: Exception){
             throw Exception("Error ${e.message}")
         }
+    }
+
+    fun saveFcmToken(userId: String) {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FCM", "Error al obtener el token FCM", task.exception)
+                    return@addOnCompleteListener
+                }
+
+                val token = task.result
+                Log.d("FCM", "Token FCM: $token")
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(userId)
+                    .update("fcmToken", token)
+                    .addOnSuccessListener {
+                        Log.d("FCM", "Token guardado correctamente")
+                    }
+                    .addOnFailureListener {
+                        Log.e("FCM", "Error al guardar el token", it)
+                    }
+            }
     }
 
 }

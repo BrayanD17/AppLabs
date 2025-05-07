@@ -61,14 +61,9 @@ class NotificationsFragment : Fragment() {
                 noNotificationsText.visibility = View.GONE
                 withoutMessage.visibility = View.GONE
                 messageNotification.visibility = View.GONE
-            }
-        }
-    }
 
-    override fun onPause() {
-        super.onPause()
-        lifecycleScope.launch {
-            provider.markMessagesAsSeen(userId)
+                provider.markMessagesAsSeen(userId)
+            }
         }
     }
 
