@@ -1,5 +1,6 @@
 package com.labs.applabs.administrator
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioGroup
@@ -9,15 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.R
+import com.labs.applabs.utils.StepIndicatorActivity
 
-class AdminAddFormActivity : AppCompatActivity() {
+class AdminAddFormActivity : StepIndicatorActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_admin_add_form)
-        //updateStepIndicator(0) // Primer paso activo
-        //updateStepIndicator(1) // Segundo paso activo
-        //updateStepIndicator(2) // Tercer paso activo
+
         updateStepIndicator(0)
 
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroupPeriodo)
@@ -34,31 +33,11 @@ class AdminAddFormActivity : AppCompatActivity() {
                 }
             }
         }
-
-    }
-    private fun updateStepIndicator(currentStep: Int) {
-        val steps = listOf(
-            findViewById<TextView>(R.id.step1),
-            findViewById<TextView>(R.id.step2),
-            findViewById<TextView>(R.id.step3)
-        )
-        val lines = listOf(
-            findViewById<View>(R.id.line1),
-            findViewById<View>(R.id.line2)
-        )
-
-        for ((i, step) in steps.withIndex()) {
-            step.setBackgroundResource(
-                if (i <= currentStep) R.drawable.circle_selected else R.drawable.circle_unselected
-            )
+        val btnSiguiente = findViewById<View>(R.id.btnSiguiente1)
+        btnSiguiente.setOnClickListener {
+            val intent = Intent(this, AdminAddFormTwoActivity::class.java)
+            startActivity(intent)
         }
 
-        for ((i, line) in lines.withIndex()) {
-            line.setBackgroundColor(
-                if (i < currentStep) getColor(R.color.marineBlue) else getColor(R.color.gray)
-            )
-        }
     }
-
-
 }

@@ -1,15 +1,18 @@
 package com.labs.applabs
+
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.administrator.AdminMenuActivity
 import com.labs.applabs.login.RegisterActivity
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,45 +24,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ✔️ Hacer transparentes barra de estado y barra de navegación
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        insetsController.isAppearanceLightStatusBars = false
+        insetsController.isAppearanceLightNavigationBars = false
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+
         setContentView(R.layout.activity_main)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Vincular los elementos del layout
         emailEditText = findViewById(R.id.et1)
         passwordEditText = findViewById(R.id.et2)
         loginButton = findViewById(R.id.btnLogin)
         registerButton = findViewById(R.id.btn3)
 
-        // Navegar a la pantalla de registro
         registerButton.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
-        // Iniciar sesión
-        /*
-        loginButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val pass = passwordEditText.text.toString()
-
-            if (email.isNotEmpty() && pass.isNotEmpty()) {
-                firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-
-                    } else {
-                        Toast.makeText(this, it.exception?.message ?: "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else {
-                Toast.makeText(this, "No se permiten campos vacíos", Toast.LENGTH_SHORT).show()
-            }
-        }
-        */
     }
 
-    fun menuAdmin(view: View){
+    fun menuAdmin(view: View) {
         val intent = Intent(this, AdminMenuActivity::class.java)
         startActivity(intent)
     }
@@ -68,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         if (firebaseAuth.currentUser != null) {
             Toast.makeText(this, "Sesión iniciada automáticamente", Toast.LENGTH_SHORT).show()
-            // Si ya estoy logueada saltar a la vista siguiente despues de log in
         }
     }
 }

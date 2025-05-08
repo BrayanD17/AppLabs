@@ -75,5 +75,13 @@
         <item name="android:layout_margin">8dp</item>
     </style>
 
+    <style name="CustomMaterialDatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorPrimary">@color/softMarineBlue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/almostBlack</item> <!-- Fondo oscuro -->
+        <item name="colorOnSurface">@color/white</item>     <!-- Texto claro -->
+    </style>
+
+
 
 </resources>

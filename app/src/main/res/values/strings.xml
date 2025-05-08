@@ -92,5 +92,6 @@
     <string name="nuevo_formulario_de_operadores">Nuevo Formulario de Operadores</string>
     <string name="nombre_de_formulario">Nombre de formulario</string>
     <string name="link_del_formulario">Link de la boleta</string>
+    <string name="campo_para_seleccionar_fecha_de_habilitaci_n">Campo para seleccionar fecha de habilitación</string>
 
 </resources>
