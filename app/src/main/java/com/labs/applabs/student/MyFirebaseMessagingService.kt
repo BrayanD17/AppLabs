@@ -10,33 +10,40 @@ import com.google.firebase.messaging.RemoteMessage
 import com.labs.applabs.R
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // Mostrar la notificación solo si está en primer plano
-        remoteMessage.notification?.let {
-            showNotification(it.title, it.body)
-        }
+        super.onMessageReceived(remoteMessage)
+
+        // Prioridad: usar "data" si existe, si no, usar "notification"
+        val title = remoteMessage.data["subject"]
+            ?: remoteMessage.notification?.title
+            ?: "Nuevo mensaje"
+
+        val body = remoteMessage.data["message"]
+            ?: remoteMessage.notification?.body
+            ?: "Tienes una nueva notificación"
+
+        showNotification(title, body)
     }
 
-    private fun showNotification(title: String?, body: String?) {
+    private fun showNotification(title: String, body: String) {
+        val channelId = "default_channel"
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channelId = "default_channel_id"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Notificaciones",
-                NotificationManager.IMPORTANCE_DEFAULT
+                "Canal de mensajes",
+                NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }
 
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.message_icon) // Usa un ícono válido
-            .setContentTitle(title ?: "Título")
-            .setContentText(body ?: "Mensaje")
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setSmallIcon(R.drawable.notification_icon) // Asegúrate de tener este ícono en res/drawable
             .setAutoCancel(true)
 
-        notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+        notificationManager.notify(0, notificationBuilder.build())
     }
 }

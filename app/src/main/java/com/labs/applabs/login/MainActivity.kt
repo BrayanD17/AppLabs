@@ -1,17 +1,20 @@
 package com.labs.applabs
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.administrator.AdminMenuActivity
 //import com.labs.applabs.login.RegisterActivity
 import com.labs.applabs.administrator.DetailFormActivity
 import com.labs.applabs.R
 import com.labs.applabs.firebase.Provider
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,12 +24,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
+
     private val provider: Provider = Provider()
     private val userId = "gfTos90dNJeX8kkffqIo"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        // Guardar el token al iniciar
+        lifecycleScope.launch {
+            try {
+                provider.saveFcmToken(userId)
+            } catch (e: Exception) {
+                Log.e("MainActivity", "No se pudo guardar el token", e)
+            }
+        }
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -81,9 +95,8 @@ class MainActivity : AppCompatActivity() {
          }
      }*/
 
-    fun activy(view:View){
-        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.student.studentMenuActivity::class.java)
+    fun activy(view: View) {
+        val intent = Intent(this, com.labs.applabs.student.studentMenuActivity::class.java)
         startActivity(intent)
-        provider.saveFcmToken(userId)
     }
 }

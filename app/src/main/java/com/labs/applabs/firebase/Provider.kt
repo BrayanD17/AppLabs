@@ -6,6 +6,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.student.FormStudentData
@@ -182,50 +184,39 @@ class Provider {
     }
 
     suspend fun generateNotificationMessage(updateData: dataUpdateStatus) {
-        val messageRef = db.collection("message").document(updateData.userId)
+        val messagesCollection = db.collection("message")
+        val userMessagesRef = messagesCollection.document(updateData.userId)
+        val notificationsCollection = userMessagesRef.collection("notifications")
 
         val newNotification = hashMapOf(
             "subject" to "Proceso de solicitud",
             "message" to updateData.message,
-            "timestamp" to Date(),
+            "timestamp" to FieldValue.serverTimestamp(),
             "status" to 0
         )
 
-        db.runTransaction { transaction ->
-            val snapshot = transaction.get(messageRef)
-            if (snapshot.exists()) {
-                transaction.update(messageRef, "notifications", FieldValue.arrayUnion(newNotification))
-            } else {
-                val data = hashMapOf("notifications" to arrayListOf(newNotification))
-                transaction.set(messageRef, data)
-            }
-        }.await()
+        // Crear un nuevo documento en la subcolección
+        notificationsCollection.add(newNotification).await()
     }
 
     suspend fun getUserMessages(userId: String): List<getMessage> {
-        val db = FirebaseFirestore.getInstance()
-        val messageRef = db.collection("message").document(userId)
+        val notificationsRef = db.collection("message")
+            .document(userId)
+            .collection("notifications")
 
-        val snapshot = messageRef.get().await()
+        val querySnapshot = notificationsRef
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .await()
 
-        if (!snapshot.exists()) return emptyList()
-
-        val notifications = snapshot.get("notifications") as? List<Map<String, Any>> ?: return emptyList()
-
-        return notifications.mapNotNull { notif ->
+        return querySnapshot.documents.mapNotNull { doc ->
             try {
-                val subject = notif["subject"] as? String ?: ""
-                val message = notif["message"] as? String ?: ""
-                val timestamp = notif["timestamp"]
-                val status = (notif["status"] as? Long)?.toInt() ?: 0
+                val subject = doc.getString("subject") ?: ""
+                val message = doc.getString("message") ?: ""
+                val timestamp = doc.getTimestamp("timestamp")?.toDate()?.toString() ?: ""
+                val status = doc.getLong("status")?.toInt() ?: 0
 
-                val timestampStr = when (timestamp) {
-                    is com.google.firebase.Timestamp -> timestamp.toDate().toString()
-                    is Date -> timestamp.toString()
-                    else -> ""
-                }
-
-                getMessage(subject, message, timestampStr, status)
+                getMessage(subject, message, timestamp, status)
             } catch (e: Exception) {
                 null
             }
@@ -233,27 +224,27 @@ class Provider {
     }
 
     suspend fun markMessagesAsSeen(userId: String) {
-        val db = FirebaseFirestore.getInstance()
-        val messageRef = db.collection("message").document(userId)
+        val notificationsRef = db.collection("message")
+            .document(userId)
+            .collection("notifications")
 
-        val snapshot = messageRef.get().await()
-        if (!snapshot.exists()) return
+        // Obtener todos los mensajes no leídos
+        val querySnapshot = notificationsRef
+            .whereEqualTo("status", 0)
+            .get()
+            .await()
 
-        val notifications = snapshot.get("notifications") as? MutableList<Map<String, Any>> ?: return
-
-        var updated = false
-
-        val updatedList = notifications.map { notif ->
-            if ((notif["status"] as? Long ?: 0L) == 0L) {
-                updated = true
-                notif.toMutableMap().apply { this["status"] = 1 }
-            } else notif
+        // Actualizar cada mensaje no leído en un batch
+        val batch = db.batch()
+        querySnapshot.documents.forEach { doc ->
+            batch.update(doc.reference, "status", 1)
         }
 
-        if (updated) {
-            messageRef.update("notifications", updatedList).await()
+        if (!querySnapshot.isEmpty) {
+            batch.commit().await()
         }
     }
+
 
     // Esta función será suspendida para poder usarse con coroutines
     suspend fun uploadPdfToFirebase(pdfUri: Uri): String {
@@ -280,27 +271,21 @@ class Provider {
         }
     }
 
-    fun saveFcmToken(userId: String) {
-        FirebaseMessaging.getInstance().token
-            .addOnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("FCM", "Error al obtener el token FCM", task.exception)
-                    return@addOnCompleteListener
-                }
+    suspend fun saveFcmToken(userId: String) {
+        try {
+            // 1. Obtener el token
+            val token = FirebaseMessaging.getInstance().token.await()
 
-                val token = task.result
-                Log.d("FCM", "Token FCM: $token")
+            // 2. Guardar en Firestore (con el campo "fcmToken")
+            db.collection("users").document(userId)
+                .set(mapOf("fcmToken" to token), SetOptions.merge())
+                .await()
 
-                val db = FirebaseFirestore.getInstance()
-                db.collection("users").document(userId)
-                    .update("fcmToken", token)
-                    .addOnSuccessListener {
-                        Log.d("FCM", "Token guardado correctamente")
-                    }
-                    .addOnFailureListener {
-                        Log.e("FCM", "Error al guardar el token", it)
-                    }
-            }
+            Log.d("FCM", "Token guardado en campo 'fcmToken'")
+        } catch (e: Exception) {
+            Log.e("FCM", "Error completo:", e)
+            throw e // Opcional: relanzar para manejo superior
+        }
     }
 
 }
