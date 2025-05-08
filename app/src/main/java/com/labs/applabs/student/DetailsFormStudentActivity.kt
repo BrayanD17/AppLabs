@@ -44,8 +44,6 @@ class DetailsFormStudentActivity : AppCompatActivity() {
         idUser = "gfTos90dNJeX8kkffqIo"
     }
 
-
-    //Function to show form data of the user and the application
     private fun showInfo(formId: String) {
         applicationOperatorTitle = findViewById(R.id.textViewApplicationTitle)
         typeForm = findViewById(R.id.textViewTypeForm)
@@ -76,36 +74,35 @@ class DetailsFormStudentActivity : AppCompatActivity() {
                 idFormOperator = studentInfo.idFormOperator
                 idUser = studentInfo.idUser
                 namePsycologist.text = studentInfo.namePsycologist
-                studentSemester.text = "${studentInfo.studentSemester} @string/dataSemester"
-                studentShifts.text = "${studentInfo.studentShifts} @string/hoursWeekly"
+                studentSemester.text = "${studentInfo.studentSemester} semestres"
+                studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
                 comments.text = studentInfo.comment
                 status.text = studentInfo.statusApplication
-
-
                 // Schedule availability
                 val styleLetter = ResourcesCompat.getFont(this@DetailsFormStudentActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
                 studentInfo.scheduleAvailability.forEach { schedule ->
                     val textView = TextView(this@DetailsFormStudentActivity).apply {
-                        text = schedule
+                        text = "${schedule.day}: ${schedule.shift.joinToString(", ")}"
                         textSize = 14f
                         typeface = styleLetter
                         setPadding(0, 8, 0, 8)
                     }
                     scheduleAvailability.addView(textView)
                 }
+
                 urlApplication = studentInfo.urlApplication
-                //downloadBoleta(urlApplication!!)
+                // downloadBoleta(urlApplication!!)
 
             } ?: run {
-                studentCareer.text = "@string/dataNotAvailable"
-                studentLastDigitCard.text = "@string/dataNotAvailable"
-                studentId.text = "@string/dataNotAvailable"
-                namePsycologist.text = "@string/dataNotAvailable"
-                studentSemester.text = "@string/dataNotAvailable"
-                studentShifts.text = "@string/dataNotAvailable"
-                studentAverage.text = "@string/dataNotAvailable"
+                studentCareer.text = "No disponible"
+                studentLastDigitCard.text = "No disponible"
+                studentId.text = "No disponible"
+                namePsycologist.text = "No disponible"
+                studentSemester.text = "No disponible"
+                studentShifts.text = "No disponible"
+                studentAverage.text = "No disponible"
             }
 
 
@@ -119,22 +116,22 @@ class DetailsFormStudentActivity : AppCompatActivity() {
                 studentPhone.text = studentInfo.studentPhone
                 bankAccount.text = studentInfo.bankAccount
             } ?: run {
-                studentName.text = "@string/dataNotAvailable"
-                studentCard.text = "@string/dataNotAvailable"
-                studentEmail.text = "@string/dataNotAvailable"
-                studentPhone.text = "@string/dataNotAvailable"
-                bankAccount.text = "@string/dataNotAvailable"
+                studentName.text = "No disponible"
+                studentCard.text = "No disponible"
+                studentEmail.text = "No disponible"
+                studentPhone.text = "No disponible"
+                bankAccount.text = "No disponible"
             }
 
             //Assign form name
-            val formOperator = provider.getFormOperator(idFormOperator)
-            formOperator?.let { form ->
+            val formDataOperator = provider.getFormOperator(idFormOperator)
+            formDataOperator?.let { form ->
                 val dataformOperator = form.formOperator
                 applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
                 typeForm.text = "${dataformOperator.typeForm} ${dataformOperator.year}"
             } ?: run {
-                applicationOperatorTitle.text = "@string/dataNotAvailable"
-                typeForm.text = "@string/dataNotAvailable"
+                applicationOperatorTitle.text = "No disponible"
+                typeForm.text = "No disponible"
             }
 
         }

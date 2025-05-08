@@ -55,9 +55,15 @@ data class Solicitud(
     val nombre: String = "",
     val correo: String = "",
     val uid : String = "",
-
 )
+
 data class dataUpdateStatus(
     val newStatusApplication: Int,
     val newComment: String = "",
+)
+
+data class FormListStudent(
+    val Semester: String = "",
+    val FormName: String = "",
+    val DateEnd : String = "",
 )

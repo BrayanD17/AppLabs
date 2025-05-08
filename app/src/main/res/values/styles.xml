@@ -42,6 +42,15 @@
         <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
+    <!-- Estilo para TextView Forms Title -->
+    <style name="TextViewStyleFormsTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+
+
 
 
     <!-- Estilo para EditText -->

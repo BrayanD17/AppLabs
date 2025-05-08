@@ -113,5 +113,9 @@
     <string name="status">Estado</string>
     <string name="name">Nombre</string>
 
+    <!--Request history details (administrator view)-->
+    <string name="formListTitle">Historial de Formularios Enviados</string>
+    <string name="formLisDescription">Podra editar la informacion del formulario siempre y cuando este se encuentre en periodo activo.</string>
+
 
 </resources>
