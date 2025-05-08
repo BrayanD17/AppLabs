@@ -1,4 +1,7 @@
 *.iml
+**/node_modules/
+**/functions/node_modules/
+.firebase/
 .gradle
 /local.properties
 /.idea/caches
