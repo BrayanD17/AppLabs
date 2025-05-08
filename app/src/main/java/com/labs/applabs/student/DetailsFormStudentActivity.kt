@@ -1,19 +1,11 @@
-package com.labs.applabs.administrator
+package com.labs.applabs.student
 
-import android.app.DownloadManager
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
-import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -21,37 +13,37 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
-import com.labs.applabs.elements.ToastType
-import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
-import com.labs.applabs.firebase.dataUpdateStatus
 import kotlinx.coroutines.launch
 
-class DetailFormActivity : AppCompatActivity() {
+class DetailsFormStudentActivity : AppCompatActivity() {
+
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
     private var idForm: String? = null
-    private var formIdOperator: String? = null
+    private var idFormOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
-    private var comment: String? = null
-    private var statusApplication: String? = null
     private val provider: Provider = Provider()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_detail_form)
-        idForm="LBnb7LT7Pu2YTMz4CdJG"
+        setContentView(R.layout.activity_details_form_student)
+        idForm="SzNjA5Aqjs21oB4CjRpo"
+
         showInfo(idForm!!)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        idFormOperator="0OyPvJVUXD7aamtEHR1a"
+        idUser = "gfTos90dNJeX8kkffqIo"
     }
 
-    //Function to show form data of the user and the application
     private fun showInfo(formId: String) {
         applicationOperatorTitle = findViewById(R.id.textViewApplicationTitle)
         typeForm = findViewById(R.id.textViewTypeForm)
@@ -68,6 +60,8 @@ class DetailFormActivity : AppCompatActivity() {
         val studentSemester = findViewById<TextView>(R.id.textDataOperatorSemester)
         val namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
+        val status = findViewById<TextView>(R.id.textStatusData)
+        val comments = findViewById<TextView>(R.id.textCommentData)
 
         lifecycleScope.launch {
             //Assign form data that belongs to the user
@@ -77,17 +71,19 @@ class DetailFormActivity : AppCompatActivity() {
                 studentCareer.text = studentInfo.studentCareer
                 studentLastDigitCard.text = studentInfo.studentLastDigitCard
                 studentId.text = studentInfo.studentId
-                formIdOperator = studentInfo.idFormOperator
+                idFormOperator = studentInfo.idFormOperator
                 idUser = studentInfo.idUser
                 namePsycologist.text = studentInfo.namePsycologist
                 studentSemester.text = "${studentInfo.studentSemester} semestres"
                 studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
+                comments.text = studentInfo.comment
+                status.text = studentInfo.statusApplication
                 // Schedule availability
-                val styleLetter = ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
+                val styleLetter = ResourcesCompat.getFont(this@DetailsFormStudentActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
                 studentInfo.scheduleAvailability.forEach { schedule ->
-                    val textView = TextView(this@DetailFormActivity).apply {
+                    val textView = TextView(this@DetailsFormStudentActivity).apply {
                         text = "${schedule.day}: ${schedule.shift.joinToString(", ")}"
                         textSize = 14f
                         typeface = styleLetter
@@ -97,21 +93,7 @@ class DetailFormActivity : AppCompatActivity() {
                 }
 
                 urlApplication = studentInfo.urlApplication
-                downloadBoleta(urlApplication!!)
-                // Mostrar el comentario en el EditText
-                val dataComment = findViewById<EditText>(R.id.textDataComment)
-                comment = studentInfo.comment
-                dataComment.setText(comment)
-
-                // Mostrar el estado en el RadioGroup
-                val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
-                when (studentInfo.statusApplication) {
-                    "0" -> statusRadioGroup.check(R.id.radioStatusPending)
-                    "1" -> statusRadioGroup.check(R.id.radioStatusAcept)
-                    "2" -> statusRadioGroup.check(R.id.radioStatusRejected)
-                    else -> statusRadioGroup.clearCheck()
-                }
-                statusApplication = studentInfo.statusApplication
+                // downloadBoleta(urlApplication!!)
 
             } ?: run {
                 studentCareer.text = "No disponible"
@@ -142,7 +124,7 @@ class DetailFormActivity : AppCompatActivity() {
             }
 
             //Assign form name
-            val formDataOperator = provider.getFormOperator(formIdOperator)
+            val formDataOperator = provider.getFormOperator(idFormOperator)
             formDataOperator?.let { form ->
                 val dataformOperator = form.formOperator
                 applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
@@ -153,79 +135,5 @@ class DetailFormActivity : AppCompatActivity() {
             }
 
         }
-
-        //Update application status
-        val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
-        btnUpdateStatus.setOnClickListener {
-           updateApplicationStatus(comment!!, statusApplication!!)
-        }
     }
-
-    private fun downloadBoleta(urlApplication: String) {
-        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
-        val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
-        btnDescargar.setOnClickListener {
-            if (urlApplication.isNotEmpty()) {
-                val request = DownloadManager.Request(Uri.parse(urlApplication))
-                    .setTitle("Descargando documento")
-                    .setDescription(fileName)
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(
-                        this,
-                        Environment.DIRECTORY_DOWNLOADS,
-                        fileName
-                    )
-
-                val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                downloadManager.enqueue(request)
-                toastMessage("Descarga iniciada", ToastType.SUCCESS)
-            } else {
-                toastMessage("No se encontró la URL del documento", ToastType.ERROR)
-            }
-        }
-
-    }
-
-    private fun updateApplicationStatus(originalComment: String, originalStatus: String) {
-        val dataComment = findViewById<EditText>(R.id.textDataComment)
-        var commentText = dataComment.text.toString().trim()
-
-        val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
-        val selectedStatusId = statusRadioGroup.checkedRadioButtonId
-        val statusText = when (selectedStatusId) {
-            R.id.radioStatusPending -> "0"
-            R.id.radioStatusAcept -> "1"
-            R.id.radioStatusRejected -> "2"
-            else -> "0"
-        }
-
-        val isStatusChanged = statusText != originalStatus
-        val isCommentUnchangedOrEmpty = commentText.isEmpty() || commentText == originalComment
-
-        if (isStatusChanged && isCommentUnchangedOrEmpty) {
-            commentText = when (statusText) {
-                "1" -> "Aprobado"
-                "2" -> "Cupo lleno"
-                else -> commentText
-            }
-        }
-
-        val updateData = dataUpdateStatus(
-            newStatusApplication = statusText.toInt(),
-            newComment = commentText
-        )
-
-        lifecycleScope.launch {
-            val updateSuccess = provider.updateFormStatusAndComment(idForm!!, updateData)
-            if (updateSuccess) {
-                toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
-            } else {
-                toastMessage("Error al actualizar los datos", ToastType.ERROR)
-            }
-        }
-    }
-
-
 }

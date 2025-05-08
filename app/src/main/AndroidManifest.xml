@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:name=".firebase.App"
@@ -19,6 +19,15 @@
 
         <activity
             android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.FormListStudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.DetailsFormStudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".administrator.SolicitudesListView"
             android:exported="false" />
         <activity
             android:name=".administrator.AdminMenuFormActivity"
