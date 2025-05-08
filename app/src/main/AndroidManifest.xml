@@ -37,7 +37,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".RegisterActivity2"
+            android:name=".login.RegisterActivity2"
             android:exported="false" />
 
         <activity
@@ -47,7 +47,7 @@
             android:name=".student.FormStudent"
             android:exported="false" />
         <activity
-            android:name=".NewPasswordActivity"
+            android:name=".login.NewPasswordActivity"
             android:exported="false"/>
         <activity
             android:name=".ResetPasswordActivity"

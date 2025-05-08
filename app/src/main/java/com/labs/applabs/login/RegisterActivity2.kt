@@ -1,11 +1,11 @@
-package com.labs.applabs
+package com.labs.applabs.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.labs.applabs.R
 import com.labs.applabs.firebase.Provider
-import com.labs.applabs.login.MainActivity
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.models.ValidadorCampos
 

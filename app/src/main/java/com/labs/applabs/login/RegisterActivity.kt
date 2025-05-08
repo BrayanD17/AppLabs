@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.labs.applabs.login.RegisterActivity2
 import com.labs.applabs.models.ValidadorCampos
 
 class RegisterActivity : AppCompatActivity() {

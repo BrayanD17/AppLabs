@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECE9E6">
+    android:background="@color/baseActivityColor">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -20,53 +20,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/rectangle" />
+        app:srcCompat="@drawable/image_rectangle" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="399dp"
-        android:layout_height="353dp"
+        android:layout_width="222dp"
+        android:layout_height="125dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/logo_labs"
+        android:src="@drawable/logo_compulabs_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.105" />
 
     <EditText
         android:id="@+id/etName"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_regular"
         android:hint="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
         android:id="@+id/etSurnames"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat_regular"
         android:hint="Primer y segundo apellido"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <EditText
         android:id="@+id/etPhone"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_regular"
@@ -78,8 +80,8 @@
     <EditText
         android:id="@+id/etBankAccount"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_regular"

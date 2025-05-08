@@ -11,4 +11,5 @@
     <color name="marineBlue">#002855</color>
     <color name="borderColor">#D1D1D1</color>
     <color name="baseActivityColor">#E6E3DE</color>
+    <color name="darkBlue">#0B1F35</color>
 </resources>

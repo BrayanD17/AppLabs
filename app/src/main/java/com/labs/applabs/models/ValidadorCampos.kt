@@ -14,13 +14,20 @@ abstract class ValidadorCampos {
 
     //Al menos una letra, un número y un carácter especial
     fun validarContrasena(contrasena: String): String? {
-        if (contrasena.length < 6) return "Debe tener al menos 6 caracteres"
-        val regex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#\$%^&*()_.,+=<>?]).{6,}$")
-        if (!regex.matches(contrasena)) {
-            return "Debe contener una letra, un número y un carácter especial"
+        val password = contrasena.trim()
+
+        if (password.length < 6) return "Debe tener al menos 6 caracteres"
+
+        val regex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#\$%^&*()_.,+=<>?/]).{6,}$")
+
+        if (!regex.matches(password)) {
+            return "Debe contener al menos una letra, un número y un carácter especial"
         }
+
         return null
     }
+
+
 
     //Solo letras y espacios, mínimo 6 caracteres
     fun validarNombre(nombre: String): String? {
@@ -34,9 +41,9 @@ abstract class ValidadorCampos {
 
     //Formatos: +506 8736-6357 o 8736-6357
     fun validarTelefono(telefono: String): String? {
-        val regex = Regex("^(\\+506\\s)?\\d{4}-\\d{4}$")
-        if (!regex.matches(telefono)) {
-            return "Formato: +506 8736-6357 o 8736-6357"
+        val regex = Regex("^((\\+506\\s)?\\d{4}-\\d{4})\$")
+        if (!regex.matches(telefono.trim())) {
+            return "Formato válido: +506 8736-6357 o 8736-6357"
         }
         return null
     }

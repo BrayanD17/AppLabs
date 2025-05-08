@@ -1,4 +1,4 @@
-package com.labs.applabs
+package com.labs.applabs.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.labs.applabs.R
 import com.labs.applabs.models.ValidadorCampos
-import com.labs.applabs.login.MainActivity
 
 class NewPasswordActivity : AppCompatActivity() {
 
