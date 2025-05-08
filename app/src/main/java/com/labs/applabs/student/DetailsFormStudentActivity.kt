@@ -1,18 +1,11 @@
-package com.labs.applabs.administrator
+package com.labs.applabs.student
 
-import android.app.DownloadManager
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -20,12 +13,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
-import com.labs.applabs.elements.ToastType
-import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
 
-class DetailFormActivity : AppCompatActivity() {
+class DetailsFormStudentActivity : AppCompatActivity() {
+
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
     private var idForm: String? = null
@@ -34,18 +26,24 @@ class DetailFormActivity : AppCompatActivity() {
     private var urlApplication: String? = null
     private val provider: Provider = Provider()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_detail_form)
-        idForm="pHtKsliS3Zy3iGFvel3j"
+        setContentView(R.layout.activity_details_form_student)
+        idForm="SzNjA5Aqjs21oB4CjRpo"
+
         showInfo(idForm!!)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        idFormOperator="0OyPvJVUXD7aamtEHR1a"
+        idUser = "gfTos90dNJeX8kkffqIo"
     }
+
 
     //Function to show form data of the user and the application
     private fun showInfo(formId: String) {
@@ -64,6 +62,8 @@ class DetailFormActivity : AppCompatActivity() {
         val studentSemester = findViewById<TextView>(R.id.textDataOperatorSemester)
         val namePsycologist = findViewById<TextView>(R.id.textDataPsychology)
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
+        val status = findViewById<TextView>(R.id.textStatusData)
+        val comments = findViewById<TextView>(R.id.textCommentData)
 
         lifecycleScope.launch {
             //Assign form data that belongs to the user
@@ -79,11 +79,15 @@ class DetailFormActivity : AppCompatActivity() {
                 studentSemester.text = "${studentInfo.studentSemester} @string/dataSemester"
                 studentShifts.text = "${studentInfo.studentShifts} @string/hoursWeekly"
                 studentAverage.text = studentInfo.studentAverage
+                comments.text = studentInfo.comment
+                status.text = studentInfo.statusApplication
+
+
                 // Schedule availability
-                val styleLetter = ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
+                val styleLetter = ResourcesCompat.getFont(this@DetailsFormStudentActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
                 studentInfo.scheduleAvailability.forEach { schedule ->
-                    val textView = TextView(this@DetailFormActivity).apply {
+                    val textView = TextView(this@DetailsFormStudentActivity).apply {
                         text = schedule
                         textSize = 14f
                         typeface = styleLetter
@@ -92,7 +96,7 @@ class DetailFormActivity : AppCompatActivity() {
                     scheduleAvailability.addView(textView)
                 }
                 urlApplication = studentInfo.urlApplication
-                downloadBoleta(urlApplication!!)
+                //downloadBoleta(urlApplication!!)
 
             } ?: run {
                 studentCareer.text = "@string/dataNotAvailable"
@@ -134,42 +138,5 @@ class DetailFormActivity : AppCompatActivity() {
             }
 
         }
-
-        //Update application status
-        val statusAplication = findViewById<RadioGroup>(R.id.radioGroup)
-        var dataComment = findViewById<EditText>(R.id.textDataComment)
-        val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
-        btnUpdateStatus.setOnClickListener {
-
-        }
     }
-
-    fun downloadBoleta(urlApplication: String) {
-        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
-        btnDescargar.setOnClickListener {
-            if (urlApplication.isNotEmpty()) {
-                val request = DownloadManager.Request(Uri.parse(urlApplication))
-                    .setTitle("Descargando documento")
-                    .setDescription("Formulario PDF")
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(
-                        this,
-                        Environment.DIRECTORY_DOWNLOADS,
-                        "formulario.pdf"
-                    )
-
-                val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                downloadManager.enqueue(request)
-                toastMessage("Descarga iniciada", ToastType.SUCCESS)
-            } else {
-                toastMessage("No se encontró la URL del documento", ToastType.ERROR)
-            }
-        }
-
-    }
-
-
-
 }

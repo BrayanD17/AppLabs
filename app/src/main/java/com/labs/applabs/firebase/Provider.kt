@@ -186,7 +186,10 @@ class Provider {
             if (document != null) {
                 FormOperatorData(
                     urlApplicationForm = document.getString("urlApplicationForm"),
-                    iud = document.getString("iud")
+                    iud = document.getString("iud"),
+                    nameForm = document.getString("nameForm"),
+                    semester = document.getString("semester"),
+                    year = document.getString("year")
                 )
             } else {
                 null

@@ -38,7 +38,11 @@ data class FormOperator(
 
 data class FormOperatorData(
     val urlApplicationForm: String?,
-    val iud: String?
+    val iud: String?,
+    val nameForm : String?,
+    val semester: String?,
+    val year: String?
+
 )
 
 data class Solicitud(
