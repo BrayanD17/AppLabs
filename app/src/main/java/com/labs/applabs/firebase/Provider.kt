@@ -15,6 +15,7 @@ import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
@@ -210,17 +211,18 @@ class Provider {
             .get()
             .await()
 
-        val dateFormat = SimpleDateFormat("d/M/yyyy h:mm", Locale.getDefault())
+        val formatter = SimpleDateFormat("d/M/yyyy h:mm a", Locale("es", "MX"))
+        formatter.timeZone = TimeZone.getTimeZone("America/Mexico_City")
 
         return querySnapshot.documents.mapNotNull { doc ->
             try {
                 val subject = doc.getString("subject") ?: ""
                 val message = doc.getString("message") ?: ""
                 val date = doc.getTimestamp("timestamp")?.toDate()
-                val timestamp  = date?.let { dateFormat.format(it) } ?: ""
+                val formattedTimestamp = date?.let { formatter.format(it) } ?: ""
                 val status = doc.getLong("status")?.toInt() ?: 0
 
-                getMessage(subject, message, timestamp, status)
+                getMessage(subject, message, formattedTimestamp, status)
             } catch (e: Exception) {
                 null
             }
