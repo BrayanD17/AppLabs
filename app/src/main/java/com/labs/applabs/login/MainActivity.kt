@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun menuAdmin(view: View){
-        val intent = Intent(this, com.labs.applabs.student.DetailsFormStudentActivity::class.java)
+        val intent = Intent(this, com.labs.applabs.student.EditFormStudent::class.java)
         startActivity(intent)
     }
 
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
      }*/
 
     fun activy(view:View){
-        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.administrator.DetailFormActivity::class.java)
+        val intent: Intent=Intent(this@MainActivity,com.labs.applabs.student.FormListStudentActivity::class.java)
         startActivity(intent)
     }
 }
