@@ -99,6 +99,7 @@
     <string name="infoNamePsychology">Psicología</string>
     <string name="infoScheduleAvailability">Disponibilidad horaria</string>
     <string name="infoApplicationStatus">Estado de la solicitud</string>
+    <string name="statusPending">Pendiente</string>
     <string name="statusAcept">Aceptada</string>
     <string name="statusRejected">Denegada</string>
     <string name="downloadDocument">Descargar Boleta</string>

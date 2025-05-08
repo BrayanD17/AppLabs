@@ -113,20 +113,23 @@ class Provider {
         return try {
             val doc = db.collection("formStudent").document(formId).get().await()
             if(doc.exists()){
-                val scheduleAvailability = (doc.get("scheduleAvailability") as? Map<*, *>)?.map {
-                    "${it.key}: ${it.value}"
-                } ?: emptyList()
+                val scheduleRaw = doc.get("scheduleAvailability") as? List<Map<String, Any>> ?: emptyList()
+                val scheduleAvailability = scheduleRaw.map {
+                    val day = it["day"] as? String ?: ""
+                    val shifts = it["shifts"] as? List<String> ?: emptyList()
+                    ScheduleItem(day, shifts)
+                }
                 val studentInfo = StudentInfo(
-                    studentCareer= doc.getString("career") ?: "",
+                    studentCareer= doc.getString("degree") ?: "",
                     comment= doc.getString("comment") ?: "",
                     studentLastDigitCard= doc.get("digitsCard")?.toString() ?: "",
                     studentId= doc.get("idCard")?.toString() ?: "",
-                    idFormOperator= doc.getString("idFormOperator") ?: "",
-                    idUser= doc.getString("idUser") ?: "",
+                    idFormOperator= doc.getString("idFormOperator ") ?: "",
+                    idUser= doc.getString("idStudent") ?: "",
                     namePsycologist= doc.getString("psychology") ?: "",
                     scheduleAvailability= scheduleAvailability,
-                    studentSemester= doc.get("semesterNumber")?.toString() ?: "",
-                    studentShifts= doc.get("shifts")?.toString() ?: "",
+                    studentSemester= doc.get("semester")?.toString() ?: "",
+                    studentShifts= doc.get("shift")?.toString() ?: "",
                     statusApplication= doc.get("statusApplicationForm")?.toString() ?: "",
                     urlApplication= doc.getString("urlApplicationForm") ?: "",
                     studentAverage= doc.get("weightedAverage")?.toString() ?: "",
@@ -140,10 +143,10 @@ class Provider {
     }
 
 
-    suspend fun getFormOperator(formId: String?): DataClass? {
+    suspend fun getFormOperator(idFormOperator: String?): DataClass? {
         return try {
-            if (formId == null) return null
-            val doc = db.collection("formOperator").document(formId).get().await()
+            if (idFormOperator == null) return null
+            val doc = db.collection("formOperator").document(idFormOperator).get().await()
             if(doc.exists()){
                 val formOperator = FormOperator(
                     applicationOperatorTitle = doc.getString("nameForm") ?: "",
@@ -153,10 +156,25 @@ class Provider {
                 DataClass(formOperator = formOperator)
             }else null
         } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
+            Log.e("FirestoreProvider", "Error al obtener datos para $idFormOperator: ${e.message}")
             null
         }
 
+    }
+
+    // Método para actualizar el estado y comentario en Firebase usando dataUpdateStatus
+    suspend fun updateFormStatusAndComment(formId: String, updateData: dataUpdateStatus): Boolean {
+        return try {
+            val formRef = db.collection("formStudent").document(formId)
+            formRef.update(
+                "statusApplicationForm", updateData.newStatusApplication,
+                "comment", updateData.newComment
+            ).await()
+            true
+        } catch (e: Exception) {
+            Log.e("FirebaseError", "Error al actualizar los datos", e)
+            false
+        }
     }
 
     // Esta función será suspendida para poder usarse con coroutines
@@ -226,10 +244,6 @@ class Provider {
         }
     }
 
-    //suspend fun updateStatus(formId: String): Map<String, Any>? {}
 }
-
-
-
 
 
