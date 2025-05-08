@@ -98,7 +98,7 @@
     <Button
         style="@style/ButtonStyle"
         app:backgroundTint="@color/marineBlue"
-        android:id="@+id/button4"
+        android:id="@+id/btnSiguiente2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"

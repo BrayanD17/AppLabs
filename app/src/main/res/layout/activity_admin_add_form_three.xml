@@ -8,6 +8,7 @@
     android:background="@color/white"
     tools:context=".administrator.AdminAddFormThreeActivity">
 
+    <!-- Barra de progreso -->
     <include
         android:id="@+id/stepIndicator"
         layout="@layout/layout_step_indicator"
@@ -16,8 +17,97 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="273dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@id/stepIndicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/logo_compulabs" />
+    <!-- Contenido con Scroll -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/imageView7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Requerimientos -->
+            <TextView
+                android:text="Requerimientos"
+                style="@style/TextViewStyleTitle" />
+            <EditText
+                android:id="@+id/etRequerimiento"
+                android:minHeight="48dp"
+                android:minWidth="48dp"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Escribe un requerimiento" />
+
+            <Button
+                android:id="@+id/btnAgregarRequerimiento"
+                app:backgroundTint="@color/marineBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar requerimiento"
+                style="@style/ButtonStyle"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/listaRequerimientos"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Beneficios -->
+            <TextView
+                android:text="Beneficios"
+                style="@style/TextViewStyleTitle" />
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:minHeight="48dp"
+                android:minWidth="48dp"
+                android:id="@+id/etBeneficio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Escribe un beneficio" />
+
+            <Button
+                android:id="@+id/btnAgregarBeneficio"
+                app:backgroundTint="@color/marineBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar beneficio"
+                style="@style/ButtonStyle"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/listaBeneficios"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

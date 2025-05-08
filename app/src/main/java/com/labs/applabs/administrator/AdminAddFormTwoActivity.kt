@@ -1,6 +1,8 @@
 package com.labs.applabs.administrator
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -39,6 +41,11 @@ class AdminAddFormTwoActivity : StepIndicatorActivity() {
             showMaterialDatePicker("Seleccionar fecha de cierre") { selectedDate ->
                 tvCierre.text = selectedDate
             }
+        }
+
+        findViewById<Button>(R.id.btnSiguiente2).setOnClickListener {
+            val intent = Intent(this, AdminAddFormThreeActivity::class.java)
+            startActivity(intent)
         }
     }
 
