@@ -13,6 +13,8 @@
         style="@style/TextViewStyleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Editar formulario"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -22,10 +24,11 @@
 
 
     <ScrollView
-        android:layout_width="371dp"
-        android:layout_height="691dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         android:padding="8dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintTop_toTopOf="@+id/nameFormStudentEdit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,8 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
             app:cardBackgroundColor="@color/white"
             app:strokeColor="@color/white"
             app:strokeWidth="1dp">
@@ -425,6 +428,7 @@
                     android:background="@drawable/bg_button"
                     android:text="Guardar Cambios"
                     app:backgroundTint="@color/green"
+                    android:layout_marginBottom="100dp"
                     android:textColor="#ffffff" />
 
             </LinearLayout>
