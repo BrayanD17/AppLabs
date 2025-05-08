@@ -12,7 +12,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
@@ -208,11 +210,14 @@ class Provider {
             .get()
             .await()
 
+        val dateFormat = SimpleDateFormat("d/M/yyyy h:mm", Locale.getDefault())
+
         return querySnapshot.documents.mapNotNull { doc ->
             try {
                 val subject = doc.getString("subject") ?: ""
                 val message = doc.getString("message") ?: ""
-                val timestamp = doc.getTimestamp("timestamp")?.toDate()?.toString() ?: ""
+                val date = doc.getTimestamp("timestamp")?.toDate()
+                val timestamp  = date?.let { dateFormat.format(it) } ?: ""
                 val status = doc.getLong("status")?.toInt() ?: 0
 
                 getMessage(subject, message, timestamp, status)
