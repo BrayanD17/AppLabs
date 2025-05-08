@@ -34,7 +34,7 @@ class studentMenuActivity : AppCompatActivity() {
             showNotificationsFragment()
         }
 
-        // Detectar cambios en el back stack para actualizar la UI
+        // Detectar cambios en el back stack para actualizar
         supportFragmentManager.addOnBackStackChangedListener {
             val isFragmentVisible = supportFragmentManager.backStackEntryCount > 0
             val welcomeText = findViewById<TextView>(R.id.welcomeText)

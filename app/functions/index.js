@@ -17,6 +17,7 @@ exports.checkUnreadMessages = onSchedule("every 7200 minutes", async (event) => 
         continue;
       }
 
+      //Access the messages collection, to listen for changes in the state
       const messagesSnapshot = await admin
         .firestore()
         .collection(`message/${userId}/notifications`)
@@ -26,12 +27,14 @@ exports.checkUnreadMessages = onSchedule("every 7200 minutes", async (event) => 
       for (const msgDoc of messagesSnapshot.docs) {
         const msgData = msgDoc.data();
 
+        //Marking as notified, so it is not sent again
         if (msgData.notified) {
           continue;
         }
 
-        const title = msgData.subject || "Nuevo mensaje";
-        const body = msgData.message || "Tienes una nueva actualización";
+        //Structend for sending the notification
+        const title = msgData.subject || "Mensaje nuevo";
+        const body = msgData.message || "Actualización en solicitud";
 
         const notification = {
           notification: {
@@ -52,7 +55,7 @@ exports.checkUnreadMessages = onSchedule("every 7200 minutes", async (event) => 
           await admin.messaging().send(notification);
           console.log(`Notificación enviada al usuario ${userId}`);
 
-          // Evita reenvíos marcando como notificado
+          //Marking as notified, so it is not sent again
           await msgDoc.ref.update({ notified: true });
 
         } catch (sendError) {
@@ -61,6 +64,6 @@ exports.checkUnreadMessages = onSchedule("every 7200 minutes", async (event) => 
       }
     }
   } catch (error) {
-    console.error("Error en la función programada:", error);
+    console.error("Error en el disparador de notificaciones:", error);
   }
 });

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        // Guardar el token al iniciar
+        // Guardar el token al iniciar, para identificar el dispositivo
         lifecycleScope.launch {
             try {
                 provider.saveFcmToken(userId)

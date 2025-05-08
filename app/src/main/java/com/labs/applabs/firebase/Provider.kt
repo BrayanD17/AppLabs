@@ -167,7 +167,7 @@ class Provider {
 
     }
 
-    // Método para actualizar el estado y comentario en Firebase usando dataUpdateStatus
+    //Update status and comment
     suspend fun updateFormStatusAndComment(formId: String, updateData: dataUpdateStatus): Boolean {
         return try {
             val formRef = db.collection("formStudent").document(formId)
@@ -195,7 +195,6 @@ class Provider {
             "status" to 0
         )
 
-        // Crear un nuevo documento en la subcolección
         notificationsCollection.add(newNotification).await()
     }
 
@@ -228,13 +227,13 @@ class Provider {
             .document(userId)
             .collection("notifications")
 
-        // Obtener todos los mensajes no leídos
+        //Get all unread messages
         val querySnapshot = notificationsRef
             .whereEqualTo("status", 0)
             .get()
             .await()
 
-        // Actualizar cada mensaje no leído en un batch
+        //Update each unread message in a batch
         val batch = db.batch()
         querySnapshot.documents.forEach { doc ->
             batch.update(doc.reference, "status", 1)
@@ -273,18 +272,16 @@ class Provider {
 
     suspend fun saveFcmToken(userId: String) {
         try {
-            // 1. Obtener el token
             val token = FirebaseMessaging.getInstance().token.await()
 
-            // 2. Guardar en Firestore (con el campo "fcmToken")
             db.collection("users").document(userId)
                 .set(mapOf("fcmToken" to token), SetOptions.merge())
                 .await()
 
-            Log.d("FCM", "Token guardado en campo 'fcmToken'")
+            Log.d("FCM", "Token guardado en campo")
         } catch (e: Exception) {
             Log.e("FCM", "Error completo:", e)
-            throw e // Opcional: relanzar para manejo superior
+            throw e
         }
     }
 
