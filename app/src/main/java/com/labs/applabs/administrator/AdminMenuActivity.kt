@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.labs.applabs.MainActivity
+import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
 
 class AdminMenuActivity : AppCompatActivity() {

@@ -33,435 +33,644 @@
         app:layout_constraintVertical_bias="0.01" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewDetailForm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:focusable="false"
-        android:importantForAccessibility="no"
-        android:padding="15dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTypeForm"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTypeForm">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewInfoName"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/infoName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataInfoName"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewInfoName"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewInfoName"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewInfoId"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoId"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:layout_constraintVertical_bias="0.002" />
+
+                <TextView
+                    android:id="@+id/textDataId"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewInfoId"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewStudentCard"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoCardStudent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textViewInfoId"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataCardStudent"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.54"
+                    app:layout_constraintStart_toEndOf="@+id/textDataId"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewStudentCard"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewEmail"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoEmailStudent"
+                    app:layout_constraintBottom_toTopOf="@+id/view3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataEmail"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewEmail"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoCellPhone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataPhone"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPhone"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewCardDigit"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoLastDigitCard"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.62"
+                    app:layout_constraintStart_toEndOf="@+id/textViewPhone"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataCardDigit"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.45"
+                    app:layout_constraintStart_toEndOf="@+id/textDataPhone"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCardDigit"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewAverage"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoWeightedAverage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view4"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataAverage"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAverage"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewShifts"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/inforShifts"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.42"
+                    app:layout_constraintStart_toEndOf="@+id/textViewAverage"
+                    app:layout_constraintTop_toBottomOf="@+id/view4"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataShifts"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.45"
+                    app:layout_constraintStart_toEndOf="@+id/textDataAverage"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewShifts"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view4"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewCareer"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoCareer"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view5"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataCareer"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCareer"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view5"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewOperatorSemester"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoSemesterOperator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view6"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataOperatorSemester"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewOperatorSemester"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view7"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view6"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewPsychology"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoNamePsychology"
+                    app:layout_constraintBottom_toTopOf="@+id/view8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view7"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataPsychology"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPsychology"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view8"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view7"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textViewBankAccount"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/infoBankAccount"
+                    app:layout_constraintBottom_toTopOf="@+id/view9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view8"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textDataBankAccount"
+                    style="@style/viewDataForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewBankAccount"
+                    app:layout_constraintVertical_bias="0.0" />
 
 
-            <TextView
-                android:id="@+id/textViewInfoName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/infoName"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                <View
+                    android:id="@+id/view9"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="65dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view8"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/textDataInfoName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewInfoName"
-                app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/textViewScheduleAvailability"
+                    style="@style/viewTextForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/infoScheduleAvailability"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view9"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewInfoName"
-                app:layout_constraintVertical_bias="0.058" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/dataSchedule"
+                    style="@style/viewDataForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewScheduleAvailability"
+                    app:layout_constraintBottom_toBottomOf="@+id/view10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:id="@+id/textViewInfoId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/infoId"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                app:layout_constraintVertical_bias="0.0" />
+                    <LinearLayout
+                        android:id="@+id/containerDataSchedule"
+                        android:layout_marginStart="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp" />
 
-            <TextView
-                android:id="@+id/textDataId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/view2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewInfoId"
-                app:layout_constraintVertical_bias="0.0" />
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/textViewStudentCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/infoCardStudent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textViewInfoId"
-                app:layout_constraintTop_toTopOf="@+id/textViewInfoId"
-                app:layout_constraintVertical_bias="0.0" />
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintTop_toBottomOf="@+id/dataSchedule"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:id="@+id/textDataCardStudent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/view2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textDataId"
-                app:layout_constraintTop_toBottomOf="@+id/textViewStudentCard" />
+                <FrameLayout
+                    android:id="@+id/btnDescargarBoleta"
+                    android:layout_width="275dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view10"
+                    app:layout_constraintVertical_bias="0.0">
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                app:layout_constraintVertical_bias="0.115" />
+                    <ImageView
+                        android:id="@+id/iconDescargar"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/baseline_download_24" />
 
-            <TextView
-                android:id="@+id/textViewEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/infoEmailStudent"
-                app:layout_constraintBottom_toTopOf="@+id/view3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2"
-                app:layout_constraintVertical_bias="0.0" />
+                    <TextView
+                        android:id="@+id/textDescargar"
+                        style="@style/viewDataForm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/downloadDocument" />
+                </FrameLayout>
 
-            <TextView
-                android:id="@+id/textDataEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/view3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewEmail"
-                app:layout_constraintVertical_bias="0.307" />
+                <TextView
+                    android:id="@+id/textStatus"
+                    style="@style/viewTextForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginBottom="160dp"
+                    android:text="@string/infoApplicationStatus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta" />
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2"
-                app:layout_constraintVertical_bias="0.127" />
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.90"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta"
+                    app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/textViewPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/infoCellPhone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3"
-                app:layout_constraintVertical_bias="0.0" />
+                    <RadioButton
+                        android:id="@+id/radioStatusPending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statusPending"
+                        android:layout_marginBottom="-15dp" />
 
-            <TextView
-                android:id="@+id/textDataPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/view4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPhone"
-                app:layout_constraintVertical_bias="0.125" />
+                    <RadioButton
+                        android:id="@+id/radioStatusAcept"
+                        style="@style/viewTextForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statusAcept"
+                        android:layout_marginBottom="-15dp" />
 
-            <TextView
-                android:id="@+id/textViewCareer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/infoCareer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.666"
-                app:layout_constraintStart_toEndOf="@+id/textViewPhone"
-                app:layout_constraintTop_toBottomOf="@+id/view3"
-                app:layout_constraintVertical_bias="0.0" />
+                    <RadioButton
+                        android:id="@+id/radioStatusRejected"
+                        style="@style/viewTextForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statusRejected" />
+                </RadioGroup>
 
-            <TextView
-                android:id="@+id/textDataCareer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/view4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textDataPhone"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCareer"
-                app:layout_constraintVertical_bias="0.0" />
+                <EditText
+                    android:id="@+id/textDataComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_comment_border"
+                    android:layout_margin="16dp"
+                    android:hint="@string/infoComment"
+                    style="@style/EditTextStyle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioGroup"
+                    app:layout_constraintVertical_bias="0.0"
+                    />
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3"
-                app:layout_constraintVertical_bias="0.139" />
+                <Button
+                    android:id="@+id/btnUpdateStatus"
+                    style="@style/ButtonStyle"
+                    android:layout_width="234dp"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="25dp"
+                    android:text="@string/btnSaveStatus"
+                    app:backgroundTint="@color/green"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textDataComment"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/textViewAverage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/infoWeightedAverage"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.128"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textDataAverage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/view5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAverage"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textViewShifts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/inforShifts"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.662"
-                app:layout_constraintStart_toEndOf="@+id/textViewAverage"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textDataShifts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/view5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textDataAverage"
-                app:layout_constraintTop_toBottomOf="@+id/textViewShifts"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <View
-                android:id="@+id/view5"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                app:layout_constraintVertical_bias="0.169" />
-
-            <TextView
-                android:id="@+id/textViewBankAccount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/infoBankAccount"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textViewCardDigit"
-                app:layout_constraintHorizontal_bias="0.238"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view5"
-                app:layout_constraintVertical_bias="0.011" />
-
-            <TextView
-                android:id="@+id/textDataBankAccount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/view6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewBankAccount"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textViewCardDigit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/infoLastDigitCard"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.8"
-                app:layout_constraintStart_toEndOf="@+id/textDataBankAccount"
-                app:layout_constraintTop_toBottomOf="@+id/view5"
-                app:layout_constraintVertical_bias="0.011" />
-
-            <TextView
-                android:id="@+id/textDataCardDigit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/view6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.687"
-                app:layout_constraintStart_toEndOf="@+id/textDataBankAccount"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCardDigit"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <View
-                android:id="@+id/view6"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view5"
-                app:layout_constraintVertical_bias="0.197" />
-
-            <TextView
-                android:id="@+id/textViewOperatorSemester"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/infoSemesterOperator"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.049"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view6"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textDataOperatorSemester"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/view7"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.128"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewOperatorSemester"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textViewPsychology"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/infoNamePsychology"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.477"
-                app:layout_constraintStart_toEndOf="@+id/textViewOperatorSemester"
-                app:layout_constraintTop_toBottomOf="@+id/view6"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textDataPsychology"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/view7"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.728"
-                app:layout_constraintStart_toEndOf="@+id/textDataOperatorSemester"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPsychology"
-                app:layout_constraintVertical_bias="0.125" />
-
-            <View
-                android:id="@+id/view7"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view6"
-                app:layout_constraintVertical_bias="0.242" />
-
-            <TextView
-                android:id="@+id/textViewScheduleAvailability"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/infoScheduleAvailability"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view7"
-                app:layout_constraintVertical_bias="0.006" />
-
-            <EditText
-                android:id="@+id/editComentario"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:background="@drawable/edit_text_comment_border"
-                android:gravity="top|start"
-                android:padding="12dp"
-                android:hint="Escribe un comentario"
-                app:layout_constraintTop_toBottomOf="@+id/textViewScheduleAvailability"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.cardview.widget.CardView>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

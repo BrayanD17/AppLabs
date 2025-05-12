@@ -2,158 +2,128 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECE9E6">
-    <!-- Imagen -->
+    android:background="@color/baseActivityColor">
+
     <ImageView
-        android:id="@+id/headerImage2"
-        android:layout_width="417dp"
-        android:layout_height="227dp"
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/rectangle" />
-    <!-- Logo -->
+        app:srcCompat="@drawable/image_rectangle" />
+
     <ImageView
-        android:id="@+id/headerImage"
-        android:layout_width="160dp"
-        android:layout_height="64dp"
+        android:id="@+id/imageView4"
+        android:layout_width="222dp"
+        android:layout_height="125dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_compulabs_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.12"
-        app:srcCompat="@drawable/logo_labs" />
+        app:layout_constraintVertical_bias="0.105" />
 
-    <!-- Correo -->
-    <EditText
-        android:id="@+id/etMail"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Correo Institucional"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerImage2"
-        tools:ignore="MissingConstraints" />
-
-    <!-- Contraseña -->
-    <EditText
-        android:id="@+id/etPassword"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTelephone" />
-
-    <!-- Nombre -->
-    <EditText
-        android:id="@+id/etName"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Nombre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etMail" />
-
-    <!-- Apellidos -->
     <EditText
         android:id="@+id/etSurnames"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat_regular"
         android:hint="Primer y segundo apellido"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
 
-    <!-- Carnet -->
     <EditText
-        android:id="@+id/etCard"
+        android:id="@+id/etName"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_regular"
-        android:hint="Carnet"
+        android:hint="Nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <EditText
+        android:id="@+id/etPhone"
+        style="@style/EditTextStyle"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="7856-9872"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSurnames" />
 
-    <!-- Teléfono -->
-    <EditText
-        android:id="@+id/etTelephone"
-        style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="Teléfono"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCard" />
-
-
-    <!-- Cuenta Bancaria -->
     <EditText
         android:id="@+id/etBankAccount"
         style="@style/EditTextStyle"
-        android:layout_width="363dp"
-        android:layout_height="46dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_regular"
-        android:hint="Cuenta bancaria"
+        android:hint="002-100-101452-8"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTelephone" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-    <!-- Bonton de registrarse -->
     <Button
         android:id="@+id/btnRegister"
         style="@style/ButtonStyle"
         android:layout_width="186dp"
         android:layout_height="48dp"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="36dp"
-        android:text="Registrarse"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="68dp"
+        android:text="Siguiente"
         app:backgroundTint="@color/marineBlue"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintTop_toBottomOf="@+id/etBankAccount"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView9"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="237dp"
+        android:text="Cuenta Bancaria"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPhone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

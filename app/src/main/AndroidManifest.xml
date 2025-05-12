@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:name=".firebase.App"
@@ -16,6 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppLabs"
         tools:targetApi="31">
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.FormListStudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.DetailsFormStudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".administrator.SolicitudesListView"
+            android:exported="false" />
         <activity
             android:name=".administrator.AdminAddFormThreeActivity"
             android:exported="false" />
@@ -40,6 +53,11 @@
         <activity
             android:name=".administrator.DetailFormActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".login.RegisterActivity2"
+            android:exported="false" />
+
         <activity
             android:name=".student.FormStudent2"
             android:exported="false" />
@@ -47,7 +65,13 @@
             android:name=".student.FormStudent"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".login.NewPasswordActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".login.MainActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>

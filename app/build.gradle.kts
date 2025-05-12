@@ -43,8 +43,13 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.room.runtime.android)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.cardview)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.storage.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
