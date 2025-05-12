@@ -1,5 +1,6 @@
 package com.labs.applabs.firebase
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
