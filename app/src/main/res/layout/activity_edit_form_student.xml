@@ -13,7 +13,7 @@
         style="@style/TextViewStyleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Editar formulario"
+        android:text="@string/nameFormEdit"
         android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.064" />
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -52,106 +51,111 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Título -->
-
-                <!-- Cédula -->
-
                 <TextView
+                    android:id="@+id/textViewCardId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Cédula"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormCardId"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editFormDataCardId"/>
 
                 <EditText
-                    android:id="@+id/etCedula"
+                    android:id="@+id/editFormDataCardId"
+                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
                     android:inputType="number"
-                    android:padding="12dp" />
+                    android:importantForAutofill="no" />
 
-                <!-- Promedio ponderado -->
                 <TextView
+                    android:id="@+id/textViewAverage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Promedio ponderado del semestre anterior"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormWeightedAverage"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editFormDataAverage" />
 
                 <EditText
-                    android:id="@+id/etPromedio"
+                    android:id="@+id/editFormDataAverage"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:inputType="numberDecimal"
-                    android:padding="12dp" />
+                    android:inputType=""
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
 
-                <!-- Carrera -->
                 <TextView
+                    android:id="@+id/textViewDegree"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Carrera"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormDegree"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataDegree" />
 
                 <EditText
-                    android:id="@+id/etCarrera"
+                    android:id="@+id/editDataDegree"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="12dp" />
+                    android:inputType="text"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no" />
 
-                <!-- Dígitos detrás del carnet -->
                 <TextView
+                    android:id="@+id/textViewLastDigit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Dígitos detrás del carnet"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormLastDigits"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataLastDigits" />
 
                 <EditText
-                    android:id="@+id/etDigitosCarnet"
+                    android:id="@+id/editDataLastDigits"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
                     android:inputType="number"
-                    android:padding="12dp" />
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
 
-                <!-- Turnos -->
                 <TextView
+                    android:id="@+id/textViewShifts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Turnos"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormShifts"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataShifts" />
 
                 <EditText
-                    android:id="@+id/etTurnos"
+                    android:id="@+id/editDataShifts"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="12dp" />
+                    android:inputType="text"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
 
-                <!-- Disponibilidad horaria -->
                 <TextView
+                    android:id="@+id/texViewScheduleAvailability"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Disponibilidad de horario"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormScheduleAvailability"
+                    style="@style/viewTextForm" />
 
                 <TableLayout
+                    android:id="@+id/tableScheduleAvailability"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:background="#f9f9f9"
+                    android:background="@color/white"
                     android:padding="15dp"
                     android:stretchColumns="1,2,3">
 
@@ -169,40 +173,42 @@
                         <TextView
                             android:gravity="center"
                             android:padding="0dp"
-                            android:text="7am a 12" />
+                            android:text="@string/morningTable" />
 
                         <TextView
                             android:gravity="center"
                             android:padding="0dp"
-                            android:text="12 a 5pm" />
+                            android:text="@string/afternoonTable" />
 
                         <TextView
                             android:gravity="center"
                             android:padding="0dp"
-                            android:text="5pm a 10pm" />
+                            android:text="@string/eveningTable" />
                     </TableRow>
 
                     <!-- Días de la semana -->
                     <!-- Lunes -->
                     <TableRow android:paddingVertical="2dp">
-
                         <TextView
                             android:gravity="center"
-                            android:text="Lunes" />
+                            android:text="@string/monday" />
 
                         <CheckBox
                             android:id="@+id/lunes_m"
-                            android:minHeight="0dp"
+                            android:minHeight="48dp"
+                            android:minWidth="48dp"
                             android:padding="0dp" />
 
                         <CheckBox
                             android:id="@+id/lunes_t"
-                            android:minHeight="0dp"
+                            android:minHeight="48dp"
+                            android:minWidth="48dp"
                             android:padding="0dp" />
 
                         <CheckBox
                             android:id="@+id/lunes_n"
-                            android:minHeight="0dp"
+                            android:minHeight="48dp"
+                            android:minWidth="48dp"
                             android:padding="0dp" />
                     </TableRow>
 
@@ -211,20 +217,20 @@
 
                         <TextView
                             android:gravity="center"
-                            android:text="Martes" />
+                            android:text="@string/tuesday" />
 
                         <CheckBox
-                            android:id="@+id/martes_m"
+                            android:id="@+id/tuesdayMorning"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/martes_t"
+                            android:id="@+id/tuesdayAfternoon"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/martes_n"
+                            android:id="@+id/tuesdayEvening"
                             android:minHeight="0dp"
                             android:padding="0dp" />
                     </TableRow>
@@ -234,20 +240,20 @@
 
                         <TextView
                             android:gravity="center"
-                            android:text="Miércoles" />
+                            android:text="@string/wednesday" />
 
                         <CheckBox
-                            android:id="@+id/miercoles_m"
+                            android:id="@+id/wednesdayMorning"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/miercoles_t"
+                            android:id="@+id/wednesdayAfternoon"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/miercoles_n"
+                            android:id="@+id/wednesdayEvening"
                             android:minHeight="0dp"
                             android:padding="0dp" />
                     </TableRow>
@@ -257,20 +263,20 @@
 
                         <TextView
                             android:gravity="center"
-                            android:text="Jueves" />
+                            android:text="@string/thursday" />
 
                         <CheckBox
-                            android:id="@+id/jueves_m"
+                            android:id="@+id/thursdayMorning"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/jueves_t"
+                            android:id="@+id/thursdayAfternoon"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/jueves_n"
+                            android:id="@+id/thursdayEvening"
                             android:minHeight="0dp"
                             android:padding="0dp" />
                     </TableRow>
@@ -280,20 +286,20 @@
 
                         <TextView
                             android:gravity="center"
-                            android:text="Viernes" />
+                            android:text="@string/friday" />
 
                         <CheckBox
-                            android:id="@+id/viernes_m"
+                            android:id="@+id/fridayMorning"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/viernes_t"
+                            android:id="@+id/fridayAfternoon"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/viernes_n"
+                            android:id="@+id/fridayEvening"
                             android:minHeight="0dp"
                             android:padding="0dp" />
                     </TableRow>
@@ -303,20 +309,20 @@
 
                         <TextView
                             android:gravity="center"
-                            android:text="Sábado" />
+                            android:text="@string/saturday" />
 
                         <CheckBox
-                            android:id="@+id/sabado_m"
+                            android:id="@+id/saturdayMorning"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/sabado_t"
+                            android:id="@+id/saturdayAfternoon"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/sabado_n"
+                            android:id="@+id/saturdayEvening"
                             android:minHeight="0dp"
                             android:padding="0dp" />
                     </TableRow>
@@ -326,65 +332,68 @@
 
                         <TextView
                             android:gravity="center"
-                            android:text="Domingo" />
+                            android:text="@string/sunday" />
 
                         <CheckBox
-                            android:id="@+id/domingo_m"
+                            android:id="@+id/sundayMorning"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/domingo_t"
+                            android:id="@+id/sundayAfternoon"
                             android:minHeight="0dp"
                             android:padding="0dp" />
 
                         <CheckBox
-                            android:id="@+id/domingo_n"
+                            android:id="@+id/sundayEvening"
                             android:minHeight="0dp"
                             android:padding="0dp" />
                     </TableRow>
                 </TableLayout>
 
-                <!-- Número de semestres como operador -->
                 <TextView
+                    android:id="@+id/texViewSemesterOperator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Número de semestres como operador"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormSemesterOperator"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataSemesterOperator" />
 
                 <EditText
-                    android:id="@+id/etSemestresOperador"
+                    android:id="@+id/editDataSemesterOperator"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:inputType="number"
-                    android:padding="12dp" />
+                    android:inputType="text"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no" />
 
-                <!-- Nombre del psicólogo -->
                 <TextView
+                    android:id="@+id/textViewNamePsychology"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Nombre del psicólogo"
-                    android:textSize="16sp" />
+                    android:text="@string/editFormNamePsychology"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataNamePsychology" />
 
                 <EditText
-                    android:id="@+id/etNombrePsicologo"
+                    android:id="@+id/editDataNamePsychology"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="12dp" />
+                    android:inputType=""
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
 
-                <!-- Boleta de solicitud (PDF) -->
                 <TextView
+                    android:id="@+id/textViewApplicationForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Boleta de solicitud (PDF)"
-                    android:textSize="16sp" />
+                    android:text="@string/editApplicationForm"
+                    style="@style/viewTextForm" />
 
                 <LinearLayout
                     android:id="@+id/btnUploadPdf"
@@ -400,14 +409,15 @@
                         android:id="@+id/ivPdfIcon"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/upload" />
+                        android:src="@drawable/upload"
+                        android:contentDescription="@null" />
 
                     <TextView
-                        android:id="@+id/tvPdfInstruction"
+                        android:id="@+id/iconUpload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Sube tu documento PDF"
+                        android:text="@string/editApplicationFormChange"
                         android:textSize="14sp" />
 
                     <TextView
@@ -415,25 +425,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Ningún archivo seleccionado"
+                        android:text="@string/editAnyApplicationForm"
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <!-- Botón Guardar -->
                 <Button
-                    android:id="@+id/btnGuardar"
+                    android:id="@+id/btnEditSaveChange"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/bg_button"
-                    android:text="Guardar Cambios"
+                    android:text="@string/saveChangesEdit"
                     app:backgroundTint="@color/green"
                     android:layout_marginBottom="100dp"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/white" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

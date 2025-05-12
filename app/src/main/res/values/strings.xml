@@ -117,5 +117,28 @@
     <string name="formListTitle">Historial de Formularios Enviados</string>
     <string name="formLisDescription">Podra editar la informacion del formulario siempre y cuando este se encuentre en periodo activo.</string>
 
-
+   <!--Edit form (student view)-->
+    <string name="nameFormEdit">Editar formulario</string>
+    <string name="editFormCardId">Cédula</string>
+    <string name="editFormWeightedAverage">Promedio ponderado del semestre anterior</string>
+    <string name="editFormDegree">Carrera</string>
+    <string name="editFormLastDigits">Dígitos detrás del carnet</string>
+    <string name="editFormShifts">Turnos</string>
+    <string name="editFormScheduleAvailability">Disponibilidad de horario</string>
+    <string name="editFormSemesterOperator">Número de semestres como operador</string>
+    <string name="editFormNamePsychology">Nombre de psicología</string>"
+    <string name="editApplicationForm">Boleta de solicitud (PDF)</string>>
+    <string name="editApplicationFormChange">Cambiar el documento PDF</string>
+    <string name="editAnyApplicationForm">Ningún archivo seleccionado</string>
+    <string name="saveChangesEdit">Guardar Cambios</string>
+    <string name="morningTable">7am a 12</string>
+    <string name="afternoonTable">12 a 5pm</string>
+    <string name="eveningTable">5pm a 10pm</string>
+    <string name="monday">Lunes</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
+    <string name="thursday">Jueves</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
 </resources>
