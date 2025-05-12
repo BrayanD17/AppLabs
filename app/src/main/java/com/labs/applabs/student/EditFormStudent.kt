@@ -2,9 +2,12 @@ package com.labs.applabs.student
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TableLayout
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
 import com.labs.applabs.firebase.Provider
+import com.labs.applabs.firebase.ScheduleItem
 import kotlinx.coroutines.launch
 
 class EditFormStudent : AppCompatActivity() {
@@ -22,10 +26,24 @@ class EditFormStudent : AppCompatActivity() {
     private lateinit var dataShifts:EditText
     private lateinit var dataSemesterOperator:EditText
     private lateinit var dataNamePsychology:EditText
-    private lateinit var tableScheduleAvailability: TableLayout
+    private lateinit var anyUpload: TextView
+    private lateinit var btnUploadPdf: LinearLayout
+    private var currentPdfUrl: String? = null
     private val provider: Provider = Provider()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private companion object {
+        private val daysMap = mapOf(
+            "Lunes" to Triple(R.id.mondayMorning, R.id.mondayAfternoon, R.id.mondayEvening),
+            "Martes" to Triple(R.id.tuesdayMorning, R.id.tuesdayAfternoon, R.id.tuesdayEvening),
+            "Miércoles" to Triple(R.id.wednesdayMorning, R.id.wednesdayAfternoon, R.id.wednesdayEvening),
+            "Jueves" to Triple(R.id.thursdayMorning, R.id.thursdayAfternoon, R.id.thursdayEvening),
+            "Viernes" to Triple(R.id.fridayMorning, R.id.fridayAfternoon, R.id.fridayEvening),
+            "Sábado" to Triple(R.id.saturdayMorning, R.id.saturdayAfternoon, R.id.saturdayEvening),
+            "Domingo" to Triple(R.id.sundayMorning, R.id.sundayAfternoon, R.id.sundayEvening)
+        )
+    }
+
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_edit_form_student)
@@ -45,6 +63,8 @@ class EditFormStudent : AppCompatActivity() {
         dataShifts = findViewById(R.id.editDataShifts)
         dataSemesterOperator = findViewById(R.id.editDataSemesterOperator)
         dataNamePsychology = findViewById(R.id.editDataNamePsychology)
+        anyUpload = findViewById(R.id.anyUpload)
+        btnUploadPdf = findViewById(R.id.btnUploadPdf)
 
         lifecycleScope.launch {
             val careers = provider.getCareerNames()
@@ -72,13 +92,41 @@ class EditFormStudent : AppCompatActivity() {
                 dataShifts.setText(studentInfo.studentShifts)
                 dataSemesterOperator.setText(studentInfo.studentSemester)
                 dataNamePsychology.setText(studentInfo.namePsycologist)
+                getScheduleAvailability(studentInfo.scheduleAvailability)
+                // Mostrar nombre del archivo si existe
+                currentPdfUrl = form.studentInfo.urlApplication
+                if (!currentPdfUrl.isNullOrEmpty()) {
+                    val fileName = currentPdfUrl?.substringAfterLast('/') ?.substringBefore("?") ?: "Archivo actual"
+                    anyUpload.text = fileName
+                }
+
             }
         }
     }
 
+    private fun getScheduleAvailability(schedule: List<ScheduleItem>) {
+        schedule.forEach { item ->
+            val (morningId, afternoonId, eveningId) = daysMap[item.day] ?: return@forEach
 
-    /*tableScheduleAvailability
-    btnUploadPdf //subir archivo
-    anyUpload //Cambiar a archivo subido o seleccionado o al nombre del archivo
-    btnEditSaveChange //guardar cambios*/
+            val morningCheckBox = findViewById<CheckBox>(morningId)
+            val afternoonCheckBox = findViewById<CheckBox>(afternoonId)
+            val eveningCheckBox = findViewById<CheckBox>(eveningId)
+
+            morningCheckBox.isChecked = item.shift.contains("7am a 12pm")
+            afternoonCheckBox.isChecked = item.shift.contains("12pm a 5pm")
+            eveningCheckBox.isChecked = item.shift.contains("5pm a 10pm")
+        }
+    }
+
+    private fun updateDataStudent() {}
+
+    private fun uploadPdf() {
+        //Eliminar archivo que tiene el usuario actualmente en storage
+        //Subir el nuevo archivo
+        //Actualizar la url en la base de datos
+        btnUploadPdf //subir archivo
+        anyUpload //Cambiar a archivo subido o seleccionado o al nombre del archivo
+      //  btnEditSaveChange //guardar cambios*/
+    }
+
 }
