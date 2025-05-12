@@ -96,7 +96,7 @@
                     style="@style/viewTextForm"
                     android:labelFor="@id/editDataDegree" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/editDataDegree"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"

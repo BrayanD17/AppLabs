@@ -108,7 +108,6 @@ class Provider {
     }
 
 
-
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
             val doc = db.collection("formStudent").document(formId).get().await()
@@ -139,6 +138,50 @@ class Provider {
         } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
             null
+        }
+    }
+
+    suspend fun updateStudentData(formId: String, studentData: editDataStudentForm): Boolean {
+        return try {
+            val userId = "gfTos90dNJeX8kkffqIo" // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
+
+            val docRef = db.collection("formStudent").document(formId)
+            val snapshot = docRef.get().await()
+
+            if (!snapshot.exists()) {
+                Log.e("Firebase", "Formulario no encontrado")
+                return false
+            }
+
+            val storedUserId = snapshot.getString("idStudent")
+            if (storedUserId != userId) {
+                Log.e("Firebase", "No autorizado para actualizar este formulario")
+                return false
+            }
+
+            val dataMap = hashMapOf<String, Any>().apply {
+                put("idCard", studentData.dataCardId.toInt())
+                put("weightedAverage", studentData.dataAverage.toInt())
+                put("degree", studentData.dataDegree)
+                put("digitsCard", studentData.dataLastDigits.toInt())
+                put("shift", studentData.dataShifts.toInt())
+                put("semester", studentData.dataSemesterOperator.toInt())
+                put("psychology", studentData.dataNamePsychology)
+                put("urlApplicationForm", studentData.dataUploadPdf)
+                put("scheduleAvailability", studentData.datatableScheduleAvailability.map { daySchedule ->
+                    hashMapOf(
+                        "day" to daySchedule.day,
+                        "shifts" to daySchedule.shifts
+                    )
+                })
+            }
+
+            docRef.set(dataMap).await()
+            true
+
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error al actualizar: ${e.message}", e)
+            false
         }
     }
 

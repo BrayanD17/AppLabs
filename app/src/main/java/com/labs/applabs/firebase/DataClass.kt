@@ -2,7 +2,8 @@ package com.labs.applabs.firebase
 
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
-    val formOperator: FormOperator = FormOperator()
+    val formOperator: FormOperator = FormOperator(),
+    val editDataStudentForm: editDataStudentForm = editDataStudentForm(),
 
 )
 
@@ -66,4 +67,21 @@ data class FormListStudent(
     val Semester: String = "",
     val FormName: String = "",
     val DateEnd : String = "",
+)
+
+data class editDataStudentForm(
+    val dataCardId: String = "",
+    val dataAverage: String = "",
+    val dataDegree: String = "",
+    val dataLastDigits: String = "",
+    val dataShifts: String = "",
+    val dataSemesterOperator: String = "",
+    val dataNamePsychology: String = "",
+    val datatableScheduleAvailability: List<listSchedule> = emptyList(),
+    val dataUploadPdf: String = ""
+)
+
+data class listSchedule(
+    val day: String,
+    val shifts: List<String> = emptyList()
 )
