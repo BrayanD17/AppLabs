@@ -10,12 +10,14 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.R
 import com.labs.applabs.models.ValidadorCampos
 
 class NewPasswordActivity : AppCompatActivity() {
 
+    private lateinit var etCurrentPassword: EditText
     private lateinit var etNewPassword: EditText
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnChangePassword: Button
@@ -29,6 +31,7 @@ class NewPasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_password)
 
         // Referencias del layout
+        etCurrentPassword = findViewById(R.id.etCurrentPassword)
         etNewPassword = findViewById(R.id.etnewpassword)
         etConfirmPassword = findViewById(R.id.etconfirmpassword)
         btnChangePassword = findViewById(R.id.btnChangePassword)
@@ -36,39 +39,58 @@ class NewPasswordActivity : AppCompatActivity() {
 
         // Botón para cambiar contraseña
         btnChangePassword.setOnClickListener {
+            val current = etCurrentPassword.text.toString().trim()
             val nueva = etNewPassword.text.toString().trim()
             val confirmar = etConfirmPassword.text.toString().trim()
 
-            // Validar contraseña
+            // Validar contraseña actual
+            if (current.isEmpty()) {
+                etCurrentPassword.error = "Ingrese su contraseña actual"
+                return@setOnClickListener
+            }
+
+            // Validar nueva contraseña
             val errorPass = validador.validarContrasena(nueva)
             if (errorPass != null) {
                 etNewPassword.error = errorPass
                 return@setOnClickListener
             }
 
-            // Verificar coincidencia
+            // Verificar coincidencia con confirmar
             if (nueva != confirmar) {
                 etConfirmPassword.error = "Las contraseñas no coinciden"
                 return@setOnClickListener
             }
 
-            // Actualizar contraseña en Firebase (solo si está autenticado)
+            // Obtener usuario actual y correo
             val user = auth.currentUser
-            if (user != null) {
-                user.updatePassword(nueva)
-                    .addOnSuccessListener {
-                        // Mostrar mensaje visual
-                        llSuccessMessage.visibility = View.VISIBLE
+            val email = user?.email
 
-                        // Ocultar mensaje después de 3 segundos y redirigir
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            llSuccessMessage.visibility = View.GONE
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
-                        }, 3000)
+            // Reautenticar antes de cambiar contraseña
+            if (user != null && email != null) {
+                val credential = EmailAuthProvider.getCredential(email, current)
+
+                user.reauthenticate(credential)
+                    .addOnSuccessListener {
+                        // Si se reautenticó correctamente, actualizar contraseña
+                        user.updatePassword(nueva)
+                            .addOnSuccessListener {
+                                // Mostrar mensaje visual
+                                llSuccessMessage.visibility = View.VISIBLE
+
+                                // Ocultar mensaje después de 3 segundos y redirigir
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    llSuccessMessage.visibility = View.GONE
+                                    startActivity(Intent(this, MainActivity::class.java))
+                                    finish()
+                                }, 3000)
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Error al actualizar: ${it.message}", Toast.LENGTH_LONG).show()
+                            }
                     }
                     .addOnFailureListener {
-                        Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_LONG).show()
+                        etCurrentPassword.error = "Contraseña actual incorrecta"
                     }
             } else {
                 Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()

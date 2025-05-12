@@ -82,7 +82,18 @@ class MainActivity : AppCompatActivity() {
             // Login Firebase
             auth.signInWithEmailAndPassword(correo, password)
                 .addOnSuccessListener {
-                    val uid = auth.currentUser?.uid ?: return@addOnSuccessListener
+                    val user = auth.currentUser
+                    if (user != null && !user.isEmailVerified) {
+                        auth.signOut()
+                        Toast.makeText(
+                            this,
+                            "Debes verificar tu correo antes de iniciar sesión.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@addOnSuccessListener
+                    }
+
+                    val uid = user?.uid ?: return@addOnSuccessListener
 
                     // Guardar o borrar credenciales
                     if (cbRecordar.isChecked) {
@@ -96,22 +107,29 @@ class MainActivity : AppCompatActivity() {
                         prefs.edit().clear().apply()
                     }
 
-                    // Usar provider para verificar el rol
                     provider.verificarRol(uid) { rol ->
                         when (rol) {
-                            1 -> startActivity(Intent(this, com.labs.applabs.administrator.DetailFormActivity::class.java))
-                            // 2 -> startActivity(Intent(this, OperadorActivity::class.java)) // pendiente
-                            // 3 -> startActivity(Intent(this, EstudianteActivity::class.java)) // pendiente
+                            1 -> startActivity(
+                                Intent(
+                                    this,
+                                    com.labs.applabs.administrator.DetailFormActivity::class.java
+                                )
+                            )
+                            // 2 -> ...
                         }
                         finish()
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Error al iniciar sesión: ${it.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Error al iniciar sesión: ${it.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-        }
 
-        // Registro
+        }
+            // Registro
         btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
