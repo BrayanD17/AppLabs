@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -35,6 +36,7 @@ class EditFormStudent : AppCompatActivity() {
     private lateinit var dataNamePsychology:EditText
     private lateinit var anyUpload: TextView
     private lateinit var btnUploadPdf: LinearLayout
+    private lateinit var btnSaveChanges: Button
     private var currentPdfUrl: String? = null
     private val provider: Provider = Provider()
 
@@ -72,6 +74,7 @@ class EditFormStudent : AppCompatActivity() {
         dataNamePsychology = findViewById(R.id.editDataNamePsychology)
         anyUpload = findViewById(R.id.anyUpload)
         btnUploadPdf = findViewById(R.id.btnUploadPdf)
+        btnSaveChanges = findViewById(R.id.btnEditSaveChange)
 
         lifecycleScope.launch {
             val careers = provider.getCareerNames()
@@ -110,6 +113,10 @@ class EditFormStudent : AppCompatActivity() {
                     uploadPdf()
                 }
 
+                btnSaveChanges.setOnClickListener {
+                    updateDataStudent()
+                }
+
             }
         }
     }
@@ -128,7 +135,7 @@ class EditFormStudent : AppCompatActivity() {
         }
     }
 
-    private fun updateDataStudent(newUrl: String) {
+    private fun updateDataStudent() {
         val formId = "LBnb7LT7Pu2YTMz4CdJG"
 
         val scheduleAvailability = daysMap.mapNotNull { (day, triple) ->
@@ -159,7 +166,7 @@ class EditFormStudent : AppCompatActivity() {
             dataSemesterOperator = dataSemesterOperator.text.toString(),
             dataNamePsychology = dataNamePsychology.text.toString(),
             datatableScheduleAvailability = scheduleAvailability,
-            dataUploadPdf = newUrl
+            dataUploadPdf = currentPdfUrl?: ""
         )
 
         lifecycleScope.launch {
@@ -222,8 +229,6 @@ class EditFormStudent : AppCompatActivity() {
             // 2. Subir nuevo archivo
             val newUrl = provider.uploadPdfToStorage(uri, "formularios/${System.currentTimeMillis()}.pdf")
 
-            // 3. Actualizar URL en Firestore
-            updateDataStudent(newUrl)
 
             // Actualizar UI y variable local
             currentPdfUrl = newUrl
