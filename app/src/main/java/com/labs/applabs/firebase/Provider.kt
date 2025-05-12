@@ -3,9 +3,11 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
@@ -286,6 +288,24 @@ class Provider {
             emptyList()
         }
     }
+
+
+    suspend fun deletePdfFromStorage(url: String) {
+        try {
+            val storageRef = Firebase.storage.getReferenceFromUrl(url)
+            storageRef.delete().await()
+        } catch (e: Exception) {
+            Log.e("FirebaseStorage", "Error al eliminar archivo", e)
+        }
+    }
+
+    suspend fun uploadPdfToStorage(uri: Uri, path: String): String {
+        val storageRef = Firebase.storage.reference.child(path)
+        val uploadTask = storageRef.putFile(uri).await()
+        return uploadTask.storage.downloadUrl.await().toString()
+    }
+
+
 
 }
 
