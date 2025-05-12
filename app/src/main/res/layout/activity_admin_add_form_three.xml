@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,83 +31,130 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/logo_compulabs" />
-    <!-- Contenido con Scroll -->
+
+    <!-- Requerimientos -->
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollRequerimientos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:fillViewport="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintTop_toBottomOf="@id/imageView7"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/scrollBeneficios"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Requerimientos -->
-            <TextView
-                android:text="Requerimientos"
-                style="@style/TextViewStyleTitle" />
             <EditText
                 android:id="@+id/etRequerimiento"
-                android:minHeight="48dp"
-                android:minWidth="48dp"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Escribe un requerimiento" />
+                android:hint="Escribe un requerimiento"
+                android:minWidth="48dp"
+                android:minHeight="48dp" />
 
             <Button
                 android:id="@+id/btnAgregarRequerimiento"
-                app:backgroundTint="@color/marineBlue"
+                style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Agregar requerimiento"
-                style="@style/ButtonStyle"
-                android:layout_marginTop="8dp" />
+                app:backgroundTint="@color/marineBlue" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:id="@+id/tvTituloListaRequerimientos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lista de requerimientos"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:layout_marginTop="16dp" />
 
             <LinearLayout
                 android:id="@+id/listaRequerimientos"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"/>
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp" />
+        </LinearLayout>
+    </ScrollView>
 
-            <!-- Beneficios -->
-            <TextView
-                android:text="Beneficios"
-                style="@style/TextViewStyleTitle" />
+    <!-- Beneficios -->
+    <ScrollView
+        android:id="@+id/scrollBeneficios"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/scrollRequerimientos"
+        app:layout_constraintBottom_toTopOf="@id/btnSaveForm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <EditText
-                style="@style/EditTextStyle"
-                android:minHeight="48dp"
-                android:minWidth="48dp"
                 android:id="@+id/etBeneficio"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Escribe un beneficio" />
+                android:hint="Escribe un beneficio"
+                android:minWidth="48dp"
+                android:minHeight="48dp" />
 
             <Button
                 android:id="@+id/btnAgregarBeneficio"
-                app:backgroundTint="@color/marineBlue"
+                style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Agregar beneficio"
-                style="@style/ButtonStyle"
-                android:layout_marginTop="8dp" />
+                app:backgroundTint="@color/marineBlue" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:id="@+id/tvTituloListaBeneficios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lista de beneficios"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:layout_marginTop="16dp" />
 
             <LinearLayout
                 android:id="@+id/listaBeneficios"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
         </LinearLayout>
     </ScrollView>
+
+    <!-- Botón Guardar -->
+    <Button
+        android:id="@+id/btnSaveForm"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Guardar"
+        app:backgroundTint="@color/marineBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
