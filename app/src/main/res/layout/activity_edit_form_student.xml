@@ -406,14 +406,14 @@
                     android:padding="16dp">
 
                     <ImageView
-                        android:id="@+id/ivPdfIcon"
+                        android:id="@+id/iconUpload"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/upload"
                         android:contentDescription="@null" />
 
                     <TextView
-                        android:id="@+id/iconUpload"
+                        android:id="@+id/withUpload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -421,7 +421,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tvPdfFileName"
+                        android:id="@+id/anyUpload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"

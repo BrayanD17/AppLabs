@@ -18,4 +18,17 @@ class EditFormStudent : AppCompatActivity() {
             insets
         }
     }
+
+    editFormDataCardId
+    editFormDataAverage
+    editDataDegree
+    editDataLastDigits
+    editDataShifts
+    editDataSemesterOperator
+    editDataNamePsychology
+
+    tableScheduleAvailability
+    btnUploadPdf //subir archivo
+    anyUpload //Cambiar a archivo subido o seleccionado o al nombre del archivo
+    btnEditSaveChange //guardar cambios
 }
