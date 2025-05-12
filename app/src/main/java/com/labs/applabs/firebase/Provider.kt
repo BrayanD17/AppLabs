@@ -6,34 +6,70 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.labs.applabs.models.Usuario
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
 
 class Provider {
+
+    private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val storageRef = FirebaseStorage.getInstance().reference
 
-    // Funcion paraa poder obtener el id de la persona autenticada
+    // Obtener UID del usuario autenticado
     private fun getAuthenticatedUserId(): String {
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUser = auth.currentUser
         return currentUser?.uid ?: throw IllegalStateException("No hay usuario autenticado")
     }
 
-    /*Using coroutines to fetch data asynchronously*/
-    /*Está función es solo de ejemplo, no es funcional dentro del proyecto (solo era una prueba)
-    * Forma de instanciar provider para usarlo en el frontend ( val provider: provider = provider() )*/
-    suspend fun getFormularioInfoById(id: String): Map<String, Any>? {
-        return try {
-            val snapshot = db.collection("prueba").document(id).get().await()
-            if (snapshot.exists()) {
-                snapshot.data
-            } else {
-                null
+    // Registrar usuario en FirebaseAuth + Firestore y enviar correo de verificación
+    fun registrarUsuario(
+        context: Context,
+        correo: String,
+        password: String,
+        usuario: Usuario,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        auth.createUserWithEmailAndPassword(correo, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val uid = auth.currentUser?.uid
+                    val usuarioFinal = usuario.copy(uid = uid ?: "")
+
+                    db.collection("users").document(uid!!)
+                        .set(usuarioFinal)
+                        .addOnSuccessListener {
+                            // Enviar correo de verificación
+                            auth.currentUser?.sendEmailVerification()
+                                ?.addOnSuccessListener {
+                                    Toast.makeText(context, "Registro exitoso. Verifica tu correo.", Toast.LENGTH_LONG).show()
+                                    onSuccess()
+                                }
+                                ?.addOnFailureListener {
+                                    onError("Usuario creado pero no se pudo enviar verificación: ${it.message}")
+                                }
+                        }
+                        .addOnFailureListener { e ->
+                            onError("Error al guardar: ${e.message}")
+                        }
+                } else {
+                    onError("Error de registro: ${task.exception?.message}")
+                }
             }
-        } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error al obtener datos: ${e.message}")
-            null
-        }
+    }
+
+    // Obtener rol del usuario desde Firestore (por UID)
+    fun verificarRol(uid: String, onResult: (Int) -> Unit) {
+        db.collection("users").document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                val rol = doc.getLong("rol")?.toInt() ?: 3 // Por defecto: estudiante
+                onResult(rol)
+            }
+            .addOnFailureListener {
+                onResult(3)
+            }
     }
 
     suspend fun getCareerNames(): List<String> {
@@ -67,10 +103,8 @@ class Provider {
         }
     }
 
-    //
     suspend fun saveStudentData(studentData: FormStudentData): Boolean {
         return try {
-            // val user = getAuthenticatedUserId()
             val user = "gfTos90dNJeX8kkffqIo"
 
             val dataMap = hashMapOf<String, Any>().apply {
@@ -95,8 +129,8 @@ class Provider {
             }
 
             db.collection("formStudent")
-            .add(dataMap)
-            .await()
+                .add(dataMap)
+                .await()
 
             FormStudentData.clearAll()
             true
@@ -106,8 +140,6 @@ class Provider {
             false
         }
     }
-
-
 
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
@@ -142,7 +174,6 @@ class Provider {
         }
     }
 
-
     suspend fun getFormOperator(idFormOperator: String?): DataClass? {
         return try {
             if (idFormOperator == null) return null
@@ -159,10 +190,8 @@ class Provider {
             Log.e("FirestoreProvider", "Error al obtener datos para $idFormOperator: ${e.message}")
             null
         }
-
     }
 
-    // Método para actualizar el estado y comentario en Firebase usando dataUpdateStatus
     suspend fun updateFormStatusAndComment(formId: String, updateData: dataUpdateStatus): Boolean {
         return try {
             val formRef = db.collection("formStudent").document(formId)
@@ -177,17 +206,14 @@ class Provider {
         }
     }
 
-    // Esta función será suspendida para poder usarse con coroutines
     suspend fun uploadPdfToFirebase(pdfUri: Uri): String? {
-
         val fileName = "${System.currentTimeMillis()}.pdf"
         val pdfRef = storageRef.child(fileName)
 
         try {
-            // Subir el archivo de manera asíncrona y obtener el URL de descarga
             pdfRef.putFile(pdfUri).await()
             val downloadUrl = pdfRef.downloadUrl.await()
-            return downloadUrl.toString() // Devuelves el URL del archivo subido
+            return downloadUrl.toString()
         } catch (e: Exception) {
             throw Exception("Error al subir el archivo: ${e.message}")
         }
@@ -219,8 +245,6 @@ class Provider {
 
     suspend fun getSolicitudes(): List<Solicitud> {
         return try {
-            // val activeFormId = getFormOperatorData()?.iud ?: return emptyList()
-
             val snapshot = db.collection("formStudent")
                 .whereEqualTo("idFormOperator ", "0OyPvJVUXD7aamtEHR1a")
                 .get()
@@ -243,7 +267,4 @@ class Provider {
             emptyList()
         }
     }
-
 }
-
-
