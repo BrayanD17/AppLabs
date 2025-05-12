@@ -81,7 +81,7 @@ class RegisterActivity2 : AppCompatActivity() {
                 telefono = telefono,
                 cuentaBancaria = cuenta,
                 carnet = carnet,
-                rol = null // sin rol, lo asigna el admin luego
+                rol = 2
             )
 
             //Usar Provider en lugar de FirebaseUsuarioService

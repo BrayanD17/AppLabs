@@ -124,10 +124,21 @@ class MainActivity : AppCompatActivity() {
                             1 -> startActivity(
                                 Intent(
                                     this,
+                                    com.labs.applabs.administrator.AdminMenuActivity::class.java
+                                )
+                            )
+                            2 -> startActivity(
+                                Intent(
+                                    this,
+                                    com.labs.applabs.student.FormActivity::class.java
+                                )
+                            )
+                            3 -> startActivity(
+                                Intent(
+                                    this,
                                     com.labs.applabs.administrator.DetailFormActivity::class.java
                                 )
                             )
-                            // 2 -> ...
                         }
                         finish()
                     }

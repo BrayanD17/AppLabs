@@ -37,7 +37,7 @@ class Provider {
                     val uid = auth.currentUser?.uid
                     val usuarioFinal = usuario.copy(uid = uid ?: "")
 
-                    db.collection("usuarios").document(uid!!)
+                    db.collection("users").document(uid!!)
                         .set(usuarioFinal)
                         .addOnSuccessListener {
                             // Enviar correo de verificación
@@ -61,7 +61,7 @@ class Provider {
 
     // Obtener rol del usuario desde Firestore (por UID)
     fun verificarRol(uid: String, onResult: (Int) -> Unit) {
-        db.collection("usuarios").document(uid)
+        db.collection("users").document(uid)
             .get()
             .addOnSuccessListener { doc ->
                 val rol = doc.getLong("rol")?.toInt() ?: 3 // Por defecto: estudiante

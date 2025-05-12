@@ -8,6 +8,6 @@ data class Usuario(
     val telefono: String = "",
     val cuentaBancaria: String = "",
     val carnet: String = "",
-    val rol: Int? = null //sin rol (se interpreta como estudiante), hasta que el administrador le asigne
+    val rol: Int? = 2 // 1 Administrador, 2 Estudiante y 3 Operador
 )
 

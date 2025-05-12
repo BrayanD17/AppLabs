@@ -1,4 +1,4 @@
-package com.labs.applabs.operador
+package com.labs.applabs.administrator.formOperador
 
 data class FormOperador(
     val activityStatus: Int = 0,

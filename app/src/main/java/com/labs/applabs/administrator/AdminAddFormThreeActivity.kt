@@ -3,12 +3,11 @@ package com.labs.applabs.administrator
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.labs.applabs.R
+import com.labs.applabs.administrator.formOperador.FormOperador
 import com.labs.applabs.utils.StepIndicatorActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -78,7 +77,7 @@ class AdminAddFormThreeActivity : StepIndicatorActivity() {
             val timestampHabilitado = com.google.firebase.Timestamp(sdf.parse(fechaHabilitado)!!)
             val timestampCierre = com.google.firebase.Timestamp(sdf.parse(fechaCierre)!!)
 
-            val formulario = com.labs.applabs.operador.FormOperador(
+            val formulario = FormOperador(
                 activityStatus = 1,
                 closingDate = timestampCierre,
                 createdDate = timestampCreacion,
