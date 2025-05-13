@@ -8,12 +8,22 @@
     android:background="@color/baseActivityColor"
     tools:context=".student.EditFormStudent">
 
+    <ImageView
+        android:id="@+id/backViewEditStudent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/nameFormStudentEdit"
         style="@style/TextViewStyleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nameFormEdit"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

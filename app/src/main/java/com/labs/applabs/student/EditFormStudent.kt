@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TableLayout
@@ -20,6 +21,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
+import com.labs.applabs.elements.ToastType
+import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.firebase.ScheduleItem
 import com.labs.applabs.firebase.editDataStudentForm
@@ -59,12 +62,13 @@ class EditFormStudent : AppCompatActivity() {
         setContentView(R.layout.activity_edit_form_student)
         val id = intent.getStringExtra("formId")
         if (id == null) {
-            Toast.makeText(this, "ID de formulario no recibido", Toast.LENGTH_SHORT).show()
+            toastMessage("ID de formulario no recibido", ToastType.ERROR)
             finish()
             return
         }
         formId = id
         showDataStudent()
+        finishActivity()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -178,9 +182,9 @@ class EditFormStudent : AppCompatActivity() {
         lifecycleScope.launch {
             val success = provider.updateStudentData(formId, studentData)
             if (success) {
-                Toast.makeText(this@EditFormStudent, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show()
+                toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
             } else {
-                Toast.makeText(this@EditFormStudent, "Error al actualizar los datos", Toast.LENGTH_SHORT).show()
+                toastMessage("Error al actualizar los datos", ToastType.ERROR)
             }
         }
     }
@@ -238,11 +242,19 @@ class EditFormStudent : AppCompatActivity() {
 
             // Actualizar UI y variable local
             currentPdfUrl = newUrl
-            Toast.makeText(this, "Archivo actualizado correctamente", Toast.LENGTH_SHORT).show()
+            toastMessage("Archivo actualizado correctamente", ToastType.SUCCESS)
         } catch (e: Exception) {
-            Toast.makeText(this, "Error al subir archivo: ${e.message}", Toast.LENGTH_SHORT).show()
+            toastMessage("Error al subir archivo: ${e.message}", ToastType.ERROR)
             Log.e("UploadPDF", "Error: ${e.message}")
         }
+    }
+
+    private fun finishActivity(){
+        val backView = findViewById<ImageView>(R.id.backViewEditStudent)
+        backView.setOnClickListener {
+            finish()
+        }
+
     }
 
 }
