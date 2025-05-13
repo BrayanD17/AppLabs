@@ -1,5 +1,6 @@
 package com.labs.applabs.student
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -44,8 +45,19 @@ class FormListStudentActivity : AppCompatActivity(){
         }
 
         adapter.setOnItemClickListener { listForm ->
-            Toast.makeText(this, "${listForm.FormIdStudent}", Toast.LENGTH_SHORT).show()
+
         }
+
+        adapter.setOnEditClickListener { listForm ->
+            val intent = Intent(this, EditFormStudent::class.java)
+            intent.putExtra("formId", listForm.FormIdStudent)
+            startActivity(intent)
+        }
+
+        adapter.setOnDeleteClickListener { listForm ->
+
+        }
+
     }
 
 }

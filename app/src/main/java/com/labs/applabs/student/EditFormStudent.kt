@@ -38,6 +38,7 @@ class EditFormStudent : AppCompatActivity() {
     private lateinit var btnUploadPdf: LinearLayout
     private lateinit var btnSaveChanges: Button
     private var currentPdfUrl: String? = null
+    private lateinit var formId: String
     private val provider: Provider = Provider()
 
     private companion object {
@@ -52,10 +53,17 @@ class EditFormStudent : AppCompatActivity() {
         )
     }
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_edit_form_student)
+        val id = intent.getStringExtra("formId")
+        if (id == null) {
+            Toast.makeText(this, "ID de formulario no recibido", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+        formId = id
         showDataStudent()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -84,7 +92,7 @@ class EditFormStudent : AppCompatActivity() {
 
             dataDegree.adapter = adapter
 
-            val dataFormStudent = provider.getFormStudent("LBnb7LT7Pu2YTMz4CdJG")
+            val dataFormStudent = provider.getFormStudent(formId)
             dataFormStudent?.let { form ->
                 val studentInfo = form.studentInfo
                 dataCardId.setText(studentInfo.studentId)
@@ -136,8 +144,6 @@ class EditFormStudent : AppCompatActivity() {
     }
 
     private fun updateDataStudent() {
-        val formId = "LBnb7LT7Pu2YTMz4CdJG"
-
         val scheduleAvailability = daysMap.mapNotNull { (day, triple) ->
             val (morningId, afternoonId, eveningId) = triple
 
