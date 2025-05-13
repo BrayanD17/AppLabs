@@ -64,6 +64,7 @@ data class dataUpdateStatus(
 )
 
 data class FormListStudent(
+    val FormIdStudent: String = "",
     val FormId: String = "",
     val Semester: String = "",
     val FormName: String = "",

@@ -44,7 +44,7 @@ class FormListStudentActivity : AppCompatActivity(){
         }
 
         adapter.setOnItemClickListener { listForm ->
-            Toast.makeText(this, "${listForm.FormName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${listForm.FormIdStudent}", Toast.LENGTH_SHORT).show()
         }
     }
 
