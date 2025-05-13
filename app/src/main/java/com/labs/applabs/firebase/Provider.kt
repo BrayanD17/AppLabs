@@ -9,7 +9,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.labs.applabs.student.FormStudentData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
@@ -19,23 +21,6 @@ class Provider {
     private fun getAuthenticatedUserId(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
         return currentUser?.uid ?: throw IllegalStateException("No hay usuario autenticado")
-    }
-
-    /*Using coroutines to fetch data asynchronously*/
-    /*Está función es solo de ejemplo, no es funcional dentro del proyecto (solo era una prueba)
-    * Forma de instanciar provider para usarlo en el frontend ( val provider: provider = provider() )*/
-    suspend fun getFormularioInfoById(id: String): Map<String, Any>? {
-        return try {
-            val snapshot = db.collection("prueba").document(id).get().await()
-            if (snapshot.exists()) {
-                snapshot.data
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error al obtener datos: ${e.message}")
-            null
-        }
     }
 
     suspend fun getCareerNames(): List<String> {
@@ -187,7 +172,6 @@ class Provider {
         }
     }
 
-
     suspend fun getFormOperator(idFormOperator: String?): DataClass? {
         return try {
             if (idFormOperator == null) return null
@@ -207,7 +191,7 @@ class Provider {
 
     }
 
-    // Método para actualizar el estado y comentario en Firebase usando dataUpdateStatus
+    //Actualizar el estado y comentario
     suspend fun updateFormStatusAndComment(formId: String, updateData: dataUpdateStatus): Boolean {
         return try {
             val formRef = db.collection("formStudent").document(formId)
@@ -304,8 +288,6 @@ class Provider {
         val uploadTask = storageRef.putFile(uri).await()
         return uploadTask.storage.downloadUrl.await().toString()
     }
-
-
 
 }
 

@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.491" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+        android:id="@+id/recycleViewStudentForm"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="10dp"
@@ -59,8 +59,6 @@
         app:layout_constraintTop_toBottomOf="@+id/ivRectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
