@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
@@ -13,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class Provider {
@@ -302,7 +304,7 @@ class Provider {
             Log.d("FirestoreDebug", "Cantidad de documentos encontrados: ${snapshot.size()}")
 
             snapshot.documents.mapNotNull { doc ->
-                val formId = doc.getString("idFormOperator") ?: return@mapNotNull null
+                val formId = doc.getString("idFormOperator ") ?: return@mapNotNull null
 
                 val listIdInfo = db.collection("formOperator").document(formId).get().await()
                 if (!listIdInfo.exists()) return@mapNotNull null
@@ -332,6 +334,52 @@ class Provider {
         }
 
     }
+
+    suspend fun getInfoStudentForm1(id: String): List<FormListStudent> {
+        return try {
+            // 1. Obtener formularios del estudiante
+            val snapshot = db.collection("formStudent")
+                .whereEqualTo("idStudent", id)
+                .get()
+                .await()
+
+            Log.d("DEBUG", "Documentos en formStudent: ${snapshot.documents.size}")
+
+            // 2. Procesar cada documento
+            snapshot.documents.mapNotNull { doc ->
+                val formId = doc.getString("idFormOperator ")
+                    ?: run {
+                        Log.e("DEBUG", "idFormOperator es null en documento ${doc.id}")
+                        return@mapNotNull null
+                    }
+
+                // 3. Obtener detalles del formulario
+                val formOp = db.collection("formOperator").document(formId).get().await()
+                if (!formOp.exists()) {
+                    Log.e("DEBUG", "FormOperator $formId no existe")
+                    return@mapNotNull null
+                }
+
+                // 4. Extraer datos (con valores por defecto)
+                FormListStudent(
+                    FormId = formId,
+                    Semester = "${formOp.getString("semester") ?: ""} ${formOp.get("year")?.toString() ?: ""}",
+                    FormName = formOp.getString("nameForm") ?: "Sin nombre",
+                    DateEnd = formOp.getTimestamp("closingDate")?.toDate()?.formatDate() ?: "",
+                    DateStart = formOp.getTimestamp("startDate")?.toDate()?.formatDate() ?: ""
+                )
+            }
+        } catch (e: Exception) {
+            Log.e("ERROR", "Excepción: ${e.message}")
+            emptyList()
+        }
+    }
+
+    // Extensión para formatear fechas
+    fun Date?.formatDate(): String {
+        return this?.let { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it) } ?: ""
+    }
+
 
 }
 
