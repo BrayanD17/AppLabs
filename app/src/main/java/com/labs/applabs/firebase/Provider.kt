@@ -12,6 +12,8 @@ import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class Provider {
     private val db = FirebaseFirestore.getInstance()
@@ -287,6 +289,48 @@ class Provider {
         val storageRef = Firebase.storage.reference.child(path)
         val uploadTask = storageRef.putFile(uri).await()
         return uploadTask.storage.downloadUrl.await().toString()
+    }
+
+    //Obtener los formularios que ha enviado el estudiante
+    suspend fun getInfoStudentForm(id:String): List<FormListStudent> {
+        return try {
+            val snapshot = db.collection("formStudent")
+                .whereEqualTo("idStudent", id)
+                .get()
+                .await()
+
+            Log.d("FirestoreDebug", "Cantidad de documentos encontrados: ${snapshot.size()}")
+
+            snapshot.documents.mapNotNull { doc ->
+                val formId = doc.getString("idFormOperator") ?: return@mapNotNull null
+
+                val listIdInfo = db.collection("formOperator").document(formId).get().await()
+                if (!listIdInfo.exists()) return@mapNotNull null
+
+                val semester = listIdInfo.getString("semester") ?: ""
+                val year = listIdInfo.get("year") ?.toString()?: ""
+                val closingDate = listIdInfo.getTimestamp("closingDate")?.toDate()?.let {
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
+                } ?: ""
+                val startDate = listIdInfo.getTimestamp("startDate")?.toDate()?.let {
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
+                } ?: ""
+                //Log.e("Provider", "Formulario operador: ${}")
+
+                FormListStudent(
+                    FormId = formId,
+                    Semester = "$semester $year",
+                    FormName = listIdInfo.getString("nameForm") ?: "",
+                    DateEnd = closingDate,
+                    DateStart = startDate,
+                )
+            }
+
+        }catch (e: Exception){
+            Log.e("FirestoreProvider", "Error al obtener getInfoStudentForm: ${e.message}")
+            emptyList()
+        }
+
     }
 
 }

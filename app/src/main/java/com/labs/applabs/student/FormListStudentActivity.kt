@@ -24,6 +24,7 @@ class FormListStudentActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_form_list_student)
+        initRecyclerView()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -38,13 +39,13 @@ class FormListStudentActivity : AppCompatActivity(){
         recyclerViewListForm.adapter = adapter
 
         lifecycleScope.launch {
-
+            val studentOperatorForm = provider.getInfoStudentForm("gfTos90dNJeX8kkffqIo")
+            adapter.actualizarLista(studentOperatorForm)
         }
 
         adapter.setOnItemClickListener { listForm ->
-
+            Toast.makeText(this, "${listForm.FormName}", Toast.LENGTH_SHORT).show()
         }
-
     }
 
 }
