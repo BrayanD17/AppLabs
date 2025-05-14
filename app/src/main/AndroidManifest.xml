@@ -45,9 +45,6 @@
             android:name=".administrator.SolicitudesListView"
             android:exported="false" />
         <activity
-            android:name=".administrator.AdminAddFormThreeActivity"
-            android:exported="false" />
-        <activity
             android:name=".administrator.AdminAddFormTwoActivity"
             android:exported="false" />
         <activity
@@ -55,9 +52,6 @@
             android:exported="false" />
         <activity
             android:name=".administrator.AdminMenuFormActivity"
-            android:exported="false" />
-        <activity
-            android:name=".operador.OperadorMenuActivity"
             android:exported="false" />
         <activity
             android:name=".administrator.AdminMenuActivity"

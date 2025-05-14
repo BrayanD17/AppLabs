@@ -21,7 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.labs.applabs.MainActivity
+import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
 import com.labs.applabs.administrator.AdminMenuActivity
 import com.labs.applabs.firebase.Provider
