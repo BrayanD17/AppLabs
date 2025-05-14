@@ -34,48 +34,47 @@ class FormActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val buttonURL : Button = findViewById(R.id.buttonURL)
-
-        buttonURL.setOnClickListener {
-            Log.e("Click", "Click")
-            lifecycleScope.launch {
-                val form = provider.getFormOperatorData()
-                if (form != null) {
-                    downloadBoleta(form.urlApplicationForm!!)
-                }
-            }
-        }
+        val button = findViewById<Button>(R.id.buttonURL)
     }
 
-    fun downloadBoleta(urlApplication: String) {
-        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
-        btnDescargar.setOnClickListener {
-            if (urlApplication.isNotEmpty()) {
-                val request = DownloadManager.Request(Uri.parse(urlApplication))
-                    .setTitle("Descargando documento")
-                    .setDescription("Formulario PDF")
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(
-                        this,
-                        Environment.DIRECTORY_DOWNLOADS,
-                        "formulario.pdf"
-                    )
+    private fun downloadBoleta(urlApplication: String) {
+        val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
+        val request = DownloadManager.Request(Uri.parse(urlApplication))
+            .setTitle("Descargando documento")
+            .setDescription(fileName)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+            .setDestinationInExternalFilesDir(
+                this,
+                Environment.DIRECTORY_DOWNLOADS,
+                fileName
+            )
 
-                val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                downloadManager.enqueue(request)
-                toastMessage("Descarga iniciada", ToastType.SUCCESS)
-            } else {
-                toastMessage("No se encontró la URL del documento", ToastType.ERROR)
-            }
-        }
+        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager.enqueue(request)
+        toastMessage("Descarga iniciada", ToastType.SUCCESS)
     }
 
-    fun Siguiente(view: View){
+    fun nextForm(view: View){
         val intent : Intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
         startActivity(intent);
+    }
+
+    fun onClickFormButton(view: View) {
+        Log.d("DEBUG", "Botón del formulario presionado")
+
+        lifecycleScope.launch {
+            try {
+                val formData = provider.getFormOperatorData()
+                val formUrl = formData?.urlApplicationForm
+                Log.d("DEBUG", "Link de descarga: $formUrl")
+                downloadBoleta(formUrl!!)
+            } catch (e: Exception) {
+                Log.e("DEBUG", "Error al obtener el formulario", e)
+                toastMessage("Error al descargar la boleta", ToastType.ERROR)
+            }
+        }
     }
 
 }

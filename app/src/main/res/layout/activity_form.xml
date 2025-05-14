@@ -12,145 +12,125 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvForm"
-                style="@style/TextViewStyleTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/nameForm"
-                android:textSize="21sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvForm"
+            style="@style/TextViewStyleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/nameForm"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvSemester"
-                style="@style/TextViewStyleTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="Semestre 1 - 2025"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvForm" />
+        <TextView
+            android:id="@+id/tvSemester"
+            style="@style/TextViewStyleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Semestre 1 - 2025"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvForm" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSemester">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_margin="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSemester"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvDescription1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/descriptionTitleForm"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tvDescription1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/descriptionTitleForm"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView"
-                        app:layout_constraintEnd_toEndOf="@+id/textView"
-                        app:layout_constraintHorizontal_bias="0.507"
-                        app:layout_constraintStart_toStartOf="@+id/textView"
-                        app:layout_constraintTop_toTopOf="@+id/textView"
-                        app:layout_constraintVertical_bias="0.102" />
+                <TextView
+                    android:id="@+id/tvDescription2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/descripcionForm1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tvDescription2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:justificationMode="inter_word"
-                        android:padding="10dp"
-                        android:text="@string/descripcionForm1"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView"
-                        app:layout_constraintEnd_toEndOf="@+id/textView"
-                        app:layout_constraintHorizontal_bias="0.516"
-                        app:layout_constraintStart_toStartOf="@+id/textView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2"
-                        app:layout_constraintVertical_bias="0.112" />
+                <TextView
+                    android:id="@+id/tvDescription3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/descripcionForm2"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tvDescription3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:justificationMode="inter_word"
-                        android:padding="10dp"
-                        android:text="@string/descripcionForm2"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView"
-                        app:layout_constraintEnd_toEndOf="@+id/textView"
-                        app:layout_constraintStart_toStartOf="@+id/textView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                <Button
+                    android:id="@+id/buttonURL"
+                    style="@style/ButtonOutlineStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/application_form"
+                    android:onClick="onClickFormButton"
+                    android:textColor="@color/marineBlue"
+                    app:backgroundTint="@color/marineBlue"/>
 
-                    <Button
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                        android:id="@+id/buttonURL"
-                        style="@style/ButtonOutlineStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="50dp"
-                        android:layout_weight="0.5"
-                        android:backgroundTint="@color/white"
-                        android:gravity="center"
-                        android:text="@string/application_form"
-                        android:textColor="@color/marineBlue"
-                        android:textSize="14dp"
-                        app:layout_constraintEnd_toEndOf="@+id/textView"
-                        app:layout_constraintStart_toStartOf="@+id/textView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-                </LinearLayout>
+        <Button
+            android:id="@+id/buttonNext"
+            style="@style/ButtonStyle"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:text="@string/next"
+            app:backgroundTint="@color/marineBlue"
+            android:onClick="nextForm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            app:layout_constraintVertical_bias="0.1" />
 
-            </androidx.cardview.widget.CardView>
-
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button2"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/imagen_form" />
-
-            <Button
-                android:id="@+id/button2"
-                style="@style/ButtonStyle"
-                android:layout_width="250dp"
-                android:layout_height="60dp"
-                android:onClick="Siguiente"
-                android:text="@string/next"
-                app:backgroundTint="@color/marineBlue"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:layout_constraintVertical_bias="0.175" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonNext"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/figure_form_activity" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

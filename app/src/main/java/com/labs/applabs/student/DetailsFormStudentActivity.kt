@@ -1,6 +1,10 @@
 package com.labs.applabs.student
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -13,6 +17,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
+import com.labs.applabs.elements.ToastType
+import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
 
@@ -90,7 +96,7 @@ class DetailsFormStudentActivity : AppCompatActivity() {
                 }
 
                 urlApplication = studentInfo.urlApplication
-                // downloadBoleta(urlApplication!!)
+                downloadBoleta(urlApplication!!)
 
             } ?: run {
                 studentCareer.text = "No disponible"
@@ -133,4 +139,25 @@ class DetailsFormStudentActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun downloadBoleta(urlApplication: String) {
+        val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
+        val request = DownloadManager.Request(Uri.parse(urlApplication))
+            .setTitle("Descargando documento")
+            .setDescription(fileName)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+            .setDestinationInExternalFilesDir(
+                this,
+                Environment.DIRECTORY_DOWNLOADS,
+                fileName
+            )
+
+        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager.enqueue(request)
+        toastMessage("Descarga iniciada", ToastType.SUCCESS)
+    }
+
+
 }
