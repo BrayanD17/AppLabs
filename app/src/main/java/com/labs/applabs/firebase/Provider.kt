@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.tasks.await
@@ -266,5 +267,14 @@ class Provider {
             Log.e("FirestoreProvider", "Error al obtener solicitudes: ${e.message}")
             emptyList()
         }
+
     }
+
+    fun createFormularioOperador(formulario: FormOperador, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection("formOperator")
+            .add(formulario)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { exception -> onFailure(exception) }
+    }
+
 }

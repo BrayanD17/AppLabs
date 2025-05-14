@@ -7,7 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import com.labs.applabs.R
+import com.labs.applabs.models.FormOperador
 import com.labs.applabs.utils.StepIndicatorActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,7 +51,8 @@ class AdminAddFormTwoActivity : StepIndicatorActivity() {
             }
         }
 
-        findViewById<Button>(R.id.btnSiguiente2).setOnClickListener {
+        val btnGuardar = findViewById<Button>(R.id.btnSaveForm)
+        btnGuardar.setOnClickListener {
             val fechaHabilitado = tvHabilitado.text.toString().trim()
             val fechaCierre = tvCierre.text.toString().trim()
             val fechaCreacion = tvCreacion.text.toString().trim()
@@ -63,25 +67,46 @@ class AdminAddFormTwoActivity : StepIndicatorActivity() {
                 return@setOnClickListener
             }
 
-
             if (fechaCreacion.isEmpty() || fechaCreacion == "dd/mm/yyyy") {
                 Toast.makeText(this, "La fecha de creación no es válida.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            try {
+                val sdf = dateFormat
+                val fechaCreacionDate = sdf.parse(fechaCreacion)!!
+                val fechaHabilitadoDate = sdf.parse(fechaHabilitado)!!
+                val fechaCierreDate = sdf.parse(fechaCierre)!!
 
-            val anioActual = Calendar.getInstance().get(Calendar.YEAR)
+                val estadoFormulario = if (fechaHabilitadoDate.after(fechaCreacionDate)) 0 else 1
 
-            val intent = Intent(this, AdminAddFormThreeActivity::class.java).apply {
-                putExtra("nombreFormulario", nombreFormulario)
-                putExtra("periodo", periodo)
-                putExtra("linkFormulario", linkFormulario)
-                putExtra("fechaHabilitado", fechaHabilitado)
-                putExtra("fechaCierre", fechaCierre)
-                putExtra("fechaCreacion", fechaCreacion)
-                putExtra("anioActual", anioActual)
+                val formulario = FormOperador(
+                    activityStatus = estadoFormulario,
+                    closingDate = Timestamp(fechaCierreDate),
+                    createdDate = Timestamp(fechaCreacionDate),
+                    nameForm = nombreFormulario,
+                    semester = periodo,
+                    startDate = Timestamp(fechaHabilitadoDate),
+                    urlApplicationForm = linkFormulario,
+                    year = Calendar.getInstance().get(Calendar.YEAR)
+                )
+
+                FirebaseFirestore.getInstance()
+                    .collection("formOperator")
+                    .add(formulario)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Formulario guardado exitosamente.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, AdminMenuFormActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error procesando fechas: ${e.message}", Toast.LENGTH_LONG).show()
             }
-            startActivity(intent)
         }
     }
 
@@ -95,7 +120,6 @@ class AdminAddFormTwoActivity : StepIndicatorActivity() {
             val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
                 timeInMillis = selection
             }
-            // Convertir al timezone local
             val localCalendar = Calendar.getInstance().apply {
                 set(Calendar.YEAR, calendar.get(Calendar.YEAR))
                 set(Calendar.MONTH, calendar.get(Calendar.MONTH))
