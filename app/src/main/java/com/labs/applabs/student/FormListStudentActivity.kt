@@ -40,17 +40,17 @@ class FormListStudentActivity : AppCompatActivity(){
 
     private fun initRecyclerView() {
         recyclerViewListForm = findViewById(R.id.recycleViewStudentForm)
-        adapter = FormListAdapter(emptyList())
+        adapter = FormListAdapter(mutableListOf())
         recyclerViewListForm.layoutManager = LinearLayoutManager(this)
         recyclerViewListForm.adapter = adapter
 
         lifecycleScope.launch {
             val studentOperatorForm = provider.getInfoStudentForm("gfTos90dNJeX8kkffqIo")
-            adapter.actualizarLista(studentOperatorForm)
+            adapter.updateList(studentOperatorForm)
         }
 
         adapter.setOnItemClickListener { listForm ->
-            
+
         }
 
         adapter.setOnEditClickListener { listForm ->
@@ -63,6 +63,7 @@ class FormListStudentActivity : AppCompatActivity(){
             dialogConfirmDelete { provider.deleteFormStudent(listForm.FormIdStudent){success->
                 if(success){
                     toastMessage("Formulario eliminado correctamente",ToastType.SUCCESS)
+                    adapter.removeItem(listForm)
                 }else{
                     toastMessage("Error al eliminar el formulario",ToastType.ERROR)
                 }

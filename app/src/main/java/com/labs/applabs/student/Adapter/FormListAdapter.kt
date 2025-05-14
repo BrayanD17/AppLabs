@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.firebase.FormListStudent
 
-class FormListAdapter(private var lista: List<FormListStudent>) :
+class FormListAdapter(private var list: MutableList<FormListStudent>) :
     RecyclerView.Adapter<FormListAdapter.FormListStudentViewHolder>() {
 
     private var itemClickListener: ((FormListStudent) -> Unit)? = null
@@ -45,7 +45,7 @@ class FormListAdapter(private var lista: List<FormListStudent>) :
 
 
     override fun onBindViewHolder(holder: FormListStudentViewHolder, position: Int) {
-        val item = lista[position]
+        val item = list[position]
         holder.semester.text = item.Semester
         holder.formName.text = item.FormName
         holder.dateEnd.text = item.DateEnd
@@ -63,10 +63,20 @@ class FormListAdapter(private var lista: List<FormListStudent>) :
         }
     }
 
-    override fun getItemCount(): Int = lista.size
+    override fun getItemCount(): Int = list.size
 
-    fun actualizarLista(nuevaLista: List<FormListStudent>) {
-        lista = nuevaLista
+    fun updateList(newList: List<FormListStudent>) {
+        list.clear()
+        list.addAll(newList)
         notifyDataSetChanged()
     }
+
+    fun removeItem(item: FormListStudent) {
+        val position = list.indexOfFirst { it.FormIdStudent == item.FormIdStudent }
+        if (position != -1) {
+            list.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
 }
