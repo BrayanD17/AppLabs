@@ -41,6 +41,21 @@ data class FormOperator(
     val year: String = "",
 )
 
+data class FormOperatorData(
+    val urlApplicationForm: String?,
+    val iud: String?,
+    val nameForm : String?,
+    val semester: String?,
+    val year: String?
+
+)
+
+data class Solicitud(
+    val nombre: String = "",
+    val correo: String = "",
+    val uidForm : String = "",
+)
+
 data class dataUpdateStatus(
     val newStatusApplication: Int,
     val newComment: String = "",
@@ -58,5 +73,10 @@ data class getMessage(
 data class formOperatorActive(
     val operatorIdForm: String = "",
     val nameActiveForm: String = "",
-    val semesterActive: String = "",
+    val semesterActive: String = ""
+    )
+data class FormListStudent(
+    val Semester: String = "",
+    val FormName: String = "",
+    val DateEnd : String = "",
 )

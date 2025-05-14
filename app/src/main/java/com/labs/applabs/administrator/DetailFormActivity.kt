@@ -44,13 +44,19 @@ class DetailFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
-        idForm="LBnb7LT7Pu2YTMz4CdJG"
+
+        idForm = "LBnb7LT7Pu2YTMz4CdJG"
         showInfo(idForm!!)
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //val idForm = intent.getStringExtra("formId")
+
     }
 
     //Function to show form data of the user and the application
@@ -163,8 +169,6 @@ class DetailFormActivity : AppCompatActivity() {
         btnUpdateStatus.setOnClickListener {
            updateApplicationStatus(idUser!!,comment!!, statusApplication!!,nameFormOperator!!, semesterFormOperator!!)
         }
-
-
     }
 
     private fun downloadBoleta(urlApplication: String) {
