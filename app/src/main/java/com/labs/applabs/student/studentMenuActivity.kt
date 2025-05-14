@@ -16,12 +16,19 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.MainActivity
 import com.labs.applabs.R
 import com.labs.applabs.administrator.AdminMenuActivity
+import com.labs.applabs.firebase.Provider
+import kotlinx.coroutines.launch
 
 class studentMenuActivity : AppCompatActivity() {
+    private val provider = Provider()
+    private lateinit var recyclerView: RecyclerView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +50,8 @@ class studentMenuActivity : AppCompatActivity() {
         btnMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+
+        loadActiveForm()
 
         // Cerrar el drawer con el botón dentro del menú
         val btnCerrarDrawer = navView.findViewById<Button>(R.id.btnCerrarDrawer)
@@ -116,4 +125,26 @@ class studentMenuActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    private fun loadActiveForm() {
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewStudents)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        lifecycleScope.launch {
+            val forms = provider.getActiveForms()
+
+            if (forms.isNotEmpty()) {
+                val adapter = CardActiveFormAdapter(forms)
+                recyclerView.adapter = adapter
+            } else {
+                // Si no hay formularios, podrías ocultar el RecyclerView o mostrar un mensaje
+                recyclerView.visibility = View.GONE
+                findViewById<TextView>(R.id.formEmptyMessage)?.apply {
+                    text = "No hay formularios activos disponibles."
+                    visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
 }

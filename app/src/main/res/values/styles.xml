@@ -88,7 +88,7 @@
     <!--Style message welcome app student-->
     <style name="welcomeMessageStyle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_medium</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">9dp</item>
@@ -120,15 +120,23 @@
     </style>
     <style name="formCardStudentActive" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_regular</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">8dp</item>
         <item name="android:textAlignment">center</item>
     </style>
     <style name="formNameCardStudentActive" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineSpacingExtra">8dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="formNameCard" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">8dp</item>

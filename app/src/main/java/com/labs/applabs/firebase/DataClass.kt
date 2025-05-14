@@ -54,3 +54,9 @@ data class getMessage(
     val timestamp: String = "",
     val status: Int
 )
+
+data class formOperatorActive(
+    val operatorIdForm: String = "",
+    val nameActiveForm: String = "",
+    val semesterActive: String = "",
+)

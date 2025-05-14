@@ -292,6 +292,42 @@ class Provider {
         }
     }
 
+    suspend fun getActiveForms(): List<formOperatorActive> {
+        return try {
+            val snapshot = db.collection("formOperator")
+                .whereEqualTo("activityStatus", 1) // Paso 1: formularios activos
+                .get()
+                .await()
+
+            val currentDate = Date()
+
+            snapshot.documents.mapNotNull { doc ->
+                // Paso 2: Validar que esté en rango de fechas
+                val startDate = doc.getTimestamp("startDate")?.toDate()
+                val closingDate = doc.getTimestamp("closingDate")?.toDate()
+                if (startDate == null || closingDate == null) return@mapNotNull null
+                if (currentDate.before(startDate) || currentDate.after(closingDate)) return@mapNotNull null
+
+                // Paso 3: Obtener datos del documento
+                val operatorId = doc.id
+                val nameForm = doc.getString("nameForm") ?: return@mapNotNull null
+                val semester = doc.getString("semester") ?: return@mapNotNull null
+                val year = doc.get("year")?.toString() ?: return@mapNotNull null
+
+                // Paso 4: Retornar objeto válido
+                formOperatorActive(
+                    operatorIdForm = operatorId,
+                    nameActiveForm = nameForm,
+                    semesterActive = "$semester $year"
+                )
+            }
+
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener formularios activos: ${e.message}")
+            emptyList()
+        }
+    }
+
 }
 
 
