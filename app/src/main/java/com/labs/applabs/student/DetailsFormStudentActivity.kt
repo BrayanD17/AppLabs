@@ -13,6 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
+import com.labs.applabs.elements.ToastType
+import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
 
@@ -20,7 +22,7 @@ class DetailsFormStudentActivity : AppCompatActivity() {
 
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
-    private var idForm: String? = null
+    private lateinit var formId: String
     private var idFormOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
@@ -31,17 +33,20 @@ class DetailsFormStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_details_form_student)
-        idForm="SzNjA5Aqjs21oB4CjRpo"
-
-        showInfo(idForm!!)
+        val id = intent.getStringExtra("formIdStudent")
+        if (id == null) {
+            toastMessage("ID de formulario no recibido", ToastType.ERROR)
+            finish()
+            return
+        }
+        formId = id
+        showInfo(formId)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        idFormOperator="0OyPvJVUXD7aamtEHR1a"
-        idUser = "gfTos90dNJeX8kkffqIo"
     }
 
     private fun showInfo(formId: String) {

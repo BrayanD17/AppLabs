@@ -114,7 +114,7 @@ class Provider {
                     comment= doc.getString("comment") ?: "",
                     studentLastDigitCard= doc.get("digitsCard")?.toString() ?: "",
                     studentId= doc.get("idCard")?.toString() ?: "",
-                    idFormOperator= doc.getString("idFormOperator ") ?: "",
+                    idFormOperator= doc.getString("idFormOperator") ?: "",
                     idUser= doc.getString("idStudent") ?: "",
                     namePsycologist= doc.getString("psychology") ?: "",
                     scheduleAvailability= scheduleAvailability,

@@ -50,7 +50,9 @@ class FormListStudentActivity : AppCompatActivity(){
         }
 
         adapter.setOnItemClickListener { listForm ->
-
+            val intent = Intent(this, DetailsFormStudentActivity::class.java)
+            intent.putExtra("formIdStudent", listForm.FormIdStudent)
+            startActivity(intent)
         }
 
         adapter.setOnEditClickListener { listForm ->
