@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
                             3 -> startActivity(
                                 Intent(
                                     this,
-                                    com.labs.applabs.administrator.DetailFormActivity::class.java
+                                    com.labs.applabs.administrator.SolicitudesListView::class.java
                                 )
                             )
                         }
@@ -163,9 +163,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Menú Admin (vista de administrador)
-    fun menuAdmin(view: View) {
-        val intent = Intent(this, AdminMenuActivity::class.java)
+    /*fun menuAdmin(view: View){
+        //val intent = Intent(this, com.labs.applabs.student.DetailsFormStudentActivity::class.java)
+         //val intent = Intent(this, com.labs.applabs.student.FormActivity::class.java)
+            val intent = Intent(this, com.labs.applabs.administrator.SolicitudesListView::class.java)
         startActivity(intent)
-    }
+    }*/
 }
