@@ -254,7 +254,6 @@ class EditFormStudent : AppCompatActivity() {
         backView.setOnClickListener {
             finish()
         }
-
     }
 
 }

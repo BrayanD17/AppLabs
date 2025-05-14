@@ -3,6 +3,7 @@ package com.labs.applabs.student
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -41,6 +42,7 @@ class DetailsFormStudentActivity : AppCompatActivity() {
         }
         formId = id
         showInfo(formId)
+        finishActivity()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -139,6 +141,13 @@ class DetailsFormStudentActivity : AppCompatActivity() {
                 typeForm.text = "No disponible"
             }
 
+        }
+    }
+
+    private fun finishActivity(){
+        val backView = findViewById<ImageView>(R.id.backViewDetailStudent)
+        backView.setOnClickListener {
+            finish()
         }
     }
 }
