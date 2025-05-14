@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class FormActivity : AppCompatActivity() {
     private val provider : Provider = Provider()
-
+    private lateinit var formIdActive: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +72,14 @@ class FormActivity : AppCompatActivity() {
     }
 
     fun Siguiente(view: View){
+        val id = intent.getStringExtra("formIdFormActive")
+        if (id == null) {
+            toastMessage("ID de formulario no recibido", ToastType.ERROR)
+            finish()
+            return
+        }
+        formIdActive = id
+        FormStudentData.idFormOperator = formIdActive
         val intent : Intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
         startActivity(intent);
     }
