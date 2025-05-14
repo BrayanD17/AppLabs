@@ -11,11 +11,9 @@ open class StepIndicatorActivity : AppCompatActivity() {
         val steps = listOf(
             findViewById<TextView>(R.id.step1),
             findViewById<TextView>(R.id.step2),
-            findViewById<TextView>(R.id.step3)
         )
         val lines = listOf(
-            findViewById<View>(R.id.line1),
-            findViewById<View>(R.id.line2)
+            findViewById<View>(R.id.line1)
         )
 
         for ((i, step) in steps.withIndex()) {

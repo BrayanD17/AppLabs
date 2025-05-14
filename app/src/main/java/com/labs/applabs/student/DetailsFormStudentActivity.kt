@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -26,7 +27,7 @@ class DetailsFormStudentActivity : AppCompatActivity() {
 
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
-    private var idForm: String? = null
+    private lateinit var formId: String
     private var idFormOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
@@ -37,8 +38,15 @@ class DetailsFormStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_details_form_student)
-
-        showInfo(idForm!!)
+        val id = intent.getStringExtra("formIdStudent")
+        if (id == null) {
+            toastMessage("ID de formulario no recibido", ToastType.ERROR)
+            finish()
+            return
+        }
+        formId = id
+        showInfo(formId)
+        finishActivity()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -160,4 +168,10 @@ class DetailsFormStudentActivity : AppCompatActivity() {
     }
 
 
+    private fun finishActivity(){
+        val backView = findViewById<ImageView>(R.id.backViewDetailStudent)
+        backView.setOnClickListener {
+            finish()
+        }
+    }
 }

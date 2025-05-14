@@ -23,16 +23,4 @@
         android:id="@+id/step2"
         style="@style/CircleStepStyle"
         android:text="2" />
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="40dp"
-        android:layout_height="4dp"
-        android:layout_gravity="center_vertical"
-        android:background="@color/gray" />
-
-    <TextView
-        android:id="@+id/step3"
-        style="@style/CircleStepStyle"
-        android:text="3" />
 </LinearLayout>
