@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.labs.applabs.MainActivity
+import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
 
 class AdminMenuActivity : AppCompatActivity() {

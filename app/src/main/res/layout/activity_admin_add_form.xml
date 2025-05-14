@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".administrator.AdminAddFormActivity">
+
+
+    <include
+        android:id="@+id/stepIndicator"
+        layout="@layout/layout_step_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="84dp"
+        android:text="@string/nuevo_formulario_de_operadores"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupPeriodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="51dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+        <RadioButton
+            android:id="@+id/radioButtonISemestre"
+            style="@style/TextViewStyle"
+            android:buttonTint="@color/marineBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I Semestre" />
+
+        <RadioButton
+            android:id="@+id/radioButtonIISemestre"
+            style="@style/TextViewStyle"
+            android:buttonTint="@color/marineBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="II Semestre" />
+
+        <RadioButton
+            android:id="@+id/radioButtonVerano"
+            style="@style/TextViewStyle"
+            android:buttonTint="@color/marineBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verano" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView13"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Link/URL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupPeriodo" />
+
+    <EditText
+        android:id="@+id/et_name_add_form"
+        style="@style/EditTextStyle"
+        android:layout_width="317dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="92dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="@string/nombre_de_formulario"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView10"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <EditText
+        android:id="@+id/et_link_form"
+        style="@style/EditTextStyle"
+        android:layout_width="317dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="92dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="@string/link_del_formulario"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView11"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Periodo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_name_add_form" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="273dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="69dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_compulabs" />
+
+    <Button
+        android:id="@+id/btnSiguiente1"
+        style="@style/ButtonStyle"
+        android:layout_width="112dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="298dp"
+        android:layout_marginEnd="16dp"
+        android:text="Siguiente"
+        app:backgroundTint="@color/marineBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_link_form" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
