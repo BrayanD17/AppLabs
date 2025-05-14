@@ -291,7 +291,8 @@ class Provider {
     suspend fun uploadPdfToStorage(uri: Uri, fileName: String): String {
         val storageRef = Firebase.storage.reference.child(fileName)
         val uploadTask = storageRef.putFile(uri).await()
-        return uploadTask.storage.downloadUrl.await().toString()
+        val downloadUrl = storageRef.downloadUrl.await()
+        return downloadUrl.toString()
     }
 
 

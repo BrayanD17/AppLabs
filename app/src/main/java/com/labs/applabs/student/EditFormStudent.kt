@@ -147,7 +147,37 @@ class EditFormStudent : AppCompatActivity() {
         }
     }
 
+    private var isUploading = false // Nueva bandera
+
+    private suspend fun uploadFileToFirebase(uri: Uri) {
+        try {
+            isUploading = true // <-- Empieza carga
+
+            // Elimina anterior si hay
+            currentPdfUrl?.let { oldUrl ->
+                provider.deletePdfFromStorage(oldUrl)
+            }
+
+            val fileName = getFileName(uri)
+            val newUrl = provider.uploadPdfToStorage(uri, fileName)
+
+            currentPdfUrl = newUrl
+            Log.d("UploadPDF", "URL del archivo subida: $newUrl")
+
+            toastMessage("PDF subido correctamente", ToastType.SUCCESS)
+        } catch (e: Exception) {
+            toastMessage("Error al subir archivo: ${e.message}", ToastType.ERROR)
+            Log.e("UploadPDF", "Error: ${e.message}")
+        } finally {
+            isUploading = false // <-- Termina carga
+        }
+    }
+
     private fun updateDataStudent() {
+        if (isUploading) {
+            toastMessage("Espere a que se suba el archivo antes de guardar", ToastType.SUCCESS)
+            return
+        }
         val scheduleAvailability = daysMap.mapNotNull { (day, triple) ->
             val (morningId, afternoonId, eveningId) = triple
 
@@ -229,27 +259,7 @@ class EditFormStudent : AppCompatActivity() {
         return result
     }
 
-    private suspend fun uploadFileToFirebase(uri: Uri) {
-        try {
-            // 1. Eliminar archivo anterior si existe
-            currentPdfUrl?.let { oldUrl ->
-                provider.deletePdfFromStorage(oldUrl)
-            }
 
-            // 2. Obtener el nombre original del archivo
-            val fileName = getFileName(uri)
-
-            // 3. Subir el archivo a la raíz con su nombre original
-            val newUrl = provider.uploadPdfToStorage(uri, fileName)
-
-            // 4. Actualizar la URL y UI
-            currentPdfUrl = newUrl
-            toastMessage("PDF subido correctamente", ToastType.SUCCESS)
-        } catch (e: Exception) {
-            toastMessage("Error al subir archivo: ${e.message}", ToastType.ERROR)
-            Log.e("UploadPDF", "Error: ${e.message}")
-        }
-    }
 
 
     private fun finishActivity(){
