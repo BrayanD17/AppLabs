@@ -328,20 +328,19 @@
             tools:ignore="OnClick" />
 
         <Button
-            android:id="@+id/btnBack"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="Back"
-            android:text="@string/back"
-            app:backgroundTint="@color/marineBlue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnNext"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2"
-            app:layout_constraintVertical_bias="0.505"
-            tools:ignore="OnClick" />
+        android:id="@+id/btnBack"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="Back"
+        android:text="@string/back"
+        app:backgroundTint="@color/marineBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="0.505" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 

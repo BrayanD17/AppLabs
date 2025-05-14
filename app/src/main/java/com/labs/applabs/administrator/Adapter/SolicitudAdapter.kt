@@ -6,16 +6,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
-import com.labs.applabs.administrator.Solicitud
+import com.labs.applabs.firebase.Solicitud
 
 class SolicitudAdapter(private var lista: List<Solicitud>) :
     RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder>() {
 
-    private var listener: ((Solicitud) -> Unit)? = null
+    // Cambia a un solo listener
+    private var onItemClickListener: ((Solicitud) -> Unit)? = null
 
+    // Función pública para establecer el listener
     fun setOnItemClickListener(listener: (Solicitud) -> Unit) {
-        this.listener = listener
+        this.onItemClickListener = listener
     }
+
 
     class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.nameTextView)
@@ -34,10 +37,10 @@ class SolicitudAdapter(private var lista: List<Solicitud>) :
         holder.name.text = item.nombre
         holder.email.text = item.correo
 
-
         holder.itemView.setOnClickListener {
-            listener?.invoke(item)
+            onItemClickListener?.invoke(item)
         }
+
     }
 
     override fun getItemCount(): Int = lista.size

@@ -1,5 +1,4 @@
 <resources>
-    <!--Login and register-->
     <string name="app_name">AppLabs</string>
     <string name="users">Usuario</string>
     <string name="password">Contraseña</string>
@@ -8,6 +7,10 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+    <string name="mostrar_u_ocultar_contrase_a">Mostrar u ocultar contraseña</string>
+    <string name="icono_exito">Ícono de éxito</string>
+    <string name="contraseña_actualizada">Contraseña actualizada</string>
+    <string name="btn_cambiar_contrasena">Botón para cambiar la contraseña</string>
 
     <string name="bienvenido_a_la_gesti_n_de_laboratorios">¡Bienvenido a la gestión de laboratorios!</string>
     <string name="formularios">Formularios</string>
@@ -104,11 +107,24 @@
     <string name="statusRejected">Denegada</string>
     <string name="downloadDocument">Descargar Boleta</string>
     <string name="infoComment">Comentario</string>
+    <string name="ver_historial">Ver historial</string>
+    <string name="nuevo_formulario_para_operadores">Nuevo formulario para operadores</string>
+    <string name="nuevo_formulario_de_operadores">Nuevo Formulario de Operadores</string>
+    <string name="nombre_de_formulario">Nombre de formulario</string>
+    <string name="link_del_formulario">Link de la boleta</string>
+    <string name="campo_para_seleccionar_fecha_de_habilitaci_n">Campo para seleccionar fecha de habilitación</string>
     <string name="btnSaveStatus">Guardar estado</string>"
     <string name="dataNotAvailable">No disponible</string>
     <string name="dataSemester">semestres</string>
     <string name="hoursWeekly">horas semanales</string>
 
+    <string name="semesterFilter">Cantidad de semestres siendo operador</string>
+    <string name="status">Estado</string>
+    <string name="name">Nombre</string>
+
+    <!--Request history details (administrator view)-->
+    <string name="formListTitle">Historial de Formularios Enviados</string>
+    <string name="formLisDescription">Podra editar la informacion del formulario siempre y cuando este se encuentre en periodo activo.</string>
 
 
 </resources>
