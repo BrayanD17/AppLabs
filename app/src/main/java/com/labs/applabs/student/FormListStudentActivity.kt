@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.administrator.Adapter.SolicitudAdapter
+import com.labs.applabs.elements.ToastType
+import com.labs.applabs.elements.dialogConfirmDelete
+import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.student.Adapter.FormListAdapter
 import kotlinx.coroutines.launch
@@ -56,7 +59,14 @@ class FormListStudentActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-        adapter.setOnDeleteClickListener { listForm ->
+        adapter.setOnDeleteClickListener { listForm->
+            dialogConfirmDelete { provider.deleteFormStudent(listForm.FormIdStudent){success->
+                if(success){
+                    toastMessage("Formulario eliminado correctamente",ToastType.SUCCESS)
+                }else{
+                    toastMessage("Error al eliminar el formulario",ToastType.ERROR)
+                }
+            } }
 
         }
 

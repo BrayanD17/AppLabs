@@ -334,6 +334,23 @@ class Provider {
 
     }
 
+    fun deleteFormStudent(documentoId: String, onResult: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("formStudent")
+            .document(documentoId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("Firestore", "Documento eliminado correctamente")
+                onResult(true)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error al eliminar el documento", e)
+                onResult(false)
+            }
+    }
+
+
 
 }
 
