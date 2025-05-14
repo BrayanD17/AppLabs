@@ -282,7 +282,9 @@ class Provider {
         notificationsCollection.add(newNotification).await()
     }
 
-    suspend fun getUserMessages(userId: String): List<getMessage> {
+    suspend fun getUserMessages(): List<getMessage> {
+        val userId = getAuthenticatedUserId()
+
         val notificationsRef = db.collection("message")
             .document(userId)
             .collection("notifications")
@@ -310,7 +312,9 @@ class Provider {
         }
     }
 
-    suspend fun markMessagesAsSeen(userId: String) {
+    suspend fun markMessagesAsSeen() {
+        val userId = getAuthenticatedUserId()
+
         val notificationsRef = db.collection("message")
             .document(userId)
             .collection("notifications")

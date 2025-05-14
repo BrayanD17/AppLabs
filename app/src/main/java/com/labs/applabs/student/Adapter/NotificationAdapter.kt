@@ -1,12 +1,9 @@
-package com.labs.applabs.student
+package com.labs.applabs.student.Adapter
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.firebase.getMessage

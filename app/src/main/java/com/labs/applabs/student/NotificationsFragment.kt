@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.firebase.Provider
+import com.labs.applabs.student.Adapter.NotificationAdapter
 import kotlinx.coroutines.launch
 
 class NotificationsFragment : Fragment() {
@@ -22,7 +23,6 @@ class NotificationsFragment : Fragment() {
     private lateinit var messageNotification: TextView
 
     private val provider = Provider()
-    private val userId = "gfTos90dNJeX8kkffqIo"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +47,7 @@ class NotificationsFragment : Fragment() {
 
     private fun loadNotifications() {
         lifecycleScope.launch {
-            val messages = provider.getUserMessages(userId)
+            val messages = provider.getUserMessages()
 
             if (messages.isEmpty()) {
                 recyclerView.visibility = View.GONE
@@ -62,7 +62,7 @@ class NotificationsFragment : Fragment() {
                 withoutMessage.visibility = View.GONE
                 messageNotification.visibility = View.GONE
 
-                provider.markMessagesAsSeen(userId)
+                provider.markMessagesAsSeen()
             }
         }
     }
