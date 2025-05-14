@@ -11,31 +11,18 @@ import com.labs.applabs.firebase.Solicitud
 class SolicitudAdapter(private var lista: List<Solicitud>) :
     RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder>() {
 
-    private var listener: ((Solicitud) -> Unit)? = null
+    // Cambia a un solo listener
+    private var onItemClickListener: ((Solicitud) -> Unit)? = null
 
-
-
-    private var itemClickListener: ((Solicitud) -> Unit)? = null
-    private var editClickListener: ((Solicitud) -> Unit)? = null
-    private var deleteClickListener: ((Solicitud) -> Unit)? = null
-
-
+    // Función pública para establecer el listener
     fun setOnItemClickListener(listener: (Solicitud) -> Unit) {
-        this.listener = listener
+        this.onItemClickListener = listener
     }
 
-    fun setOnEditClickListener(listener: (Solicitud) -> Unit) {
-        editClickListener = listener
-    }
-
-    fun setOnDeleteClickListener(listener: (Solicitud) -> Unit) {
-        deleteClickListener = listener
-    }
 
     class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.nameTextView)
         val email: TextView = itemView.findViewById(R.id.emailTextView)
-        val uid : String = ""
     }
 
 
@@ -51,15 +38,9 @@ class SolicitudAdapter(private var lista: List<Solicitud>) :
         holder.email.text = item.correo
 
         holder.itemView.setOnClickListener {
-            itemClickListener?.invoke(item)
-        }
-        holder.editIcon.setOnClickListener {
-            editClickListener?.invoke(item)
+            onItemClickListener?.invoke(item)
         }
 
-        holder.deleteIcon.setOnClickListener {
-            deleteClickListener?.invoke(item)
-        }
     }
 
     override fun getItemCount(): Int = lista.size
