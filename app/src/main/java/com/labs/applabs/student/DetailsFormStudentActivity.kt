@@ -31,7 +31,6 @@ class DetailsFormStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_details_form_student)
-        idForm="SzNjA5Aqjs21oB4CjRpo"
 
         showInfo(idForm!!)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -40,8 +39,6 @@ class DetailsFormStudentActivity : AppCompatActivity() {
             insets
         }
 
-        idFormOperator="0OyPvJVUXD7aamtEHR1a"
-        idUser = "gfTos90dNJeX8kkffqIo"
     }
 
     private fun showInfo(formId: String) {

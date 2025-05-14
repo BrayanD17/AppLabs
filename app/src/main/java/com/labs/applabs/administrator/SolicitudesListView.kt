@@ -22,33 +22,29 @@ class SolicitudesListView : AppCompatActivity() {
     private lateinit var adapter: SolicitudAdapter
 
     @SuppressLint("MissingInflatedId")
+    // Versión simplificada pero mejorada de tu código original
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_solicitudes_list_view)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         recyclerView = findViewById(R.id.recycleView)
-        adapter = SolicitudAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = SolicitudAdapter(emptyList())
         recyclerView.adapter = adapter
 
-        // Cargar datos
-        lifecycleScope.launch {
-            val solicitudes = provider.getSolicitudes()
-            adapter.actualizarLista(solicitudes) // actualiza la lista
-        }
-
-        // Opcional: clics en cada solicitud
         adapter.setOnItemClickListener { solicitud ->
-            // Aquí puedes abrir un modal o actividad con más detalles
-            // Ejemplo: mostrar un Toast
             Toast.makeText(this, "${solicitud.nombre} - ${solicitud.correo}", Toast.LENGTH_SHORT).show()
         }
 
+        lifecycleScope.launch {
+            try {
+                val solicitudes = provider.getSolicitudes()
+                adapter.actualizarLista(solicitudes) // Usa submitList en lugar de actualizarLista
+            } catch (e: Exception) {
+                Toast.makeText(this@SolicitudesListView,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

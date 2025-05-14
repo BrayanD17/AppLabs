@@ -20,6 +20,7 @@ class SolicitudAdapter(private var lista: List<Solicitud>) :
     class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.nameTextView)
         val email: TextView = itemView.findViewById(R.id.emailTextView)
+        val uid : String = ""
     }
 
 
@@ -34,10 +35,7 @@ class SolicitudAdapter(private var lista: List<Solicitud>) :
         holder.name.text = item.nombre
         holder.email.text = item.correo
 
-
-        holder.itemView.setOnClickListener {
-            listener?.invoke(item)
-        }
+        
     }
 
     override fun getItemCount(): Int = lista.size

@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.labs.applabs.models.Usuario
@@ -219,51 +220,79 @@ class Provider {
         }
     }
 
+    // Para FormOperatorData
     suspend fun getFormOperatorData(): FormOperatorData? {
         return try {
             val doc = db.collection("formOperator")
                 .whereEqualTo("activityStatus", 1)
+                .limit(1)
                 .get()
                 .await()
 
-            val document = doc.documents.firstOrNull()
-            if (document != null) {
+            doc.documents.firstOrNull()?.let { document ->
                 FormOperatorData(
-                    urlApplicationForm = document.getString("urlApplicationForm"),
-                    iud = document.getString("iud"),
-                    nameForm = document.getString("nameForm"),
-                    semester = document.getString("semester"),
-                    year = document.getString("year")
+                    urlApplicationForm = document.getString("urlApplicationForm") ?: "",
+                    iud = document.id,
+                    nameForm = document.getString("nameForm") ?: "",
+                    semester = document.getString("semester") ?: "",
+                    year = document.getLong("year")?.toString() ?: ""
                 )
-            } else {
-                null
             }
         } catch (e: Exception) {
-            throw Exception("Error: ${e.message}")
+            Log.e("FirestoreProvider", "Error getting operator data: ${e.message}")
+            null
         }
     }
 
     suspend fun getSolicitudes(): List<Solicitud> {
+        // 1. Obtener el ID del formulario operador activo
+        val idFormOperator = getFormOperatorData()?.iud ?: run {
+            Log.d("DEBUG", "No hay formulario operador activo")
+            return emptyList()
+        }
+
+        Log.d("DEBUG", "Buscando solicitudes para formulario operador: $idFormOperator")
+
         return try {
-            val snapshot = db.collection("formStudent")
-                .whereEqualTo("idFormOperator ", "0OyPvJVUXD7aamtEHR1a")
+            // 2. Obtener todos los formStudent asociados a este formulario operador
+            val formStudents = db.collection("formStudent")
+                .whereEqualTo("idFormOperator", idFormOperator)
                 .get()
                 .await()
 
-            snapshot.documents.mapNotNull { doc ->
-                val idUser = doc.getString("idStudent") ?: return@mapNotNull null
+            Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios de estudiantes")
 
-                val userDoc = db.collection("users").document(idUser).get().await()
-                if (!userDoc.exists()) return@mapNotNull null
+            // 3. Extraer todos los idStudent únicos
+            val studentIds = formStudents.documents.mapNotNull { doc ->
+                doc.getString("idStudent")?.also { id ->
+                    Log.d("DEBUG", "ID Estudiante encontrado: $id")
+                }
+            }.distinct()
 
-                val nombre = userDoc.getString("name") ?: ""
-                val correo = userDoc.getString("email") ?: ""
+            if (studentIds.isEmpty()) {
+                Log.d("DEBUG", "No hay estudiantes asociados a este formulario")
+                return emptyList()
+            }
 
-                Solicitud(nombre = nombre, correo = correo)
+            // 4. Obtener información de los usuarios (students)
+            val users = db.collection("users")
+                .whereIn(FieldPath.documentId(), studentIds)
+                .get()
+                .await()
+
+            // 5. Mapear a objetos Solicitud
+            users.documents.map { userDoc ->
+                Solicitud(
+                    nombre = userDoc.getString("name") ?: "Sin nombre",
+                    correo = userDoc.getString("email") ?: "Sin email",
+                    uidForm = idFormOperator
+                ).also {
+                    Log.d("DEBUG", "Solicitud procesada: $it")
+                }
             }
 
         } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error al obtener solicitudes: ${e.message}")
+            Log.e("DEBUG", "Error al obtener solicitudes: ${e.message}", e)
             emptyList()
         }
     }
