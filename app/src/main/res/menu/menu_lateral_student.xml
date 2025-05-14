@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_home_student"
         android:title="@string/men"
         android:icon="@drawable/icon_home"/>
     <item
-        android:id="@+id/nav_Forms"
+        android:id="@+id/nav_Forms_student"
         android:title="Formularios enviados"
         android:icon="@drawable/icon_form_student"/>
     <item
-        android:id="@+id/nav_logout"
+        android:id="@+id/nav_logout_student"
         android:title="@string/cerrar_sesi_n"
         android:icon="@drawable/icon_logout" />
 

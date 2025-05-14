@@ -34,6 +34,7 @@ class studentMenuActivity : AppCompatActivity() {
             insets
         }
 
+        //FROM MENU (NAVAGATION BAR) STUDENT
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_Student)
         val navView = findViewById<NavigationView>(R.id.nav_view_student)
         val btnMenu = findViewById<ImageButton>(R.id.btnMenuStudent)
@@ -52,17 +53,17 @@ class studentMenuActivity : AppCompatActivity() {
         // Opciones del menú
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> {
-                    val intent = Intent(this, AdminMenuActivity::class.java)
+                R.id.nav_home_student -> {
+                    val intent = Intent(this, this::class.java)
                     startActivity(intent)
                     finish()
                 }
-                R.id.nav_logout -> {
+                R.id.nav_Forms_student -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
-                R.id.nav_logout -> {
+                R.id.nav_logout_student -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -77,6 +78,7 @@ class studentMenuActivity : AppCompatActivity() {
             showNotificationsFragment()
         }
 
+    //MENU STUDENT FROM MESSAGE (VISIBILITY OR INVISIBILITY)
         // Detectar cambios en el back stack para actualizar
         supportFragmentManager.addOnBackStackChangedListener {
             val isFragmentVisible = supportFragmentManager.backStackEntryCount > 0
@@ -99,6 +101,7 @@ class studentMenuActivity : AppCompatActivity() {
         }
     }
 
+    //SHOW FRAGMENT FROM MESSAGE
     private fun showNotificationsFragment() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, NotificationsFragment.newInstance())
