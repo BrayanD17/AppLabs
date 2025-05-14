@@ -78,6 +78,8 @@ class FormListStudentActivity : AppCompatActivity(){
     private fun finishActivity(){
         val backView = findViewById<ImageView>(R.id.backViewStudent)
         backView.setOnClickListener {
+            val intent = Intent(this, studentMenuActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }
