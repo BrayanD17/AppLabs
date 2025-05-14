@@ -33,7 +33,7 @@ class SolicitudesListView : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         adapter.setOnItemClickListener { solicitud ->
-            Toast.makeText(this, "${solicitud.nombre} - ${solicitud.correo}", Toast.LENGTH_SHORT).show()
+            
         }
 
         lifecycleScope.launch {

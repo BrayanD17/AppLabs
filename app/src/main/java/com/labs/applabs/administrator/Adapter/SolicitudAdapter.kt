@@ -13,8 +13,23 @@ class SolicitudAdapter(private var lista: List<Solicitud>) :
 
     private var listener: ((Solicitud) -> Unit)? = null
 
+
+
+    private var itemClickListener: ((Solicitud) -> Unit)? = null
+    private var editClickListener: ((Solicitud) -> Unit)? = null
+    private var deleteClickListener: ((Solicitud) -> Unit)? = null
+
+
     fun setOnItemClickListener(listener: (Solicitud) -> Unit) {
         this.listener = listener
+    }
+
+    fun setOnEditClickListener(listener: (Solicitud) -> Unit) {
+        editClickListener = listener
+    }
+
+    fun setOnDeleteClickListener(listener: (Solicitud) -> Unit) {
+        deleteClickListener = listener
     }
 
     class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -35,7 +50,16 @@ class SolicitudAdapter(private var lista: List<Solicitud>) :
         holder.name.text = item.nombre
         holder.email.text = item.correo
 
-        
+        holder.itemView.setOnClickListener {
+            itemClickListener?.invoke(item)
+        }
+        holder.editIcon.setOnClickListener {
+            editClickListener?.invoke(item)
+        }
+
+        holder.deleteIcon.setOnClickListener {
+            deleteClickListener?.invoke(item)
+        }
     }
 
     override fun getItemCount(): Int = lista.size
