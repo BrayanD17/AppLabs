@@ -69,7 +69,7 @@ class studentMenuActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_Forms_student -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, FormListStudentActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

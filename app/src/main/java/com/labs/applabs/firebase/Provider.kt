@@ -119,7 +119,7 @@ class Provider {
 
     suspend fun saveStudentData(studentData: FormStudentData): Boolean {
         return try {
-            val user = "gfTos90dNJeX8kkffqIo"
+            val user = getAuthenticatedUserId()
 
             val dataMap = hashMapOf<String, Any>().apply {
                 put("idStudent", user)
@@ -155,7 +155,7 @@ class Provider {
         }
     }
 
-
+    //Obtener los datos del estudiente de formStudent por id de usuario
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
             val doc = db.collection("formStudent").document(formId).get().await()
@@ -191,7 +191,7 @@ class Provider {
 
     suspend fun updateStudentData(formId: String, studentData: editDataStudentForm): Boolean {
         return try {
-            val userId = "MWEPEbXrAFTpeY5V57znaeCbuh83" // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
+            val userId = getAuthenticatedUserId() // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
 
             val docRef = db.collection("formStudent").document(formId)
             val snapshot = docRef.get().await()
@@ -501,7 +501,8 @@ class Provider {
 
 
     //Obtener los formularios que ha enviado el estudiante
-    suspend fun getInfoStudentForm(id:String): List<FormListStudent> {
+    suspend fun getInfoStudentForm(): List<FormListStudent> {
+        val id = getAuthenticatedUserId()
         return try {
             val snapshot = db.collection("formStudent")
                 .whereEqualTo("idStudent", id)

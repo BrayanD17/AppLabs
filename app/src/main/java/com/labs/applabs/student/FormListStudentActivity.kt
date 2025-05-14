@@ -45,7 +45,7 @@ class FormListStudentActivity : AppCompatActivity(){
         recyclerViewListForm.adapter = adapter
 
         lifecycleScope.launch {
-            val studentOperatorForm = provider.getInfoStudentForm("MWEPEbXrAFTpeY5V57znaeCbuh83")
+            val studentOperatorForm = provider.getInfoStudentForm()
             adapter.updateList(studentOperatorForm)
         }
 
