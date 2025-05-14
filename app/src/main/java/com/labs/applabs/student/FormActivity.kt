@@ -10,6 +10,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -34,7 +36,14 @@ class FormActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val button = findViewById<Button>(R.id.buttonURL)
+        finishActivity()
+        
+        val formName : TextView = findViewById(R.id.tvForm)
+        val formSemester : TextView = findViewById(R.id.tvSemester)
+        formName.text = intent.getStringExtra("formName")
+        formSemester.text = intent.getStringExtra("semesterForm")
+
+
     }
 
     private fun downloadBoleta(urlApplication: String) {
@@ -67,6 +76,13 @@ class FormActivity : AppCompatActivity() {
         FormStudentData.idFormOperator = formIdActive
         val intent : Intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
         startActivity(intent);
+    }
+
+    private fun finishActivity(){
+        val backView = findViewById<ImageView>(R.id.backViewFormActivyty)
+        backView.setOnClickListener {
+            finish()
+        }
     }
 
     fun onClickFormButton(view: View) {

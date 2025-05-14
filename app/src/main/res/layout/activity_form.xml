@@ -8,9 +8,21 @@
     android:background="@color/baseActivityColor"
     tools:context=".student.FormActivity">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backViewFormActivyty"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvForm"
@@ -55,8 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvDescription1"
@@ -76,6 +87,7 @@
                     android:text="@string/descripcionForm1"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
+                    android:justificationMode="inter_word"
                     android:textSize="14sp" />
 
                 <TextView
@@ -86,6 +98,7 @@
                     android:text="@string/descripcionForm2"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
+                    android:justificationMode="inter_word"
                     android:textSize="14sp" />
 
                 <Button

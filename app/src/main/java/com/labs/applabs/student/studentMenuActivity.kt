@@ -141,6 +141,8 @@ class studentMenuActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener { form->
                     val intent = Intent(this@studentMenuActivity, FormActivity::class.java)
                     intent.putExtra("formIdFormActive", form.operatorIdForm)
+                    intent.putExtra("formName", form.nameActiveForm)
+                    intent.putExtra("semesterForm", form.semesterActive)
                     //Toast.makeText(this@studentMenuActivity, form.operatorIdForm, Toast.LENGTH_SHORT).show()
                     startActivity(intent)
                 }
