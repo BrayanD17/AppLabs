@@ -103,3 +103,8 @@ data class listSchedule(
     val day: String,
     val shifts: List<String> = emptyList()
 )
+
+data class UserInformation(
+    val nameUser: String = "",
+    val rolUser: String = ""
+)

@@ -572,6 +572,35 @@ class Provider {
             }
     }
 
+    suspend fun getUserInformation(): UserInformation? {
+        val uid = getAuthenticatedUserId()
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("users").document(uid)
 
+        return try {
+            val snapshot = docRef.get().await()
+            if (snapshot.exists()) {
+                val name = snapshot.getString("name") ?: ""
+                val surnames = snapshot.getString("surnames") ?: ""
+                val fullName = "$name $surnames".trim()
+                val rolNumerico = snapshot.getLong("userRole")?.toInt() ?: 0
+                val rolTexto = when (rolNumerico) {
+                    1 -> "Administrador"
+                    2 -> "Estudiante"
+                    3 -> "Operador"
+                    else -> "Desconocido"
+                }
 
+                UserInformation(
+                    nameUser = fullName,
+                    rolUser = rolTexto
+                )
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("ERROR", "Error al obtener datos del usuario", e)
+            null
+        }
+    }
 }
