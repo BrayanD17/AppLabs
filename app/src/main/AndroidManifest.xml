@@ -17,6 +17,17 @@
         android:theme="@style/Theme.AppLabs"
         tools:targetApi="31">
 
+        <service
+            android:name=".student.FirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".student.studentMenuActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -84,5 +95,6 @@
             android:name=".student.FormActivity"
             android:exported="false" />
     </application>
+
 
 </manifest>

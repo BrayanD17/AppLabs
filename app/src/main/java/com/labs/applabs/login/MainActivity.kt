@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
     // Validador
     private val validador = object : ValidadorCampos() {}
 
+    private val provider: Provider = Provider()
+    private val userId = "gfTos90dNJeX8kkffqIo"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

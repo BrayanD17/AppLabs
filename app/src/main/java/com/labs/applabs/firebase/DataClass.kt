@@ -2,8 +2,7 @@ package com.labs.applabs.firebase
 
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
-    val formOperator: FormOperator = FormOperator()
-
+    val formOperator: FormOperator = FormOperator(),
 )
 
 data class StudentInfo(
@@ -60,8 +59,22 @@ data class Solicitud(
 data class dataUpdateStatus(
     val newStatusApplication: Int,
     val newComment: String = "",
+    val userId: String="",
+    val message: String = ""
 )
 
+data class getMessage(
+    val subject: String = "",
+    val infomessage: String = "" ,
+    val timestamp: String = "",
+    val status: Int
+)
+
+data class formOperatorActive(
+    val operatorIdForm: String = "",
+    val nameActiveForm: String = "",
+    val semesterActive: String = ""
+    )
 data class FormListStudent(
     val Semester: String = "",
     val FormName: String = "",
