@@ -11,6 +11,12 @@ import com.labs.applabs.firebase.formOperatorActive
 class CardActiveFormAdapter(private val studentList: List<formOperatorActive>) :
     RecyclerView.Adapter<CardActiveFormAdapter.StudentViewHolder>() {
 
+    private var itemClickListener: ((formOperatorActive) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (formOperatorActive) -> Unit) {
+        itemClickListener = listener
+    }
+
     class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textNameForm: TextView = itemView.findViewById(R.id.nameFormActive)
         val textSemester: TextView = itemView.findViewById(R.id.semesterActive)
@@ -26,6 +32,10 @@ class CardActiveFormAdapter(private val studentList: List<formOperatorActive>) :
         val student = studentList[position]
         holder.textNameForm.text = student.nameActiveForm
         holder.textSemester.text = student.semesterActive
+
+        holder.itemView.setOnClickListener {
+            itemClickListener?.invoke(student)
+        }
     }
 
     override fun getItemCount(): Int = studentList.size

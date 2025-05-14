@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -136,8 +137,15 @@ class studentMenuActivity : AppCompatActivity() {
             if (forms.isNotEmpty()) {
                 val adapter = CardActiveFormAdapter(forms)
                 recyclerView.adapter = adapter
+
+                adapter.setOnItemClickListener { form->
+                    val intent = Intent(this@studentMenuActivity, FormActivity::class.java)
+                    intent.putExtra("formIdFormActive", form.operatorIdForm)
+                    //Toast.makeText(this@studentMenuActivity, form.operatorIdForm, Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                }
+
             } else {
-                // Si no hay formularios, podrías ocultar el RecyclerView o mostrar un mensaje
                 recyclerView.visibility = View.GONE
                 findViewById<TextView>(R.id.formEmptyMessage)?.apply {
                     text = "No hay formularios activos disponibles."
@@ -145,6 +153,8 @@ class studentMenuActivity : AppCompatActivity() {
                 }
             }
         }
+
+
     }
 
 }
