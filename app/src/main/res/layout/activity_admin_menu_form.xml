@@ -115,6 +115,7 @@
             android:layout_marginEnd="26dp"
             android:background="@color/white"
             android:gravity="center"
+            android:onClick="callAdminEditForm"
             android:orientation="vertical"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:contentDescription="@string/boton_menu_administrador"
+                android:onClick="callAdminEditForm"
                 app:srcCompat="@drawable/icon_edit_form_admin" />
 
             <TextView
@@ -133,6 +135,7 @@
                 style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="callAdminEditForm"
                 android:text="@string/editar_formulario" />
         </LinearLayout>
 

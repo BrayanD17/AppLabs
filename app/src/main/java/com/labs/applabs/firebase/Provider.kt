@@ -306,4 +306,16 @@ class Provider {
             .addOnFailureListener { exception -> onFailure(exception) }
     }
 
+    suspend fun getAllFormOperators(): List<FormOperador> {
+        return try {
+            val snapshot = db.collection("formOperator").get().await()
+            snapshot.documents.mapNotNull { doc ->
+                doc.toObject(FormOperador::class.java)
+            }
+        } catch (e: Exception) {
+            Log.e("Provider", "Error al obtener formularios: ${e.message}")
+            emptyList()
+        }
+    }
+
 }
