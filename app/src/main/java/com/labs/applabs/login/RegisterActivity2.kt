@@ -74,14 +74,13 @@ class RegisterActivity2 : AppCompatActivity() {
 
             // Crear el objeto Usuario
             val nuevoUsuario = Usuario(
-                uid = "",
-                nombre = nombre,
-                apellidos = apellidos,
-                correo = correo,
-                telefono = telefono,
-                cuentaBancaria = cuenta,
-                carnet = carnet,
-                rol = 2
+                name = nombre,
+                surnames = apellidos,
+                email = correo,
+                phone = telefono,
+                bankAccount = cuenta,
+                studentCard = carnet,
+                userRole = 2
             )
 
             //Usar Provider en lugar de FirebaseUsuarioService

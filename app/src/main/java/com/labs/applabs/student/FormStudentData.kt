@@ -12,7 +12,7 @@ object FormStudentData {
     var psychology : String = ""
     var ticketUrl : String = ""
     var comment : String = "Pendiente de Revision"
-    var idFormOperator : String = "0OyPvJVUXD7aamtEHR1a"
+    var idFormOperator : String = ""
 
 
     fun clearAll() {
@@ -27,7 +27,7 @@ object FormStudentData {
         psychology = ""
         ticketUrl = ""
         comment = "Pendiente de Revision"
-        idFormOperator  = "0OyPvJVUXD7aamtEHR1a"
+        idFormOperator  = ""
     }
 
 }

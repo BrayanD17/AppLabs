@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".firebase.App"
@@ -17,8 +18,22 @@
         android:theme="@style/Theme.AppLabs"
         tools:targetApi="31">
 
+        <service
+            android:name=".student.FirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".student.studentMenuActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.EditFormStudent"
             android:exported="false" />
         <activity
             android:name=".student.FormListStudentActivity"
@@ -30,9 +45,6 @@
             android:name=".administrator.SolicitudesListView"
             android:exported="false" />
         <activity
-            android:name=".administrator.AdminAddFormThreeActivity"
-            android:exported="false" />
-        <activity
             android:name=".administrator.AdminAddFormTwoActivity"
             android:exported="false" />
         <activity
@@ -40,9 +52,6 @@
             android:exported="false" />
         <activity
             android:name=".administrator.AdminMenuFormActivity"
-            android:exported="false" />
-        <activity
-            android:name=".operador.OperadorMenuActivity"
             android:exported="false" />
         <activity
             android:name=".administrator.AdminMenuActivity"
@@ -84,5 +93,6 @@
             android:name=".student.FormActivity"
             android:exported="false" />
     </application>
+
 
 </manifest>

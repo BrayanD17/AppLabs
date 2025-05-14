@@ -22,6 +22,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <ImageView
+        android:id="@+id/backViewStudent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textFormTitle"
         style="@style/TextViewStyleFormsTitle"
@@ -50,7 +59,7 @@
         app:layout_constraintVertical_bias="0.491" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+        android:id="@+id/recycleViewStudentForm"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="10dp"
@@ -59,8 +68,6 @@
         app:layout_constraintTop_toBottomOf="@+id/ivRectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
