@@ -12,7 +12,8 @@ import com.labs.applabs.R
 
 enum class ToastType {
     SUCCESS,
-    ERROR
+    ERROR,
+    PROCESS
 }
 
 fun Context.toastMessage(message: String, type: ToastType) {
@@ -34,6 +35,10 @@ fun Context.toastMessage(message: String, type: ToastType) {
         }
         ToastType.ERROR -> {
             icon.setImageResource(R.drawable.error_circle)
+            container.setBackgroundResource(R.drawable.rectangule_toast)
+        }
+        ToastType.PROCESS -> {
+            icon.setImageResource(R.drawable.upload_process)
             container.setBackgroundResource(R.drawable.rectangule_toast)
         }
     }

@@ -175,7 +175,7 @@ class EditFormStudent : AppCompatActivity() {
 
     private fun updateDataStudent() {
         if (isUploading) {
-            toastMessage("Espere a que se suba el archivo antes de guardar", ToastType.SUCCESS)
+            toastMessage("Espere a que se suba el archivo antes de guardar", ToastType.PROCESS)
             return
         }
         val scheduleAvailability = daysMap.mapNotNull { (day, triple) ->
