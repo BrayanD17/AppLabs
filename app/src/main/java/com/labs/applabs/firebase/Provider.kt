@@ -66,7 +66,7 @@ class Provider {
         db.collection("users").document(uid)
             .get()
             .addOnSuccessListener { doc ->
-                val rol = doc.getLong("rol")?.toInt() ?: 3 // Por defecto: estudiante
+                val rol = doc.getLong("userRole")?.toInt() ?: 3 // Por defecto: estudiante
                 onResult(rol)
             }
             .addOnFailureListener {
