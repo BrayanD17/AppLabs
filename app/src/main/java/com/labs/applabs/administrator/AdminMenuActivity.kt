@@ -2,6 +2,7 @@ package com.labs.applabs.administrator
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -54,10 +55,22 @@ class AdminMenuActivity : AppCompatActivity() {
             true
         }
 
+        //Access the view of the applications received by the students
+        viewAplicationForm()
+
     }
 
     fun callMenuForm(view: View){
         val intent = Intent(this, AdminMenuFormActivity::class.java)
         startActivity(intent)
     }
+
+    fun viewAplicationForm(){
+        val btnViewApplicationForm = findViewById<ImageButton>(R.id.btnAplicationForm)
+        btnViewApplicationForm.setOnClickListener {
+            val intent = Intent(this, SolicitudesListView::class.java)
+            startActivity(intent)
+        }
+    }
+
 }

@@ -192,19 +192,19 @@
             app:layout_constraintVertical_bias="0.0">
 
             <ImageButton
-                android:id="@+id/btnContact"
+                android:id="@+id/btnAplicationForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_contact" />
+                app:srcCompat="@drawable/application_form_admin" />
 
             <TextView
                 android:id="@+id/tvContact"
                 style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cont_ctanos" />
+                android:text="@string/adminViewAplicationForm" />
         </LinearLayout>
 
         <TextView
