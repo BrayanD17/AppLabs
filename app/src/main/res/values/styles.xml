@@ -50,9 +50,6 @@
     </style>
 
 
-
-
-
     <!-- Estilo para EditText -->
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/montserrat_regular</item>
