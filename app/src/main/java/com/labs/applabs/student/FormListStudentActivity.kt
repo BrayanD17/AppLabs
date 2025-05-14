@@ -50,7 +50,7 @@ class FormListStudentActivity : AppCompatActivity(){
         }
 
         adapter.setOnItemClickListener { listForm ->
-
+            
         }
 
         adapter.setOnEditClickListener { listForm ->
