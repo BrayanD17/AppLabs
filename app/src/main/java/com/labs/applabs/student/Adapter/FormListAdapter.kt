@@ -50,6 +50,7 @@ class FormListAdapter(private var list: MutableList<FormListStudent>) :
         holder.formName.text = item.FormName
         holder.dateEnd.text = item.DateEnd
 
+        holder.editIcon.visibility = if (item.IsEdit) View.VISIBLE else View.GONE
 
         holder.itemView.setOnClickListener {
             itemClickListener?.invoke(item)

@@ -70,6 +70,7 @@ data class FormListStudent(
     val FormName: String = "",
     val DateEnd : String = "",
     val DateStart : String = "",
+    val IsEdit:Boolean
 )
 
 data class editDataStudentForm(

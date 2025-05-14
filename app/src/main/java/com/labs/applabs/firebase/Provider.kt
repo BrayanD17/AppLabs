@@ -310,20 +310,30 @@ class Provider {
 
                 val semester = listIdInfo.getString("semester") ?: ""
                 val year = listIdInfo.get("year") ?.toString()?: ""
-                val closingDate = listIdInfo.getTimestamp("closingDate")?.toDate()?.let {
+                val startDateObj = listIdInfo.getTimestamp("startDate")?.toDate()
+                val closingDateObj = listIdInfo.getTimestamp("closingDate")?.toDate()
+
+                val currentDate = Date()
+                val isEditable = startDateObj != null && closingDateObj != null &&
+                        currentDate.after(startDateObj) && currentDate.before(closingDateObj)
+
+                val closingDateFormatted = closingDateObj?.let {
                     SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
                 } ?: ""
-                val startDate = listIdInfo.getTimestamp("startDate")?.toDate()?.let {
+
+                val startDateFormatted = startDateObj?.let {
                     SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
                 } ?: ""
+
 
                 FormListStudent(
                     FormIdStudent = formStudentDocId,
                     FormId = formId,
                     Semester = "$semester $year",
                     FormName = listIdInfo.getString("nameForm") ?: "",
-                    DateEnd = closingDate,
-                    DateStart = startDate,
+                    DateEnd = closingDateFormatted,
+                    DateStart = startDateFormatted,
+                    IsEdit = isEditable
                 )
             }
 
