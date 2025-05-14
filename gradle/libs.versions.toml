@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.0"
+agp = "8.8.2"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -21,6 +21,9 @@ verticalstepview = "1.0.3"
 cardview = "1.0.0"
 firebaseStorage = "21.0.1"
 firebaseStorageKtx = "21.0.1"
+firebaseFunctions = "21.2.1"
+firebaseMessaging = "24.1.1"
+firebaseMessagingKtx = "24.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +45,9 @@ verticalstepview = { module = "com.baoyachi.stepview:verticalstepview", version.
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+firebase-functions = { group = "com.google.firebase", name = "firebase-functions", version.ref = "firebaseFunctions" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
