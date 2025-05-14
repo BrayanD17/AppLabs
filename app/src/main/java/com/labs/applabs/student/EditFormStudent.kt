@@ -175,7 +175,7 @@ class EditFormStudent : AppCompatActivity() {
 
     private fun updateDataStudent() {
         if (isUploading) {
-            toastMessage("Espere a que se suba el archivo antes de guardar", ToastType.PROCESS)
+            //toastMessage("Espere a que se suba el archivo antes de guardar", ToastType.PROCESS)
             return
         }
         val scheduleAvailability = daysMap.mapNotNull { (day, triple) ->
@@ -237,6 +237,8 @@ class EditFormStudent : AppCompatActivity() {
                 // Mostrar nombre del archivo seleccionado
                 val fileName = getFileName(uri)
                 anyUpload.text = fileName
+
+                toastMessage("Subiendo archivo, por favor espere...", ToastType.PROCESS)
 
                 // Subir el archivo a Firebase Storage
                 lifecycleScope.launch {
