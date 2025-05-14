@@ -7,7 +7,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.labs.applabs.MainActivity
+import com.labs.applabs.login.MainActivity
 
 class SplashActivity : AppCompatActivity() {
     //Iniciar el SharedPreference y Firebase

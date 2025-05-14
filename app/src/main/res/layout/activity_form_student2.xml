@@ -1,332 +1,347 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/baseActivityColor"
-    tools:context=".student.FormStudent2">
+    tools:context=".student.FormActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="15dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="15dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvIdSchoolNumber"
-                style="@style/TextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="left"
-                android:text="@string/idSchoolNumber"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/etIdSchoolNumber"
-                style="@style/EditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/idSchoolNumberDesc" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/rounded_corner"
-                android:backgroundTint="@color/marineBlue"
-                android:padding="15dp"
-                android:text="@string/scheduleAvailability"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/textView6"
-                style="@style/TextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="left"
-                android:text="@string/shifts"
-                android:textSize="14sp" />
-
-            <RadioGroup
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_corner">
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/radioButton"
+                <TextView
+                    android:id="@+id/tvIdSchoolNumber"
+                    style="@style/TextViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/hours1" />
+                    android:layout_margin="5dp"
+                    android:gravity="left"
+                    android:text="@string/idSchoolNumber"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
-                <RadioButton
-                    android:id="@+id/radioButton2"
+                <EditText
+                    android:id="@+id/etIdSchoolNumber"
+                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/hours2" />
-            </RadioGroup>
+                    android:layout_margin="10dp"
+                    android:hint="@string/idSchoolNumberDesc" />
 
-            <TextView
-                android:id="@+id/textView7"
-                style="@style/TextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/schueduleHours" />
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/rounded_corner"
+                    android:backgroundTint="@color/marineBlue"
+                    android:padding="15dp"
+                    android:text="@string/scheduleAvailability"
+                    android:textColor="@color/white" />
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:stretchColumns="1,2,3">
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="left"
+                    android:text="@string/shifts"
+                    android:textSize="14sp" />
 
-                <!-- Encabezado -->
-                <TableRow
-                    android:layout_margin="0dp"
-                    android:paddingVertical="4dp">
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_corner">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:padding="0dp"
-                        android:text="" />
+                    <RadioButton
+                        android:id="@+id/radioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onShiftSelected"
+                        android:text="@string/hours1" />
 
-                    <TextView
-                        android:gravity="center"
-                        android:padding="0dp"
-                        android:text="7am a 12" />
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onShiftSelected"
+                        android:text="@string/hours2" />
+                </RadioGroup>
 
-                    <TextView
-                        android:gravity="center"
-                        android:padding="0dp"
-                        android:text="12 a 5pm" />
+                <TextView
+                    android:id="@+id/textView7"
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/schueduleHours" />
 
-                    <TextView
-                        android:gravity="center"
-                        android:padding="0dp"
-                        android:text="5pm a 10pm" />
-                </TableRow>
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:stretchColumns="1,2,3">
 
-                <!-- Días de la semana -->
-                <!-- Lunes -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Encabezado -->
+                    <TableRow
+                        android:layout_margin="0dp"
+                        android:paddingVertical="4dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Lunes" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:padding="0dp"
+                            android:text="" />
 
-                    <CheckBox
-                        android:id="@+id/lunes_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <TextView
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:text="7am a 12" />
 
-                    <CheckBox
-                        android:id="@+id/lunes_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <TextView
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:text="12 a 5pm" />
 
-                    <CheckBox
-                        android:id="@+id/lunes_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <TextView
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:text="5pm a 10pm" />
+                    </TableRow>
 
-                <!-- Martes -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Días de la semana -->
+                    <!-- Lunes -->
+                    <TableRow android:paddingVertical="2dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Martes" />
+                        <TextView
+                            android:gravity="center"
+                            android:text="Lunes" />
 
-                    <CheckBox
-                        android:id="@+id/martes_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/lunes_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/martes_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/lunes_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/martes_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/lunes_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
 
-                <!-- Miércoles -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Martes -->
+                    <TableRow android:paddingVertical="2dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Miércoles" />
+                        <TextView
+                            android:gravity="center"
+                            android:text="Martes" />
 
-                    <CheckBox
-                        android:id="@+id/miercoles_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/martes_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/miercoles_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/martes_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/miercoles_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/martes_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
 
-                <!-- Jueves -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Miércoles -->
+                    <TableRow android:paddingVertical="2dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Jueves" />
+                        <TextView
+                            android:gravity="center"
+                            android:text="Miércoles" />
 
-                    <CheckBox
-                        android:id="@+id/jueves_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/miercoles_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/jueves_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/miercoles_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/jueves_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/miercoles_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
 
-                <!-- Viernes -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Jueves -->
+                    <TableRow android:paddingVertical="2dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Viernes" />
+                        <TextView
+                            android:gravity="center"
+                            android:text="Jueves" />
 
-                    <CheckBox
-                        android:id="@+id/viernes_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/jueves_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/viernes_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/jueves_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/viernes_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/jueves_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
 
-                <!-- Sábado -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Viernes -->
+                    <TableRow android:paddingVertical="2dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Sábado" />
+                        <TextView
+                            android:gravity="center"
+                            android:text="Viernes" />
 
-                    <CheckBox
-                        android:id="@+id/sabado_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/viernes_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/sabado_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/viernes_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/sabado_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/viernes_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
 
-                <!-- Domingo -->
-                <TableRow android:paddingVertical="2dp">
+                    <!-- Sábado -->
+                    <TableRow android:paddingVertical="2dp">
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Domingo" />
+                        <TextView
+                            android:gravity="center"
+                            android:text="Sábado" />
 
-                    <CheckBox
-                        android:id="@+id/domingo_m"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/sabado_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/domingo_t"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
+                        <CheckBox
+                            android:id="@+id/sabado_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
 
-                    <CheckBox
-                        android:id="@+id/domingo_n"
-                        android:minHeight="0dp"
-                        android:padding="0dp" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/sabado_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
 
-            </TableLayout>
+                    <!-- Domingo -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="Domingo" />
+
+                        <CheckBox
+                            android:id="@+id/domingo_m"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/domingo_t"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/domingo_n"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                </TableLayout>
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnNext"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:backgroundTint="@color/marineBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2"
-        app:layout_constraintStart_toEndOf="@+id/btnBack" />
+        <Button
+            android:id="@+id/btnNext"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="Next"
+            android:text="@string/next"
+            app:backgroundTint="@color/marineBlue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2"
+            app:layout_constraintVertical_bias="0.505"
+            tools:ignore="OnClick" />
 
-    <Button
+        <Button
         android:id="@+id/btnBack"
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back"
+        android:layout_margin="10dp"
         android:onClick="Back"
+        android:text="@string/back"
         app:backgroundTint="@color/marineBlue"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2"
-        app:layout_constraintEnd_toStartOf="@+id/btnNext"/>
+        app:layout_constraintVertical_bias="0.505" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+

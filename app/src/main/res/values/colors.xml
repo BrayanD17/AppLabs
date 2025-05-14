@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#C00F0C</color>
     <color name="green">#009951</color>
+    <color name="gray">#9B9B9B</color>
     <color name="splashBackground">#002855</color>
     <color name="textColor">#333333</color>
     <color name="hintColor">#808080</color>
@@ -11,4 +12,8 @@
     <color name="marineBlue">#002855</color>
     <color name="borderColor">#D1D1D1</color>
     <color name="baseActivityColor">#E6E3DE</color>
+    <color name="softMarineBlue">#144A75</color>
+    <color name="iceBlue">#EAF2FA</color>
+    <color name="almostBlack">#1A1A1A</color>
+    <color name="darkBlue">#0B1F35</color>
 </resources>
