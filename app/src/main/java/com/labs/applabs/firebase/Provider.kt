@@ -3,14 +3,26 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.student.FormStudentData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import kotlinx.coroutines.withContext
 
 class Provider {
 
@@ -66,11 +78,11 @@ class Provider {
         db.collection("users").document(uid)
             .get()
             .addOnSuccessListener { doc ->
-                val rol = doc.getLong("userRole")?.toInt() ?: 3 // Por defecto: estudiante
+                val rol = doc.getLong("userRole")?.toInt() ?: 2 // Por defecto: estudiante
                 onResult(rol)
             }
             .addOnFailureListener {
-                onResult(3)
+                onResult(2)
             }
     }
 
@@ -107,7 +119,7 @@ class Provider {
 
     suspend fun saveStudentData(studentData: FormStudentData): Boolean {
         return try {
-            val user = "gfTos90dNJeX8kkffqIo"
+            val user = getAuthenticatedUserId()
 
             val dataMap = hashMapOf<String, Any>().apply {
                 put("idStudent", user)
@@ -143,6 +155,7 @@ class Provider {
         }
     }
 
+    //Obtener los datos del estudiente de formStudent por id de usuario
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
             val doc = db.collection("formStudent").document(formId).get().await()
@@ -158,7 +171,7 @@ class Provider {
                     comment= doc.getString("comment") ?: "",
                     studentLastDigitCard= doc.get("digitsCard")?.toString() ?: "",
                     studentId= doc.get("idCard")?.toString() ?: "",
-                    idFormOperator= doc.getString("idFormOperator ") ?: "",
+                    idFormOperator= doc.getString("idFormOperator") ?: "",
                     idUser= doc.getString("idStudent") ?: "",
                     namePsycologist= doc.getString("psychology") ?: "",
                     scheduleAvailability= scheduleAvailability,
@@ -173,6 +186,50 @@ class Provider {
         } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener datos para $formId: ${e.message}")
             null
+        }
+    }
+
+    suspend fun updateStudentData(formId: String, studentData: editDataStudentForm): Boolean {
+        return try {
+            val userId = getAuthenticatedUserId() // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
+
+            val docRef = db.collection("formStudent").document(formId)
+            val snapshot = docRef.get().await()
+
+            if (!snapshot.exists()) {
+                Log.e("Firebase", "Formulario no encontrado")
+                return false
+            }
+
+            val storedUserId = snapshot.getString("idStudent")
+            if (storedUserId != userId) {
+                Log.e("Firebase", "No autorizado para actualizar este formulario")
+                return false
+            }
+
+            val dataMap = hashMapOf<String, Any>().apply {
+                put("idCard", studentData.dataCardId.toInt())
+                put("weightedAverage", studentData.dataAverage.toInt())
+                put("degree", studentData.dataDegree)
+                put("digitsCard", studentData.dataLastDigits.toInt())
+                put("shift", studentData.dataShifts.toInt())
+                put("semester", studentData.dataSemesterOperator.toInt())
+                put("psychology", studentData.dataNamePsychology)
+                put("urlApplicationForm", studentData.dataUploadPdf)
+                put("scheduleAvailability", studentData.datatableScheduleAvailability.map { daySchedule ->
+                    hashMapOf(
+                        "day" to daySchedule.day,
+                        "shifts" to daySchedule.shifts
+                    )
+                })
+            }
+
+            docRef.set(dataMap, SetOptions.merge()).await()
+            true
+
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error al actualizar: ${e.message}", e)
+            false
         }
     }
 
@@ -194,6 +251,7 @@ class Provider {
         }
     }
 
+    //Update status and comment
     suspend fun updateFormStatusAndComment(formId: String, updateData: dataUpdateStatus): Boolean {
         return try {
             val formRef = db.collection("formStudent").document(formId)
@@ -201,6 +259,7 @@ class Provider {
                 "statusApplicationForm", updateData.newStatusApplication,
                 "comment", updateData.newComment
             ).await()
+            generateNotificationMessage(updateData)
             true
         } catch (e: Exception) {
             Log.e("FirebaseError", "Error al actualizar los datos", e)
@@ -208,7 +267,78 @@ class Provider {
         }
     }
 
-    suspend fun uploadPdfToFirebase(pdfUri: Uri): String? {
+    suspend fun generateNotificationMessage(updateData: dataUpdateStatus) {
+        val messagesCollection = db.collection("message")
+        val userMessagesRef = messagesCollection.document(updateData.userId)
+        val notificationsCollection = userMessagesRef.collection("notifications")
+
+        val newNotification = hashMapOf(
+            "subject" to "Proceso de solicitud",
+            "message" to updateData.message,
+            "timestamp" to FieldValue.serverTimestamp(),
+            "status" to 0
+        )
+
+        notificationsCollection.add(newNotification).await()
+    }
+
+    suspend fun getUserMessages(): List<getMessage> {
+        val userId = getAuthenticatedUserId()
+
+        val notificationsRef = db.collection("message")
+            .document(userId)
+            .collection("notifications")
+
+        val querySnapshot = notificationsRef
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .await()
+
+        val formatter = SimpleDateFormat("d/M/yyyy h:mm a", Locale("es", "MX"))
+        formatter.timeZone = TimeZone.getTimeZone("America/Mexico_City")
+
+        return querySnapshot.documents.mapNotNull { doc ->
+            try {
+                val subject = doc.getString("subject") ?: ""
+                val message = doc.getString("message") ?: ""
+                val date = doc.getTimestamp("timestamp")?.toDate()
+                val formattedTimestamp = date?.let { formatter.format(it) } ?: ""
+                val status = doc.getLong("status")?.toInt() ?: 0
+
+                getMessage(subject, message, formattedTimestamp, status)
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    suspend fun markMessagesAsSeen() {
+        val userId = getAuthenticatedUserId()
+
+        val notificationsRef = db.collection("message")
+            .document(userId)
+            .collection("notifications")
+
+        //Get all unread messages
+        val querySnapshot = notificationsRef
+            .whereEqualTo("status", 0)
+            .get()
+            .await()
+
+        //Update each unread message in a batch
+        val batch = db.batch()
+        querySnapshot.documents.forEach { doc ->
+            batch.update(doc.reference, "status", 1)
+        }
+
+        if (!querySnapshot.isEmpty) {
+            batch.commit().await()
+        }
+    }
+
+
+    // Esta función será suspendida para poder usarse con coroutines
+    suspend fun uploadPdfToFirebase(pdfUri: Uri): String {
         val fileName = "${System.currentTimeMillis()}.pdf"
         val pdfRef = storageRef.child(fileName)
 
@@ -245,6 +375,56 @@ class Provider {
         }
     }
 
+    suspend fun saveFcmToken(userId: String) {
+        try {
+            val token = FirebaseMessaging.getInstance().token.await()
+
+            db.collection("users").document(userId)
+                .set(mapOf("fcmToken" to token), SetOptions.merge())
+                .await()
+
+            Log.d("FCM", "Token guardado en campo")
+        } catch (e: Exception) {
+            Log.e("FCM", "Error completo:", e)
+            throw e
+        }
+    }
+
+    suspend fun getActiveForms(): List<formOperatorActive> {
+        return try {
+            val snapshot = db.collection("formOperator")
+                .whereEqualTo("activityStatus", 1) // Paso 1: formularios activos
+                .get()
+                .await()
+
+            val currentDate = Date()
+
+            snapshot.documents.mapNotNull { doc ->
+                // Paso 2: Validar que esté en rango de fechas
+                val startDate = doc.getTimestamp("startDate")?.toDate()
+                val closingDate = doc.getTimestamp("closingDate")?.toDate()
+                if (startDate == null || closingDate == null) return@mapNotNull null
+                if (currentDate.before(startDate) || currentDate.after(closingDate)) return@mapNotNull null
+
+                // Paso 3: Obtener datos del documento
+                val operatorId = doc.id
+                val nameForm = doc.getString("nameForm") ?: return@mapNotNull null
+                val semester = doc.getString("semester") ?: return@mapNotNull null
+                val year = doc.get("year")?.toString() ?: return@mapNotNull null
+
+                // Paso 4: Retornar objeto válido
+                formOperatorActive(
+                    operatorIdForm = operatorId,
+                    nameActiveForm = nameForm,
+                    semesterActive = "$semester $year"
+                )
+            }
+
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener formularios activos: ${e.message}")
+            emptyList()
+        }
+    }
     suspend fun getSolicitudes(): List<Solicitud> {
         // 1. Obtener el ID del formulario operador activo
         val idFormOperator = getFormOperatorData()?.iud ?: run {
@@ -317,5 +497,93 @@ class Provider {
             emptyList()
         }
     }
+
+
+    suspend fun deletePdfFromStorage(url: String) {
+        try {
+            val storageRef = Firebase.storage.getReferenceFromUrl(url)
+            storageRef.delete().await()
+        } catch (e: Exception) {
+            Log.e("FirebaseStorage", "Error al eliminar archivo", e)
+        }
+    }
+
+    suspend fun uploadPdfToStorage(uri: Uri, fileName: String): String {
+        val storageRef = Firebase.storage.reference.child(fileName)
+        val uploadTask = storageRef.putFile(uri).await()
+        val downloadUrl = storageRef.downloadUrl.await()
+        return downloadUrl.toString()
+    }
+
+
+    //Obtener los formularios que ha enviado el estudiante
+    suspend fun getInfoStudentForm(): List<FormListStudent> {
+        val id = getAuthenticatedUserId()
+        return try {
+            val snapshot = db.collection("formStudent")
+                .whereEqualTo("idStudent", id)
+                .get()
+                .await()
+
+            snapshot.documents.mapNotNull { doc ->
+                val formStudentDocId = doc.id
+                val formId = doc.getString("idFormOperator") ?: return@mapNotNull null
+
+                val listIdInfo = db.collection("formOperator").document(formId).get().await()
+                if (!listIdInfo.exists()) return@mapNotNull null
+
+                val semester = listIdInfo.getString("semester") ?: ""
+                val year = listIdInfo.get("year") ?.toString()?: ""
+                val startDateObj = listIdInfo.getTimestamp("startDate")?.toDate()
+                val closingDateObj = listIdInfo.getTimestamp("closingDate")?.toDate()
+
+                val currentDate = Date()
+                val isEditable = startDateObj != null && closingDateObj != null &&
+                        currentDate.after(startDateObj) && currentDate.before(closingDateObj)
+
+                val closingDateFormatted = closingDateObj?.let {
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
+                } ?: ""
+
+                val startDateFormatted = startDateObj?.let {
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
+                } ?: ""
+
+
+                FormListStudent(
+                    FormIdStudent = formStudentDocId,
+                    FormId = formId,
+                    Semester = "$semester $year",
+                    FormName = listIdInfo.getString("nameForm") ?: "",
+                    DateEnd = closingDateFormatted,
+                    DateStart = startDateFormatted,
+                    IsEdit = isEditable
+                )
+            }
+
+        }catch (e: Exception){
+            Log.e("FirestoreProvider", "Error al obtener getInfoStudentForm: ${e.message}")
+            emptyList()
+        }
+
+    }
+
+    fun deleteFormStudent(docId: String, onResult: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("formStudent")
+            .document(docId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("Firestore", "Documento eliminado correctamente")
+                onResult(true)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error al eliminar el documento", e)
+                onResult(false)
+            }
+    }
+
+
 
 }

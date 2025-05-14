@@ -50,6 +50,9 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.functions)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.messaging.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                             2 -> startActivity(
                                 Intent(
                                     this,
-                                    com.labs.applabs.student.FormActivity::class.java
+                                    com.labs.applabs.student.studentMenuActivity::class.java
                                 )
                             )
                             3 -> startActivity(
@@ -163,10 +163,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*fun menuAdmin(view: View){
-        //val intent = Intent(this, com.labs.applabs.student.DetailsFormStudentActivity::class.java)
-         //val intent = Intent(this, com.labs.applabs.student.FormActivity::class.java)
-            val intent = Intent(this, com.labs.applabs.administrator.SolicitudesListView::class.java)
-        startActivity(intent)
-    }*/
 }

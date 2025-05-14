@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseActivityColor"
+    tools:context=".student.EditFormStudent">
+
+    <ImageView
+        android:id="@+id/backViewEditStudent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameFormStudentEdit"
+        style="@style/TextViewStyleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nameFormEdit"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:padding="8dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toTopOf="@+id/nameFormStudentEdit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="44dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/textViewCardId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/editFormCardId"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editFormDataCardId"/>
+
+                <EditText
+                    android:id="@+id/editFormDataCardId"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType="number"
+                    android:importantForAutofill="no" />
+
+                <TextView
+                    android:id="@+id/textViewAverage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/editFormWeightedAverage"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editFormDataAverage" />
+
+                <EditText
+                    android:id="@+id/editFormDataAverage"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType=""
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
+
+                <TextView
+                    android:id="@+id/textViewDegree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/editFormDegree"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataDegree" />
+
+                <Spinner
+                    android:id="@+id/editDataDegree"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType="text"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no" />
+
+                <TextView
+                    android:id="@+id/textViewLastDigit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/editFormLastDigits"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataLastDigits" />
+
+                <EditText
+                    android:id="@+id/editDataLastDigits"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType="number"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
+
+                <TextView
+                    android:id="@+id/textViewShifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/editFormShifts"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataShifts" />
+
+                <EditText
+                    android:id="@+id/editDataShifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType="text"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
+
+                <TextView
+                    android:id="@+id/texViewScheduleAvailability"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/editFormScheduleAvailability"
+                    style="@style/viewTextForm" />
+
+                <TableLayout
+                    android:id="@+id/tableScheduleAvailability"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:stretchColumns="1,2,3">
+
+                    <!-- Encabezado -->
+                    <TableRow
+                        android:layout_margin="0dp"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:padding="0dp"
+                            android:text="" />
+
+                        <TextView
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:text="@string/morningTable" />
+
+                        <TextView
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:text="@string/afternoonTable" />
+
+                        <TextView
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:text="@string/eveningTable" />
+                    </TableRow>
+
+                    <!-- Días de la semana -->
+                    <!-- Lunes -->
+                    <TableRow android:paddingVertical="2dp">
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/monday" />
+
+                        <CheckBox
+                            android:id="@+id/mondayMorning"
+                            android:minHeight="48dp"
+                            android:minWidth="48dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/mondayAfternoon"
+                            android:minHeight="48dp"
+                            android:minWidth="48dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/mondayEvening"
+                            android:minHeight="48dp"
+                            android:minWidth="48dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                    <!-- Martes -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/tuesday" />
+
+                        <CheckBox
+                            android:id="@+id/tuesdayMorning"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/tuesdayAfternoon"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/tuesdayEvening"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                    <!-- Miércoles -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/wednesday" />
+
+                        <CheckBox
+                            android:id="@+id/wednesdayMorning"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/wednesdayAfternoon"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/wednesdayEvening"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                    <!-- Jueves -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/thursday" />
+
+                        <CheckBox
+                            android:id="@+id/thursdayMorning"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/thursdayAfternoon"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/thursdayEvening"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                    <!-- Viernes -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/friday" />
+
+                        <CheckBox
+                            android:id="@+id/fridayMorning"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/fridayAfternoon"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/fridayEvening"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                    <!-- Sábado -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/saturday" />
+
+                        <CheckBox
+                            android:id="@+id/saturdayMorning"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/saturdayAfternoon"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/saturdayEvening"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+
+                    <!-- Domingo -->
+                    <TableRow android:paddingVertical="2dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/sunday" />
+
+                        <CheckBox
+                            android:id="@+id/sundayMorning"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/sundayAfternoon"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/sundayEvening"
+                            android:minHeight="0dp"
+                            android:padding="0dp" />
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/texViewSemesterOperator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/editFormSemesterOperator"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataSemesterOperator" />
+
+                <EditText
+                    android:id="@+id/editDataSemesterOperator"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType="text"
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no" />
+
+                <TextView
+                    android:id="@+id/textViewNamePsychology"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/editFormNamePsychology"
+                    style="@style/viewTextForm"
+                    android:labelFor="@id/editDataNamePsychology" />
+
+                <EditText
+                    android:id="@+id/editDataNamePsychology"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:inputType=""
+                    style="@style/EditTextStyle"
+                    android:importantForAutofill="no"/>
+
+                <TextView
+                    android:id="@+id/textViewApplicationForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/editApplicationForm"
+                    style="@style/viewTextForm" />
+
+                <LinearLayout
+                    android:id="@+id/btnUploadPdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_corner"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iconUpload"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/upload"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/withUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/editApplicationFormChange"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/anyUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/editAnyApplicationForm"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnEditSaveChange"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_button"
+                    android:text="@string/saveChangesEdit"
+                    app:backgroundTint="@color/green"
+                    android:layout_marginBottom="100dp"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
