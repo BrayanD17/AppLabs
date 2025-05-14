@@ -236,18 +236,21 @@ class EditFormStudent : AppCompatActivity() {
                 provider.deletePdfFromStorage(oldUrl)
             }
 
-            // 2. Subir nuevo archivo
-            val newUrl = provider.uploadPdfToStorage(uri, "formularios/${System.currentTimeMillis()}.pdf")
+            // 2. Obtener el nombre original del archivo
+            val fileName = getFileName(uri)
 
+            // 3. Subir el archivo a la raíz con su nombre original
+            val newUrl = provider.uploadPdfToStorage(uri, fileName)
 
-            // Actualizar UI y variable local
+            // 4. Actualizar la URL y UI
             currentPdfUrl = newUrl
-            toastMessage("Archivo actualizado correctamente", ToastType.SUCCESS)
+            toastMessage("PDF subido correctamente", ToastType.SUCCESS)
         } catch (e: Exception) {
             toastMessage("Error al subir archivo: ${e.message}", ToastType.ERROR)
             Log.e("UploadPDF", "Error: ${e.message}")
         }
     }
+
 
     private fun finishActivity(){
         val backView = findViewById<ImageView>(R.id.backViewEditStudent)

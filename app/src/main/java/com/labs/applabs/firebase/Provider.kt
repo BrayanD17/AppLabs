@@ -7,6 +7,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.labs.applabs.student.FormStudentData
@@ -134,7 +135,7 @@ class Provider {
 
     suspend fun updateStudentData(formId: String, studentData: editDataStudentForm): Boolean {
         return try {
-            val userId = "gfTos90dNJeX8kkffqIo" // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
+            val userId = "MWEPEbXrAFTpeY5V57znaeCbuh83" // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
 
             val docRef = db.collection("formStudent").document(formId)
             val snapshot = docRef.get().await()
@@ -167,7 +168,7 @@ class Provider {
                 })
             }
 
-            docRef.set(dataMap).await()
+            docRef.set(dataMap, SetOptions.merge()).await()
             true
 
         } catch (e: Exception) {
@@ -287,11 +288,12 @@ class Provider {
         }
     }
 
-    suspend fun uploadPdfToStorage(uri: Uri, path: String): String {
-        val storageRef = Firebase.storage.reference.child(path)
+    suspend fun uploadPdfToStorage(uri: Uri, fileName: String): String {
+        val storageRef = Firebase.storage.reference.child(fileName)
         val uploadTask = storageRef.putFile(uri).await()
         return uploadTask.storage.downloadUrl.await().toString()
     }
+
 
     //Obtener los formularios que ha enviado el estudiante
     suspend fun getInfoStudentForm(id:String): List<FormListStudent> {
