@@ -107,8 +107,9 @@ class NewPasswordActivity : AppCompatActivity() {
                                 llSuccessMessage.visibility = View.VISIBLE
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     llSuccessMessage.visibility = View.GONE
-                                    startActivity(Intent(this, MainActivity::class.java))
-                                    finish()
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    startActivity(intent)
                                 }, 3000)
                             }
                             .addOnFailureListener {

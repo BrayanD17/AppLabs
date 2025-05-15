@@ -48,7 +48,6 @@ class AdminMenuActivity : AppCompatActivity() {
                 R.id.nav_change_password -> {
                     val intent = Intent(this, NewPasswordActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
                 R.id.nav_logout -> {
                     val intent = Intent(this, MainActivity::class.java)
