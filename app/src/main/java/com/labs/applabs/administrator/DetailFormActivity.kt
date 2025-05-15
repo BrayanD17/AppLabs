@@ -2,14 +2,18 @@ package com.labs.applabs.administrator
 
 import android.app.DownloadManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -25,6 +29,7 @@ import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.firebase.dataUpdateStatus
+import com.labs.applabs.student.studentMenuActivity
 import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
@@ -53,7 +58,7 @@ class DetailFormActivity : AppCompatActivity() {
         }
         formStudentId = id
         showInfo(formStudentId)
-
+        finishActivityDetailsForm()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -245,9 +250,22 @@ class DetailFormActivity : AppCompatActivity() {
             val updateSuccess = provider.updateFormStatusAndComment(formStudentId, updateData)
             if (updateSuccess) {
                 toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(Intent(this@DetailFormActivity, SolicitudesListView::class.java))
+                    finish()
+                }, 1000) // 1000ms = 1 segundo de retraso
             } else {
                 toastMessage("Error al actualizar los datos", ToastType.ERROR)
             }
+        }
+    }
+
+    private fun finishActivityDetailsForm(){
+        val backView = findViewById<ImageView>(R.id.backViewAdminDetailActivity)
+        backView.setOnClickListener {
+            val intent = Intent(this, SolicitudesListView::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
