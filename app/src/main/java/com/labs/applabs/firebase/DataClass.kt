@@ -56,6 +56,7 @@ data class Solicitud(
     val nombre: String = "",
     val correo: String = "",
     val uidForm : String = "",
+    val idFormStudent:String = "",
 )
 
 data class dataUpdateStatus(
@@ -102,4 +103,9 @@ data class editDataStudentForm(
 data class listSchedule(
     val day: String,
     val shifts: List<String> = emptyList()
+)
+
+data class UserInformation(
+    val nameUser: String = "",
+    val rolUser: String = ""
 )

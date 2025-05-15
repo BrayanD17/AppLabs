@@ -9,7 +9,6 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -23,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
-import com.labs.applabs.administrator.AdminMenuActivity
+import com.labs.applabs.elements.ToastType
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.login.NewPasswordActivity
 import kotlinx.coroutines.launch
@@ -43,19 +42,31 @@ class studentMenuActivity : AppCompatActivity() {
             insets
         }
 
-        //FROM MENU (NAVAGATION BAR) STUDENT
+        // FROM MENU (NAVAGATION BAR) STUDENT
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_Student)
         val navView = findViewById<NavigationView>(R.id.nav_view_student)
         val btnMenu = findViewById<ImageButton>(R.id.btnMenuStudent)
+
+        // User Information in Header
+        val headerView : View = navView.getHeaderView(0)
+        val nameUser : TextView = headerView.findViewById(R.id.tvNombreStudent)
+        val rolUser : TextView = headerView.findViewById(R.id.tvRolUsuarioStudent)
+
+        lifecycleScope.launch {
+            val user = provider.getUserInformation()
+            if (user != null) {
+                // Actualiza la UI con los datos
+                nameUser.text = user.nameUser
+                rolUser.text = user.rolUser
+            }
+        }
 
         // Abrir el drawer con el botón hamburguesa
         btnMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        loadActiveForm()
-
-        // Cerrar el drawer con el botón dentro del menú
+        // Close drawer with the button inside
         val btnCerrarDrawer = navView.findViewById<Button>(R.id.btnCerrarDrawer)
         btnCerrarDrawer.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -89,6 +100,8 @@ class studentMenuActivity : AppCompatActivity() {
             true
         }
 
+        loadActiveForm()
+
         val notificationIcon = findViewById<CardView>(R.id.notificationIcon)
         notificationIcon.setOnClickListener {
             showNotificationsFragment()
@@ -115,6 +128,9 @@ class studentMenuActivity : AppCompatActivity() {
                 fragmentContainer.visibility = View.GONE
             }
         }
+
+
+
     }
 
     //SHOW FRAGMENT FROM MESSAGE
@@ -147,6 +163,8 @@ class studentMenuActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener { form->
                     val intent = Intent(this@studentMenuActivity, FormActivity::class.java)
                     intent.putExtra("formIdFormActive", form.operatorIdForm)
+                    intent.putExtra("formName", form.nameActiveForm)
+                    intent.putExtra("semesterForm", form.semesterActive)
                     //Toast.makeText(this@studentMenuActivity, form.operatorIdForm, Toast.LENGTH_SHORT).show()
                     startActivity(intent)
                 }

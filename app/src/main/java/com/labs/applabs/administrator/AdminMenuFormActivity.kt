@@ -66,4 +66,9 @@ class AdminMenuFormActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun callAdminEditForm(view:View){
+        val intent = Intent(this, AdminEditFormActivity::class.java)
+        startActivity(intent)
+    }
+
 }

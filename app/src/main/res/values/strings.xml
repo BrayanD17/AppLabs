@@ -20,7 +20,7 @@
     <string name="operadores">Operadores</string>
     <string name="reportes">Reportes</string>
     <string name="visitas">Visitas</string>
-    <string name="cont_ctanos">Contáctanos</string>
+    <string name="adminViewAplicationForm">Solicitudes</string>
     <string name="boton_menu_administrador">boton menu administrador</string>
     <string name="logo_de_la_app">Logo de la app</string>
     <string name="men">Menú</string>
@@ -135,7 +135,7 @@
     <string name="formListTitle">Historial de Formularios Enviados</string>
     <string name="formLisDescription">Podra editar la informacion del formulario siempre y cuando este se encuentre en periodo activo.</string>
 
-   <!--Edit form (student view)-->
+    <!--Edit form (student view)-->
     <string name="nameFormEdit">Editar formulario</string>
     <string name="editFormCardId">Cédula</string>
     <string name="editFormWeightedAverage">Promedio ponderado del semestre anterior</string>

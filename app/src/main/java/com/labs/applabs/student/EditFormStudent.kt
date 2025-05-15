@@ -159,7 +159,7 @@ class EditFormStudent : AppCompatActivity() {
             }
 
             val fileName = getFileName(uri)
-            val newUrl = provider.uploadPdfToStorage(uri, fileName)
+            val newUrl = provider.uploadPdfToStorage(fileName)
 
             currentPdfUrl = newUrl
             Log.d("UploadPDF", "URL del archivo subida: $newUrl")

@@ -2,14 +2,18 @@ package com.labs.applabs.administrator
 
 import android.app.DownloadManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -25,12 +29,13 @@ import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.firebase.dataUpdateStatus
+import com.labs.applabs.student.studentMenuActivity
 import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
-    private var idForm: String? = null
+    private lateinit var formStudentId: String
     private var formIdOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
@@ -45,17 +50,21 @@ class DetailFormActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
 
-        idForm = "LBnb7LT7Pu2YTMz4CdJG"
-        showInfo(idForm!!)
-
+        val id = intent.getStringExtra("formId")
+        if (id == null) {
+            toastMessage("ID de formulario no recibido", ToastType.ERROR)
+            finish()
+            return
+        }
+        formStudentId = id
+        showInfo(formStudentId)
+        finishActivityDetailsForm()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        //val idForm = intent.getStringExtra("formId")
 
     }
 
@@ -172,7 +181,7 @@ class DetailFormActivity : AppCompatActivity() {
     }
 
     private fun downloadBoleta(urlApplication: String) {
-        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
+        val btnDescargar = findViewById<FrameLayout>(R.id.btnDownloadApplication)
         val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
         btnDescargar.setOnClickListener {
             if (urlApplication.isNotEmpty()) {
@@ -195,7 +204,6 @@ class DetailFormActivity : AppCompatActivity() {
                 toastMessage("No se encontró la URL del documento", ToastType.ERROR)
             }
         }
-
     }
 
     private fun updateApplicationStatus(userId: String,originalComment: String, originalStatus: String, nameFormOperator: String, semesterFormOperator: String) {
@@ -239,12 +247,25 @@ class DetailFormActivity : AppCompatActivity() {
         )
 
         lifecycleScope.launch {
-            val updateSuccess = provider.updateFormStatusAndComment(idForm!!, updateData)
+            val updateSuccess = provider.updateFormStatusAndComment(formStudentId, updateData)
             if (updateSuccess) {
                 toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(Intent(this@DetailFormActivity, SolicitudesListView::class.java))
+                    finish()
+                }, 1000) // 1000ms = 1 segundo de retraso
             } else {
                 toastMessage("Error al actualizar los datos", ToastType.ERROR)
             }
+        }
+    }
+
+    private fun finishActivityDetailsForm(){
+        val backView = findViewById<ImageView>(R.id.backViewAdminDetailActivity)
+        backView.setOnClickListener {
+            val intent = Intent(this, SolicitudesListView::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
