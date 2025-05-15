@@ -22,7 +22,7 @@
             android:exported="false" />
         <activity
             android:name=".administrator.AdminEditFormActivity"
-
+            android:exported="false" />
         <service
             android:name=".student.FirebaseMessagingService"
             android:exported="false">

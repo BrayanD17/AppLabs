@@ -498,6 +498,53 @@ class Provider {
         }
     }
 
+    suspend fun getFormOperator(nameForm: String, semester: String, year: Int): FormOperador? {
+        return try {
+            Log.d("DEBUG_QUERY", "Buscando -> nameForm: '$nameForm', semester: '$semester', year: $year")
+
+            val query = db.collection("formOperator")
+                .whereEqualTo("nameForm", nameForm)
+                .whereEqualTo("semester", semester)
+                .whereEqualTo("year", year)
+                .get()
+                .await()
+
+            Log.d("DEBUG_QUERY", "Resultados: ${query.documents.size}")
+            query.documents.firstOrNull()?.toObject(FormOperador::class.java)
+        } catch (e: Exception) {
+            Log.e("DEBUG_QUERY", "Error: ${e.message}")
+            null
+        }
+    }
+    suspend fun updateFormOperator(
+        nameForm: String,
+        semester: String,
+        year: Int,
+        updatedData: Map<String, Any>,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        try {
+            val query = db.collection("formOperator")
+                .whereEqualTo("nameForm", nameForm.trim())
+                .whereEqualTo("semester", semester.trim())
+                .whereEqualTo("year", year)
+                .get()
+                .await()
+
+            val doc = query.documents.firstOrNull()
+            if (doc != null) {
+                db.collection("formOperator").document(doc.id)
+                    .update(updatedData)
+                    .addOnSuccessListener { onSuccess() }
+                    .addOnFailureListener { e -> onFailure(e) }
+            } else {
+                onFailure(Exception("Formulario no encontrado"))
+            }
+        } catch (e: Exception) {
+            onFailure(e)
+        }
+    }
 
     suspend fun deletePdfFromStorage(url: String) {
         try {
@@ -583,7 +630,5 @@ class Provider {
                 onResult(false)
             }
     }
-
-
 
 }

@@ -8,4 +8,5 @@
         android:id="@+id/nav_logout"
         android:title="@string/cerrar_sesi_n"
         android:icon="@drawable/icon_logout" />
+
 </menu>

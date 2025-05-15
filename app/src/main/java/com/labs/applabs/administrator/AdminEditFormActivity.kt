@@ -1,5 +1,6 @@
 package com.labs.applabs.administrator
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +24,17 @@ class AdminEditFormActivity : AppCompatActivity() {
             val formularios = provider.getAllFormOperators()
             val adapter = FormOperadorAdapter(this@AdminEditFormActivity, formularios)
             listView.adapter = adapter
+            listView.setOnItemClickListener { _, _, position, _ ->
+                val form = formularios[position]
+
+                val intent = Intent(this@AdminEditFormActivity, AdminEditMenuActivity::class.java)
+                intent.putExtra("nameForm", form.nameForm.trim())
+                intent.putExtra("semester", form.semester.trim())
+                intent.putExtra("year", form.year)
+                startActivity(intent)
+            }
+
+
         }
 
 
