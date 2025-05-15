@@ -425,8 +425,8 @@ class Provider {
             emptyList()
         }
     }
+
     suspend fun getSolicitudes(): List<Solicitud> {
-        // 1. Obtener el ID del formulario operador activo
         val idFormOperator = getFormOperatorData()?.iud ?: run {
             Log.d("DEBUG", "No hay formulario operador activo")
             return emptyList()
@@ -435,39 +435,44 @@ class Provider {
         Log.d("DEBUG", "Buscando solicitudes para formulario operador: $idFormOperator")
 
         return try {
-            // 2. Obtener todos los formStudent asociados a este formulario operador
+            // 1. Obtener todos los formStudent con ese idFormOperator
             val formStudents = db.collection("formStudent")
                 .whereEqualTo("idFormOperator", idFormOperator)
                 .get()
                 .await()
 
-            Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios de estudiantes")
+            Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios llenados por estudiantes")
 
-            // 3. Extraer todos los idStudent únicos
-            val studentIds = formStudents.documents.mapNotNull { doc ->
-                doc.getString("idStudent")?.also { id ->
-                    Log.d("DEBUG", "ID Estudiante encontrado: $id")
-                }
-            }.distinct()
-
-            if (studentIds.isEmpty()) {
-                Log.d("DEBUG", "No hay estudiantes asociados a este formulario")
+            if (formStudents.isEmpty) {
                 return emptyList()
             }
 
-            // 4. Obtener información de los usuarios (students)
-            val users = db.collection("users")
+            // 2. Construir una lista de pares: (formStudentId, idStudent)
+            val solicitudesInfo = formStudents.documents.mapNotNull { doc ->
+                val idStudent = doc.getString("idStudent")
+                if (idStudent != null) {
+                    Triple(doc.id, idStudent, doc) // Guardamos también el doc en caso de necesitar más info
+                } else null
+            }
+
+            // 3. Obtener información de usuarios por sus IDs
+            val studentIds = solicitudesInfo.map { it.second }.distinct()
+            val usersSnapshot = db.collection("users")
                 .whereIn(FieldPath.documentId(), studentIds)
                 .get()
                 .await()
 
-            // 5. Mapear a objetos Solicitud
-            users.documents.map { userDoc ->
+            val userMap = usersSnapshot.documents.associateBy { it.id }
+
+            // 4. Mapear a objetos Solicitud
+            solicitudesInfo.map { (formStudentId, studentId, _) ->
+                val userDoc = userMap[studentId]
                 Solicitud(
-                    nombre = userDoc.getString("name") ?: "Sin nombre",
-                    correo = userDoc.getString("email") ?: "Sin email",
-                    uidForm = idFormOperator,  //id del formulario en curso
-                    //idFormStudent =
+                    nombre = userDoc?.getString("name") ?: "Sin nombre",
+                    correo = userDoc?.getString("email") ?: "Sin email",
+                    uidForm = idFormOperator,
+                    idFormStudent = formStudentId,
+                    //idStudent = studentId
                 ).also {
                     Log.d("DEBUG", "Solicitud procesada: $it")
                 }
@@ -479,14 +484,6 @@ class Provider {
         }
     }
 
-    fun createFormularioOperador(formulario: FormOperador, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        db.collection("formOperator")
-            .add(formulario)
-            .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { exception -> onFailure(exception) }
-    }
-
-
     suspend fun deletePdfFromStorage(url: String) {
         try {
             val storageRef = Firebase.storage.getReferenceFromUrl(url)
@@ -496,9 +493,9 @@ class Provider {
         }
     }
 
-    suspend fun uploadPdfToStorage(uri: Uri, fileName: String): String {
+    suspend fun uploadPdfToStorage(fileName: String): String {
         val storageRef = Firebase.storage.reference.child(fileName)
-        val uploadTask = storageRef.putFile(uri).await()
+        //val uploadTask = storageRef.putFile(uri).await()
         val downloadUrl = storageRef.downloadUrl.await()
         return downloadUrl.toString()
     }
