@@ -58,7 +58,7 @@ class SolicitudesListView : AppCompatActivity() {
         adapter = SolicitudAdapter(emptyList()).apply {
             setOnItemClickListener { solicitud ->
                 val intent = Intent(this@SolicitudesListView, DetailFormActivity::class.java)
-                intent.putExtra("formId", solicitud.uidForm)
+                intent.putExtra("formId", solicitud.idFormStudent)
                 startActivity(intent)
             }
         }

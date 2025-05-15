@@ -466,7 +466,8 @@ class Provider {
                 Solicitud(
                     nombre = userDoc.getString("name") ?: "Sin nombre",
                     correo = userDoc.getString("email") ?: "Sin email",
-                    uidForm = idFormOperator
+                    uidForm = idFormOperator,  //id del formulario en curso
+                    //idFormStudent =
                 ).also {
                     Log.d("DEBUG", "Solicitud procesada: $it")
                 }
@@ -476,7 +477,6 @@ class Provider {
             Log.e("DEBUG", "Error al obtener solicitudes: ${e.message}", e)
             emptyList()
         }
-
     }
 
     fun createFormularioOperador(formulario: FormOperador, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {

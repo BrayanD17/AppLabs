@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm:TextView
-    private var idForm: String? = null
+    private lateinit var formStudentId: String
     private var formIdOperator: String? = null
     private var idUser: String? = null
     private var urlApplication: String? = null
@@ -45,8 +45,14 @@ class DetailFormActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_form)
 
-        idForm = "LBnb7LT7Pu2YTMz4CdJG"
-        showInfo(idForm!!)
+        val id = intent.getStringExtra("formId")
+        if (id == null) {
+            toastMessage("ID de formulario no recibido", ToastType.ERROR)
+            finish()
+            return
+        }
+        formStudentId = id
+        showInfo(formStudentId)
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -239,7 +245,7 @@ class DetailFormActivity : AppCompatActivity() {
         )
 
         lifecycleScope.launch {
-            val updateSuccess = provider.updateFormStatusAndComment(idForm!!, updateData)
+            val updateSuccess = provider.updateFormStatusAndComment(formStudentId, updateData)
             if (updateSuccess) {
                 toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
             } else {
