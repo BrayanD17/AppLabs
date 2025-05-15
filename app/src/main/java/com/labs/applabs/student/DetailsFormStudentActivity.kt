@@ -1,8 +1,13 @@
 package com.labs.applabs.student
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
@@ -100,7 +105,7 @@ class DetailsFormStudentActivity : AppCompatActivity() {
                 }
 
                 urlApplication = studentInfo.urlApplication
-                // downloadBoleta(urlApplication!!)
+                downloadBoleta(urlApplication!!)
 
             } ?: run {
                 studentCareer.text = "No disponible"
@@ -143,6 +148,34 @@ class DetailsFormStudentActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun downloadBoleta(urlApplication: String) {
+        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
+        val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
+        btnDescargar.setOnClickListener {
+            if (urlApplication.isNotEmpty()) {
+                val request = DownloadManager.Request(Uri.parse(urlApplication))
+                    .setTitle("Descargando documento")
+                    .setDescription(fileName)
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
+                    .setDestinationInExternalFilesDir(
+                        this,
+                        Environment.DIRECTORY_DOWNLOADS,
+                        fileName
+                    )
+
+                val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                downloadManager.enqueue(request)
+                toastMessage("Descarga iniciada", ToastType.SUCCESS)
+            } else {
+                toastMessage("No se encontró la URL del documento", ToastType.ERROR)
+            }
+        }
+
+    }
+
 
     private fun finishActivity(){
         val backView = findViewById<ImageView>(R.id.backViewDetailStudent)

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -49,6 +50,8 @@ class FormStudent : AppCompatActivity() {
             idCard.setText(FormStudentData.idCard)
             weightedAverage.setText(FormStudentData.weightedAverage)
         }
+
+        finishActivity()
     }
 
     suspend fun spinner () {
@@ -83,7 +86,7 @@ class FormStudent : AppCompatActivity() {
         return true
     }
 
-    fun Siguiente(view: View){
+    fun nextForm1(view: View){
         if (validateFields()){
             // Guardar en FormStudentData
             FormStudentData.idCard = idCard.text.toString()
@@ -93,6 +96,13 @@ class FormStudent : AppCompatActivity() {
             val intent = Intent(this@FormStudent, FormStudent2::class.java)
             startActivity(intent)
 
+        }
+    }
+
+    private fun finishActivity(){
+        val backView = findViewById<ImageView>(R.id.backViewFormActivyty)
+        backView.setOnClickListener {
+            finish()
         }
     }
 }
