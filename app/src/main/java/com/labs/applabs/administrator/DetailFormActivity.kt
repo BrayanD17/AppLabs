@@ -61,8 +61,6 @@ class DetailFormActivity : AppCompatActivity() {
             insets
         }
 
-        //val idForm = intent.getStringExtra("formId")
-
     }
 
     //Function to show form data of the user and the application
@@ -178,7 +176,7 @@ class DetailFormActivity : AppCompatActivity() {
     }
 
     private fun downloadBoleta(urlApplication: String) {
-        val btnDescargar = findViewById<FrameLayout>(R.id.btnDescargarBoleta)
+        val btnDescargar = findViewById<FrameLayout>(R.id.btnDownloadApplication)
         val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
         btnDescargar.setOnClickListener {
             if (urlApplication.isNotEmpty()) {
