@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
+import com.labs.applabs.login.NewPasswordActivity
 
 class AdminMenuActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -40,6 +41,11 @@ class AdminMenuActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.nav_home -> {
                     val intent = Intent(this, AdminMenuActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                R.id.nav_change_password -> {
+                    val intent = Intent(this, NewPasswordActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
