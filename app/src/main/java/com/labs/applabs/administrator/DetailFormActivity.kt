@@ -199,7 +199,6 @@ class DetailFormActivity : AppCompatActivity() {
                 toastMessage("No se encontró la URL del documento", ToastType.ERROR)
             }
         }
-
     }
 
     private fun updateApplicationStatus(userId: String,originalComment: String, originalStatus: String, nameFormOperator: String, semesterFormOperator: String) {
