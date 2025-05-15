@@ -15,50 +15,18 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:id="@+id/lyHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="52dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lyEditar">
-
-            <ImageButton
-                android:id="@+id/btnHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_history" />
-
-            <TextView
-                android:id="@+id/tvHistory"
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ver_historial" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/lyNuevo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="57dp"
-            android:layout_marginBottom="52dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="88dp"
             android:background="@color/white"
             android:gravity="center"
             android:onClick="callAdminAddForm"
             android:orientation="vertical"
             android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lyVer"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <ImageButton
                 android:id="@+id/btnNuevo"
@@ -79,40 +47,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lyVer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="88dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <ImageButton
-                android:id="@+id/btnForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_form" />
-
-            <TextView
-                android:id="@+id/tvVer"
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ver_formularios" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/lyEditar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="88dp"
-            android:layout_marginEnd="26dp"
+            android:layout_marginEnd="24dp"
             android:background="@color/white"
             android:gravity="center"
             android:onClick="callAdminEditForm"
@@ -128,15 +67,15 @@
                 android:background="@color/white"
                 android:contentDescription="@string/boton_menu_administrador"
                 android:onClick="callAdminEditForm"
-                app:srcCompat="@drawable/icon_edit_form_admin" />
+                app:srcCompat="@drawable/icon_form" />
 
             <TextView
-                android:id="@+id/tvEditar"
+                android:id="@+id/tvForm"
                 style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="callAdminEditForm"
-                android:text="@string/editar_formulario" />
+                android:text="Ver Formularios" />
         </LinearLayout>
 
         <ImageView

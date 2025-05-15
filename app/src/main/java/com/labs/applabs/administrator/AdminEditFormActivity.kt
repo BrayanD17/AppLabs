@@ -34,9 +34,7 @@ class AdminEditFormActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-
         }
-
 
     }
 }

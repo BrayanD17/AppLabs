@@ -23,6 +23,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class Provider {
 
@@ -488,10 +489,29 @@ class Provider {
 
     suspend fun getAllFormOperators(): List<FormOperador> {
         return try {
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            val threshold = currentYear - 4
+
+            // 1. Obtener todos los formularios
             val snapshot = db.collection("formOperator").get().await()
-            snapshot.documents.mapNotNull { doc ->
-                doc.toObject(FormOperador::class.java)
+
+            // 2. Eliminar formularios con año menor al umbral
+            for (doc in snapshot.documents) {
+                val year = doc.getLong("year")?.toInt()
+                if (year != null && year < threshold) {
+                    doc.reference.delete()
+                }
             }
+
+            // 3. Filtrar válidos y ordenar por fecha de creación (más reciente primero)
+            snapshot.documents
+                .mapNotNull { doc ->
+                    val year = doc.getLong("year")?.toInt()
+                    if (year != null && year >= threshold) {
+                        doc.toObject(FormOperador::class.java)
+                    } else null
+                }
+                .sortedByDescending { it.createdDate?.toDate() }
         } catch (e: Exception) {
             Log.e("Provider", "Error al obtener formularios: ${e.message}")
             emptyList()
@@ -516,6 +536,7 @@ class Provider {
             null
         }
     }
+
     suspend fun updateFormOperator(
         nameForm: String,
         semester: String,

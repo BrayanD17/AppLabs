@@ -132,7 +132,7 @@
     <string name="formListTitle">Historial de Formularios Enviados</string>
     <string name="formLisDescription">Podra editar la informacion del formulario siempre y cuando este se encuentre en periodo activo.</string>
 
-   <!--Edit form (student view)-->
+    <!--Edit form (student view)-->
     <string name="nameFormEdit">Editar formulario</string>
     <string name="editFormCardId">Cédula</string>
     <string name="editFormWeightedAverage">Promedio ponderado del semestre anterior</string>

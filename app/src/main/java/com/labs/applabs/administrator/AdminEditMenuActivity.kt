@@ -62,7 +62,6 @@ class AdminEditMenuActivity : AppCompatActivity() {
             val formulario = provider.getFormOperator(nameForm, semester, year)
 
             if (formulario != null) {
-                Toast.makeText(this@AdminEditMenuActivity, "Formulario: ${formulario.nameForm}", Toast.LENGTH_SHORT).show()
                 formulario?.let { form ->
 
                     // Nombre del formulario
