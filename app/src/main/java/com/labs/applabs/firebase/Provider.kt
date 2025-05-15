@@ -560,7 +560,6 @@ class Provider {
 
     suspend fun getUserInformation(): UserInformation? {
         val uid = getAuthenticatedUserId()
-        val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("users").document(uid)
 
         return try {
@@ -587,6 +586,22 @@ class Provider {
         } catch (e: Exception) {
             Log.e("ERROR", "Error al obtener datos del usuario", e)
             null
+        }
+    }
+
+    suspend fun checkFormSubmission(formId: String): Boolean {
+        val studentId = getAuthenticatedUserId()
+        return try {
+            val query = db.collection("formStudent")
+                .whereEqualTo("idStudent", studentId)
+                .whereEqualTo("idFormOperator", formId)
+                .get()
+                .await()
+
+            !query.isEmpty
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al verificar envío de formulario", e)
+            false
         }
     }
 }
