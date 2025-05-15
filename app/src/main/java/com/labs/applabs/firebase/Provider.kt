@@ -540,7 +540,6 @@ class Provider {
             Log.e("FirestoreProvider", "Error al obtener getInfoStudentForm: ${e.message}")
             emptyList()
         }
-
     }
 
     fun deleteFormStudent(docId: String, onResult: (Boolean) -> Unit) {
