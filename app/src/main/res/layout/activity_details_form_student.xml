@@ -571,7 +571,7 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <FrameLayout
-                    android:id="@+id/btnDescargarBoleta"
+                    android:id="@+id/btnDescargarBoletaEstudiante"
                     android:layout_width="275dp"
                     android:layout_height="85dp"
                     android:layout_marginTop="16dp"
