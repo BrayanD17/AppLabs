@@ -1,6 +1,7 @@
 package com.labs.applabs.student
 
 import android.app.Activity
+import android.app.ComponentCaller
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -21,9 +22,12 @@ import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
 import android.provider.OpenableColumns
+import android.widget.Button
+import android.widget.ProgressBar
 
 
 class FormStudent3 : AppCompatActivity() {
+
 
     private lateinit var semesters: EditText
     private lateinit var psychology: EditText
@@ -123,6 +127,14 @@ class FormStudent3 : AppCompatActivity() {
     }
 
     fun Next(view: View) {
+
+        val btnNext = findViewById<Button>(R.id.btnSend)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+
+        // Desactivar botón y mostrar spinner
+        btnNext.isEnabled = false
+        progressBar.visibility = View.VISIBLE
+
         lifecycleScope.launch {
             if (validateFields() && saveFormData()) {
                 try {
@@ -135,7 +147,8 @@ class FormStudent3 : AppCompatActivity() {
                     val saved = provider.saveStudentData(FormStudentData)
                     if (saved) {
                         toastMessage("Formulario guardado exitosamente", ToastType.SUCCESS)
-                        startActivity(Intent(this@FormStudent3, studentMenuActivity::class.java))
+                        setResult(RESULT_OK)
+                        finish() // Esto hace que empiece a cerrarse la cadena
                     } else {
                         toastMessage("Error al guardar formulario", ToastType.ERROR)
                     }
@@ -143,8 +156,13 @@ class FormStudent3 : AppCompatActivity() {
                     toastMessage("Error al subir el PDF: ${e.message}", ToastType.ERROR)
                 }
             }
+            // Volver a activar botón y ocultar spinner si hubo algún fallo
+            btnNext.isEnabled = true
+            progressBar.visibility = View.GONE
         }
     }
+
+
 
     fun Back(view: View) {
         finish()

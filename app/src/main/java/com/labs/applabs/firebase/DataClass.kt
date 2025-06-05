@@ -57,6 +57,18 @@ data class Solicitud(
     val correo: String = "",
     val uidForm : String = "",
     val idFormStudent:String = "",
+    val carnet: String = "",
+    val estado: String = "",
+    val carrera : String = "",
+    val numeroSemestreOperador : String = "",
+)
+
+data class FilterData(
+    val carrera: String? = null,
+    val semestres: String? = null,
+    val nombre: String? = null,
+    val carnet: String? = null,
+    val estado: String? = null,
 )
 
 data class dataUpdateStatus(
@@ -77,7 +89,8 @@ data class formOperatorActive(
     val operatorIdForm: String = "",
     val nameActiveForm: String = "",
     val semesterActive: String = ""
-    )
+)
+
 data class FormListStudent(
     val FormIdStudent: String = "",
     val FormId: String = "",

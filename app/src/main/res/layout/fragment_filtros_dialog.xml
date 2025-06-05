@@ -30,8 +30,7 @@
         <Spinner
             android:id="@+id/spinner_carrera"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:text="@string/semesterFilter"
@@ -102,10 +101,19 @@
 
             <Button
                 android:id="@+id/btn_aplicar"
-                style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aplicar" />
+                android:text="Aplicar"
+                android:backgroundTint="@color/marineBlue"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="14sp"
+                android:padding="12dp"
+                android:textAllCaps="false"
+                />
+
+
+
         </LinearLayout>
 
     </LinearLayout>

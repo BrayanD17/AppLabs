@@ -1,5 +1,6 @@
 package com.labs.applabs.student
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,13 @@ import kotlinx.coroutines.launch
 
 
 class FormStudent : AppCompatActivity() {
+
+    private val formStudentLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            setResult(Activity.RESULT_OK)
+            finish() // Cierra esta activity si el formulario fue enviado correctamente
+        }
+    }
 
     lateinit var idCard : EditText
     lateinit var weightedAverage : EditText
@@ -94,8 +102,7 @@ class FormStudent : AppCompatActivity() {
             FormStudentData.degree = degreeSelected
 
             val intent = Intent(this@FormStudent, FormStudent2::class.java)
-            startActivity(intent)
-
+            formStudentLauncher.launch(intent)
         }
     }
 

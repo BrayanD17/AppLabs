@@ -1,15 +1,9 @@
 package com.labs.applabs.administrator
-
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,16 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.administrator.Adapter.SolicitudAdapter
 import com.labs.applabs.elements.FiltroDialogFragment
+import com.labs.applabs.firebase.FilterData
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.firebase.Solicitud
 import kotlinx.coroutines.launch
 
-class SolicitudesListView : AppCompatActivity() {
+class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterListener {
 
     private val provider : Provider = Provider()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SolicitudAdapter
     private lateinit var filters : ImageView
+    private var listaCompletaSolicitudes: List<Solicitud> = emptyList()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +34,10 @@ class SolicitudesListView : AppCompatActivity() {
         setupRecyclerView()
         loadData()
 
-        filters = findViewById<ImageView>(R.id.filterIcon)
+        filters = findViewById(R.id.filterIcon)
         filters.setOnClickListener {
             // Crea una instancia del DialogFragment
             val filtroDialog = FiltroDialogFragment()
-
             // Muestra el diálogo usando el FragmentManager
             filtroDialog.show(
                 (this as FragmentActivity).supportFragmentManager,
@@ -74,6 +70,7 @@ class SolicitudesListView : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val solicitudes = provider.getSolicitudes()
+                listaCompletaSolicitudes = solicitudes
                 adapter.actualizarLista(solicitudes)
             } catch (e: Exception) {
                 showError(e.message ?: "Error desconocido")
@@ -94,6 +91,20 @@ class SolicitudesListView : AppCompatActivity() {
         }
     }
 
+    override fun onFilterApply(filterData: FilterData) {
+        val filtradas = listaCompletaSolicitudes.filter {
+            (filterData.carrera.isNullOrEmpty() || it.carrera == filterData.carrera) &&
+                    (filterData.semestres.isNullOrEmpty() || it.numeroSemestreOperador == filterData.semestres) &&
+                    (filterData.nombre.isNullOrEmpty() || it.nombre.contains(filterData.nombre, ignoreCase = true)) &&
+                    (filterData.carnet.isNullOrEmpty() || it.carnet.contains(filterData.carnet, ignoreCase = true)) &&
+                    (filterData.estado.isNullOrEmpty() || it.estado == filterData.estado)
+        }
+        adapter.actualizarLista(filtradas)
+    }
+
+    override fun onFilterCancel() {
+        adapter.actualizarLista(listaCompletaSolicitudes)
+    }
 
 
 }

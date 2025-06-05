@@ -427,27 +427,25 @@ class Provider {
         Log.d("DEBUG", "Buscando solicitudes para formulario operador: $idFormOperator")
 
         return try {
-            // 1. Obtener todos los formStudent con ese idFormOperator
             val formStudents = db.collection("formStudent")
                 .whereEqualTo("idFormOperator", idFormOperator)
                 .get()
                 .await()
-
             Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios llenados por estudiantes")
 
             if (formStudents.isEmpty) {
                 return emptyList()
             }
 
-            // 2. Construir una lista de pares: (formStudentId, idStudent)
+            // Construir una lista: (formStudentId, idStudent)
             val solicitudesInfo = formStudents.documents.mapNotNull { doc ->
                 val idStudent = doc.getString("idStudent")
                 if (idStudent != null) {
-                    Triple(doc.id, idStudent, doc) // Guardamos también el doc en caso de necesitar más info
+                    Triple(doc.id, idStudent, doc)
                 } else null
             }
 
-            // 3. Obtener información de usuarios por sus IDs
+            // Obtener información de usuarios por sus IDs
             val studentIds = solicitudesInfo.map { it.second }.distinct()
             val usersSnapshot = db.collection("users")
                 .whereIn(FieldPath.documentId(), studentIds)
@@ -457,13 +455,17 @@ class Provider {
             val userMap = usersSnapshot.documents.associateBy { it.id }
 
             // 4. Mapear a objetos Solicitud
-            solicitudesInfo.map { (formStudentId, studentId, _) ->
+            solicitudesInfo.map { (formStudentId, studentId, formStudentDoc) ->
                 val userDoc = userMap[studentId]
                 Solicitud(
                     nombre = userDoc?.getString("name") ?: "Sin nombre",
                     correo = userDoc?.getString("email") ?: "Sin email",
                     uidForm = idFormOperator,
                     idFormStudent = formStudentId,
+                    carnet = formStudentDoc.get("idCard")?.toString() ?: "Sin carnet",
+                    estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "Sin estado",
+                    carrera = formStudentDoc.getString("degree") ?: "Sin carrera",
+                    numeroSemestreOperador = formStudentDoc.get("semester")?.toString() ?: "Sin semestre"
                     //idStudent = studentId
                 ).also {
                     Log.d("DEBUG", "Solicitud procesada: $it")
