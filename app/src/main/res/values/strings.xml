@@ -26,6 +26,7 @@
     <string name="men">Menú</string>
     <string name="cerrar_sesi_n">Cerrar sesión</string>
     <string name="new_password">Cambiar contraseña</string>
+    <string name="export_excel">Exportar horarios de aprobados</string>
     <string name="icono_del_usuario">icono del usuario</string>
     <string name="defaut_text_user">Brayan Gutiérrez Dinarte</string>
     <string name="defaut_rol_usuario">Administrador</string>

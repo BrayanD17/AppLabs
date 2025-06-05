@@ -24,6 +24,7 @@ firebaseStorageKtx = "21.0.1"
 firebaseFunctions = "21.2.1"
 firebaseMessaging = "24.1.1"
 firebaseMessagingKtx = "24.1.1"
+poi = "5.2.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,9 +49,12 @@ firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage
 firebase-functions = { group = "com.google.firebase", name = "firebase-functions", version.ref = "firebaseFunctions" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
+apache-poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+apache-poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+
 

@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
@@ -241,7 +242,7 @@ class Provider {
             val doc = db.collection("formOperator").document(idFormOperator).get().await()
             if(doc.exists()){
                 val formOperator = FormOperator(
-                    applicationOperatorTitle = doc.getString("nameForm") ?: "",
+                    nameForm = doc.getString("nameForm") ?: "",
                     typeForm = doc.getString("semester") ?: "",
                     year = doc.get("year")?.toString() ?: "",
                 )
@@ -693,4 +694,26 @@ class Provider {
             false
         }
     }
+    //Si el formulario es aceptado cambia el estado de estudiante a operador
+    suspend fun registrarNuevoOperador(
+        userId: String,
+        formId: String,
+        nombreUsuario: String,
+        correoUsuario: String,
+        semestre: String,
+        nombreFormulario: String
+    ) {
+        val operador = hashMapOf(
+            "userId" to userId,
+            "formId" to formId,
+            "nombreUsuario" to nombreUsuario,
+            "correoUsuario" to correoUsuario,
+            "semestre" to semestre,
+            "nombreFormulario" to nombreFormulario,
+            "fechaRegistro" to com.google.firebase.Timestamp.now()
+        )
+
+        Firebase.firestore.collection("historialOperadores").add(operador)
+    }
+
 }

@@ -139,7 +139,7 @@ class DetailsFormStudentActivity : AppCompatActivity() {
             val formDataOperator = provider.getFormOperator(idFormOperator)
             formDataOperator?.let { form ->
                 val dataformOperator = form.formOperator
-                applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
+                applicationOperatorTitle.text = dataformOperator.nameForm
                 typeForm.text = "${dataformOperator.typeForm} ${dataformOperator.year}"
             } ?: run {
                 applicationOperatorTitle.text = "No disponible"

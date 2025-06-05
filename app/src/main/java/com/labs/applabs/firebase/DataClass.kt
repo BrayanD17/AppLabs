@@ -38,7 +38,7 @@ data class ScheduleItem(
 
 
 data class FormOperator(
-    val applicationOperatorTitle: String = "",
+    val nameForm: String = "",
     val typeForm: String = "",
     val year: String = "",
 )
