@@ -20,70 +20,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:text="@string/degree"
-            android:textSize="15sp"
-            style="@style/TextViewStyleFilters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <Spinner
             android:id="@+id/spinner_carrera"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:text="@string/semesterFilter"
-            android:textSize="15sp"
-            style="@style/TextViewStyleFilters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:contentDescription="Seleccionar carrera" />
 
         <EditText
             android:id="@+id/et_semestres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:layout_marginBottom="12dp" />
-
-        <TextView
-            android:text="@string/name"
-            android:textSize="15sp"
-            style="@style/TextViewStyleFilters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:hint="Numero de semestres siendo operador"
+            android:layout_margin="12dp" />
 
         <EditText
             android:id="@+id/et_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
-
-        <TextView
-            android:text="@string/infoCardStudent"
-            android:textSize="15sp"
-            style="@style/TextViewStyleFilters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:hint="Nombre del estudiante"
+            android:layout_margin="12dp" />
 
         <EditText
             android:id="@+id/et_carnet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
-
-        <TextView
-            android:text="@string/status"
-            android:textSize="15sp"
-            style="@style/TextViewStyleFilters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:hint="Número de Carné"
+            android:layout_margin="12dp" />
 
         <Spinner
             android:id="@+id/spinner_estado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp" />
+            android:layout_margin="12dp"
+            android:contentDescription="Seleccionar estado" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:text="Reiniciar"
                 android:layout_marginEnd="10dp"
-                style="@style/ButtonOutlineStyle"/>
+                android:contentDescription="Botón para reiniciar filtros"
+                style="@style/ButtonOutlineStyle" />
 
             <Button
                 android:id="@+id/btn_aplicar"
@@ -110,10 +82,7 @@
                 android:textSize="14sp"
                 android:padding="12dp"
                 android:textAllCaps="false"
-                />
-
-
-
+                android:contentDescription="Botón para aplicar filtros" />
         </LinearLayout>
 
     </LinearLayout>

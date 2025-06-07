@@ -99,6 +99,16 @@ class Provider {
         }
     }
 
+    suspend fun getFormStatusData() : List<String> {
+        return try{
+            val snapshot = db.collection("dataDefault").document("statusForm").get().await()
+            snapshot.get("status") as? List<String> ?: emptyList()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar estados", e)
+            emptyList()
+        }
+    }
+
     suspend fun getUserInfo(userId: String?): DataClass? {
         return try {
             if (userId == null) return null
