@@ -12,13 +12,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/baseActivityColor">
+        android:background="@color/white">
 
         <ImageButton
             android:id="@+id/btnMenuStudent"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="10dp"
+            android:background="@color/white"
             android:contentDescription="@string/boton_menu_administrador"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +50,7 @@
                 android:contentDescription="@string/notification"
                 android:padding="4dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/notification_icon" />
+                android:src="@drawable/icon_notification" />
 
         </androidx.cardview.widget.CardView>
 

@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/baseActivityColor">
-
-    <!-- Botón de retroceso -->
-
-    <!-- Contenedor para mensaje cuando no hay datos -->
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/backView"
