@@ -160,4 +160,11 @@
     <string name="friday">Viernes</string>
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
+    <string name="aplicar_filtro">Aplicar filtro</string>
+    <string name="selecciona_una_carrera">Selecciona una carrera:</string>
+    <string name="filtrar_operadores_por">Filtrar operadores por:</string>
+    <string name="carnet">Carnet</string>
+    <string name="nombre">Nombre</string>
+    <string name="carrera">Carrera</string>
+    <string name="search">Search</string>
 </resources>
