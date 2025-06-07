@@ -8,16 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.Gravity
-import android.widget.Button
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -34,7 +25,7 @@ import kotlinx.coroutines.launch
 
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
-    private lateinit var typeForm:TextView
+    private lateinit var typeForm: TextView
     private lateinit var formStudentId: String
     private var formIdOperator: String? = null
     private var idUser: String? = null
@@ -43,6 +34,8 @@ class DetailFormActivity : AppCompatActivity() {
     private var statusApplication: String? = null
     private var nameFormOperator: String? = null
     private var semesterFormOperator: String? = null
+    private var studentNameValue: String = ""
+    private var studentEmailValue: String = ""
     private val provider: Provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,10 +58,8 @@ class DetailFormActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
     }
 
-    //Function to show form data of the user and the application
     private fun showInfo(formId: String) {
         applicationOperatorTitle = findViewById(R.id.textViewApplicationTitle)
         typeForm = findViewById(R.id.textViewTypeForm)
@@ -87,7 +78,6 @@ class DetailFormActivity : AppCompatActivity() {
         val scheduleAvailability = findViewById<LinearLayout>(R.id.containerDataSchedule)
 
         lifecycleScope.launch {
-            //Assign form data that belongs to the user
             val formStudent = provider.getFormStudent(formId)
             formStudent?.let { form ->
                 val studentInfo = form.studentInfo
@@ -100,7 +90,7 @@ class DetailFormActivity : AppCompatActivity() {
                 studentSemester.text = "${studentInfo.studentSemester} semestres"
                 studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
-                // Schedule availability
+
                 val styleLetter = ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
                 studentInfo.scheduleAvailability.forEach { schedule ->
@@ -115,12 +105,10 @@ class DetailFormActivity : AppCompatActivity() {
 
                 urlApplication = studentInfo.urlApplication
                 downloadBoleta(urlApplication!!)
-                // Mostrar el comentario en el EditText
                 val dataComment = findViewById<EditText>(R.id.textDataComment)
                 comment = studentInfo.comment
                 dataComment.setText(comment)
 
-                // Mostrar el estado en el RadioGroup
                 val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
                 when (studentInfo.statusApplication) {
                     "0" -> statusRadioGroup.check(R.id.radioStatusPending)
@@ -129,54 +117,33 @@ class DetailFormActivity : AppCompatActivity() {
                     else -> statusRadioGroup.clearCheck()
                 }
                 statusApplication = studentInfo.statusApplication
-
-            } ?: run {
-                studentCareer.text = "No disponible"
-                studentLastDigitCard.text = "No disponible"
-                studentId.text = "No disponible"
-                namePsycologist.text = "No disponible"
-                studentSemester.text = "No disponible"
-                studentShifts.text = "No disponible"
-                studentAverage.text = "No disponible"
             }
 
-
-            //Assign user data
             val infoUser = provider.getUserInfo(idUser)
             infoUser?.let { info ->
                 val studentInfo = info.studentInfo
-                studentName.text = "${studentInfo.studentName} ${studentInfo.surNames}"
+                studentNameValue = "${studentInfo.studentName} ${studentInfo.surNames}"
+                studentEmailValue = studentInfo.studentEmail
+                studentName.text = studentNameValue
                 studentCard.text = studentInfo.studentCard
-                studentEmail.text = studentInfo.studentEmail
+                studentEmail.text = studentEmailValue
                 studentPhone.text = studentInfo.studentPhone
                 bankAccount.text = studentInfo.bankAccount
-            } ?: run {
-                studentName.text = "No disponible"
-                studentCard.text = "No disponible"
-                studentEmail.text = "No disponible"
-                studentPhone.text = "No disponible"
-                bankAccount.text = "No disponible"
             }
 
-            //Assign form name
             val formDataOperator = provider.getFormOperator(formIdOperator)
             formDataOperator?.let { form ->
                 val dataformOperator = form.formOperator
-                nameFormOperator = dataformOperator.applicationOperatorTitle
+                nameFormOperator = dataformOperator.nameForm
                 semesterFormOperator = "${dataformOperator.typeForm} ${dataformOperator.year}"
-                applicationOperatorTitle.text = dataformOperator.applicationOperatorTitle
-                typeForm.text = "${dataformOperator.typeForm} ${dataformOperator.year}"
-            } ?: run {
-                applicationOperatorTitle.text = "No disponible"
-                typeForm.text = "No disponible"
+                applicationOperatorTitle.text = dataformOperator.nameForm
+                typeForm.text = semesterFormOperator
             }
-
         }
 
-        //Update application status
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
-           updateApplicationStatus(idUser!!,comment!!, statusApplication!!,nameFormOperator!!, semesterFormOperator!!)
+            updateApplicationStatus(idUser!!, comment!!, statusApplication!!, nameFormOperator!!, semesterFormOperator!!)
         }
     }
 
@@ -191,11 +158,7 @@ class DetailFormActivity : AppCompatActivity() {
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     .setAllowedOverMetered(true)
                     .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(
-                        this,
-                        Environment.DIRECTORY_DOWNLOADS,
-                        fileName
-                    )
+                    .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, fileName)
 
                 val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 downloadManager.enqueue(request)
@@ -206,7 +169,7 @@ class DetailFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateApplicationStatus(userId: String,originalComment: String, originalStatus: String, nameFormOperator: String, semesterFormOperator: String) {
+    private fun updateApplicationStatus(userId: String, originalComment: String, originalStatus: String, nameFormOperator: String, semesterFormOperator: String) {
         val dataComment = findViewById<EditText>(R.id.textDataComment)
         var commentText = dataComment.text.toString().trim()
         var newMessage: String
@@ -249,18 +212,29 @@ class DetailFormActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val updateSuccess = provider.updateFormStatusAndComment(formStudentId, updateData)
             if (updateSuccess) {
+                if (statusText == "1") {
+                    provider.registrarNuevoOperador(
+                        userId = userId,
+                        formId = formStudentId,
+                        nombreUsuario = studentNameValue,
+                        correoUsuario = studentEmailValue,
+                        nombreFormulario = nameFormOperator,
+                        semestre = semesterFormOperator
+                    )
+                }
+
                 toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
                 Handler(Looper.getMainLooper()).postDelayed({
                     startActivity(Intent(this@DetailFormActivity, SolicitudesListView::class.java))
                     finish()
-                }, 1000) // 1000ms = 1 segundo de retraso
+                }, 1000)
             } else {
                 toastMessage("Error al actualizar los datos", ToastType.ERROR)
             }
         }
     }
 
-    private fun finishActivityDetailsForm(){
+    private fun finishActivityDetailsForm() {
         val backView = findViewById<ImageView>(R.id.backViewAdminDetailActivity)
         backView.setOnClickListener {
             val intent = Intent(this, SolicitudesListView::class.java)
@@ -268,5 +242,4 @@ class DetailFormActivity : AppCompatActivity() {
             finish()
         }
     }
-
 }
