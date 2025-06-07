@@ -65,7 +65,7 @@ class FormActivity : AppCompatActivity() {
         toastMessage("Descarga iniciada", ToastType.SUCCESS)
     }
 
-    fun nextForm(view: View){
+    fun nextForm(view: View) {
         val id = intent.getStringExtra("formIdFormActive")
         if (id == null) {
             toastMessage("ID de formulario no recibido", ToastType.ERROR)
@@ -73,9 +73,24 @@ class FormActivity : AppCompatActivity() {
             return
         }
         formIdActive = id
-        FormStudentData.idFormOperator = formIdActive
-        val intent : Intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
-        startActivity(intent);
+
+        // Verificar si el estudiante ya ha enviado este formulario
+        lifecycleScope.launch {
+            try {
+                val alreadySubmitted = provider.checkFormSubmission(formIdActive)
+
+                if (alreadySubmitted) {
+                    toastMessage( "Formulario enviado. Edítalo desde 'Formularios enviados' si es necesario.", ToastType.ERROR)
+                } else {
+                    FormStudentData.idFormOperator = formIdActive
+                    val intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
+                    startActivity(intent)
+                }
+            } catch (e: Exception) {
+                Log.e("FormActivity", "Error al verificar envío de formulario", e)
+                toastMessage("Error al verificar formulario", ToastType.ERROR)
+            }
+        }
     }
 
     private fun finishActivity(){

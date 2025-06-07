@@ -8,8 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
 import com.labs.applabs.R
+import com.labs.applabs.firebase.Provider
 import com.labs.applabs.models.FormOperador
 import com.labs.applabs.utils.StepIndicatorActivity
 import java.text.SimpleDateFormat
@@ -21,6 +21,7 @@ class AdminAddFormTwoActivity : StepIndicatorActivity() {
     private lateinit var tvCierre: TextView
     private lateinit var tvCreacion: TextView
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val provider = Provider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,18 +92,18 @@ class AdminAddFormTwoActivity : StepIndicatorActivity() {
                     year = Calendar.getInstance().get(Calendar.YEAR)
                 )
 
-                FirebaseFirestore.getInstance()
-                    .collection("formOperator")
-                    .add(formulario)
-                    .addOnSuccessListener {
+                provider.createFormularioOperador(
+                    formulario,
+                    onSuccess = {
                         Toast.makeText(this, "Formulario guardado exitosamente.", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, AdminMenuFormActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
-                    }
-                    .addOnFailureListener { e ->
+                    },
+                    onFailure = { e ->
                         Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_LONG).show()
                     }
+                )
 
             } catch (e: Exception) {
                 Toast.makeText(this, "Error procesando fechas: ${e.message}", Toast.LENGTH_LONG).show()

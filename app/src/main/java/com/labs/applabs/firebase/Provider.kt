@@ -10,6 +10,8 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
@@ -23,6 +25,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class Provider {
 
@@ -39,13 +42,13 @@ class Provider {
     // Registrar usuario en FirebaseAuth + Firestore y enviar correo de verificación
     fun registrarUsuario(
         context: Context,
-        correo: String,
+        email: String,
         password: String,
         usuario: Usuario,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
-        auth.createUserWithEmailAndPassword(correo, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val uid = auth.currentUser?.uid
@@ -239,7 +242,7 @@ class Provider {
             val doc = db.collection("formOperator").document(idFormOperator).get().await()
             if(doc.exists()){
                 val formOperator = FormOperator(
-                    applicationOperatorTitle = doc.getString("nameForm") ?: "",
+                    nameForm = doc.getString("nameForm") ?: "",
                     typeForm = doc.getString("semester") ?: "",
                     year = doc.get("year")?.toString() ?: "",
                 )
@@ -393,40 +396,30 @@ class Provider {
     suspend fun getActiveForms(): List<formOperatorActive> {
         return try {
             val snapshot = db.collection("formOperator")
-                .whereEqualTo("activityStatus", 1) // Paso 1: formularios activos
+                .whereEqualTo("activityStatus", 1) // Solo filtro por estado activo
                 .get()
                 .await()
 
-            val currentDate = Date()
-
             snapshot.documents.mapNotNull { doc ->
-                // Paso 2: Validar que esté en rango de fechas
-                val startDate = doc.getTimestamp("startDate")?.toDate()
-                val closingDate = doc.getTimestamp("closingDate")?.toDate()
-                if (startDate == null || closingDate == null) return@mapNotNull null
-                if (currentDate.before(startDate) || currentDate.after(closingDate)) return@mapNotNull null
-
-                // Paso 3: Obtener datos del documento
+                // Extracción directa de datos (sin validar fechas)
                 val operatorId = doc.id
                 val nameForm = doc.getString("nameForm") ?: return@mapNotNull null
                 val semester = doc.getString("semester") ?: return@mapNotNull null
                 val year = doc.get("year")?.toString() ?: return@mapNotNull null
 
-                // Paso 4: Retornar objeto válido
                 formOperatorActive(
                     operatorIdForm = operatorId,
                     nameActiveForm = nameForm,
                     semesterActive = "$semester $year"
                 )
             }
-
         } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener formularios activos: ${e.message}")
             emptyList()
         }
     }
+
     suspend fun getSolicitudes(): List<Solicitud> {
-        // 1. Obtener el ID del formulario operador activo
         val idFormOperator = getFormOperatorData()?.iud ?: run {
             Log.d("DEBUG", "No hay formulario operador activo")
             return emptyList()
@@ -435,38 +428,44 @@ class Provider {
         Log.d("DEBUG", "Buscando solicitudes para formulario operador: $idFormOperator")
 
         return try {
-            // 2. Obtener todos los formStudent asociados a este formulario operador
+            // 1. Obtener todos los formStudent con ese idFormOperator
             val formStudents = db.collection("formStudent")
                 .whereEqualTo("idFormOperator", idFormOperator)
                 .get()
                 .await()
 
-            Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios de estudiantes")
+            Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios llenados por estudiantes")
 
-            // 3. Extraer todos los idStudent únicos
-            val studentIds = formStudents.documents.mapNotNull { doc ->
-                doc.getString("idStudent")?.also { id ->
-                    Log.d("DEBUG", "ID Estudiante encontrado: $id")
-                }
-            }.distinct()
-
-            if (studentIds.isEmpty()) {
-                Log.d("DEBUG", "No hay estudiantes asociados a este formulario")
+            if (formStudents.isEmpty) {
                 return emptyList()
             }
 
-            // 4. Obtener información de los usuarios (students)
-            val users = db.collection("users")
+            // 2. Construir una lista de pares: (formStudentId, idStudent)
+            val solicitudesInfo = formStudents.documents.mapNotNull { doc ->
+                val idStudent = doc.getString("idStudent")
+                if (idStudent != null) {
+                    Triple(doc.id, idStudent, doc) // Guardamos también el doc en caso de necesitar más info
+                } else null
+            }
+
+            // 3. Obtener información de usuarios por sus IDs
+            val studentIds = solicitudesInfo.map { it.second }.distinct()
+            val usersSnapshot = db.collection("users")
                 .whereIn(FieldPath.documentId(), studentIds)
                 .get()
                 .await()
 
-            // 5. Mapear a objetos Solicitud
-            users.documents.map { userDoc ->
+            val userMap = usersSnapshot.documents.associateBy { it.id }
+
+            // 4. Mapear a objetos Solicitud
+            solicitudesInfo.map { (formStudentId, studentId, _) ->
+                val userDoc = userMap[studentId]
                 Solicitud(
-                    nombre = userDoc.getString("name") ?: "Sin nombre",
-                    correo = userDoc.getString("email") ?: "Sin email",
-                    uidForm = idFormOperator
+                    nombre = userDoc?.getString("name") ?: "Sin nombre",
+                    correo = userDoc?.getString("email") ?: "Sin email",
+                    uidForm = idFormOperator,
+                    idFormStudent = formStudentId,
+                    //idStudent = studentId
                 ).also {
                     Log.d("DEBUG", "Solicitud procesada: $it")
                 }
@@ -476,7 +475,6 @@ class Provider {
             Log.e("DEBUG", "Error al obtener solicitudes: ${e.message}", e)
             emptyList()
         }
-
     }
 
     fun createFormularioOperador(formulario: FormOperador, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
@@ -486,6 +484,85 @@ class Provider {
             .addOnFailureListener { exception -> onFailure(exception) }
     }
 
+    suspend fun getAllFormOperators(): List<FormOperador> {
+        return try {
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            val threshold = currentYear - 4
+
+            // 1. Obtener todos los formularios
+            val snapshot = db.collection("formOperator").get().await()
+
+            // 2. Eliminar formularios con año menor al umbral
+            for (doc in snapshot.documents) {
+                val year = doc.getLong("year")?.toInt()
+                if (year != null && year < threshold) {
+                    doc.reference.delete()
+                }
+            }
+
+            // 3. Filtrar válidos y ordenar por fecha de creación (más reciente primero)
+            snapshot.documents
+                .mapNotNull { doc ->
+                    val year = doc.getLong("year")?.toInt()
+                    if (year != null && year >= threshold) {
+                        doc.toObject(FormOperador::class.java)
+                    } else null
+                }
+                .sortedByDescending { it.createdDate?.toDate() }
+        } catch (e: Exception) {
+            Log.e("Provider", "Error al obtener formularios: ${e.message}")
+            emptyList()
+        }
+    }
+
+    suspend fun getFormOperator(nameForm: String, semester: String, year: Int): FormOperador? {
+        return try {
+            Log.d("DEBUG_QUERY", "Buscando -> nameForm: '$nameForm', semester: '$semester', year: $year")
+
+            val query = db.collection("formOperator")
+                .whereEqualTo("nameForm", nameForm)
+                .whereEqualTo("semester", semester)
+                .whereEqualTo("year", year)
+                .get()
+                .await()
+
+            Log.d("DEBUG_QUERY", "Resultados: ${query.documents.size}")
+            query.documents.firstOrNull()?.toObject(FormOperador::class.java)
+        } catch (e: Exception) {
+            Log.e("DEBUG_QUERY", "Error: ${e.message}")
+            null
+        }
+    }
+
+    suspend fun updateFormOperator(
+        nameForm: String,
+        semester: String,
+        year: Int,
+        updatedData: Map<String, Any>,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        try {
+            val query = db.collection("formOperator")
+                .whereEqualTo("nameForm", nameForm.trim())
+                .whereEqualTo("semester", semester.trim())
+                .whereEqualTo("year", year)
+                .get()
+                .await()
+
+            val doc = query.documents.firstOrNull()
+            if (doc != null) {
+                db.collection("formOperator").document(doc.id)
+                    .update(updatedData)
+                    .addOnSuccessListener { onSuccess() }
+                    .addOnFailureListener { e -> onFailure(e) }
+            } else {
+                onFailure(Exception("Formulario no encontrado"))
+            }
+        } catch (e: Exception) {
+            onFailure(e)
+        }
+    }
 
     suspend fun deletePdfFromStorage(url: String) {
         try {
@@ -496,9 +573,9 @@ class Provider {
         }
     }
 
-    suspend fun uploadPdfToStorage(uri: Uri, fileName: String): String {
+    suspend fun uploadPdfToStorage(fileName: String): String {
         val storageRef = Firebase.storage.reference.child(fileName)
-        val uploadTask = storageRef.putFile(uri).await()
+        //val uploadTask = storageRef.putFile(uri).await()
         val downloadUrl = storageRef.downloadUrl.await()
         return downloadUrl.toString()
     }
@@ -553,7 +630,6 @@ class Provider {
             Log.e("FirestoreProvider", "Error al obtener getInfoStudentForm: ${e.message}")
             emptyList()
         }
-
     }
 
     fun deleteFormStudent(docId: String, onResult: (Boolean) -> Unit) {
@@ -574,7 +650,6 @@ class Provider {
 
     suspend fun getUserInformation(): UserInformation? {
         val uid = getAuthenticatedUserId()
-        val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("users").document(uid)
 
         return try {
@@ -603,4 +678,42 @@ class Provider {
             null
         }
     }
+
+    suspend fun checkFormSubmission(formId: String): Boolean {
+        val studentId = getAuthenticatedUserId()
+        return try {
+            val query = db.collection("formStudent")
+                .whereEqualTo("idStudent", studentId)
+                .whereEqualTo("idFormOperator", formId)
+                .get()
+                .await()
+
+            !query.isEmpty
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al verificar envío de formulario", e)
+            false
+        }
+    }
+    //Si el formulario es aceptado cambia el estado de estudiante a operador
+    suspend fun registrarNuevoOperador(
+        userId: String,
+        formId: String,
+        nombreUsuario: String,
+        correoUsuario: String,
+        semestre: String,
+        nombreFormulario: String
+    ) {
+        val operador = hashMapOf(
+            "userId" to userId,
+            "formId" to formId,
+            "nombreUsuario" to nombreUsuario,
+            "correoUsuario" to correoUsuario,
+            "semestre" to semestre,
+            "nombreFormulario" to nombreFormulario,
+            "fechaRegistro" to com.google.firebase.Timestamp.now()
+        )
+
+        Firebase.firestore.collection("historialOperadores").add(operador)
+    }
+
 }

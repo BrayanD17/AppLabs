@@ -8,8 +8,19 @@
     tools:context=".administrator.SolicitudesListView"
     android:background="@color/baseActivityColor">
 
-    <!-- Campo de búsqueda -->
+    <ImageView
+        android:id="@+id/backViewSolicitudesList"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
+    <!-- Campo de búsqueda -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
@@ -17,14 +28,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
-        android:text="Solicitudes I Semestre 2025"
+        android:text="Solicitudes"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backViewSolicitudesList"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

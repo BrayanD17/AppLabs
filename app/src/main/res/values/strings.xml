@@ -7,7 +7,9 @@
     <string name="register">Regístrate</string>
     <string name="introduceEmail">Introduce tu correo</string>
     <string name="introducePassword">Introduce tu contraseña</string>
+    <string name="confirmPassword">Confirmar contraseña</string>
     <string name="mostrar_u_ocultar_contrase_a">Mostrar u ocultar contraseña</string>
+    <string name="mostrar_u_ocultar_contrase_b">Confimar contraseña</string>
     <string name="icono_exito">Ícono de éxito</string>
     <string name="contraseña_actualizada">Contraseña actualizada</string>
     <string name="btn_cambiar_contrasena">Botón para cambiar la contraseña</string>
@@ -18,11 +20,13 @@
     <string name="operadores">Operadores</string>
     <string name="reportes">Reportes</string>
     <string name="visitas">Visitas</string>
-    <string name="cont_ctanos">Contáctanos</string>
+    <string name="adminViewAplicationForm">Solicitudes</string>
     <string name="boton_menu_administrador">boton menu administrador</string>
     <string name="logo_de_la_app">Logo de la app</string>
     <string name="men">Menú</string>
     <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="new_password">Cambiar contraseña</string>
+    <string name="export_excel">Exportar horarios de aprobados</string>
     <string name="icono_del_usuario">icono del usuario</string>
     <string name="defaut_text_user">Brayan Gutiérrez Dinarte</string>
     <string name="defaut_rol_usuario">Administrador</string>
@@ -132,7 +136,7 @@
     <string name="formListTitle">Historial de Formularios Enviados</string>
     <string name="formLisDescription">Podra editar la informacion del formulario siempre y cuando este se encuentre en periodo activo.</string>
 
-   <!--Edit form (student view)-->
+    <!--Edit form (student view)-->
     <string name="nameFormEdit">Editar formulario</string>
     <string name="editFormCardId">Cédula</string>
     <string name="editFormWeightedAverage">Promedio ponderado del semestre anterior</string>

@@ -48,6 +48,7 @@ class SolicitudesListView : AppCompatActivity() {
                 "FiltroDialogFragment"
             )
         }
+        finishActivitySolicitudes()
     }
 
     private fun initViews() {
@@ -58,7 +59,7 @@ class SolicitudesListView : AppCompatActivity() {
         adapter = SolicitudAdapter(emptyList()).apply {
             setOnItemClickListener { solicitud ->
                 val intent = Intent(this@SolicitudesListView, DetailFormActivity::class.java)
-                intent.putExtra("formId", solicitud.uidForm)
+                intent.putExtra("formId", solicitud.idFormStudent)
                 startActivity(intent)
             }
         }
@@ -82,6 +83,15 @@ class SolicitudesListView : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun finishActivitySolicitudes(){
+        val backView = findViewById<ImageView>(R.id.backViewSolicitudesList)
+        backView.setOnClickListener {
+            val intent = Intent(this, AdminMenuActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
 

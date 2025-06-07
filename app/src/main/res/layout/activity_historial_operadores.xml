@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F2EC"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Logo y campanita bien distribuidos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:layout_width="152dp"
+            android:layout_height="109dp"
+            android:contentDescription="Logo"
+            android:src="@drawable/logo_compulabs" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btnNotification"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:contentDescription="Notificación"
+            android:src="@drawable/notification_icon" />
+    </LinearLayout>
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:text="Gestión de Horarios I\nSemestre 2025"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Buscar, filtro y exportar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corner"
+            android:hint="Search"
+            android:inputType="text"
+            android:padding="12dp" />
+
+        <ImageView
+            android:id="@+id/btnFiltro"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_corner"
+            android:src="@drawable/icon_filter"
+            android:contentDescription="Filtro"
+            android:padding="10dp"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/btnExportar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_corner_green"
+            android:src="@drawable/upload"
+            android:contentDescription="Exportar"
+            android:padding="10dp"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+    <!-- Título de sección -->
+    <TextView
+        android:id="@+id/tvListaOperadores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Lista de Operadores"
+        style="@style/TextViewStyle"
+        android:textStyle="bold" />
+
+    <!-- Lista de operadores -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOperadores"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Paginación -->
+    <LinearLayout
+        android:id="@+id/paginationContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp" />
+</LinearLayout>

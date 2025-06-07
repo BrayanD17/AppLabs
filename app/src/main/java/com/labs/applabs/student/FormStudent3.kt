@@ -134,8 +134,8 @@ class FormStudent3 : AppCompatActivity() {
                     }
                     val saved = provider.saveStudentData(FormStudentData)
                     if (saved) {
-                        startActivity(Intent(this@FormStudent3, FormActivity::class.java))
                         toastMessage("Formulario guardado exitosamente", ToastType.SUCCESS)
+                        startActivity(Intent(this@FormStudent3, studentMenuActivity::class.java))
                     } else {
                         toastMessage("Error al guardar formulario", ToastType.ERROR)
                     }

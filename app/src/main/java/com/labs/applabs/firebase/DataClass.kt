@@ -38,7 +38,7 @@ data class ScheduleItem(
 
 
 data class FormOperator(
-    val applicationOperatorTitle: String = "",
+    val nameForm: String = "",
     val typeForm: String = "",
     val year: String = "",
 )
@@ -56,6 +56,7 @@ data class Solicitud(
     val nombre: String = "",
     val correo: String = "",
     val uidForm : String = "",
+    val idFormStudent:String = "",
 )
 
 data class dataUpdateStatus(

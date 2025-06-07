@@ -8,6 +8,18 @@
     android:background="@color/baseActivityColor"
     tools:context=".administrator.DetailFormActivity">
 
+    <ImageView
+        android:id="@+id/backViewAdminDetailActivity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
     <TextView
         android:id="@+id/textViewApplicationTitle"
         style="@style/TextViewStyleTitle"
@@ -17,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backViewAdminDetailActivity"
         app:layout_constraintVertical_bias="0.064" />
 
     <TextView
@@ -558,7 +570,7 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <FrameLayout
-                    android:id="@+id/btnDescargarBoleta"
+                    android:id="@+id/btnDownloadApplication"
                     android:layout_width="275dp"
                     android:layout_height="85dp"
                     android:layout_marginTop="16dp"
@@ -602,7 +614,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/radioGroup"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta" />
+                    app:layout_constraintTop_toBottomOf="@id/btnDownloadApplication" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
@@ -612,11 +624,12 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.90"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnDescargarBoleta"
+                    app:layout_constraintTop_toBottomOf="@id/btnDownloadApplication"
                     app:layout_constraintVertical_bias="0.0">
 
                     <RadioButton
                         android:id="@+id/radioStatusPending"
+                        style="@style/viewTextForm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/statusPending"

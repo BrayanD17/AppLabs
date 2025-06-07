@@ -2,9 +2,11 @@ package com.labs.applabs.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.labs.applabs.R
+import com.labs.applabs.administrator.AdminMenuFormActivity
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.models.ValidadorCampos
@@ -33,14 +35,42 @@ class RegisterActivity2 : AppCompatActivity() {
         etMail = findViewById(R.id.etMail)
         etCard = findViewById(R.id.etCard)
         etPassword = findViewById(R.id.etPassword)
-        etConfirmPassword = findViewById(R.id.etconfirmpassword)
+        etConfirmPassword = findViewById(R.id.confirmPassword)
         btnRegister = findViewById(R.id.btnRegister)
+
 
         // Recuperar datos del paso anterior
         nombre = intent.getStringExtra("nombre") ?: ""
         apellidos = intent.getStringExtra("apellidos") ?: ""
         telefono = intent.getStringExtra("telefono") ?: ""
         cuenta = intent.getStringExtra("cuenta") ?: ""
+        // Mostrar/ocultar contraseña
+        var isPasswordVisible = false
+        val ivTogglePassword = findViewById<ImageView>(R.id.iv_toggle)
+        ivTogglePassword.setOnClickListener {
+            etPassword.inputType = if (isPasswordVisible)
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            else
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+
+            etPassword.setSelection(etPassword.text.length)
+            ivTogglePassword.setImageResource(if (isPasswordVisible) R.drawable.eye_hide else R.drawable.eye_open)
+            isPasswordVisible = !isPasswordVisible
+        }
+
+        var isConfirmVisible = false
+        val ivToggleConfirm = findViewById<ImageView>(R.id.iv_toggle1)
+        ivToggleConfirm.setOnClickListener {
+            etConfirmPassword.inputType = if (isConfirmVisible)
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            else
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+
+            etConfirmPassword.setSelection(etConfirmPassword.text.length)
+            ivToggleConfirm.setImageResource(if (isConfirmVisible) R.drawable.eye_hide else R.drawable.eye_open)
+            isConfirmVisible = !isConfirmVisible
+        }
+
 
         btnRegister.setOnClickListener {
             val correo = etMail.text.toString().trim()
@@ -86,12 +116,13 @@ class RegisterActivity2 : AppCompatActivity() {
             //Usar Provider en lugar de FirebaseUsuarioService
             provider.registrarUsuario(
                 context = this,
-                correo = correo,
+                email = correo,
                 password = password,
                 usuario = nuevoUsuario,
                 onSuccess = {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 },
                 onError = { mensaje ->
                     Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()

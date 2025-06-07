@@ -24,6 +24,7 @@ import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
 import com.labs.applabs.elements.ToastType
 import com.labs.applabs.firebase.Provider
+import com.labs.applabs.login.NewPasswordActivity
 import kotlinx.coroutines.launch
 
 class studentMenuActivity : AppCompatActivity() {
@@ -83,6 +84,10 @@ class studentMenuActivity : AppCompatActivity() {
                     val intent = Intent(this, FormListStudentActivity::class.java)
                     startActivity(intent)
                     finish()
+                }
+                R.id.nav_change_password -> {
+                    val intent = Intent(this, NewPasswordActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_logout_student -> {
                     val intent = Intent(this, MainActivity::class.java)

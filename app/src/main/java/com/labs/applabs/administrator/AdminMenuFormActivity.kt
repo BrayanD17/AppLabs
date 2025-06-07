@@ -13,6 +13,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.R
+import com.labs.applabs.export.ExportSchedulesActivity
+import com.labs.applabs.login.NewPasswordActivity
 
 class AdminMenuFormActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -43,11 +45,16 @@ class AdminMenuFormActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
+                R.id.nav_change_password -> {
+                    val intent = Intent(this, NewPasswordActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.nav_logout -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
+
 
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -56,6 +63,11 @@ class AdminMenuFormActivity : AppCompatActivity() {
     }
     fun callAdminAddForm(view:View){
         val intent = Intent(this, AdminAddFormActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun callAdminEditForm(view:View){
+        val intent = Intent(this, AdminEditFormActivity::class.java)
         startActivity(intent)
     }
 

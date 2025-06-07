@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".firebase.App"
@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppLabs"
         tools:targetApi="31">
+        <activity
+            android:name=".administrator.AdminEditMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".administrator.AdminEditFormActivity"
+            android:exported="false" />
 
         <service
             android:name=".student.FirebaseMessagingService"
@@ -63,11 +69,9 @@
         <activity
             android:name=".administrator.DetailFormActivity"
             android:exported="false" />
-
         <activity
             android:name=".login.RegisterActivity2"
             android:exported="false" />
-
         <activity
             android:name=".student.FormStudent2"
             android:exported="false"
@@ -82,10 +86,16 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".login.NewPasswordActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ResetPasswordActivity"
-            android:exported="false"/>
+            android:exported="false" />
+        <activity
+            android:name=".export.ExportSchedulesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".operadores.HistorialOperadoresActivity"
+            android:exported="false" />
         <activity
             android:name=".login.MainActivity"
             android:exported="true"
@@ -96,8 +106,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
-
 
 </manifest>

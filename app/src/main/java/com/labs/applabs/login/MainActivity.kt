@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✔️ Hacer transparentes barra de estado y barra de navegación
+        // Hacer transparentes barra de estado y barra de navegación
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val insetsController = WindowInsetsControllerCompat(window, window.decorView)
         insetsController.isAppearanceLightStatusBars = false
@@ -75,11 +75,11 @@ class MainActivity : AppCompatActivity() {
 
         // Login
         btnLogin.setOnClickListener {
-            val correo = etCorreo.text.toString().trim()
+            val email = etCorreo.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
             // Validaciones
-            val errorCorreo = validador.validarCorreo(correo)
+            val errorCorreo = validador.validarCorreo(email)
             if (errorCorreo != null) {
                 etCorreo.error = errorCorreo
                 return@setOnClickListener
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             // Login Firebase
-            auth.signInWithEmailAndPassword(correo, password)
+            auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     val user = auth.currentUser
                     if (user != null && !user.isEmailVerified) {
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     // Guardar o borrar credenciales
                     if (cbRecordar.isChecked) {
                         prefs.edit().apply {
-                            putString("correo", correo)
+                            putString("correo", email)
                             putString("clave", password)
                             putBoolean("recordar", true)
                             apply()
