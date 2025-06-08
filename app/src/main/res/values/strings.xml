@@ -160,4 +160,15 @@
     <string name="friday">Viernes</string>
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
+
+
+    <!--Misconduct (View Misconduct)-->
+    <string name="miscondutTextView">Reportar mala conducta</string>
+    <string name="laboratoryTextView">Laboratorio</string>
+    <string name="StudentTextView">Estudiante</string>
+    <string name="SemesterTextView">Semestre en curso</string>
+    <string name="CommentTextView">Comentario</string>
+    <string name="btnSendReport">Enviar Reporte</string>
+
+
 </resources>

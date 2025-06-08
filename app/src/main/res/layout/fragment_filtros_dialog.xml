@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="24dp"
     android:background="@drawable/rounded_corner">
 
@@ -76,13 +77,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aplicar"
-                android:backgroundTint="@color/marineBlue"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat_regular"
+                style="@style/ButtonStyle"
                 android:textSize="14sp"
                 android:padding="12dp"
                 android:textAllCaps="false"
-                android:contentDescription="Botón para aplicar filtros" />
+                android:contentDescription="Botón para aplicar filtros"
+                app:backgroundTint="@color/marineBlue"/>
         </LinearLayout>
 
     </LinearLayout>
