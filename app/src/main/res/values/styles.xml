@@ -22,6 +22,19 @@
         <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
+    <style name="TextWelcome">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/marineBlue</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="textIcon">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/marineBlue</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+    </style>
+
     <!-- Estilo para TextView Titulos -->
     <style name="TextViewStyleTitle">
         <item name="android:textSize">18sp</item>

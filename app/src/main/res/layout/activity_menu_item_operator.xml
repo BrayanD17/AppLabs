@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".administrator.AdminMenuActivity">
+    tools:context=".administrator.menu_item_operator">
 
-    <!-- Contenido principal dentro de ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".administrator.AdminMenuActivity">
 
         <TextView
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
-            android:text="@string/bienvenido_a_la_gesti_n_de_laboratorios"
+            android:text="@string/gestionOperator"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.485"
@@ -43,7 +44,6 @@
             app:layout_constraintVertical_bias="0.031"
             app:srcCompat="@drawable/icon_menu" />
 
-        <!-- Contenedor principal para los iconos -->
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="321dp"
@@ -69,16 +69,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
 
-            <!-- Primera fila: Visitas y Operadores -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="278dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:orientation="horizontal">
 
-                <!-- Icono Visitas -->
                 <LinearLayout
-                    android:id="@+id/visitIcon"
+                    android:id="@+id/operatorActive"
                     android:layout_width="108dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -87,29 +85,27 @@
                     android:padding="16dp">
 
                     <ImageButton
-                        android:id="@+id/btnVisit"
+                        android:id="@+id/btnOperatorActive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/boton_menu_administrador"
-                        app:srcCompat="@drawable/icon_visit" />
+                        app:srcCompat="@drawable/icon_operator_active" />
 
                     <TextView
-                        android:id="@+id/tvVisit"
+                        android:id="@+id/tvActive"
                         style="@style/textIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/visitas" />
+                        android:text="@string/operatorActive" />
                 </LinearLayout>
 
-                <!-- Espacio entre iconos -->
                 <Space
                     android:layout_width="64dp"
                     android:layout_height="1dp" />
 
-                <!-- Icono Operadores -->
                 <LinearLayout
-                    android:id="@+id/operatorIcon"
+                    android:id="@+id/iconHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -118,31 +114,29 @@
                     android:padding="16dp">
 
                     <ImageButton
-                        android:id="@+id/btnOperador"
+                        android:id="@+id/btnOperadorHistory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/boton_menu_administrador"
-                        app:srcCompat="@drawable/icon_operador" />
+                        app:srcCompat="@drawable/history_operator" />
 
                     <TextView
-                        android:id="@+id/tvOperador"
+                        android:id="@+id/tvOperadorHistory"
                         style="@style/textIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/operadores" />
+                        android:text="@string/operatorHistory" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Segunda fila: Solicitudes y Formularios -->
             <LinearLayout
-                android:layout_width="293dp"
+                android:layout_width="318dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Icono Solicitudes -->
                 <LinearLayout
-                    android:id="@+id/solicitudIcon"
+                    android:id="@+id/generalScheduleIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -151,29 +145,27 @@
                     android:padding="16dp">
 
                     <ImageButton
-                        android:id="@+id/btnAplicationForm"
+                        android:id="@+id/btnGeneralSchedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/boton_menu_administrador"
-                        app:srcCompat="@drawable/application_form_admin" />
+                        app:srcCompat="@drawable/icon_schedule_general_operator" />
 
                     <TextView
-                        android:id="@+id/tvContact"
+                        android:id="@+id/tvGeneralSchedule"
                         style="@style/textIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/adminViewAplicationForm" />
+                        android:text="@string/scheduleGeneral" />
                 </LinearLayout>
 
-                <!-- Espacio entre iconos -->
                 <Space
-                    android:layout_width="64dp"
+                    android:layout_width="30dp"
                     android:layout_height="1dp" />
 
-                <!-- Icono Formularios -->
                 <LinearLayout
-                    android:id="@+id/formIcon"
+                    android:id="@+id/addScheduleIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -182,54 +174,22 @@
                     android:padding="16dp">
 
                     <ImageButton
-                        android:id="@+id/btnForm"
+                        android:id="@+id/btnAddSchedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/boton_menu_administrador"
-                        android:onClick="callMenuForm"
-                        app:srcCompat="@drawable/icon_form" />
+                        app:srcCompat="@drawable/add_schedule_operator" />
 
                     <TextView
-                        android:id="@+id/tvForm"
+                        android:id="@+id/tvAddSchedule"
                         style="@style/textIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/formularios" />
+                        android:text="@string/addSchedule" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white"
-        app:menu="@menu/menu_lateral_admin"
-        app:headerLayout="@layout/header_nav_drawer"
-        app:itemIconTint="@color/marineBlue"
-        app:itemTextColor="@color/black"
-        app:itemTextAppearance="@font/montserrat_regular">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="bottom"
-            android:padding="16dp">
-
-            <Button
-                style="@style/ButtonStyle"
-                android:id="@+id/btnCerrarDrawer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/cerrar"
-                android:textColor="@color/white"
-                android:layout_marginBottom="32dp"
-                app:backgroundTint="@color/marineBlue" />
-
-        </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
