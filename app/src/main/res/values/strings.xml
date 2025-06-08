@@ -14,7 +14,7 @@
     <string name="contraseña_actualizada">Contraseña actualizada</string>
     <string name="btn_cambiar_contrasena">Botón para cambiar la contraseña</string>
 
-    <string name="bienvenido_a_la_gesti_n_de_laboratorios">¡Bienvenido a la gestión \nde laboratorios!</string>
+    <string name="bienvenido_a_la_gesti_n_de_laboratorios">¡Bienvenido a la gestión de laboratorios!</string>
     <string name="formularios">Formularios</string>
     <string name="horarios">Horarios</string>
     <string name="operadores">Operadores</string>
@@ -36,12 +36,6 @@
     <string name="editar_formulario">Editar formulario</string>
     <string name="nuevo_formulario">Nuevo formulario</string>
     <string name="ver_formularios">Ver formularios</string>
-    <string name="gestionOperator">Gestión de operadores</string>
-    <string name="operatorHistory">Historial</string>
-    <string name="operatorActive">Activos</string>
-    <string name="scheduleGeneral">Horario general</string>
-    <string name="addSchedule">Asignar horario</string>
-
 
     <!--Student Form -->
     <string name="application_form">Boleta de Solicitud</string>
@@ -137,7 +131,6 @@
     <string name="semesterFilter">Cantidad de semestres siendo operador</string>
     <string name="status">Estado</string>
     <string name="name">Nombre</string>
-    <string name="withoutForm">No hay formularios activos disponibles</string>
 
     <!--Request history details (administrator view)-->
     <string name="formListTitle">Historial de Formularios Enviados</string>
