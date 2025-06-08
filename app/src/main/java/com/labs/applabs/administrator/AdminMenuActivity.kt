@@ -63,20 +63,11 @@ class AdminMenuActivity : AppCompatActivity() {
         // Conexiones con botones principales
         viewAplicationForm()
         viewHistorialOperadores()
-        viewMenuOperator()
     }
 
     fun callMenuForm(view: View) {
         val intent = Intent(this, AdminMenuFormActivity::class.java)
         startActivity(intent)
-    }
-
-    fun viewMenuOperator(){
-        val btnMenu = findViewById<ImageButton>(R.id.btnOperador)
-        btnMenu.setOnClickListener {
-            val intent = Intent(this, menu_item_operator::class.java)
-            startActivity(intent)
-        }
     }
 
     fun viewAplicationForm() {
@@ -94,6 +85,4 @@ class AdminMenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-
 }
