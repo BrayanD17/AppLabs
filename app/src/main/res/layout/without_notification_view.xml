@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/baseActivityColor">
 
+    <!-- Botón de retroceso -->
+
+    <!-- Contenedor para mensaje cuando no hay datos -->
+
     <ImageView
         android:id="@+id/backView"
         android:layout_width="40dp"
