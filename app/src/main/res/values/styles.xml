@@ -1,24 +1,38 @@
 <resources>
+    <!-- Tema para la ventana de inicio (splash) -->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-        <!-- Evitar que el splash invada la barra de estado y navegación -->
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/splashBackground</item>
         <item name="android:navigationBarColor">@color/splashBackground</item>
-        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:windowIsTranslucent">true</item> <!-- Nueva línea -->
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Tema principal de la aplicación -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/white</item> <!-- Fondo blanco o el que prefieras -->
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
-
 
     <!-- Estilo para TextView Labels -->
     <style name="TextViewStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="TextWelcome">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/marineBlue</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="textIcon">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/marineBlue</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
     <!-- Estilo para TextView Titulos -->
@@ -129,7 +143,7 @@
     <style name="welcomeMessageStyle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">25sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/marineBlue</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">9dp</item>
         <item name="android:textAlignment">center</item>
@@ -161,23 +175,23 @@
     <style name="formCardStudentActive" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/grayOs</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">8dp</item>
         <item name="android:textAlignment">center</item>
     </style>
     <style name="formNameCardStudentActive" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_regular</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/grayOs</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">8dp</item>
         <item name="android:textAlignment">center</item>
     </style>
     <style name="formNameCard" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grayOs</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingExtra">8dp</item>
         <item name="android:textAlignment">center</item>
