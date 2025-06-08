@@ -11,18 +11,20 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_compulabs"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_compulabs"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppLabs"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".administrator.AdminEditMenuActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".administrator.AdminEditFormActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
 
         <service
             android:name=".student.FirebaseMessagingService"
@@ -37,25 +39,31 @@
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".student.EditFormStudent"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".student.FormListStudentActivity"
             android:exported="false" />
         <activity
             android:name=".student.DetailsFormStudentActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".administrator.SolicitudesListView"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".administrator.AdminAddFormTwoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".administrator.AdminAddFormActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".administrator.AdminMenuFormActivity"
             android:exported="false" />
@@ -68,10 +76,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".administrator.DetailFormActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".login.RegisterActivity2"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".student.FormStudent2"
             android:exported="false"
@@ -86,10 +96,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".login.NewPasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ResetPasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".export.ExportSchedulesActivity"
             android:exported="false" />
@@ -97,15 +109,21 @@
             android:name=".operadores.HistorialOperadoresActivity"
             android:exported="false" />
         <activity
-            android:name=".login.MainActivity"
+            android:name=".login.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".login.MainActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
     </application>
 
 </manifest>

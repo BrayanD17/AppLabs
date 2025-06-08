@@ -1,18 +1,19 @@
 <resources>
+    <!-- Tema para la ventana de inicio (splash) -->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-        <!-- Evitar que el splash invada la barra de estado y navegación -->
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/splashBackground</item>
         <item name="android:navigationBarColor">@color/splashBackground</item>
-        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:windowIsTranslucent">true</item> <!-- Nueva línea -->
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Tema principal de la aplicación -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/white</item> <!-- Fondo blanco o el que prefieras -->
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
-
 
     <!-- Estilo para TextView Labels -->
     <style name="TextViewStyle">
