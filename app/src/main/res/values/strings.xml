@@ -137,6 +137,7 @@
     <string name="semesterFilter">Cantidad de semestres siendo operador</string>
     <string name="status">Estado</string>
     <string name="name">Nombre</string>
+    <string name="withoutForm">No hay formularios activos disponibles</string>
 
     <!--Request history details (administrator view)-->
     <string name="formListTitle">Historial de Formularios Enviados</string>
