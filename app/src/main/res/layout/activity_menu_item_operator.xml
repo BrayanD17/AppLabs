@@ -31,18 +31,19 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <ImageButton
-            android:id="@+id/btnMenu"
+            android:id="@+id/btnMenuBack"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:background="@color/white"
             android:contentDescription="@string/boton_menu_administrador"
+            android:onClick="actionBtnMenuBack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.031"
-            app:srcCompat="@drawable/icon_menu" />
+            app:srcCompat="@drawable/arrow_back_blue" />
 
         <ImageView
             android:id="@+id/imageView2"

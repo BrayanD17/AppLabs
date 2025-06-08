@@ -2,6 +2,7 @@ package com.labs.applabs.administrator
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,5 +27,9 @@ class menu_item_operator : AppCompatActivity() {
             val intent = Intent(this, HistorialOperadoresActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun actionBtnMenuBack(View: View){
+        finish()
     }
 }
