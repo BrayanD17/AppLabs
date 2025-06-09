@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".administrator.AdminMenuActivity">
 
-<!-- Contenido principal dentro de ConstraintLayout -->
+    <!-- Contenido principal dentro de ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -16,200 +16,9 @@
         android:background="@color/white"
         tools:context=".administrator.AdminMenuActivity">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="49dp"
-            android:layout_marginTop="54dp"
-            android:layout_marginEnd="49dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <ImageButton
-                android:id="@+id/btnHorario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_calendar" />
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:id="@+id/tvHorario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/horarios" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="52dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <ImageButton
-                android:id="@+id/btnReport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_report" />
-
-            <TextView
-                android:id="@+id/tvReport"
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reportes" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="54dp"
-            android:layout_marginEnd="54dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <ImageButton
-                android:id="@+id/btnVisit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_visit" />
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:id="@+id/tvVisit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/visitas" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lyForm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="38dp"
-            android:layout_marginTop="62dp"
-            android:layout_marginEnd="38dp"
-            android:layout_marginBottom="166dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:onClick="callMenuForm"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
-            app:layout_constraintHorizontal_bias="0.517"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout4"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageButton
-                android:id="@+id/btnForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                android:onClick="callMenuForm"
-                app:srcCompat="@drawable/icon_form" />
-
-            <TextView
-                android:id="@+id/tvForm"
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="callMenuForm"
-                android:text="@string/formularios" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="62dp"
-            android:layout_marginBottom="166dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageButton
-                android:id="@+id/btnOperador"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/icon_operador" />
-
-            <TextView
-                android:id="@+id/tvOperador"
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/operadores" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="62dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="166dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageButton
-                android:id="@+id/btnAplicationForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/boton_menu_administrador"
-                app:srcCompat="@drawable/application_form_admin" />
-
-            <TextView
-                android:id="@+id/tvContact"
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/adminViewAplicationForm" />
-        </LinearLayout>
-
         <TextView
             android:id="@+id/textView"
-            style="@style/TextViewStyle"
+            style="@style/TextWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
@@ -231,9 +40,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.075"
+            app:layout_constraintVertical_bias="0.031"
             app:srcCompat="@drawable/icon_menu" />
 
+        <!-- Contenedor principal para los iconos -->
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="321dp"
@@ -243,24 +53,152 @@
             android:layout_marginEnd="18dp"
             android:contentDescription="@string/logo_de_la_app"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo_compulabs" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:contentDescription="@string/boton_de_notificaciones"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.075"
-            app:srcCompat="@drawable/icon_notification" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
+            <!-- Primera fila: Visitas y Operadores -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:orientation="horizontal">
+
+                <!-- Icono Visitas -->
+                <LinearLayout
+                    android:id="@+id/visitIcon"
+                    android:layout_width="108dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageButton
+                        android:id="@+id/btnVisit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:contentDescription="@string/boton_menu_administrador"
+                        app:srcCompat="@drawable/icon_visit" />
+
+                    <TextView
+                        android:id="@+id/tvVisit"
+                        style="@style/textIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/visitas" />
+                </LinearLayout>
+
+                <!-- Espacio entre iconos -->
+                <Space
+                    android:layout_width="64dp"
+                    android:layout_height="1dp" />
+
+                <!-- Icono Operadores -->
+                <LinearLayout
+                    android:id="@+id/operatorIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageButton
+                        android:id="@+id/btnOperador"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:contentDescription="@string/boton_menu_administrador"
+                        app:srcCompat="@drawable/icon_operador" />
+
+                    <TextView
+                        android:id="@+id/tvOperador"
+                        style="@style/textIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/operadores" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Segunda fila: Solicitudes y Formularios -->
+            <LinearLayout
+                android:layout_width="293dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Icono Solicitudes -->
+                <LinearLayout
+                    android:id="@+id/solicitudIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageButton
+                        android:id="@+id/btnAplicationForm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:contentDescription="@string/boton_menu_administrador"
+                        app:srcCompat="@drawable/application_form_admin" />
+
+                    <TextView
+                        android:id="@+id/tvContact"
+                        style="@style/textIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/adminViewAplicationForm" />
+                </LinearLayout>
+
+                <!-- Espacio entre iconos -->
+                <Space
+                    android:layout_width="64dp"
+                    android:layout_height="1dp" />
+
+                <!-- Icono Formularios -->
+                <LinearLayout
+                    android:id="@+id/formIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageButton
+                        android:id="@+id/btnForm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:contentDescription="@string/boton_menu_administrador"
+                        android:onClick="callMenuForm"
+                        app:srcCompat="@drawable/icon_form" />
+
+                    <TextView
+                        android:id="@+id/tvForm"
+                        style="@style/textIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/formularios" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
