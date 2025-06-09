@@ -1,5 +1,7 @@
 package com.labs.applabs.student
 
+import android.app.Activity
+import android.app.ComponentCaller
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
@@ -24,6 +26,14 @@ import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
 
 class FormActivity : AppCompatActivity() {
+
+
+    private val formStudentLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            finish() // Cierra esta activity si el formulario fue enviado correctamente
+        }
+    }
+
     private val provider : Provider = Provider()
     private lateinit var formIdActive: String
 
@@ -83,8 +93,8 @@ class FormActivity : AppCompatActivity() {
                     toastMessage( "Formulario enviado. Edítalo desde 'Formularios enviados' si es necesario.", ToastType.ERROR)
                 } else {
                     FormStudentData.idFormOperator = formIdActive
-                    val intent = Intent(this@FormActivity, com.labs.applabs.student.FormStudent::class.java)
-                    startActivity(intent)
+                    val intent = Intent(this@FormActivity, FormStudent::class.java)
+                    formStudentLauncher.launch(intent)
                 }
             } catch (e: Exception) {
                 Log.e("FormActivity", "Error al verificar envío de formulario", e)
@@ -115,5 +125,6 @@ class FormActivity : AppCompatActivity() {
             }
         }
     }
+
 
 }

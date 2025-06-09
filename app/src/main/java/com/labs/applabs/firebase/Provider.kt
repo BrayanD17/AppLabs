@@ -17,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.Usuario
+import com.labs.applabs.operadores.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -97,6 +98,28 @@ class Provider {
             Log.e("Firebase", "Error al cargar escuelas", e)
             emptyList()
         }
+    }
+
+    suspend fun getAllOperadores(): List<OperadorCompleto> {
+        val db = FirebaseFirestore.getInstance()
+        val historial = db.collection("historialOperadores").get().await()
+        val lista = mutableListOf<OperadorCompleto>()
+        for (doc in historial.documents) {
+            val userId = doc.getString("userId") ?: continue
+            val formId = doc.getString("formId") ?: continue
+
+            // Fetch usuario
+            val userDoc = db.collection("users").document(userId).get().await()
+            val carnet = userDoc.getString("studentCard") ?: ""
+            val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+
+            // Fetch formStudent
+            val formDoc = db.collection("formStudent").document(formId).get().await()
+            val carrera = formDoc.getString("degree") ?: ""
+
+            lista.add(OperadorCompleto(userId, carnet, nombre, carrera))
+        }
+        return lista
     }
 
     suspend fun getUserInfo(userId: String?): DataClass? {
@@ -428,27 +451,25 @@ class Provider {
         Log.d("DEBUG", "Buscando solicitudes para formulario operador: $idFormOperator")
 
         return try {
-            // 1. Obtener todos los formStudent con ese idFormOperator
             val formStudents = db.collection("formStudent")
                 .whereEqualTo("idFormOperator", idFormOperator)
                 .get()
                 .await()
-
             Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios llenados por estudiantes")
 
             if (formStudents.isEmpty) {
                 return emptyList()
             }
 
-            // 2. Construir una lista de pares: (formStudentId, idStudent)
+            // Construir una lista: (formStudentId, idStudent)
             val solicitudesInfo = formStudents.documents.mapNotNull { doc ->
                 val idStudent = doc.getString("idStudent")
                 if (idStudent != null) {
-                    Triple(doc.id, idStudent, doc) // Guardamos también el doc en caso de necesitar más info
+                    Triple(doc.id, idStudent, doc)
                 } else null
             }
 
-            // 3. Obtener información de usuarios por sus IDs
+            // Obtener información de usuarios por sus IDs
             val studentIds = solicitudesInfo.map { it.second }.distinct()
             val usersSnapshot = db.collection("users")
                 .whereIn(FieldPath.documentId(), studentIds)
@@ -458,13 +479,17 @@ class Provider {
             val userMap = usersSnapshot.documents.associateBy { it.id }
 
             // 4. Mapear a objetos Solicitud
-            solicitudesInfo.map { (formStudentId, studentId, _) ->
+            solicitudesInfo.map { (formStudentId, studentId, formStudentDoc) ->
                 val userDoc = userMap[studentId]
                 Solicitud(
                     nombre = userDoc?.getString("name") ?: "Sin nombre",
                     correo = userDoc?.getString("email") ?: "Sin email",
                     uidForm = idFormOperator,
                     idFormStudent = formStudentId,
+                    carnet = formStudentDoc.get("idCard")?.toString() ?: "Sin carnet",
+                    estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "Sin estado",
+                    carrera = formStudentDoc.getString("degree") ?: "Sin carrera",
+                    numeroSemestreOperador = formStudentDoc.get("semester")?.toString() ?: "Sin semestre"
                     //idStudent = studentId
                 ).also {
                     Log.d("DEBUG", "Solicitud procesada: $it")

@@ -1,5 +1,6 @@
 package com.labs.applabs.student
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,13 @@ import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.R
 
 class FormStudent2 : AppCompatActivity() {
+
+    private val formStudentLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            setResult(Activity.RESULT_OK)
+            finish() // Cierra esta activity si el formulario fue enviado correctamente
+        }
+    }
 
     private lateinit var etIdSchoolNumber: EditText
     private var shiftSelected: String = ""
@@ -114,7 +122,7 @@ class FormStudent2 : AppCompatActivity() {
 
     fun Next(view: View) {
         if (validateFields() && saveSchedules() && saveFormData()) {
-            startActivity(Intent(this, FormStudent3::class.java))
+            formStudentLauncher.launch(Intent(this, FormStudent3::class.java))
         } else if (!saveSchedules()) {
             Log.e("Error Horarios", "Eroor con los horarios")
         }

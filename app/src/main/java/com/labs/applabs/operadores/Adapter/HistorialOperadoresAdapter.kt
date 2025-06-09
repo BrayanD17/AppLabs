@@ -6,21 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
+import com.labs.applabs.operadores.OperadorCompleto
 import com.labs.applabs.operadores.OperadorHistorial
 
 class HistorialOperadoresAdapter(
-    private var operadores: List<OperadorHistorial>
+    private var operadores: List<OperadorCompleto>
 ) : RecyclerView.Adapter<HistorialOperadoresAdapter.OperadorViewHolder>() {
 
-    private var onClick: ((OperadorHistorial) -> Unit)? = null
+    private var onClick: ((OperadorCompleto) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (OperadorHistorial) -> Unit) {
+    fun setOnItemClickListener(listener: (OperadorCompleto) -> Unit) {
         onClick = listener
     }
 
     inner class OperadorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nombre: TextView = itemView.findViewById(R.id.tvNombre)
-        val correo: TextView = itemView.findViewById(R.id.tvCorreo)
 
         init {
             itemView.setOnClickListener {
@@ -37,14 +37,14 @@ class HistorialOperadoresAdapter(
 
     override fun onBindViewHolder(holder: OperadorViewHolder, position: Int) {
         val operador = operadores[position]
-        holder.nombre.text = operador.nombreUsuario
-        holder.correo.text = operador.correoUsuario
+        holder.nombre.text = operador.nombre
     }
 
     override fun getItemCount(): Int = operadores.size
 
-    fun actualizarLista(nuevaLista: List<OperadorHistorial>) {
+    fun actualizarLista(nuevaLista: List<OperadorCompleto>) {
         operadores = nuevaLista
         notifyDataSetChanged()
     }
 }
+
