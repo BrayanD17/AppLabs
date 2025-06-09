@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home_operator"
+        android:title="@string/men"
+        android:icon="@drawable/icon_home"/>
+    <item
+        android:id="@+id/nav_change_password"
+        android:title="@string/new_password"
+        android:icon="@drawable/icon_key"/>
+    <item
+        android:id="@+id/nav_logout_operator"
+        android:title="@string/cerrar_sesi_n"
+        android:icon="@drawable/icon_logout" />
+</menu>
