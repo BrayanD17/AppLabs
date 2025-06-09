@@ -174,4 +174,5 @@
     <string name="operatorActive">Activos</string>
     <string name="scheduleGeneral">Horario general</string>
     <string name="addSchedule">Asignar horario</string>
+    <string name="withoutForm">No hay formularios activos disponibles</string>
 </resources>
