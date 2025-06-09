@@ -15,6 +15,14 @@ import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.OutputStream
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
+
 
 class ExportSchedulesActivity : AppCompatActivity() {
 
@@ -102,6 +110,7 @@ class ExportSchedulesActivity : AppCompatActivity() {
 
             runOnUiThread {
                 Toast.makeText(this, "¡Excel guardado correctamente!", Toast.LENGTH_LONG).show()
+                showExportNotification(uri)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -231,6 +240,41 @@ class ExportSchedulesActivity : AppCompatActivity() {
         workbook.close()
     }
 
+    private fun showExportNotification(uri: Uri) {
+        val channelId = "export_channel"
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        // Crea el canal solo si es necesario (Android 8+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Exportaciones",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Intent para abrir el archivo exportado
+        val openIntent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground) // Usa este por ahora
+            .setContentTitle("Exportación completada")
+            .setContentText("El archivo Excel se guardó correctamente. Toca para abrirlo.")
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+        Toast.makeText(this, "Notificación generada", Toast.LENGTH_SHORT).show()
+
+        notificationManager.notify(1001, notification)
+    }
 
 
     // ---- Modelos auxiliares ----

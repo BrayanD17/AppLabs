@@ -112,12 +112,13 @@ class Provider {
             val userDoc = db.collection("users").document(userId).get().await()
             val carnet = userDoc.getString("studentCard") ?: ""
             val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+            val correo = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
             val formDoc = db.collection("formStudent").document(formId).get().await()
             val carrera = formDoc.getString("degree") ?: ""
 
-            lista.add(OperadorCompleto(userId, carnet, nombre, carrera))
+            lista.add(OperadorCompleto(userId, carnet, nombre, carrera, correo))
         }
         return lista
     }
