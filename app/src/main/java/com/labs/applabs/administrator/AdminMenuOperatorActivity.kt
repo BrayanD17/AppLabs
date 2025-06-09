@@ -1,11 +1,14 @@
 package com.labs.applabs.administrator
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.R
+import com.labs.applabs.operadores.HistorialOperadoresActivity
 
 class AdminMenuOperatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +19,16 @@ class AdminMenuOperatorActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        viewActiveOperator()
+    }
+
+    fun viewActiveOperator(){
+        val btnOperatorActive = findViewById<ImageButton>(R.id.btnOperatorActive)
+        btnOperatorActive.setOnClickListener {
+            val intent = Intent(this, HistorialOperadoresActivity::class.java)
+            startActivity(intent)
         }
     }
 
