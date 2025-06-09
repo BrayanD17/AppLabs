@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <path
+      android:pathData="M447.17,134.56c-0.54,-1.29 -1.32,-2.46 -2.3,-3.44l-128,-128c-2,-1.99 -4.71,-3.11 -7.53,-3.12H74.67C68.78,0 64,4.78 64,10.67v490.67C64,507.22 68.78,512 74.67,512h362.67c5.89,0 10.67,-4.78 10.67,-10.67V138.67C448,137.26 447.71,135.86 447.17,134.56zM320,36.42L411.58,128H320V36.42zM426.67,490.67H85.33V21.33h213.33v117.33c0,5.89 4.78,10.67 10.67,10.67h117.33V490.67z"
+      android:strokeWidth="4.096"
+      android:fillColor="@color/marineBlue"
+      android:strokeColor="@color/marineBlue"/>
+  <path
+      android:pathData="M128,320c0,70.69 57.31,128 128,128s128,-57.31 128,-128c-0.08,-70.66 -57.34,-127.92 -128,-128C185.31,192 128,249.31 128,320zM362.67,320C362.6,378.88 314.88,426.6 256,426.67c-58.91,0 -106.67,-47.76 -106.67,-106.67c0,-58.91 47.76,-106.67 106.67,-106.67C314.91,213.33 362.67,261.09 362.67,320z"
+      android:strokeWidth="4.096"
+      android:fillColor="@color/marineBlue"
+      android:strokeColor="@color/marineBlue"/>
+  <path
+      android:pathData="M256,266.67c0,-5.89 -4.78,-10.67 -10.67,-10.67c-5.89,0 -10.67,4.78 -10.67,10.67v64c0,5.89 4.78,10.67 10.67,10.67H288c5.89,0 10.67,-4.78 10.67,-10.67S293.89,320 288,320h-32V266.67z"
+      android:strokeWidth="4.096"
+      android:fillColor="@color/marineBlue"
+      android:strokeColor="@color/marineBlue"/>
+</vector>

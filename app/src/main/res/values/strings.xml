@@ -167,4 +167,11 @@
     <string name="nombre">Nombre</string>
     <string name="carrera">Carrera</string>
     <string name="search">Search</string>
+
+    <!--Menu option operator (administrator menu view)-->
+    <string name="gestionOperator">Gestión de operadores</string>
+    <string name="operatorHistory">Historial</string>
+    <string name="operatorActive">Activos</string>
+    <string name="scheduleGeneral">Horario general</string>
+    <string name="addSchedule">Asignar horario</string>
 </resources>
