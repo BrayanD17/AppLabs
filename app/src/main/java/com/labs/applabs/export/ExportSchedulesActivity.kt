@@ -1,178 +1,248 @@
 package com.labs.applabs.export
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.firestore.FirebaseFirestore
 import com.labs.applabs.R
-import com.labs.applabs.firebase.Provider
-import com.labs.applabs.firebase.ScheduleItem
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.File
-import java.io.FileOutputStream
+import java.io.OutputStream
 
 class ExportSchedulesActivity : AppCompatActivity() {
 
-    private val provider = Provider()
+    private lateinit var btnExportExcel: Button
+    private val db = FirebaseFirestore.getInstance()
+
+    // SAF: Lanzador para elegir carpeta y crear archivo
+    private val createDocumentLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) { uri: Uri? ->
+        if (uri != null) {
+            lifecycleScope.launchWhenStarted {
+                exportarHorariosAExcel(uri)
+            }
+        } else {
+            Toast.makeText(this, "Exportación cancelada.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_export_approved_schedules)
+        btnExportExcel = findViewById(R.id.btnExportExcel)
 
-        val btnSiguiente = findViewById<Button>(R.id.btnExportExcel)
-        val etEmail = findViewById<EditText>(R.id.etCorreoDestino)
-        val messageLayout = findViewById<LinearLayout>(R.id.messageSuccess)
-        val tvCorreoConfirmado = findViewById<TextView>(R.id.tvCorreoConfirmado)
+        btnExportExcel.setOnClickListener {
+            // Abrir selector de ubicación para guardar archivo
+            createDocumentLauncher.launch("HorariosOperadores.xlsx")
+        }
+    }
 
-        btnSiguiente.setOnClickListener {
-            val email = etEmail.text.toString().trim()
-            val emailRegex = "^[a-zA-Z0-9._%+-]+@(itcr\\.ac\\.cr|estudiantec\\.cr)$".toRegex()
+    private suspend fun exportarHorariosAExcel(uri: Uri) {
+        try {
+            btnExportExcel.isEnabled = false
+            btnExportExcel.text = "Exportando..."
 
-            if (!email.matches(emailRegex)) {
-                etEmail.error = "El correo debe ser @itcr.ac.cr o @estudiantec.cr"
-                return@setOnClickListener
+            // 1. Obtener historial de operadores
+            val historialSnap = db.collection("historialOperadores").get().await()
+            val historial = historialSnap.documents
+
+            //Probando
+            runOnUiThread {
+                Toast.makeText(this, "Historial size: ${historial.size}", Toast.LENGTH_LONG).show()
+            }
+            android.util.Log.d("EXPORT", "Historial size: ${historial.size}")
+
+            // 2. Preparar estructura para horarios
+            val listaDatos = mutableListOf<DatosHorarioOperador>()
+            for (doc in historial) {
+                val userId = doc.getString("userId") ?: continue
+                val nombre = doc.getString("nombreUsuario") ?: continue
+                val formId = doc.getString("formId") ?: continue
+                val formSnap = db.collection("formStudent").document(formId).get().await()
+                //Probando
+                android.util.Log.d("EXPORT", "Procesando: $nombre, userId=$userId, formId=$formId")
+
+                if (!formSnap.exists()) continue
+                val form = formSnap.data ?: continue
+
+                val horas = form["shift"]?.toString() ?: ""
+                val horariosList = (form["scheduleAvailability"] as? List<Map<String, Any>>)
+                    ?: (form["scheduleAvailability"] as? List<HashMap<String, Any>>)
+                    ?: emptyList()
+
+                val horarios = horariosList.mapNotNull { diaMap ->
+                    val day = diaMap["day"] as? String ?: return@mapNotNull null
+                    val shifts = diaMap["shifts"] as? List<String> ?: emptyList()
+                    ScheduleItem(day, shifts)
+                }
+                listaDatos.add(DatosHorarioOperador(horas, nombre, horarios))
             }
 
-            lifecycleScope.launch {
-                val solicitudes = provider.getSolicitudes()
-                val solicitudesAprobadas = solicitudes.mapNotNull { solicitud ->
-                    val form = provider.getFormStudent(solicitud.idFormStudent)
-                    form?.let {
-                        if (it.studentInfo.statusApplication == "1") {
-                            Pair("${it.studentInfo.studentName} ${it.studentInfo.surNames}", it.studentInfo.scheduleAvailability)
-                        } else null
-                    }
+            if (listaDatos.isEmpty()) {
+                runOnUiThread {
+                    Toast.makeText(this, "No hay operadores aprobados para exportar.", Toast.LENGTH_LONG).show()
                 }
+                btnExportExcel.isEnabled = true
+                btnExportExcel.text = "Descargar archivo Excel"
+                return
+            }
 
-                val file = generateExcelFile(solicitudesAprobadas)
+            // 3. Crear y guardar el Excel usando SAF
+            withContext(Dispatchers.IO) {
+                contentResolver.openOutputStream(uri)?.use { output ->
+                    crearExcelConHorarios(listaDatos, output)
+                }
+            }
 
-                tvCorreoConfirmado.text = "Seleccioná Outlook (u otra app) para enviar el archivo a $email"
-                messageLayout.visibility = View.VISIBLE
-
-                abrirAppDeCorreo(email, file)
+            runOnUiThread {
+                Toast.makeText(this, "¡Excel guardado correctamente!", Toast.LENGTH_LONG).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            runOnUiThread {
+                Toast.makeText(this, "Error al exportar: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        } finally {
+            runOnUiThread {
+                btnExportExcel.isEnabled = true
+                btnExportExcel.text = "Descargar archivo Excel"
             }
         }
     }
 
-    private fun generateExcelFile(solicitudes: List<Pair<String, List<ScheduleItem>>>): File {
-        val dias = listOf("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo")
-        val horas = listOf("7 a 12", "12 a 5", "5 a 10")
+    // ---- Formato del Excel ----
 
+    private fun crearExcelConHorarios(lista: List<DatosHorarioOperador>, output: OutputStream) {
         val workbook = XSSFWorkbook()
-        val sheet = workbook.createSheet("Horarios Aprobados")
+        val sheet = workbook.createSheet("Horarios Operadores")
 
-        val boldFont = workbook.createFont().apply {
-            bold = true
-        }
+        val dias = listOf("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo")
+        val turnos = listOf("7am a 12pm", "12pm a 5pm", "5pm a 10pm")
 
-        val headerStyle = workbook.createCellStyle().apply {
-            setFont(boldFont)
-            alignment = HorizontalAlignment.CENTER
-            fillForegroundColor = IndexedColors.GREY_25_PERCENT.index
-            fillPattern = FillPatternType.SOLID_FOREGROUND
-            borderTop = BorderStyle.THIN
-            borderBottom = BorderStyle.THIN
-            borderLeft = BorderStyle.THIN
-            borderRight = BorderStyle.THIN
-        }
-
-        val checkStyle = workbook.createCellStyle().apply {
-            fillForegroundColor = IndexedColors.LIGHT_GREEN.index
-            fillPattern = FillPatternType.SOLID_FOREGROUND
-            alignment = HorizontalAlignment.CENTER
-            borderTop = BorderStyle.THIN
-            borderBottom = BorderStyle.THIN
-            borderLeft = BorderStyle.THIN
-            borderRight = BorderStyle.THIN
-        }
-
-        val defaultStyle = workbook.createCellStyle().apply {
-            alignment = HorizontalAlignment.CENTER
-            borderTop = BorderStyle.THIN
-            borderBottom = BorderStyle.THIN
-            borderLeft = BorderStyle.THIN
-            borderRight = BorderStyle.THIN
-        }
-
-        val headerRow = sheet.createRow(0)
-        headerRow.createCell(0).apply {
-            setCellValue("Nombre completo")
-            cellStyle = headerStyle
-        }
-
-        var colIndex = 1
-        for (dia in dias) {
-            for (hora in horas) {
-                headerRow.createCell(colIndex++).apply {
-                    setCellValue("$dia $hora")
-                    cellStyle = headerStyle
-                }
-            }
-        }
-
-        for ((rowIndex, pair) in solicitudes.withIndex()) {
-            val (nombre, disponibilidad) = pair
-            val row = sheet.createRow(rowIndex + 1)
-            row.createCell(0).apply {
-                setCellValue(nombre)
-                cellStyle = defaultStyle
-            }
-
-            val mapa = disponibilidad.associate { it.day to it.shift.toSet() }
-
-            colIndex = 1
-            for (dia in dias) {
-                for (hora in horas) {
-                    val cell = row.createCell(colIndex++)
-                    if (mapa[dia]?.contains(hora) == true) {
-                        cell.setCellValue("✔")
-                        cell.cellStyle = checkStyle
-                    } else {
-                        cell.cellStyle = defaultStyle
-                    }
-                }
-            }
-        }
-
-        for (i in 0..(dias.size * horas.size)) {
-            sheet.autoSizeColumn(i)
-        }
-
-        val file = File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "Horarios_Aprobados.xlsx")
-        FileOutputStream(file).use {
-            workbook.write(it)
-            workbook.close()
-        }
-
-        return file
-    }
-
-    private fun abrirAppDeCorreo(destinatario: String, archivo: File) {
-        val uri = FileProvider.getUriForFile(
-            this,
-            "${packageName}.provider",
-            archivo
+        // Colores para los días
+        val colorDias = mapOf(
+            "Lunes" to IndexedColors.LIGHT_YELLOW.index,
+            "Martes" to IndexedColors.LIGHT_GREEN.index,
+            "Miércoles" to IndexedColors.LIGHT_CORNFLOWER_BLUE.index,
+            "Jueves" to IndexedColors.LIGHT_ORANGE.index,
+            "Viernes" to IndexedColors.TAN.index,
+            "Sábado" to IndexedColors.LIGHT_TURQUOISE.index,
+            "Domingo" to IndexedColors.LIGHT_BLUE.index,
         )
 
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(destinatario))
-            putExtra(Intent.EXTRA_SUBJECT, "Horarios Aprobados")
-            putExtra(Intent.EXTRA_TEXT, "Adjunto encontrarás el archivo Excel con los horarios aprobados.")
-            putExtra(Intent.EXTRA_STREAM, uri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        // Estilo de encabezado negro
+        val fontWhiteBold = workbook.createFont().apply {
+            color = IndexedColors.WHITE.index
+            bold = true
+        }
+        val styleBlackHeader = workbook.createCellStyle().apply {
+            fillForegroundColor = IndexedColors.BLACK.index
+            fillPattern = FillPatternType.SOLID_FOREGROUND
+            alignment = HorizontalAlignment.CENTER
+            borderTop = BorderStyle.THIN
+            borderBottom = BorderStyle.THIN
+            borderLeft = BorderStyle.THIN
+            borderRight = BorderStyle.THIN
+            setFont(fontWhiteBold)
         }
 
-        startActivity(Intent.createChooser(intent, "Selecciona Outlook o tu app de correo"))
+        // Estilo para columnas Horas/Nombres
+        val styleFijo = workbook.createCellStyle().apply {
+            alignment = HorizontalAlignment.CENTER
+            borderTop = BorderStyle.THIN
+            borderBottom = BorderStyle.THIN
+            borderLeft = BorderStyle.THIN
+            borderRight = BorderStyle.THIN
+        }
+
+        // Estilo general de celda por día
+        fun estiloCelda(color: Short) = workbook.createCellStyle().apply {
+            fillForegroundColor = color
+            fillPattern = FillPatternType.SOLID_FOREGROUND
+            alignment = HorizontalAlignment.CENTER
+            borderTop = BorderStyle.THIN
+            borderBottom = BorderStyle.THIN
+            borderLeft = BorderStyle.THIN
+            borderRight = BorderStyle.THIN
+        }
+
+        // Encabezado fila 0 (días)
+        val headerDias = sheet.createRow(0)
+        headerDias.createCell(0).apply { setCellValue("Horas"); cellStyle = styleBlackHeader }
+        headerDias.createCell(1).apply { setCellValue("Nombres"); cellStyle = styleBlackHeader }
+        var col = 2
+        for (dia in dias) {
+            // Combinar celdas para el día (ocupa 3 columnas)
+            sheet.addMergedRegion(org.apache.poi.ss.util.CellRangeAddress(0, 0, col, col + 2))
+            val cell = headerDias.createCell(col)
+            cell.setCellValue(dia)
+            cell.cellStyle = styleBlackHeader
+            // Siguientes 2 celdas solo para que tengan el mismo fondo
+            for (k in 1..2) {
+                headerDias.createCell(col + k).cellStyle = styleBlackHeader
+            }
+            col += 3
+        }
+
+        // Encabezado fila 1 (turnos)
+        val headerTurnos = sheet.createRow(1)
+        headerTurnos.createCell(0).apply { setCellValue(""); cellStyle = styleBlackHeader }
+        headerTurnos.createCell(1).apply { setCellValue(""); cellStyle = styleBlackHeader }
+        col = 2
+        for (dia in dias) {
+            for (turno in turnos) {
+                headerTurnos.createCell(col).apply {
+                    setCellValue(turno)
+                    cellStyle = styleBlackHeader
+                }
+                col++
+            }
+        }
+
+        // Llenar filas a partir de la 2
+        lista.forEachIndexed { i, op ->
+            val row = sheet.createRow(i + 2)
+            row.createCell(0).apply { setCellValue(op.horas); cellStyle = styleFijo }
+            row.createCell(1).apply { setCellValue(op.nombre); cellStyle = styleFijo }
+            col = 2
+            for (dia in dias) {
+                for (turno in turnos) {
+                    val tieneTurno = op.horarios.any { it.day.equals(dia, true) && it.shifts.contains(turno) }
+                    val cell = row.createCell(col)
+                    cell.setCellValue(if (tieneTurno) "✔" else "□")
+                    cell.cellStyle = estiloCelda(colorDias[dia] ?: IndexedColors.WHITE.index)
+                    col++
+                }
+            }
+        }
+
+        // Ajustar ancho de columnas
+        for (i in 0 until dias.size * turnos.size + 2) {
+            sheet.setColumnWidth(i, 16 * 256)
+        }
+
+        workbook.write(output)
+        workbook.close()
     }
+
+
+
+    // ---- Modelos auxiliares ----
+
+    data class DatosHorarioOperador(
+        val horas: String,
+        val nombre: String,
+        val horarios: List<ScheduleItem>
+    )
+
+    data class ScheduleItem(
+        val day: String,
+        val shifts: List<String>
+    )
 }
