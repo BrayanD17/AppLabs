@@ -100,15 +100,18 @@
             android:name=".operadores.HistorialOperadoresActivity"
             android:exported="false" />
         <activity
-            android:name=".login.MainActivity"
+            android:name=".login.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".login.MainActivity"
+            android:theme="@style/Theme.AppLabs"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
