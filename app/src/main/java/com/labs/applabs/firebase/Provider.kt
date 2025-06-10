@@ -17,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.Usuario
+import com.labs.applabs.operadores.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -119,6 +120,29 @@ class Provider {
         }
     }
 
+
+    suspend fun getAllOperadores(): List<OperadorCompleto> {
+        val db = FirebaseFirestore.getInstance()
+        val historial = db.collection("historialOperadores").get().await()
+        val lista = mutableListOf<OperadorCompleto>()
+        for (doc in historial.documents) {
+            val userId = doc.getString("userId") ?: continue
+            val formId = doc.getString("formId") ?: continue
+
+            // Fetch usuario
+            val userDoc = db.collection("users").document(userId).get().await()
+            val carnet = userDoc.getString("studentCard") ?: ""
+            val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+            val correo = userDoc.getString("email") ?: ""
+
+            // Fetch formStudent
+            val formDoc = db.collection("formStudent").document(formId).get().await()
+            val carrera = formDoc.getString("degree") ?: ""
+
+            lista.add(OperadorCompleto(userId, carnet, nombre, carrera, correo))
+        }
+        return lista
+    }
 
     suspend fun getUserInfo(userId: String?): DataClass? {
         return try {
@@ -718,21 +742,21 @@ class Provider {
         }
     }
     //Si el formulario es aceptado cambia el estado de estudiante a operador
-    suspend fun registrarNuevoOperador(
+     fun registrarNuevoOperador(
         userId: String,
         formId: String,
         nombreUsuario: String,
         correoUsuario: String,
-        semestre: String,
-        nombreFormulario: String
+        nombreFormulario: String,
+        semestre: String
     ) {
         val operador = hashMapOf(
             "userId" to userId,
             "formId" to formId,
             "nombreUsuario" to nombreUsuario,
             "correoUsuario" to correoUsuario,
-            "semestre" to semestre,
             "nombreFormulario" to nombreFormulario,
+            "semestre" to semestre,
             "fechaRegistro" to com.google.firebase.Timestamp.now()
         )
 

@@ -90,7 +90,12 @@ class DetailsFormStudentActivity : AppCompatActivity() {
                 studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
                 comments.text = studentInfo.comment
-                status.text = studentInfo.statusApplication
+                status.text = when(studentInfo.statusApplication){
+                    "0" -> "Pendiente revisión"
+                    "1" -> "Aprobado"
+                    "2" -> "Denegado"
+                    else -> "No disponible"
+                }
                 // Schedule availability
                 val styleLetter = ResourcesCompat.getFont(this@DetailsFormStudentActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()

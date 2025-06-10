@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:fontFamily="@font/montserrat_regular"
+        android:id="@+id/tvTituloFiltro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filtrar_operadores_por"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:gravity="center" />
+
+    <RadioGroup
+        android:id="@+id/rgFiltro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:fontFamily="@font/montserrat_regular"
+            android:id="@+id/rbCarnet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/carnet"
+            android:padding="12dp"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:fontFamily="@font/montserrat_regular"
+            android:id="@+id/rbNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre"
+            android:padding="12dp"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:fontFamily="@font/montserrat_regular"
+            android:id="@+id/rbCarrera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/carrera"
+            android:padding="12dp"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvSeleccionarCarrera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_una_carrera"
+        android:textSize="15sp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
+
+    <Spinner
+        android:id="@+id/spinnerCarreras"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btnAplicarFiltro"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/aplicar_filtro"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:backgroundTint="@color/marineBlue" />
+</LinearLayout>

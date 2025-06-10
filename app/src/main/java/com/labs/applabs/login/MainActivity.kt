@@ -2,6 +2,7 @@ package com.labs.applabs.login
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -35,6 +36,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Solicitar permiso de notificación en Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+        }
 
         // Hacer transparentes barra de estado y barra de navegación
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -136,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                             3 -> startActivity(
                                 Intent(
                                     this,
-                                    com.labs.applabs.administrator.SolicitudesListView::class.java
+                                    com.labs.applabs.operator.MenuOperatorActivity::class.java
                                 )
                             )
                         }

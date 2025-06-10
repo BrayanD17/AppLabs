@@ -85,6 +85,18 @@
             android:scaleType="centerInside" />
     </LinearLayout>
 
+    <!-- AQUÍ VA el TextView de filtro aplicado -->
+    <TextView
+        android:id="@+id/tvFiltroAplicado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/marineBlue"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
+
+
     <!-- Título de sección -->
     <TextView
         android:id="@+id/tvListaOperadores"

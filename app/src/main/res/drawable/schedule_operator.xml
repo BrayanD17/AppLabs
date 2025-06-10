@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="48dp"
+    android:viewportHeight="64"
+    android:viewportWidth="64"
+    android:width="48dp">
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M60,6.004h-15V1c0,-0.553 -0.447,-1 -1,-1c-0.553,0 -1,0.447 -1,1v5.004H22V1c0,-0.553 -0.447,-1 -1,-1c-0.553,0 -1,0.447 -1,1v5.004H4c-2.209,0 -4,1.791 -4,4V60c0,2.209 1.791,4 4,4h56.001c2.209,0 4,-1.791 4,-4V10.004C64,7.795 62.209,6.004 60,6.004zM4,8.004h16V11c0,0.553 0.447,1 1,1c0.553,0 1,-0.447 1,-1V8.004h21V11c0,0.553 0.447,1 1,1c0.553,0 1,-0.447 1,-1V8.004h15c1.103,0 2,0.897 2,2V17h-60L2,17v-6.996C2,8.901 2.897,8.004 4,8.004zM62,60c0,1.103 -0.897,2 -2,2H4c-1.103,0 -2,-0.897 -2,-2V19L2,19h60V60z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M18,24h-8v8h8V24zM16,30h-4v-4h4V30z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M36,24h-8v8h8V24zM34,30h-4v-4h4V30z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M54,24h-8v8h8V24zM52,30h-4v-4h4V30z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M18,36h-8v8h8V36zM16,42h-4v-4h4V42z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M36,36h-8v8h8V36zM34,42h-4v-4h4V42z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M18,48h-8v8h8V48zM16,54h-4v-4h4V54z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M36,48h-8v8h8V48zM34,54h-4v-4h4V54z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M54,36h-8v8h8V36zM52,42h-4v-4h4V42z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+      
+    <path android:fillColor="@color/marineBlue" android:pathData="M54,48h-8v8h8V48zM52,54h-4v-4h4V54z" android:strokeColor="@color/marineBlue" android:strokeWidth="0.64"/>
+    
+</vector>
