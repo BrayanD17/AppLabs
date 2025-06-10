@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/logoImage"
-            android:layout_width="239dp"
-            android:layout_height="137dp"
+            android:layout_width="217dp"
+            android:layout_height="120dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/logo_compulabs"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:columnCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,84 +66,78 @@
             app:layout_constraintTop_toBottomOf="@+id/logoImage"
             app:layout_constraintVertical_bias="0.325">
 
-            <!-- Celda 1: Contiene 3 íconos con texto debajo -->
+            <!-- Celda 1: Registrar Visita -->
             <LinearLayout
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-                <!-- Ícono 1 -->
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/image1"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:src="@drawable/schedule_operator" />
+
+                <TextView
+                    android:id="@+id/text1"
+                    style="@style/textIcon"
+                    android:layout_width="143dp"
+                    android:layout_height="wrap_content"
+                    android:text="Horario asignado"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <!-- Celda 2: Mala Conducta -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/image2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/report_misconduct" />
+
+                <TextView
+                    android:id="@+id/text2"
+                    style="@style/textIcon"
+                    android:textSize="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
+                    android:text="Mala conducta" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/image1"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/register_visit" />
+            <!-- Celda 3: Horario (centrado debajo de las dos primeras) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:layout_marginStart="90dp"
+                android:layout_columnSpan="2">
 
-                    <TextView
-                        android:id="@+id/text1"
-                        style="@style/textIcon"
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Registrar visita" />
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/image3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/register_visit" />
 
-                <!-- Ícono 2 -->
-                <LinearLayout
+                <TextView
+                    android:id="@+id/text3"
+                    style="@style/textIcon"
+                    android:textSize="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/report_misconduct" />
-
-                    <TextView
-                        android:id="@+id/text2"
-                        style="@style/textIcon"
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mala conducta" />
-                </LinearLayout>
-
-                <!-- Ícono 3 -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/image3"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/schedule_operator" />
-
-                    <TextView
-                        android:id="@+id/text3"
-                        style="@style/textIcon"
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Horario" />
-                </LinearLayout>
+                    android:text="Registrar Visita" />
             </LinearLayout>
         </GridLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -174,7 +168,6 @@
                 android:textColor="@color/white"
                 android:layout_marginBottom="32dp"
                 app:backgroundTint="@color/marineBlue" />
-
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
