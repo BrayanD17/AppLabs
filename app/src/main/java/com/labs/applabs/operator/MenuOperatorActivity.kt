@@ -35,7 +35,6 @@ class MenuOperatorActivity : AppCompatActivity() {
         val navView = findViewById<NavigationView>(R.id.nav_view_operator)
         val btnMenu = findViewById<ImageButton>(R.id.btnMenuOperator)
 
-        // User Information in Header
         val headerView : View = navView.getHeaderView(0)
         val nameUser : TextView = headerView.findViewById(R.id.tvNombreStudent)
         val rolUser : TextView = headerView.findViewById(R.id.tvRolUsuarioStudent)
@@ -48,18 +47,15 @@ class MenuOperatorActivity : AppCompatActivity() {
             }
         }
 
-        // Abrir el drawer con el botón hamburguesa
         btnMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        // Close drawer with the button inside
         val btnCerrarDrawer = navView.findViewById<Button>(R.id.btnCerrarDrawer)
         btnCerrarDrawer.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        // Opciones del menú
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home_operator -> {
@@ -81,5 +77,19 @@ class MenuOperatorActivity : AppCompatActivity() {
             true
         }
     }
+
+    fun viewAssignedSchedule(view: View) {
+        val intent = Intent(this, viewAssignedSchedule::class.java)
+        startActivity(intent)
+    }
+
+    //Agregar la vista para ver la reporte de mala conductas
+    fun viewMissConduct(view: View) {
+    }
+
+    //Agregar la vista para registrar una visita
+    fun viewRegisterVisit(view: View) {
+    }
+
 
 }
