@@ -112,12 +112,13 @@ class Provider {
             val userDoc = db.collection("users").document(userId).get().await()
             val carnet = userDoc.getString("studentCard") ?: ""
             val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+            val correo = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
             val formDoc = db.collection("formStudent").document(formId).get().await()
             val carrera = formDoc.getString("degree") ?: ""
 
-            lista.add(OperadorCompleto(userId, carnet, nombre, carrera))
+            lista.add(OperadorCompleto(userId, carnet, nombre, carrera, correo))
         }
         return lista
     }
@@ -720,21 +721,21 @@ class Provider {
         }
     }
     //Si el formulario es aceptado cambia el estado de estudiante a operador
-    suspend fun registrarNuevoOperador(
+     fun registrarNuevoOperador(
         userId: String,
         formId: String,
         nombreUsuario: String,
         correoUsuario: String,
-        semestre: String,
-        nombreFormulario: String
+        nombreFormulario: String,
+        semestre: String
     ) {
         val operador = hashMapOf(
             "userId" to userId,
             "formId" to formId,
             "nombreUsuario" to nombreUsuario,
             "correoUsuario" to correoUsuario,
-            "semestre" to semestre,
             "nombreFormulario" to nombreFormulario,
+            "semestre" to semestre,
             "fechaRegistro" to com.google.firebase.Timestamp.now()
         )
 

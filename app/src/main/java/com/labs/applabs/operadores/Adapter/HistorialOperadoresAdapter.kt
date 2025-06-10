@@ -21,6 +21,7 @@ class HistorialOperadoresAdapter(
 
     inner class OperadorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nombre: TextView = itemView.findViewById(R.id.tvNombre)
+        val correo: TextView = itemView.findViewById(R.id.tvCorreo)
 
         init {
             itemView.setOnClickListener {
@@ -38,6 +39,8 @@ class HistorialOperadoresAdapter(
     override fun onBindViewHolder(holder: OperadorViewHolder, position: Int) {
         val operador = operadores[position]
         holder.nombre.text = operador.nombre
+        holder.correo.text = operador.correo
+
     }
 
     override fun getItemCount(): Int = operadores.size

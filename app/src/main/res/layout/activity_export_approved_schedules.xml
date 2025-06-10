@@ -43,36 +43,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:text="Exportar archivo Excel"
+        android:text="Exportar Horarios de Operadores"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="372dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="60dp"
-        style="@style/TextViewStyle"
-        android:text="Ingrese la dirección del correo a enviar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
-
-    <EditText
-        android:id="@+id/etCorreoDestino"
-        style="@style/EditTextStyle"
-        android:layout_width="382dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/edit_text_background"
-        android:hint="Correo electrónico"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnExportExcel"
@@ -80,15 +56,13 @@
         android:layout_width="211dp"
         android:layout_height="48dp"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="68dp"
-        android:text="Siguiente"
+        android:layout_marginBottom="236dp"
+        android:text="Descargar archivo Excel"
         app:backgroundTint="@color/marineBlue"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCorreoDestino"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/messageSuccess"
