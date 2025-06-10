@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".administrator.AdminSetTimeOperatorActivity">
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="165dp"
+        android:layout_height="117dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/logo_de_la_app"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_compulabs" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/asignaci_n_de_horarios_a_operadores"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
+    <TextView
+        android:id="@+id/textView16"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/operador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Spinner
+        android:id="@+id/spnOp"
+        android:layout_width="220dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView19"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/laboratorio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <Spinner
+        android:id="@+id/spnLab"
+        android:layout_width="220dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnOp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/seleccione_el_horario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="391dp"
+        android:layout_height="364dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:stretchColumns="*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24">
+
+        <!-- Fila de encabezados -->
+        <TableRow>
+            <!-- Celda vacía para alinear el encabezado -->
+            <ImageView
+                android:id="@+id/infoIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:contentDescription="@string/informacion_de_oratorios"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_information" />
+
+            <TextView
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Mañana"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Tarde"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Noche"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <!-- Fila Lunes -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Lun"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_lun_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_lun_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_lun_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+
+        <!-- Fila Martes -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Mar"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_mar_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_mar_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_mar_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+
+        <!-- Fila Miércoles -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Mié"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_mie_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_mie_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_mie_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+
+        <!-- Fila Jueves -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Jue"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_jue_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_jue_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_jue_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+
+        <!-- Fila Viernes -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Vie"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_vie_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_vie_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_vie_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+
+        <!-- Fila Sábado -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Sáb"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_sab_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_sab_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_sab_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+        <!-- Fila Domingo -->
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/header_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Dom"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk_dom_manana"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_dom_tarde"
+                android:buttonTint="@color/checkbox_color" />
+
+            <CheckBox
+                android:id="@+id/chk_dom_noche"
+                android:buttonTint="@color/checkbox_color" />
+        </TableRow>
+    </TableLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

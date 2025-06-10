@@ -2,6 +2,7 @@ package com.labs.applabs.administrator
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,11 @@ class AdminMenuOperatorActivity : AppCompatActivity() {
             val intent = Intent(this, HistorialOperadoresActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun callToSetTimeOperator(view: View) {
+        val intent = Intent(this, AdminSetTimeOperatorActivity::class.java)
+        startActivity(intent)
     }
 
     fun actionBtnMenuBack(view: android.view.View) {
