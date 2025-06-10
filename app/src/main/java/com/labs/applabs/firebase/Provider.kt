@@ -94,7 +94,7 @@ class Provider {
             val snapshot = db.collection("dataDefault").document("careers").get().await()
             snapshot.get("career") as? List<String> ?: emptyList()
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al cargar escuelas", e)
+            Log.e("Firebase", "Error al cargar carreras", e)
             emptyList()
         }
     }
@@ -108,6 +108,17 @@ class Provider {
             emptyList()
         }
     }
+
+    suspend fun getLaboratoryName() : List<String> {
+        return try{
+            val laboratories = db.collection("dataDefault").document("laboratories").get().await()
+            laboratories.get("laboratory") as? List<String> ?: emptyList()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar laboratorios", e)
+            emptyList()
+        }
+    }
+
 
     suspend fun getUserInfo(userId: String?): DataClass? {
         return try {

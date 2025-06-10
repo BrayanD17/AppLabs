@@ -7,11 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".operadores.Report_Misconduct_Activity">
 
+    <ImageView
+        android:id="@+id/backViewFormActivyty"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="5dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardMiscondut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +31,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_corner">
 
             <TextView
                 android:id="@+id/textViewMisConduct"
@@ -29,8 +41,8 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@drawable/rounded_corner_blue"
-                android:padding="15dp"
                 android:fontFamily="@font/montserrat_regular"
+                android:padding="15dp"
                 android:text="@string/miscondutTextView"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,26 +54,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:fontFamily="@style/TextViewStyleDescriptions"
                 android:padding="5dp"
                 android:text="@string/laboratoryTextView"
                 android:textAlignment="textStart"
                 android:textSize="13sp"
-                android:fontFamily="@style/TextViewStyleDescriptions"
-                app:layout_constraintBottom_toTopOf="@id/spinnerLaboratory"
+                app:layout_constraintBottom_toTopOf="@id/textInputLayoutLaboratory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewMisConduct" />
 
-            <Spinner
-                android:id="@+id/spinnerLaboratory"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutLaboratory"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:padding="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintTop_toBottomOf="@id/textViewLaboratory"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLaboratory" />
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/spinnerLaboratory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/laboratoryTextView"
+                    android:inputType="text"
+                    android:completionThreshold="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/textViewStudent"
@@ -75,10 +98,9 @@
                 android:textAlignment="textStart"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toTopOf="@id/textInputLayoutStudent"
-                app:layout_constraintTop_toBottomOf="@id/spinnerLaboratory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@id/textInputLayoutLaboratory" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutStudent"
@@ -87,16 +109,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/textViewStudent"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/textViewStudent">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/spinnerStudentMisconduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:completionThreshold="1"
                     android:hint="@string/StudentTextView"
-                    android:inputType="none"/>
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -105,26 +129,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:fontFamily="@style/TextViewStyleDescriptions"
                 android:padding="5dp"
                 android:text="@string/SemesterTextView"
-                android:fontFamily="@style/TextViewStyleDescriptions"
                 android:textAlignment="textStart"
                 android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@id/spinnerSemester"
+                app:layout_constraintBottom_toTopOf="@id/textInputLayoutSemester"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStudent" />
 
-            <Spinner
-                android:id="@+id/spinnerSemester"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutSemester"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:padding="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintTop_toBottomOf="@id/textViewSemester"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSemester" />
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/spinnerSemester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/SemesterTextView"
+                    android:inputType="text"
+                    android:completionThreshold="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/textViewCommentMisconduct"
@@ -140,21 +175,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.8"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerSemester" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSemester" />
 
             <EditText
                 android:id="@+id/editTextCommentMisconduct"
-                android:hint="Escribe un comentario"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/EditTextStyle"
-                android:textSize="13sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:hint="Escribe un comentario"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/btnSendReport"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewCommentMisconduct"
-                app:layout_constraintBottom_toTopOf="@+id/btnSendReport"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewCommentMisconduct" />
 
             <Button
                 android:id="@+id/btnSendReport"
@@ -167,10 +202,24 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextCommentMisconduct"/>
+                app:layout_constraintTop_toBottomOf="@id/editTextCommentMisconduct" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardMiscondut"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/figure_form_activity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

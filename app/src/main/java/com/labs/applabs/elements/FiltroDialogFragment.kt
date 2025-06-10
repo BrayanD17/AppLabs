@@ -16,8 +16,6 @@ import com.labs.applabs.R
 import com.labs.applabs.firebase.FilterData
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
-import com.labs.applabs.elements.ToastType
-import com.labs.applabs.elements.toastMessage
 
 class FiltroDialogFragment : DialogFragment() {
 
