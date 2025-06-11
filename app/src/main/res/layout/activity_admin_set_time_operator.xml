@@ -10,11 +10,13 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="165dp"
-        android:layout_height="117dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="225dp"
+        android:layout_height="169dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="126dp"
         android:contentDescription="@string/logo_de_la_app"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_compulabs" />
@@ -24,9 +26,11 @@
         style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="74dp"
         android:text="@string/asignaci_n_de_horarios_a_operadores"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
@@ -56,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:text="@string/laboratorio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -65,7 +69,7 @@
         android:id="@+id/spnLab"
         android:layout_width="220dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnOp" />
@@ -76,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:text="@string/seleccione_el_horario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
@@ -134,11 +138,11 @@
         <TableRow>
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Lun"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -158,11 +162,11 @@
         <TableRow>
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Mar"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -182,11 +186,11 @@
         <TableRow>
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Mié"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -206,11 +210,11 @@
         <TableRow>
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Jue"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -230,11 +234,11 @@
         <TableRow>
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Vie"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -254,11 +258,11 @@
         <TableRow>
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Sáb"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -274,14 +278,16 @@
                 android:buttonTint="@color/checkbox_color" />
         </TableRow>
         <!-- Fila Domingo -->
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:background="@drawable/header_background"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Dom"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -297,6 +303,18 @@
                 android:buttonTint="@color/checkbox_color" />
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:id="@+id/btnSaveSchedule"
+        style="@style/ButtonStyle"
+        app:backgroundTint="@color/marineBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/guardar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
