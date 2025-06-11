@@ -1,8 +1,6 @@
-package com.labs.applabs.operadores
+package com.labs.applabs.operator
 
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
@@ -10,7 +8,6 @@ import android.widget.EditText
 import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +16,6 @@ import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.launch
-import org.apache.poi.ss.formula.functions.T
 
 class Report_Misconduct_Activity : AppCompatActivity() {
 
