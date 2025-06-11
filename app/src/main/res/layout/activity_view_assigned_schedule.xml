@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseActivityColor"
+    tools:context=".operator.viewAssignedSchedule">
+
+    <ImageView
+        android:id="@+id/backViewAssignedSchedule"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAssignedSchedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backViewAssignedSchedule"
+        app:layout_constraintVertical_bias="0.31">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:paddingTop="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contenido descriptivo de la tarjeta"
+                android:textSize="14sp" />
+
+            <TableLayout
+                android:id="@+id/tableScheduleAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@color/white"
+                android:padding="15dp"
+                android:stretchColumns="1,2,3">
+
+                <!-- Encabezado -->
+                <TableRow
+                    android:layout_margin="0dp"
+                    android:paddingVertical="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:text="" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/morningTable" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/afternoonTable" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/eveningTable" />
+                </TableRow>
+
+                <!-- Días de la semana -->
+                <!-- Lunes -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/monday" />
+
+                    <CheckBox
+                        android:id="@+id/mondayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/mondayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/mondayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Martes -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/tuesday" />
+
+                    <CheckBox
+                        android:id="@+id/tuesdayMorning"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/tuesdayAfternoon"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/tuesdayEvening"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Miércoles -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/wednesday" />
+
+                    <CheckBox
+                        android:id="@+id/wednesdayMorning"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/wednesdayAfternoon"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/wednesdayEvening"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Jueves -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/thursday" />
+
+                    <CheckBox
+                        android:id="@+id/thursdayMorning"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/thursdayAfternoon"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/thursdayEvening"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Viernes -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/friday" />
+
+                    <CheckBox
+                        android:id="@+id/fridayMorning"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/fridayAfternoon"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/fridayEvening"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Sábado -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/saturday" />
+
+                    <CheckBox
+                        android:id="@+id/saturdayMorning"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/saturdayAfternoon"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/saturdayEvening"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Domingo -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/sunday" />
+
+                    <CheckBox
+                        android:id="@+id/sundayMorning"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/sundayAfternoon"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/sundayEvening"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="@color/marineBlue"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp"
+        app:layout_constraintBottom_toTopOf="@id/cardAssignedSchedule"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cardAssignedSchedule"
+        app:layout_constraintVertical_bias="0.3">
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="13dp"
+        android:text="Título de la tarjeta"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardAssignedSchedule"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/figure_form_activity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

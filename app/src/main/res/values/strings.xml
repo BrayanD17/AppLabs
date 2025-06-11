@@ -186,4 +186,7 @@
     <string name="scheduleGeneral">Horario general</string>
     <string name="addSchedule">Asignar horario</string>
     <string name="withoutForm">No hay formularios activos disponibles</string>
+    <string name="assignedSchedule">Horario asignado</string>
+    <string name="missConduct">Mala conducta</string>
+    <string name="registerVisit">Registrar Visita</string>
 </resources>
