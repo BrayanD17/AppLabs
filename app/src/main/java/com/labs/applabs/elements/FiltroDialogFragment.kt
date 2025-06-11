@@ -21,7 +21,9 @@ class FiltroDialogFragment : DialogFragment() {
 
     val provider: Provider = Provider()
     private lateinit var degreeSpinner: Spinner
+    private lateinit var statusSpinner: Spinner
     private var degreeSelected: String? = null
+    private var statusSelected: String? = null
 
     interface FilterListener {
         fun onFilterApply(filterData: FilterData)
@@ -48,11 +50,12 @@ class FiltroDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         degreeSpinner = view.findViewById(R.id.spinner_carrera)
+        statusSpinner = view.findViewById(R.id.spinner_estado)
 
         val etSemestres = view.findViewById<EditText>(R.id.et_semestres)
         val etNombre = view.findViewById<EditText>(R.id.et_nombre)
         val etCarnet = view.findViewById<EditText>(R.id.et_carnet)
-        val spinnerEstado = view.findViewById<Spinner>(R.id.spinner_estado)
+
 
         val btnAplicar = view.findViewById<Button>(R.id.btn_aplicar)
         val btnReiniciar = view.findViewById<Button>(R.id.btn_reiniciar)
@@ -63,7 +66,7 @@ class FiltroDialogFragment : DialogFragment() {
                 semestres = etSemestres.text.toString(),
                 nombre = etNombre.text.toString(),
                 carnet = etCarnet.text.toString(),
-                estado = spinnerEstado.selectedItem?.toString() ?: ""
+                estado = (statusSpinner ?: "").toString()
             )
             (activity as? FilterListener)?.onFilterApply(filterData)
             dismiss()
@@ -74,13 +77,14 @@ class FiltroDialogFragment : DialogFragment() {
             etSemestres.text.clear()
             etNombre.text.clear()
             etCarnet.text.clear()
-            spinnerEstado.setSelection(0)
+            statusSpinner.setSelection(0)
             (activity as? FilterListener)?.onFilterCancel()
             dismiss()
         }
 
         // Llama al cargador del spinner
         loadSpinnerCarreras()
+        loadSpinnerEstados()
     }
 
     private fun loadSpinnerCarreras() {
@@ -115,5 +119,36 @@ class FiltroDialogFragment : DialogFragment() {
             }
         }
     }
+
+    private fun loadSpinnerEstados() {
+       viewLifecycleOwner.lifecycleScope.launch {
+           try {
+               val statusList = provider.getFormStatusData()
+               val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, statusList)
+               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+               statusSpinner.adapter = adapter
+
+               statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                   override fun onItemSelected(
+                       parent: AdapterView<*>?,
+                       view: View?,
+                       position: Int,
+                       id: Long
+                   ) {
+                       statusSelected = statusList[position]
+                   }
+
+                   override fun onNothingSelected(parent: AdapterView<*>?) {
+                       Toast.makeText(requireContext(), "Seleccione un estado", Toast.LENGTH_SHORT).show()
+                   }
+               }
+           } catch (e : Exception){
+               Toast.makeText(requireContext(), "Error al cargar estados", Toast.LENGTH_SHORT).show()
+           }
+       }
+    }
+
+
+
 }
 

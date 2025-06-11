@@ -43,6 +43,9 @@
             android:name=".administrator.operator.AdminMenuOperatorActivity"
             android:exported="false" />
         <activity
+            android:name=".operator.Report_Misconduct_Activity"
+            android:exported="false" />
+        <activity
             android:name=".administrator.AdminEditMenuActivity"
             android:exported="false" />
         <activity
@@ -124,7 +127,8 @@
         <activity
             android:name=".login.SplashActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -24,6 +24,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import java.util.Calendar
+import kotlin.math.log
 
 class Provider {
 
@@ -92,10 +93,52 @@ class Provider {
             val snapshot = db.collection("dataDefault").document("careers").get().await()
             snapshot.get("career") as? List<String> ?: emptyList()
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al cargar escuelas", e)
+            Log.e("Firebase", "Error al cargar carreras", e)
             emptyList()
         }
     }
+
+    suspend fun getFormStatusData() : List<String> {
+        return try{
+            val snapshot = db.collection("dataDefault").document("statusForm").get().await()
+            snapshot.get("status") as? List<String> ?: emptyList()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar estados", e)
+            emptyList()
+        }
+    }
+
+    suspend fun getLaboratoryName() : List<String> {
+        return try{
+            val laboratories = db.collection("dataDefault").document("laboratories").get().await()
+            laboratories.get("laboratory") as? List<String> ?: emptyList()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar laboratorios", e)
+            emptyList()
+        }
+    }
+
+    suspend fun getStudentName() : Map<String, String> {
+        return try{
+            val students = db.collection("users").whereEqualTo("userRole", 2).get().await()
+            students.documents.mapNotNull { doc ->
+                val name = doc.get("name")
+                val surNames = doc.get("surnames")
+                val fullname = "$name $surNames".trim()
+                val id = doc.id
+                if (name != null && surNames != null) {
+                    fullname to id
+                } else {
+                    null
+                }
+            }.toMap()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar estudiantes")
+            emptyMap()
+        }
+
+    }
+
 
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
@@ -141,6 +184,8 @@ class Provider {
         }
     }
 
+
+
     suspend fun saveStudentData(studentData: FormStudentData): Boolean {
         return try {
             val user = getAuthenticatedUserId()
@@ -176,6 +221,26 @@ class Provider {
         } catch (e: Exception) {
             Log.e("Firebase", "Error al guardar: ${e.message}", e)
             false
+        }
+    }
+
+    suspend fun saveStudentMisconductos(reportMisconducStudent: ReportMisconducStudent): Boolean {
+        return try{
+            val user = getAuthenticatedUserId()
+            val dataMapMisconductReport = hashMapOf<String, Any>().apply {
+                put("idOperador", user)
+                put("laboratory", reportMisconducStudent.laboratory)
+                put("student", reportMisconducStudent.student)
+                put("semester", reportMisconducStudent.semester)
+                put("comment", reportMisconducStudent.comment)
+            }
+            db.collection("misconducReportStudent")
+                .add(dataMapMisconductReport)
+                .await()
+            return true
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al guardar el reporte de mala conducta.(${e.message})")
+            return false
         }
     }
 

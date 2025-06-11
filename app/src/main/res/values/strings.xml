@@ -160,6 +160,17 @@
     <string name="friday">Viernes</string>
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
+
+
+    <!--Misconduct (View Misconduct)-->
+    <string name="miscondutTextView">Reportar mala conducta</string>
+    <string name="laboratoryTextView">Laboratorio</string>
+    <string name="StudentTextView">Estudiante</string>
+    <string name="SemesterTextView">Semestre en curso</string>
+    <string name="CommentTextView">Comentario</string>
+    <string name="btnSendReport">Enviar Reporte</string>
+
+
     <string name="aplicar_filtro">Aplicar filtro</string>
     <string name="selecciona_una_carrera">Selecciona una carrera:</string>
     <string name="filtrar_operadores_por">Filtrar operadores por:</string>
@@ -180,4 +191,9 @@
     <string name="registerVisit">Registrar Visita</string>
     <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
     <string name="eveningAssignedTable">5 a 10pm</string>
+
+
+    <!-- Semesters -->
+    <string name="semester1">I Semestre</string>
+    <string name="semester2">II Semestre</string>
 </resources>
