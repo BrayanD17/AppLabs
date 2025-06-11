@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/baseActivityColor"
     tools:context=".operator.Report_Misconduct_Activity">
 
     <ImageView
@@ -22,17 +23,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:background="@drawable/rounded_corner"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="InvalidId">
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/rounded_corner">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textViewMisConduct"
@@ -82,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/laboratoryTextView"
                     android:inputType="text"
+                    android:textSize="13sp"
                     android:completionThreshold="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:completionThreshold="1"
                     android:hint="@string/StudentTextView"
+                    android:textSize="13sp"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,6 +159,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/SemesterTextView"
                     android:inputType="text"
+                    android:textSize="13sp"
                     android:completionThreshold="1" />
             </com.google.android.material.textfield.TextInputLayout>
 

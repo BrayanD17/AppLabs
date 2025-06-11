@@ -27,6 +27,7 @@ import java.util.Locale
 import java.util.TimeZone
 import kotlinx.coroutines.withContext
 import java.util.Calendar
+import kotlin.math.log
 
 class Provider {
 
@@ -120,6 +121,27 @@ class Provider {
         }
     }
 
+    suspend fun getStudentName() : Map<String, String> {
+        return try{
+            val students = db.collection("users").whereEqualTo("userRole", 2).get().await()
+            students.documents.mapNotNull { doc ->
+                val name = doc.get("name")
+                val surNames = doc.get("surnames")
+                val fullname = "$name $surNames".trim()
+                val id = doc.id
+                if (name != null && surNames != null) {
+                    fullname to id
+                } else {
+                    null
+                }
+            }.toMap()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar estudiantes")
+            emptyMap()
+        }
+
+    }
+
 
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
@@ -165,6 +187,8 @@ class Provider {
         }
     }
 
+
+
     suspend fun saveStudentData(studentData: FormStudentData): Boolean {
         return try {
             val user = getAuthenticatedUserId()
@@ -200,6 +224,26 @@ class Provider {
         } catch (e: Exception) {
             Log.e("Firebase", "Error al guardar: ${e.message}", e)
             false
+        }
+    }
+
+    suspend fun saveStudentMisconductos(reportMisconducStudent: ReportMisconducStudent): Boolean {
+        return try{
+            val user = getAuthenticatedUserId()
+            val dataMapMisconductReport = hashMapOf<String, Any>().apply {
+                put("idOperador", user)
+                put("laboratory", reportMisconducStudent.laboratory)
+                put("student", reportMisconducStudent.student)
+                put("semester", reportMisconducStudent.semester)
+                put("comment", reportMisconducStudent.comment)
+            }
+            db.collection("misconducReportStudent")
+                .add(dataMapMisconductReport)
+                .await()
+            return true
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al guardar el reporte de mala conducta.(${e.message})")
+            return false
         }
     }
 

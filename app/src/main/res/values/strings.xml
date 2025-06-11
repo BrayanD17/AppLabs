@@ -189,4 +189,9 @@
     <string name="assignedSchedule">Horario asignado</string>
     <string name="missConduct">Mala conducta</string>
     <string name="registerVisit">Registrar Visita</string>
+
+
+    <!-- Semesters -->
+    <string name="semester1">I Semestre</string>
+    <string name="semester2">II Semestre</string>
 </resources>

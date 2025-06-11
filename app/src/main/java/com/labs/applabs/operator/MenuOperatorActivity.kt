@@ -10,8 +10,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.navigation.NavigationView
@@ -19,7 +17,6 @@ import com.labs.applabs.R
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.login.NewPasswordActivity
-import com.labs.applabs.student.FormListStudentActivity
 import kotlinx.coroutines.launch
 
 class MenuOperatorActivity : AppCompatActivity() {
@@ -85,6 +82,8 @@ class MenuOperatorActivity : AppCompatActivity() {
 
     //Agregar la vista para ver la reporte de mala conductas
     fun viewMissConduct(view: View) {
+        val intent = Intent(this, Report_Misconduct_Activity::class.java)
+        startActivity(intent)
     }
 
     //Agregar la vista para registrar una visita

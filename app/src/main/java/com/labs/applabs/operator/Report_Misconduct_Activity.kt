@@ -1,11 +1,14 @@
 package com.labs.applabs.operator
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,19 +18,21 @@ import com.labs.applabs.R
 import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.Provider
+import com.labs.applabs.firebase.ReportMisconducStudent
 import kotlinx.coroutines.launch
 
 class Report_Misconduct_Activity : AppCompatActivity() {
 
     val provider : Provider = Provider()
-    private lateinit var laboratory: Spinner
+    private lateinit var laboratory: AutoCompleteTextView
     private lateinit var student: AutoCompleteTextView
-    private lateinit var semester: Spinner
+    private lateinit var semester: AutoCompleteTextView
     private lateinit var comment: EditText
     private lateinit var sendReport: Button
     private lateinit var selectedLaboratory: String
-    private lateinit var selectedStudent: String
+    private lateinit var selectedStudentUid: String
     private lateinit var selectedSemester: String
+    private lateinit var btnBack : ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +58,32 @@ class Report_Misconduct_Activity : AppCompatActivity() {
         sendReport.setOnClickListener {
             lifecycleScope.launch {
                 try {
-                    // provider.sendReportMisconduct(selectedLaboratory, selectedStudent, selectedSemester, comment.text.toString())
-                    toastMessage("Reporte enviado", ToastType.SUCCESS)
-                    finish()
+                    if(validateInputs()){
+                        val reportMisconducStudent = ReportMisconducStudent(
+                            laboratory = selectedLaboratory,
+                            student = selectedStudentUid,
+                            semester = selectedSemester,
+                            comment = comment.text.toString())
+                        val result = provider.saveStudentMisconductos(reportMisconducStudent)
+                        if(result){
+                            toastMessage("Reporte enviado correctamente", ToastType.SUCCESS)
+                            finish()
+                        }
+                    }
                 } catch (e : Exception){
                     toastMessage("Error al enviar el reporte", ToastType.ERROR)
                 }
             }
+        }
+
+        btnBack = findViewById(R.id.backViewFormActivyty)
+        btnBack.setOnClickListener {
+            finish()
+        }
+
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
         }
 
     }
@@ -82,11 +106,15 @@ class Report_Misconduct_Activity : AppCompatActivity() {
     private fun loadSpinnerStudent(){
         lifecycleScope.launch {
             try {
-                val studentList = provider.getLaboratoryName()
-                val adapter = ArrayAdapter(this@Report_Misconduct_Activity, android.R.layout.simple_dropdown_item_1line, studentList)
+                val studentList = provider.getStudentName()
+                val nameStudents = studentList.keys.toList()
+                val adapter = ArrayAdapter(this@Report_Misconduct_Activity, android.R.layout.simple_dropdown_item_1line, nameStudents)
                 student.setAdapter(adapter)
                 student.setOnItemClickListener { parent, view, position, id ->
-                    selectedStudent = studentList[position]
+                    val selectedName = parent.getItemAtPosition(position) as String
+                    selectedStudentUid = studentList[selectedName].toString()
+                    // Aquí puedes usar el UID como necesites
+                    Log.d("Selected", "UID del estudiante: $selectedStudentUid")
                 }
             } catch (e : Exception){
                 toastMessage("Error al cargar los datos", ToastType.ERROR)
@@ -98,11 +126,11 @@ class Report_Misconduct_Activity : AppCompatActivity() {
     private fun loadSpinnerSemester(){
         lifecycleScope.launch {
             try {
-                val studentList = provider.getLaboratoryName()
-                val adapter = ArrayAdapter(this@Report_Misconduct_Activity, android.R.layout.simple_dropdown_item_1line, studentList)
-                student.setAdapter(adapter)
-                student.setOnItemClickListener { parent, view, position, id ->
-                    selectedStudent = studentList[position]
+                val SemesterList = listOf(getString(R.string.semester1), getString(R.string.semester2))
+                val adapter = ArrayAdapter(this@Report_Misconduct_Activity, android.R.layout.simple_dropdown_item_1line, SemesterList)
+                semester.setAdapter(adapter)
+                semester.setOnItemClickListener { parent, view, position, id ->
+                    selectedSemester = SemesterList[position]
                 }
             } catch (e : Exception){
                 toastMessage("Error al cargar los datos", ToastType.ERROR)
@@ -110,5 +138,14 @@ class Report_Misconduct_Activity : AppCompatActivity() {
         }
     }
 
+    private fun validateInputs() : Boolean{
+        if (selectedLaboratory.isEmpty() && selectedStudentUid.isEmpty() && selectedSemester.isEmpty() && comment.text.isEmpty()){
+            toastMessage("Por favor seleccione los datos requeridos", ToastType.ERROR)
+            return false
+        } else{
+
+            return true
+        }
+    }
 
 }
