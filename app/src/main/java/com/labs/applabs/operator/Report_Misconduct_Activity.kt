@@ -139,11 +139,10 @@ class Report_Misconduct_Activity : AppCompatActivity() {
     }
 
     private fun validateInputs() : Boolean{
-        if (selectedLaboratory.isEmpty() && selectedStudentUid.isEmpty() && selectedSemester.isEmpty() && comment.text.isEmpty()){
-            toastMessage("Por favor seleccione los datos requeridos", ToastType.ERROR)
+        if (selectedLaboratory.isEmpty() || selectedStudentUid.isEmpty() || selectedSemester.isEmpty() || comment.text.toString().isEmpty()){
+            toastMessage("Por favor llenar todos los datos requeridos", ToastType.ERROR)
             return false
         } else{
-
             return true
         }
     }
