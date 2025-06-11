@@ -812,7 +812,7 @@ class Provider {
             if(rol?.rolUser!="Operador"){
                 val doc = db.collection("").document(operatorId).get().await()
                 if(doc.exists()){
-                    //Agregar extraccion de datos cuando Dinarte tenga lista la asignación
+                    //Agregar extraccion de datos
                     return null
                 }else null
             }else null
