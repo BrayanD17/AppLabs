@@ -742,4 +742,22 @@ class Provider {
         Firebase.firestore.collection("historialOperadores").add(operador)
     }
 
+    //Obtener el horario asignado del operador, validar si es rol 3
+    suspend fun getAssignedSchedule():DataClass?{
+        val operatorId = getAuthenticatedUserId()
+        val rol=getUserInformation()
+        return try {
+            if(rol?.rolUser!="Operador"){
+                val doc = db.collection("").document(operatorId).get().await()
+                if(doc.exists()){
+                    //Agregar extraccion de datos
+                    return null
+                }else null
+            }else null
+        }catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $operatorId: ${e.message}")
+            null
+        }
+    }
+
 }
