@@ -152,7 +152,7 @@
     <string name="saveChangesEdit">Guardar Cambios</string>
     <string name="morningTable">7am a 12</string>
     <string name="afternoonTable">12 a 5pm</string>
-    <string name="eveningTable">5 a 10pm</string>
+    <string name="eveningTable">5pm a 10pm</string>
     <string name="monday">Lunes</string>
     <string name="tuesday">Martes</string>
     <string name="wednesday">Miércoles</string>
@@ -179,4 +179,5 @@
     <string name="missConduct">Mala conducta</string>
     <string name="registerVisit">Registrar Visita</string>
     <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
+    <string name="eveningAssignedTable">5 a 10pm</string>
 </resources>
