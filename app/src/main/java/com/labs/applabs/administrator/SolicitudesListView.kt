@@ -70,6 +70,7 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
                 false
             }
         }
+        finishActivitySolicitudes()
     }
 
     private fun initViews() {
