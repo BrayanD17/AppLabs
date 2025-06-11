@@ -1,4 +1,4 @@
-package com.labs.applabs.operadores
+package com.labs.applabs.administrator.operator
 
 data class OperadorCompleto(
     val userId: String,
