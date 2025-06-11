@@ -99,21 +99,21 @@
                         android:text="@string/monday" />
 
                     <CheckBox
-                        android:id="@+id/mondayMorning"
+                        android:id="@+id/DataMondayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/mondayAfternoon"
+                        android:id="@+id/DataMondayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/mondayEvening"
+                        android:id="@+id/DataMondayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
@@ -129,21 +129,21 @@
                         android:text="@string/tuesday" />
 
                     <CheckBox
-                        android:id="@+id/tuesdayMorning"
+                        android:id="@+id/DataTuesdayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/tuesdayAfternoon"
+                        android:id="@+id/DataTuesdayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/tuesdayEvening"
+                        android:id="@+id/DataTuesdayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
@@ -159,21 +159,21 @@
                         android:text="@string/wednesday" />
 
                     <CheckBox
-                        android:id="@+id/wednesdayMorning"
+                        android:id="@+id/DataWednesdayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/wednesdayAfternoon"
+                        android:id="@+id/DataWednesdayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/wednesdayEvening"
+                        android:id="@+id/DataWednesdayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
@@ -189,21 +189,21 @@
                         android:text="@string/thursday" />
 
                     <CheckBox
-                        android:id="@+id/thursdayMorning"
+                        android:id="@+id/DataThursdayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/thursdayAfternoon"
+                        android:id="@+id/DataThursdayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/thursdayEvening"
+                        android:id="@+id/DataThursdayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
@@ -219,21 +219,21 @@
                         android:text="@string/friday" />
 
                     <CheckBox
-                        android:id="@+id/fridayMorning"
+                        android:id="@+id/DataFridayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/fridayAfternoon"
+                        android:id="@+id/DataFridayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/fridayEvening"
+                        android:id="@+id/DataFridayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
@@ -249,21 +249,21 @@
                         android:text="@string/saturday" />
 
                     <CheckBox
-                        android:id="@+id/saturdayMorning"
+                        android:id="@+id/DataSaturdayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/saturdayAfternoon"
+                        android:id="@+id/DataSaturdayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/saturdayEvening"
+                        android:id="@+id/DataSaturdayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
@@ -279,21 +279,21 @@
                         android:text="@string/sunday" />
 
                     <CheckBox
-                        android:id="@+id/sundayMorning"
+                        android:id="@+id/DataSundayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/sundayAfternoon"
+                        android:id="@+id/DataSundayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/sundayEvening"
+                        android:id="@+id/DataSundayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         android:clickable="false"
