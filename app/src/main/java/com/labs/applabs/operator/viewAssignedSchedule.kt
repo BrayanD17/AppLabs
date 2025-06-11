@@ -18,4 +18,8 @@ class viewAssignedSchedule : AppCompatActivity() {
             insets
         }
     }
+
+    fun backViewAssignedSchedule(view: android.view.View) {
+        finish()
+    }
 }
