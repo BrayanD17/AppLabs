@@ -60,7 +60,7 @@ class AdminSetTimeOperatorActivity : AppCompatActivity() {
 
         // Llenar laboratorios
         lifecycleScope.launch {
-            labsList = Provider().getLaboratoryNames()
+            labsList = Provider().getLaboratoryName()
             val adapter = ArrayAdapter(
                 this@AdminSetTimeOperatorActivity,
                 android.R.layout.simple_spinner_item,
