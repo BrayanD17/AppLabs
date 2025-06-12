@@ -1,4 +1,4 @@
-package com.labs.applabs.administrator
+package com.labs.applabs.administrator.operator
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.labs.applabs.R
-import com.labs.applabs.operadores.HistorialOperadoresActivity
 
 class AdminMenuOperatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

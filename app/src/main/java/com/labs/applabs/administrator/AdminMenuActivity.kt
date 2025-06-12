@@ -12,9 +12,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.R
+import com.labs.applabs.administrator.operator.AdminMenuOperatorActivity
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.login.NewPasswordActivity
-import com.labs.applabs.operadores.HistorialOperadoresActivity
+import com.labs.applabs.administrator.operator.HistorialOperadoresActivity
 
 class AdminMenuActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")

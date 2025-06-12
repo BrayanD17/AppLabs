@@ -10,7 +10,6 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
@@ -18,16 +17,15 @@ import com.google.firebase.storage.storage
 import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.ScheduleSelection
 import com.labs.applabs.models.Usuario
-import com.labs.applabs.operadores.OperadorCompleto
+import com.labs.applabs.administrator.operator.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-import kotlinx.coroutines.withContext
 import java.util.Calendar
+import kotlin.math.log
 
 class Provider {
 
@@ -96,16 +94,26 @@ class Provider {
             val snapshot = db.collection("dataDefault").document("careers").get().await()
             snapshot.get("career") as? List<String> ?: emptyList()
         } catch (e: Exception) {
-            Log.e("Firebase", "Error al cargar escuelas", e)
+            Log.e("Firebase", "Error al cargar carreras", e)
             emptyList()
         }
     }
 
-    suspend fun getLaboratoryNames(): List<String> {
-        return try {
-            val snapshot = db.collection("dataDefault").document("laboratories").get().await()
-            snapshot.get("laboratory") as? List<String> ?: emptyList()
-        } catch (e: Exception) {
+    suspend fun getFormStatusData() : List<String> {
+        return try{
+            val snapshot = db.collection("dataDefault").document("statusForm").get().await()
+            snapshot.get("status") as? List<String> ?: emptyList()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar estados", e)
+            emptyList()
+        }
+    }
+
+    suspend fun getLaboratoryName() : List<String> {
+        return try{
+            val laboratories = db.collection("dataDefault").document("laboratories").get().await()
+            laboratories.get("laboratory") as? List<String> ?: emptyList()
+        } catch (e : Exception){
             Log.e("Firebase", "Error al cargar laboratorios", e)
             emptyList()
         }
@@ -162,6 +170,27 @@ class Provider {
         }
         return operatorNames
     }
+    suspend fun getStudentName() : Map<String, String> {
+        return try{
+            val students = db.collection("users").whereEqualTo("userRole", 2).get().await()
+            students.documents.mapNotNull { doc ->
+                val name = doc.get("name")
+                val surNames = doc.get("surnames")
+                val fullname = "$name $surNames".trim()
+                val id = doc.id
+                if (name != null && surNames != null) {
+                    fullname to id
+                } else {
+                    null
+                }
+            }.toMap()
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al cargar estudiantes")
+            emptyMap()
+        }
+
+    }
+
 
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
@@ -175,12 +204,13 @@ class Provider {
             val userDoc = db.collection("users").document(userId).get().await()
             val carnet = userDoc.getString("studentCard") ?: ""
             val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+            val correo = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
             val formDoc = db.collection("formStudent").document(formId).get().await()
             val carrera = formDoc.getString("degree") ?: ""
 
-            lista.add(OperadorCompleto(userId, carnet, nombre, carrera))
+            lista.add(OperadorCompleto(userId, carnet, nombre, carrera, correo))
         }
         return lista
     }
@@ -246,6 +276,8 @@ class Provider {
         }
     }
 
+
+
     suspend fun saveStudentData(studentData: FormStudentData): Boolean {
         return try {
             val user = getAuthenticatedUserId()
@@ -281,6 +313,26 @@ class Provider {
         } catch (e: Exception) {
             Log.e("Firebase", "Error al guardar: ${e.message}", e)
             false
+        }
+    }
+
+    suspend fun saveStudentMisconductos(reportMisconducStudent: ReportMisconducStudent): Boolean {
+        return try{
+            val user = getAuthenticatedUserId()
+            val dataMapMisconductReport = hashMapOf<String, Any>().apply {
+                put("idOperador", user)
+                put("laboratory", reportMisconducStudent.laboratory)
+                put("student", reportMisconducStudent.student)
+                put("semester", reportMisconducStudent.semester)
+                put("comment", reportMisconducStudent.comment)
+            }
+            db.collection("misconducReportStudent")
+                .add(dataMapMisconductReport)
+                .await()
+            return true
+        } catch (e : Exception){
+            Log.e("Firebase", "Error al guardar el reporte de mala conducta.(${e.message})")
+            return false
         }
     }
 
@@ -823,25 +875,43 @@ class Provider {
         }
     }
     //Si el formulario es aceptado cambia el estado de estudiante a operador
-    suspend fun registrarNuevoOperador(
+     fun registrarNuevoOperador(
         userId: String,
         formId: String,
         nombreUsuario: String,
         correoUsuario: String,
-        semestre: String,
-        nombreFormulario: String
+        nombreFormulario: String,
+        semestre: String
     ) {
         val operador = hashMapOf(
             "userId" to userId,
             "formId" to formId,
             "nombreUsuario" to nombreUsuario,
             "correoUsuario" to correoUsuario,
-            "semestre" to semestre,
             "nombreFormulario" to nombreFormulario,
+            "semestre" to semestre,
             "fechaRegistro" to com.google.firebase.Timestamp.now()
         )
 
         Firebase.firestore.collection("historialOperadores").add(operador)
+    }
+
+    //Obtener el horario asignado del operador, validar si es rol 3
+    suspend fun getAssignedSchedule():DataClass?{
+        val operatorId = getAuthenticatedUserId()
+        val rol=getUserInformation()
+        return try {
+            if(rol?.rolUser!="Operador"){
+                val doc = db.collection("").document(operatorId).get().await()
+                if(doc.exists()){
+                    //Agregar extraccion de datos
+                    return null
+                }else null
+            }else null
+        }catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $operatorId: ${e.message}")
+            null
+        }
     }
 
 }

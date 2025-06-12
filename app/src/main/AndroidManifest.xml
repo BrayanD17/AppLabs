@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".firebase.App"
@@ -21,7 +26,27 @@
             android:name=".administrator.AdminSetTimeOperatorActivity"
             android:exported="false" />
         <activity
-            android:name=".administrator.AdminMenuOperatorActivity"
+            android:name=".operator.viewAssignedSchedule"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".operator.MenuOperatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".administrator.operator.AdminMenuOperatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".operator.Report_Misconduct_Activity"
             android:exported="false" />
         <activity
             android:name=".administrator.AdminEditMenuActivity"
@@ -100,12 +125,13 @@
             android:name=".export.ExportSchedulesActivity"
             android:exported="false" />
         <activity
-            android:name=".operadores.HistorialOperadoresActivity"
+            android:name=".administrator.operator.HistorialOperadoresActivity"
             android:exported="false" />
         <activity
             android:name=".login.SplashActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

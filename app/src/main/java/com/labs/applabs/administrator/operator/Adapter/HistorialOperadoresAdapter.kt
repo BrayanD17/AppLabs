@@ -1,4 +1,4 @@
-package com.labs.applabs.operadores.Adapter
+package com.labs.applabs.administrator.operator.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
-import com.labs.applabs.operadores.OperadorCompleto
-import com.labs.applabs.operadores.OperadorHistorial
+import com.labs.applabs.administrator.operator.OperadorCompleto
 
 class HistorialOperadoresAdapter(
     private var operadores: List<OperadorCompleto>
@@ -21,6 +20,7 @@ class HistorialOperadoresAdapter(
 
     inner class OperadorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nombre: TextView = itemView.findViewById(R.id.tvNombre)
+        val correo: TextView = itemView.findViewById(R.id.tvCorreo)
 
         init {
             itemView.setOnClickListener {
@@ -38,6 +38,8 @@ class HistorialOperadoresAdapter(
     override fun onBindViewHolder(holder: OperadorViewHolder, position: Int) {
         val operador = operadores[position]
         holder.nombre.text = operador.nombre
+        holder.correo.text = operador.correo
+
     }
 
     override fun getItemCount(): Int = operadores.size

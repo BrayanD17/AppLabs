@@ -1,6 +1,10 @@
 package com.labs.applabs.administrator
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +27,7 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
     private lateinit var adapter: SolicitudAdapter
     private lateinit var filters : ImageView
     private var listaCompletaSolicitudes: List<Solicitud> = emptyList()
+    private var listaFiltradaSolicitudes: List<Solicitud> = emptyList()
 
 
 
@@ -43,6 +48,27 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
                 (this as FragmentActivity).supportFragmentManager,
                 "FiltroDialogFragment"
             )
+        }
+
+        /// Configurar EditText para búsqueda
+        val etSearch = findViewById<EditText>(R.id.searchEditText)
+
+        // Filtrar mientras se escribe (puedes usar un TextWatcher)
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterSearch(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+        // Filtrar al presionar Enter en el teclado
+        etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                filterSearch(etSearch.text.toString())
+                true
+            } else {
+                false
+            }
         }
         finishActivitySolicitudes()
     }
@@ -104,6 +130,17 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
 
     override fun onFilterCancel() {
         adapter.actualizarLista(listaCompletaSolicitudes)
+    }
+
+    private fun filterSearch(text: String){
+        listaFiltradaSolicitudes = if (text.isEmpty()){
+            listaCompletaSolicitudes
+        }else{
+            listaCompletaSolicitudes.filter { solicitud ->
+                solicitud.nombre.contains(text, ignoreCase = true)
+            }
+        }
+        adapter.actualizarLista(listaFiltradaSolicitudes)
     }
 
 

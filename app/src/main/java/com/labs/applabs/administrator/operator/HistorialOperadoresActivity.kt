@@ -1,4 +1,4 @@
-package com.labs.applabs.operadores
+package com.labs.applabs.administrator.operator
 
 import android.content.Context
 import android.content.Intent
@@ -17,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.labs.applabs.R
 import com.labs.applabs.export.ExportSchedulesActivity
-import com.labs.applabs.operadores.Adapter.HistorialOperadoresAdapter
+import com.labs.applabs.administrator.operator.Adapter.HistorialOperadoresAdapter
 import kotlinx.coroutines.launch
 import com.labs.applabs.firebase.Provider
 class HistorialOperadoresActivity : AppCompatActivity() {
