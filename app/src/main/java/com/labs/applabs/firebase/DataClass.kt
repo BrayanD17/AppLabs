@@ -123,3 +123,10 @@ data class UserInformation(
     val rolUser: String = ""
 )
 
+data class ReportMisconducStudent(
+    val idOperator : String = "",
+    val laboratory: String = "",
+    val student : String = "",
+    val semester: String = "",
+    val comment: String = ""
+)

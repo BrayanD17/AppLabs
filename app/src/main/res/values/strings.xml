@@ -160,6 +160,17 @@
     <string name="friday">Viernes</string>
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
+
+
+    <!--Misconduct (View Misconduct)-->
+    <string name="miscondutTextView">Reportar mala conducta</string>
+    <string name="laboratoryTextView">Laboratorio</string>
+    <string name="StudentTextView">Estudiante</string>
+    <string name="SemesterTextView">Semestre en curso</string>
+    <string name="CommentTextView">Comentario</string>
+    <string name="btnSendReport">Enviar Reporte</string>
+
+
     <string name="aplicar_filtro">Aplicar filtro</string>
     <string name="selecciona_una_carrera">Selecciona una carrera:</string>
     <string name="filtrar_operadores_por">Filtrar operadores por:</string>
@@ -175,4 +186,32 @@
     <string name="scheduleGeneral">Horario general</string>
     <string name="addSchedule">Asignar horario</string>
     <string name="withoutForm">No hay formularios activos disponibles</string>
+    <string name="asignaci_n_de_horarios_a_operadores">Asignación de horarios a operadores</string>
+    <string name="seleccione_un_operador">Seleccione un operador</string>
+    <string name="laboratorio">Laboratorio</string>
+    <string name="operador">Operador</string>
+    <string name="seleccione_el_horario">Seleccione el horario</string>
+    <string name="asignar">Asignar</string>
+    <string name="guardar">Guardar</string>
+    <string name="informacion_de_oratorios">informacion de oratorios</string>
+    <string name="lun">Lun</string>
+    <string name="mar">Mar</string>
+    <string name="mi">Mié</string>
+    <string name="jue">Jue</string>
+    <string name="vie">Vie</string>
+    <string name="s_b">Sáb</string>
+    <string name="dom">Dom</string>
+    <string name="ma_ana">Mañana</string>
+    <string name="tarde">Tarde</string>
+    <string name="noche">Noche</string>
+    <string name="assignedSchedule">Horario asignado</string>
+    <string name="missConduct">Mala conducta</string>
+    <string name="registerVisit">Registrar Visita</string>
+    <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
+    <string name="eveningAssignedTable">5 a 10pm</string>
+
+
+    <!-- Semesters -->
+    <string name="semester1">I Semestre</string>
+    <string name="semester2">II Semestre</string>
 </resources>

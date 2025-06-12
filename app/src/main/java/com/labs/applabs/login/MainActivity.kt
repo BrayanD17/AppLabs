@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                             3 -> startActivity(
                                 Intent(
                                     this,
-                                    com.labs.applabs.administrator.SolicitudesListView::class.java
+                                    com.labs.applabs.operator.MenuOperatorActivity::class.java
                                 )
                             )
                         }
