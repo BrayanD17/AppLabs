@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.operadores.OperadorCompleto
-import com.labs.applabs.operadores.OperadorHistorial
+
 
 class HistorialOperadoresAdapter(
     private var operadores: List<OperadorCompleto>

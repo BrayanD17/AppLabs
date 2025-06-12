@@ -10,8 +10,6 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.auth.User
-import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
@@ -19,14 +17,13 @@ import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.operadores.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-import kotlinx.coroutines.withContext
 import java.util.Calendar
+
 
 class Provider {
 
@@ -102,7 +99,7 @@ class Provider {
 
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
-        val historial = db.collection("historialOperadores").get().await()
+        val historial = db.collection("operatorHistory").get().await()
         val lista = mutableListOf<OperadorCompleto>()
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
@@ -110,15 +107,15 @@ class Provider {
 
             // Fetch usuario
             val userDoc = db.collection("users").document(userId).get().await()
-            val carnet = userDoc.getString("studentCard") ?: ""
-            val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
-            val correo = userDoc.getString("email") ?: ""
+            val studentCard = userDoc.getString("studentCard") ?: ""
+            val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+            val email = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
             val formDoc = db.collection("formStudent").document(formId).get().await()
-            val carrera = formDoc.getString("degree") ?: ""
+            val degree = formDoc.getString("degree") ?: ""
 
-            lista.add(OperadorCompleto(userId, carnet, nombre, carrera, correo))
+            lista.add(OperadorCompleto(userId, studentCard, name, degree,email))
         }
         return lista
     }
@@ -720,26 +717,43 @@ class Provider {
             false
         }
     }
-    //Si el formulario es aceptado cambia el estado de estudiante a operador
-     fun registrarNuevoOperador(
-        userId: String,
-        formId: String,
-        nombreUsuario: String,
-        correoUsuario: String,
-        nombreFormulario: String,
-        semestre: String
-    ) {
+    // Agrega esto dentro de tu clase Provider (puedes ponerlo cerca de otros métodos suspend)
+    suspend fun operatorRegister(formId: String) {
+        // Cambia estado en formStudent
+        db.collection("formStudent").document(formId)
+            .update("statusApplicationForm", 1, "comment", "Aprobado")
+            .await()
+
+        // Trae datos del formulario
+        val formSnap = db.collection("formStudent").document(formId).get().await()
+        val form = formSnap.data ?: return
+        val idStudent = form["idStudent"] as? String ?: return
+        val semester = form["semester"]?.toString() ?: ""
+
+        // Busca datos de usuario
+        val userSnap = db.collection("users").document(idStudent).get().await()
+        val name = "${userSnap.getString("name") ?: ""} ${userSnap.getString("surnames") ?: ""}".trim()
+        val email = userSnap.getString("email") ?: ""
+
+        // Cambia rol usando el id del documento
+        db.collection("users").document(idStudent).update("userRole", 3).await()
+
+        // Agrega/actualiza historial operador
         val operador = hashMapOf(
-            "userId" to userId,
+            "userId" to idStudent,
             "formId" to formId,
-            "nombreUsuario" to nombreUsuario,
-            "correoUsuario" to correoUsuario,
-            "nombreFormulario" to nombreFormulario,
-            "semestre" to semestre,
+            "nombreUsuario" to name,
+            "correoUsuario" to email,
+            "nombreFormulario" to "Formulario Operador",
+            "semestre" to semester,
             "fechaRegistro" to com.google.firebase.Timestamp.now()
         )
-
-        Firebase.firestore.collection("historialOperadores").add(operador)
+        // Usamos una clave única
+        db.collection("operatorHistory")
+            .document("$formId-$idStudent")
+            .set(operador, SetOptions.merge())
+            .await()
     }
 
 }
+

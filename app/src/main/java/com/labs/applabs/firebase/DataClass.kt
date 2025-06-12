@@ -122,3 +122,4 @@ data class UserInformation(
     val nameUser: String = "",
     val rolUser: String = ""
 )
+

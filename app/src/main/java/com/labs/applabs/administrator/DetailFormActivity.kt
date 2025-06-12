@@ -23,6 +23,7 @@ import com.labs.applabs.firebase.dataUpdateStatus
 import com.labs.applabs.student.studentMenuActivity
 import kotlinx.coroutines.launch
 
+
 class DetailFormActivity : AppCompatActivity() {
     private lateinit var applicationOperatorTitle: TextView
     private lateinit var typeForm: TextView
@@ -91,7 +92,8 @@ class DetailFormActivity : AppCompatActivity() {
                 studentShifts.text = "${studentInfo.studentShifts} horas semanales"
                 studentAverage.text = studentInfo.studentAverage
 
-                val styleLetter = ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
+                val styleLetter =
+                    ResourcesCompat.getFont(this@DetailFormActivity, R.font.montserrat_light)
                 scheduleAvailability.removeAllViews()
                 studentInfo.scheduleAvailability.forEach { schedule ->
                     val textView = TextView(this@DetailFormActivity).apply {
@@ -143,13 +145,21 @@ class DetailFormActivity : AppCompatActivity() {
 
         val btnUpdateStatus = findViewById<Button>(R.id.btnUpdateStatus)
         btnUpdateStatus.setOnClickListener {
-            updateApplicationStatus(idUser!!, comment!!, statusApplication!!, nameFormOperator!!, semesterFormOperator!!)
+            updateApplicationStatus(
+                idUser!!,
+                comment!!,
+                statusApplication!!,
+                nameFormOperator!!,
+                semesterFormOperator!!
+            )
         }
     }
 
     private fun downloadBoleta(urlApplication: String) {
         val btnDescargar = findViewById<FrameLayout>(R.id.btnDownloadApplication)
-        val fileName = Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?") ?: "archivo.pdf"
+        val fileName =
+            Uri.parse(urlApplication).lastPathSegment?.substringAfterLast("/")?.substringBefore("?")
+                ?: "archivo.pdf"
         btnDescargar.setOnClickListener {
             if (urlApplication.isNotEmpty()) {
                 val request = DownloadManager.Request(Uri.parse(urlApplication))
@@ -158,7 +168,11 @@ class DetailFormActivity : AppCompatActivity() {
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     .setAllowedOverMetered(true)
                     .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, fileName)
+                    .setDestinationInExternalFilesDir(
+                        this,
+                        Environment.DIRECTORY_DOWNLOADS,
+                        fileName
+                    )
 
                 val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 downloadManager.enqueue(request)
@@ -169,7 +183,13 @@ class DetailFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateApplicationStatus(userId: String, originalComment: String, originalStatus: String, nameFormOperator: String, semesterFormOperator: String) {
+    private fun updateApplicationStatus(
+        userId: String,
+        originalComment: String,
+        originalStatus: String,
+        nameFormOperator: String,
+        semesterFormOperator: String
+    ) {
         val dataComment = findViewById<EditText>(R.id.textDataComment)
         var commentText = dataComment.text.toString().trim()
         var newMessage: String
@@ -200,7 +220,8 @@ class DetailFormActivity : AppCompatActivity() {
             else -> "en revisión"
         }
 
-        newMessage = "Su solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator ha sido $estadoMensaje."
+        newMessage =
+            "Su solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator ha sido $estadoMensaje."
 
         val updateData = dataUpdateStatus(
             newStatusApplication = statusText.toInt(),
@@ -210,28 +231,32 @@ class DetailFormActivity : AppCompatActivity() {
         )
 
         lifecycleScope.launch {
-            val updateSuccess = provider.updateFormStatusAndComment(formStudentId, updateData)
-            if (updateSuccess) {
-                if (statusText == "1") {
-                    provider.registrarNuevoOperador(
-                        userId = userId,
-                        formId = formStudentId,
-                        nombreUsuario = studentNameValue,
-                        correoUsuario = studentEmailValue,
-                        nombreFormulario = nameFormOperator,
-                        semestre = semesterFormOperator
+            try {
+                if (statusText == "1") { // Aprobado
+                    provider.operatorRegister(formStudentId)
+                    toastMessage(
+                        "Solicitud aprobada, operador registrado y rol actualizado",
+                        ToastType.SUCCESS
                     )
+                } else {
+                    val updateSuccess =
+                        provider.updateFormStatusAndComment(formStudentId, updateData)
+                    if (updateSuccess) {
+                        toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
+                    } else {
+                        toastMessage("Error al actualizar los datos", ToastType.ERROR)
+                    }
                 }
-
-                toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
                 Handler(Looper.getMainLooper()).postDelayed({
                     startActivity(Intent(this@DetailFormActivity, SolicitudesListView::class.java))
                     finish()
                 }, 1000)
-            } else {
-                toastMessage("Error al actualizar los datos", ToastType.ERROR)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                toastMessage("Error: ${e.message}", ToastType.ERROR)
             }
         }
+
     }
 
     private fun finishActivityDetailsForm() {
@@ -242,4 +267,5 @@ class DetailFormActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }

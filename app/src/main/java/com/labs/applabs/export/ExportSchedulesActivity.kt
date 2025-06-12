@@ -21,7 +21,8 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.core.content.FileProvider
+
+
 
 
 class ExportSchedulesActivity : AppCompatActivity() {
@@ -56,40 +57,40 @@ class ExportSchedulesActivity : AppCompatActivity() {
             btnExportExcel.isEnabled = false
             btnExportExcel.text = "Exportando..."
 
-            // 1. Obtener historial de operadores
-            val historialSnap = db.collection("historialOperadores").get().await()
-            val historial = historialSnap.documents
+            // Obtener historial de operadores
+            val scheduleSnap = db.collection("operatorHistory").get().await()
+            val schedule = scheduleSnap.documents
 
             //Probando
             runOnUiThread {
-                Toast.makeText(this, "Historial size: ${historial.size}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Historial size: ${schedule.size}", Toast.LENGTH_LONG).show()
             }
-            android.util.Log.d("EXPORT", "Historial size: ${historial.size}")
+            android.util.Log.d("EXPORT", "Historial size: ${schedule.size}")
 
-            // 2. Preparar estructura para horarios
-            val listaDatos = mutableListOf<DatosHorarioOperador>()
-            for (doc in historial) {
+            // Preparar estructura para horarios
+            val listaDatos = mutableListOf<operatorDataSchedule>()
+            for (doc in schedule) {
                 val userId = doc.getString("userId") ?: continue
-                val nombre = doc.getString("nombreUsuario") ?: continue
+                val name = doc.getString("nombreUsuario") ?: continue
                 val formId = doc.getString("formId") ?: continue
                 val formSnap = db.collection("formStudent").document(formId).get().await()
                 //Probando
-                android.util.Log.d("EXPORT", "Procesando: $nombre, userId=$userId, formId=$formId")
+                android.util.Log.d("EXPORT", "Procesando: $name, userId=$userId, formId=$formId")
 
                 if (!formSnap.exists()) continue
                 val form = formSnap.data ?: continue
 
-                val horas = form["shift"]?.toString() ?: ""
-                val horariosList = (form["scheduleAvailability"] as? List<Map<String, Any>>)
+                val hours = form["shift"]?.toString() ?: ""
+                val schedulesList = (form["scheduleAvailability"] as? List<Map<String, Any>>)
                     ?: (form["scheduleAvailability"] as? List<HashMap<String, Any>>)
                     ?: emptyList()
 
-                val horarios = horariosList.mapNotNull { diaMap ->
+                val schedules = schedulesList.mapNotNull { diaMap ->
                     val day = diaMap["day"] as? String ?: return@mapNotNull null
                     val shifts = diaMap["shifts"] as? List<String> ?: emptyList()
                     ScheduleItem(day, shifts)
                 }
-                listaDatos.add(DatosHorarioOperador(horas, nombre, horarios))
+                listaDatos.add(operatorDataSchedule(hours , name, schedules))
             }
 
             if (listaDatos.isEmpty()) {
@@ -127,7 +128,7 @@ class ExportSchedulesActivity : AppCompatActivity() {
 
     // ---- Formato del Excel ----
 
-    private fun crearExcelConHorarios(lista: List<DatosHorarioOperador>, output: OutputStream) {
+    private fun crearExcelConHorarios(lista: List<operatorDataSchedule>, output: OutputStream) {
         val workbook = XSSFWorkbook()
         val sheet = workbook.createSheet("Horarios Operadores")
 
@@ -217,12 +218,12 @@ class ExportSchedulesActivity : AppCompatActivity() {
         // Llenar filas a partir de la 2
         lista.forEachIndexed { i, op ->
             val row = sheet.createRow(i + 2)
-            row.createCell(0).apply { setCellValue(op.horas); cellStyle = styleFijo }
-            row.createCell(1).apply { setCellValue(op.nombre); cellStyle = styleFijo }
+            row.createCell(0).apply { setCellValue(op.hours); cellStyle = styleFijo }
+            row.createCell(1).apply { setCellValue(op.name); cellStyle = styleFijo }
             col = 2
             for (dia in dias) {
                 for (turno in turnos) {
-                    val tieneTurno = op.horarios.any { it.day.equals(dia, true) && it.shifts.contains(turno) }
+                    val tieneTurno = op.schedule.any { it.day.equals(dia, true) && it.shifts.contains(turno) }
                     val cell = row.createCell(col)
                     cell.setCellValue(if (tieneTurno) "✔" else "□")
                     cell.cellStyle = estiloCelda(colorDias[dia] ?: IndexedColors.WHITE.index)
@@ -275,18 +276,15 @@ class ExportSchedulesActivity : AppCompatActivity() {
 
         notificationManager.notify(1001, notification)
     }
-
-
-    // ---- Modelos auxiliares ----
-
-    data class DatosHorarioOperador(
-        val horas: String,
-        val nombre: String,
-        val horarios: List<ScheduleItem>
+    data class operatorDataSchedule(
+        val hours: String,
+        val name: String,
+        val schedule: List<ScheduleItem>
     )
 
     data class ScheduleItem(
         val day: String,
         val shifts: List<String>
     )
+
 }
