@@ -189,6 +189,8 @@
     <string name="assignedSchedule">Horario asignado</string>
     <string name="missConduct">Mala conducta</string>
     <string name="registerVisit">Registrar Visita</string>
+    <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
+    <string name="eveningAssignedTable">5 a 10pm</string>
 
 
     <!-- Semesters -->

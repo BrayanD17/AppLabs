@@ -1,4 +1,4 @@
-package com.labs.applabs.operadores.Adapter
+package com.labs.applabs.administrator.operator.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
-import com.labs.applabs.operadores.OperadorCompleto
-import com.labs.applabs.operadores.OperadorHistorial
+import com.labs.applabs.administrator.operator.OperadorCompleto
 
 class HistorialOperadoresAdapter(
     private var operadores: List<OperadorCompleto>

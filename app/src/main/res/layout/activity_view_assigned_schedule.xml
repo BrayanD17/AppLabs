@@ -10,10 +10,12 @@
 
     <ImageView
         android:id="@+id/backViewAssignedSchedule"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="20dp"
+        android:onClick="backViewAssignedSchedule"
         android:src="@drawable/arrow_back"
+        android:contentDescription="@string/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backViewAssignedSchedule"
-        app:layout_constraintVertical_bias="0.31">
+        app:layout_constraintVertical_bias="0.3">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,21 +40,23 @@
             android:layout_marginTop="25dp"
             android:orientation="vertical"
             android:padding="16dp"
-            android:paddingTop="50dp">
+            android:paddingTop="30dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contenido descriptivo de la tarjeta"
-                android:textSize="14sp" />
+                android:textAlignment="center"
+                android:text="@string/nameScheduleAssigned"
+                style="@style/TextViewStyleDescriptions"/>
 
             <TableLayout
-                android:id="@+id/tableScheduleAvailability"
+                android:id="@+id/tableAssignedSchedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:background="@color/white"
                 android:padding="15dp"
+                android:layout_marginTop="5dp"
                 android:stretchColumns="1,2,3">
 
                 <!-- Encabezado -->
@@ -69,17 +73,20 @@
                     <TextView
                         android:gravity="center"
                         android:padding="0dp"
+                        style="@style/formMessageStyle"
                         android:text="@string/morningTable" />
 
                     <TextView
                         android:gravity="center"
                         android:padding="0dp"
+                        style="@style/formMessageStyle"
                         android:text="@string/afternoonTable" />
 
                     <TextView
                         android:gravity="center"
                         android:padding="0dp"
-                        android:text="@string/eveningTable" />
+                        style="@style/formMessageStyle"
+                        android:text="@string/eveningAssignedTable" />
                 </TableRow>
 
                 <!-- Días de la semana -->
@@ -88,24 +95,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/monday" />
 
                     <CheckBox
-                        android:id="@+id/mondayMorning"
+                        android:id="@+id/DataMondayMorning"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/mondayAfternoon"
+                        android:id="@+id/DataMondayAfternoon"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/mondayEvening"
+                        android:id="@+id/DataMondayEvening"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
 
@@ -114,21 +125,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/tuesday" />
 
                     <CheckBox
-                        android:id="@+id/tuesdayMorning"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataTuesdayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/tuesdayAfternoon"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataTuesdayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/tuesdayEvening"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataTuesdayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
 
@@ -137,21 +155,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/wednesday" />
 
                     <CheckBox
-                        android:id="@+id/wednesdayMorning"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataWednesdayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/wednesdayAfternoon"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataWednesdayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/wednesdayEvening"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataWednesdayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
 
@@ -160,21 +185,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/thursday" />
 
                     <CheckBox
-                        android:id="@+id/thursdayMorning"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataThursdayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/thursdayAfternoon"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataThursdayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/thursdayEvening"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataThursdayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
 
@@ -183,21 +215,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/friday" />
 
                     <CheckBox
-                        android:id="@+id/fridayMorning"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataFridayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/fridayAfternoon"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataFridayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/fridayEvening"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataFridayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
 
@@ -206,21 +245,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/saturday" />
 
                     <CheckBox
-                        android:id="@+id/saturdayMorning"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataSaturdayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/saturdayAfternoon"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataSaturdayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/saturdayEvening"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataSaturdayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
 
@@ -229,21 +275,28 @@
 
                     <TextView
                         android:gravity="center"
+                        style="@style/formMessageStyle"
                         android:text="@string/sunday" />
 
                     <CheckBox
-                        android:id="@+id/sundayMorning"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataSundayMorning"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/sundayAfternoon"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataSundayAfternoon"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
 
                     <CheckBox
-                        android:id="@+id/sundayEvening"
-                        android:minHeight="0dp"
+                        android:id="@+id/DataSundayEvening"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:clickable="false"
                         android:padding="0dp" />
                 </TableRow>
             </TableLayout>
@@ -269,10 +322,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="13dp"
-        android:text="Título de la tarjeta"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:text="@string/assignedSchedule"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
     </androidx.cardview.widget.CardView>
 
     <ImageView

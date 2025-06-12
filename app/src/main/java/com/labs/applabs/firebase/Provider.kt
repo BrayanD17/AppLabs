@@ -10,22 +10,19 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.labs.applabs.models.FormOperador
 import com.labs.applabs.models.Usuario
-import com.labs.applabs.operadores.OperadorCompleto
+import com.labs.applabs.administrator.operator.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-import kotlinx.coroutines.withContext
 import java.util.Calendar
 import kotlin.math.log
 
@@ -805,6 +802,24 @@ class Provider {
         )
 
         Firebase.firestore.collection("historialOperadores").add(operador)
+    }
+
+    //Obtener el horario asignado del operador, validar si es rol 3
+    suspend fun getAssignedSchedule():DataClass?{
+        val operatorId = getAuthenticatedUserId()
+        val rol=getUserInformation()
+        return try {
+            if(rol?.rolUser!="Operador"){
+                val doc = db.collection("").document(operatorId).get().await()
+                if(doc.exists()){
+                    //Agregar extraccion de datos
+                    return null
+                }else null
+            }else null
+        }catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener datos para $operatorId: ${e.message}")
+            null
+        }
     }
 
 }
