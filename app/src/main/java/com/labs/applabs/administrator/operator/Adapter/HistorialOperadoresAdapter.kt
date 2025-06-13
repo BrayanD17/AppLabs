@@ -31,7 +31,7 @@ class HistorialOperadoresAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperadorViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_historial_operador, parent, false)
+            .inflate(R.layout.item_operator_history, parent, false)
         return OperadorViewHolder(view)
     }
 

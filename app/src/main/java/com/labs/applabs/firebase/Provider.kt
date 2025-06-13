@@ -160,7 +160,7 @@ class Provider {
             for (id in ids) {
                 val doc = db.collection("users").document(id).get().await()
                 val userRole = doc.getLong("userRole")
-                if (userRole == 2L) {
+                if (userRole == 3L) {
                     val name = doc.getString("name") ?: ""
                     val surnames = doc.getString("surnames") ?: ""
                     operatorNames.add(OperatorUser(id, "$name $surnames".trim()))
@@ -930,6 +930,65 @@ class Provider {
             null
         }
     }
+    // Obtener el horario asignado general como AssignedScheduleData
+    suspend fun obtenerHorariosAsignadosGeneral(): List<AssignedScheduleData> {
+        val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+        val snapshot = db.collection("assignSchedule").get().await()
+        val lista = mutableListOf<AssignedScheduleData>()
+
+        // Carga todos los usuarios solo una vez para no hacer n consultas
+        val allUsers = db.collection("users").get().await().documents.associateBy { it.id }
+
+        fun normalizarDia(dia: String): String = when (dia.trim().lowercase()) {
+            "lunes" -> "Lunes"
+            "martes" -> "Martes"
+            "miércoles" -> "Miércoles"
+            "jueves" -> "Jueves"
+            "viernes" -> "Viernes"
+            "sábado" -> "Sábado"
+            else -> dia
+        }
+        fun normalizarTurno(turno: String): String = when (turno.trim().lowercase()) {
+            "mañana" -> "7 a 12"
+            "tarde" -> "12 a 5"
+            "noche" -> "5 a 10"
+            else -> turno
+        }
+
+        for (doc in snapshot.documents) {
+            val userId = doc.getString("userId") ?: continue
+            val labs = doc.get("labs") as? Map<*, *> ?: continue
+
+            // Obtener nombre completo (si no existe pone "Sin nombre")
+            val userDoc = allUsers[userId]
+            val nombre = (userDoc?.getString("name") ?: "") + " " + (userDoc?.getString("surnames") ?: "")
+
+            for ((labKey, diasMap) in labs) {
+                val nombreLab = labKey.toString()
+                val diasTurnos = diasMap as? Map<*, *> ?: continue
+                for ((dia, turnos) in diasTurnos) {
+                    val diaNormal = normalizarDia(dia.toString())
+                    val turnosList = turnos as? List<*> ?: continue
+                    for (turno in turnosList) {
+                        val turnoNormal = normalizarTurno(turno.toString())
+                        lista.add(
+                            AssignedScheduleData(
+                                name = "",
+                                laboratory = nombreLab,
+                                shift = turnoNormal,
+                                day = diaNormal,
+                                operator = nombre.trim().ifEmpty { "Sin nombre" },
+                                scheduleMatrix = emptyMap()
+                            )
+                        )
+                    }
+                }
+            }
+        }
+        return lista
+    }
+
+
 
 }
 

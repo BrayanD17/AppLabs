@@ -61,12 +61,6 @@ class ExportSchedulesActivity : AppCompatActivity() {
             val scheduleSnap = db.collection("operatorHistory").get().await()
             val schedule = scheduleSnap.documents
 
-            //Probando
-            runOnUiThread {
-                Toast.makeText(this, "Historial size: ${schedule.size}", Toast.LENGTH_LONG).show()
-            }
-            android.util.Log.d("EXPORT", "Historial size: ${schedule.size}")
-
             // Preparar estructura para horarios
             val listaDatos = mutableListOf<operatorDataSchedule>()
             for (doc in schedule) {
@@ -109,10 +103,6 @@ class ExportSchedulesActivity : AppCompatActivity() {
                 }
             }
 
-            runOnUiThread {
-                Toast.makeText(this, "¡Excel guardado correctamente!", Toast.LENGTH_LONG).show()
-                showExportNotification(uri)
-            }
         } catch (e: Exception) {
             e.printStackTrace()
             runOnUiThread {
@@ -123,6 +113,10 @@ class ExportSchedulesActivity : AppCompatActivity() {
                 btnExportExcel.isEnabled = true
                 btnExportExcel.text = "Descargar archivo Excel"
             }
+        }
+        runOnUiThread {
+            Toast.makeText(this, "¡Excel guardado correctamente!", Toast.LENGTH_LONG).show()
+            showExportNotification(uri)
         }
     }
 
@@ -239,13 +233,13 @@ class ExportSchedulesActivity : AppCompatActivity() {
 
         workbook.write(output)
         workbook.close()
+
     }
 
     private fun showExportNotification(uri: Uri) {
         val channelId = "export_channel"
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        // Crea el canal solo si es necesario (Android 8+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -255,10 +249,9 @@ class ExportSchedulesActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        // Intent para abrir el archivo exportado
         val openIntent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
         val pendingIntent = PendingIntent.getActivity(
@@ -266,16 +259,16 @@ class ExportSchedulesActivity : AppCompatActivity() {
         )
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Usa este por ahora
+            .setSmallIcon(R.drawable.ic_launcher_foreground) // Cambia por tu ícono si tienes
             .setContentTitle("Exportación completada")
             .setContentText("El archivo Excel se guardó correctamente. Toca para abrirlo.")
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()
-        Toast.makeText(this, "Notificación generada", Toast.LENGTH_SHORT).show()
 
         notificationManager.notify(1001, notification)
     }
+
     data class operatorDataSchedule(
         val hours: String,
         val name: String,

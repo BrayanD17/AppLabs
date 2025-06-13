@@ -36,7 +36,7 @@ class HistorialOperadoresActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_historial_operadores)
+        setContentView(R.layout.activity_operator_history)
 
         recyclerView = findViewById(R.id.rvOperadores)
         recyclerView.layoutManager = LinearLayoutManager(this)
