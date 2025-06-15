@@ -211,7 +211,36 @@ class Provider {
             val formDoc = db.collection("formStudent").document(formId).get().await()
             val degree = formDoc.getString("degree") ?: ""
 
-            lista.add(OperadorCompleto(userId, studentCard, name, degree,email))
+            // Fetch assignSchedule (laboratorios y horarios)
+            val asignDoc = db.collection("assignSchedule").document(userId).get().await()
+            val labs: MutableMap<String, Map<String, List<String>>> = mutableMapOf()
+            val labsMap = asignDoc.get("labs") as? Map<*, *>
+            if (labsMap != null) {
+                for ((labName, diasObj) in labsMap) {
+                    val diasMap = diasObj as? Map<*, *> ?: continue
+                    val dias = mutableMapOf<String, List<String>>()
+                    for ((dia, horarioValue) in diasMap) {
+                        val listaHorarios = when (horarioValue) {
+                            is String -> listOf(horarioValue)
+                            is List<*> -> horarioValue.filterIsInstance<String>()
+                            else -> emptyList()
+                        }
+                        dias[dia.toString()] = listaHorarios
+                    }
+                    labs[labName.toString()] = dias
+                }
+            }
+
+            lista.add(
+                OperadorCompleto(
+                    userId = userId,
+                    carnet = studentCard,
+                    nombre = name,
+                    carrera = degree,
+                    correo = email,
+                    laboratorios = labs
+                )
+            )
         }
         return lista
     }
