@@ -23,6 +23,9 @@
         android:theme="@style/Theme.AppLabs"
         tools:targetApi="31">
         <activity
+            android:name=".administrator.operator.HistoryOperatorSemesters"
+            android:exported="false" />
+        <activity
             android:name=".administrator.operator.viewInformationOperator"
             android:exported="false" />
         <activity
@@ -31,6 +34,7 @@
         <activity
             android:name=".operator.viewAssignedSchedule"
             android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -131,8 +135,7 @@
             android:exported="false" />
         <activity
             android:name=".administrator.AdminGeneralScheduleActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".login.SplashActivity"
             android:exported="true"

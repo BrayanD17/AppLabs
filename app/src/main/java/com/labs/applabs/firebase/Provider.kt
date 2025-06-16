@@ -1076,6 +1076,7 @@ class Provider {
         return lista
     }
 
+    //Get operator approved during semesters (history from admin of all operators)
 
 
 }
