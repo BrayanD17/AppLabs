@@ -26,9 +26,11 @@
             android:name=".administrator.operator.viewInformationOperator"
             android:exported="false" />
         <activity
+            android:name=".administrator.AdminSetTimeOperatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".operator.viewAssignedSchedule"
             android:exported="false" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -127,6 +129,10 @@
         <activity
             android:name=".administrator.operator.HistorialOperadoresActivity"
             android:exported="false" />
+        <activity
+            android:name=".administrator.AdminGeneralScheduleActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".login.SplashActivity"
             android:exported="true"

@@ -130,3 +130,13 @@ data class ReportMisconducStudent(
     val semester: String = "",
     val comment: String = ""
 )
+
+data class AssignedScheduleData(
+    val name: String,
+    val laboratory: String,
+    val shift: String,
+    val day: String,
+    val operator: String,
+    val scheduleMatrix: Map<String, List<String>>
+)
+

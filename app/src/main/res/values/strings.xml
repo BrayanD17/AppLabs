@@ -186,6 +186,24 @@
     <string name="scheduleGeneral">Horario general</string>
     <string name="addSchedule">Asignar horario</string>
     <string name="withoutForm">No hay formularios activos disponibles</string>
+    <string name="asignaci_n_de_horarios_a_operadores">Asignación de horarios a operadores</string>
+    <string name="seleccione_un_operador">Seleccione un operador</string>
+    <string name="laboratorio">Laboratorio</string>
+    <string name="operador">Operador</string>
+    <string name="seleccione_el_horario">Seleccione el horario</string>
+    <string name="asignar">Asignar</string>
+    <string name="guardar">Guardar</string>
+    <string name="informacion_de_oratorios">informacion de oratorios</string>
+    <string name="lun">Lun</string>
+    <string name="mar">Mar</string>
+    <string name="mi">Mié</string>
+    <string name="jue">Jue</string>
+    <string name="vie">Vie</string>
+    <string name="s_b">Sáb</string>
+    <string name="dom">Dom</string>
+    <string name="ma_ana">Mañana</string>
+    <string name="tarde">Tarde</string>
+    <string name="noche">Noche</string>
     <string name="assignedSchedule">Horario asignado</string>
     <string name="missConduct">Mala conducta</string>
     <string name="registerVisit">Registrar Visita</string>
@@ -197,4 +215,7 @@
     <!-- Semesters -->
     <string name="semester1">I Semestre</string>
     <string name="semester2">II Semestre</string>
+    <string name="selecciona_d_a_y_horario">Selecciona día y horario</string>
+    <string name="selecciona_un_laboratorio">Selecciona un laboratorio</string>
+    <string name="d_a_y_horario">Día y Horario</string>
 </resources>

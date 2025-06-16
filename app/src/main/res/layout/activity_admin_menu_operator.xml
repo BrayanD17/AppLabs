@@ -171,6 +171,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:gravity="center"
+                    android:onClick="callToSetTimeOperator"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -180,6 +181,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/boton_menu_administrador"
+                        android:onClick="callToSetTimeOperator"
                         app:srcCompat="@drawable/add_schedule_operator" />
 
                     <TextView
@@ -187,6 +189,7 @@
                         style="@style/textIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="callToSetTimeOperator"
                         android:text="@string/addSchedule" />
                 </LinearLayout>
             </LinearLayout>
