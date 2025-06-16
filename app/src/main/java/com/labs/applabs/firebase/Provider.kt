@@ -200,6 +200,7 @@ class Provider {
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
             val formId = doc.getString("formId") ?: continue
+            val operatorId = doc.getString("formIdOperator") ?: continue
 
             // Fetch usuario
             val userDoc = db.collection("users").document(userId).get().await()
@@ -207,6 +208,16 @@ class Provider {
             // Verificar si el usuario tiene rol de operador (3)
             val userRole = userDoc.getLong("userRole")?.toInt() ?: continue
             if (userRole != 3) continue
+
+            // Verificar si el formulario del operador está activo
+            val formOperatorDoc = try {
+                db.collection("formOperator").document(operatorId).get().await()
+            } catch (e: Exception) {
+                continue // Si no existe el documento, continuar con el siguiente operador
+            }
+
+            val activityStatus = formOperatorDoc.getLong("activityStatus")?.toInt() ?: 0
+            if (activityStatus != 1) continue // Saltar si el formulario no está activo
 
             val studentCard = userDoc.getString("studentCard") ?: ""
             val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
