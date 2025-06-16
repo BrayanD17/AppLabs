@@ -20,6 +20,7 @@ import com.labs.applabs.models.Usuario
 import com.labs.applabs.administrator.operator.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
@@ -1070,8 +1071,9 @@ class Provider {
             if (query.isEmpty) return false
 
             val mostRecentReport = query.documents[0]
-            val endTime = LocalTime.now().toString()
-            mostRecentReport.reference.update("endTime", endTime).await1()
+            val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val time = LocalTime.now().format(formatterTime).toString()
+            mostRecentReport.reference.update("endTime", time).await1()
             Log.d("Firestore", "Hora de salida actualizada correctamente")
             true
         } catch (e: Exception) {
@@ -1122,6 +1124,49 @@ class Provider {
             return misconductStudents
         } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener estudiantes con reporte: ${e.message}")
+            emptyList()
+        }
+    }
+
+    suspend fun getVisitReport(): List<ReportVisit> {
+        return try {
+            val visitSnapshot = db.collection("reportVisit")
+                .get()
+                .await1()
+
+            val visitList = mutableListOf<ReportVisit>()
+
+            for (doc in visitSnapshot.documents) {
+                val idStudent = doc.getString("idStudent") ?: continue
+                val laboratory = doc.getString("laboratory") ?: continue
+                val date = doc.getString("date") ?: continue
+                val startTime = doc.getString("startTime") ?: continue
+                val endTime = doc.getString("endTime") ?: continue
+
+                val userStudent = db.collection("users")
+                    .document(idStudent)
+                    .get()
+                    .await1()
+                val studentName = userStudent.getString("name") ?: ""
+                val surnames = userStudent.getString("surnames") ?: ""
+                val fullName = "$studentName $surnames".trim()
+                val cardStudent = userStudent.getString("studentCard") ?: ""
+
+                visitList.add(
+                    ReportVisit(
+                        student = fullName,
+                        cardStudent = cardStudent,
+                        laboratory = laboratory,
+                        date = date,
+                        startTime = startTime,
+                        endTime = endTime
+                    )
+                )
+            }
+
+            return visitList
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error: ${e.message}")
             emptyList()
         }
     }

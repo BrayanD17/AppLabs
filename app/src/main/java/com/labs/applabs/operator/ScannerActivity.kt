@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -27,6 +28,7 @@ import com.labs.applabs.firebase.ReportVisitStudent
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class ScannerActivity : AppCompatActivity() {
 
@@ -65,6 +67,9 @@ class ScannerActivity : AppCompatActivity() {
             integrator.initiateScan()
         }
 
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
+        }
 
     }
 
@@ -76,8 +81,10 @@ class ScannerActivity : AppCompatActivity() {
 
                 // Save result (Eje: 2021055077)
                 val studentCard = result.contents
-                val date = LocalDate.now().toString()
-                val time = LocalTime.now().toString()
+                val formatterDate = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+                val date = LocalDate.now().format(formatterDate).toString()
+                val time = LocalTime.now().format(formatterTime).toString()
                 Log.e("Tiempo", time)
 
                 lifecycleScope.launch {

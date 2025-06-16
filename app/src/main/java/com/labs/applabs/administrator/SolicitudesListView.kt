@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -50,6 +51,10 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
                 (this as FragmentActivity).supportFragmentManager,
                 "FiltroDialogFragment"
             )
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
         }
 
 

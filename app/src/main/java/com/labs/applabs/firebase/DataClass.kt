@@ -150,7 +150,6 @@ data class MisconductStudent(
     val id: String = "",  // uid del documento
 )
 
-
 data class ReportVisitStudent(
     val idOperator : String = "",
     val idstudent : String = "",
@@ -160,6 +159,21 @@ data class ReportVisitStudent(
     val endTime: String = "",
 )
 
+data class ReportVisit(
+    val student : String = "",
+    val cardStudent: String = "",
+    val laboratory: String = "",
+    val date: String = "",
+    val startTime: String = "",
+    val endTime: String = "",
+)
+
+data class filterDataVisit(
+    val name: String? = null,
+    val cardStudent: String? = null,
+    val laboratory: String? = null,
+    val date: String? = null,
+)
 
 data class AssignedScheduleData(
     val name: String,

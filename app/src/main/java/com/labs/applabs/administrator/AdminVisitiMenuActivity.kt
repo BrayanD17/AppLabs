@@ -1,6 +1,5 @@
 package com.labs.applabs.administrator
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,20 +8,25 @@ import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.labs.applabs.R
-import com.labs.applabs.administrator.operator.AdminMenuOperatorActivity
 import com.labs.applabs.login.MainActivity
 import com.labs.applabs.login.NewPasswordActivity
-import com.labs.applabs.administrator.operator.HistorialOperadoresActivity
 
-class AdminMenuActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+class AdminVisitiMenuActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_admin_menu)
+        setContentView(R.layout.activity_admin_visiti_menu)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -62,10 +66,11 @@ class AdminMenuActivity : AppCompatActivity() {
         }
 
         // Conexiones con botones principales
-        viewAplicationForm()
-        viewHistorialOperadores()
-        viewMenuOperator()
-        viewVisitsMenu()
+
+
+        viewMisconductList()
+        viewVisitReport()
+
     }
 
     fun callMenuForm(view: View) {
@@ -73,34 +78,18 @@ class AdminMenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun viewAplicationForm() {
-        val btnViewApplicationForm = findViewById<ImageButton>(R.id.btnAplicationForm)
-        btnViewApplicationForm.setOnClickListener {
-            val intent = Intent(this, AdminVisitiMenuActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    fun viewHistorialOperadores() {
-        val btnOperadores = findViewById<ImageButton>(R.id.btnOperador)
-        btnOperadores.setOnClickListener {
-            val intent = Intent(this, HistorialOperadoresActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    fun viewMenuOperator(){
-        val btnMenu = findViewById<ImageButton>(R.id.btnOperador)
-        btnMenu.setOnClickListener {
-            val intent = Intent(this, AdminMenuOperatorActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    fun viewVisitsMenu() {
-        val btnVisit = findViewById<ImageButton>(R.id.btnVisit)
+    fun viewMisconductList() {
+        val btnVisit = findViewById<ImageButton>(R.id.btnMisconductReport)
         btnVisit.setOnClickListener {
-            val intent = Intent(this, AdminVisitiMenuActivity::class.java)
+            val intent = Intent(this, MisconductListActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    fun viewVisitReport(){
+        val btnVisit = findViewById<ImageButton>(R.id.btnVisitReport)
+        btnVisit.setOnClickListener {
+            val intent = Intent(this, VisitsListActivity::class.java)
             startActivity(intent)
         }
     }
