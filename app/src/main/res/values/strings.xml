@@ -192,8 +192,14 @@
     <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
     <string name="eveningAssignedTable">5 a 10pm</string>
 
-
     <!-- Semesters -->
     <string name="semester1">I Semestre</string>
     <string name="semester2">II Semestre</string>
+
+    <!-- Visit Report -->
+    <string name="visitReport">Reporte de Visita</string>
+    <string name="scannerLector">Lector de entradas y salidas de estudiantes</string>
+    <string name="scannerBtnScan">Escanear carnet estudiantil</string>
+    <string name="visitReportTextView">Reporte de Visita</string>
+
 </resources>

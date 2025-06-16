@@ -1,5 +1,8 @@
 package com.labs.applabs.firebase
 
+import java.time.LocalDate
+import java.time.LocalTime
+
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
     val formOperator: FormOperator = FormOperator(),
@@ -129,4 +132,13 @@ data class ReportMisconducStudent(
     val student : String = "",
     val semester: String = "",
     val comment: String = ""
+)
+
+data class ReportVisitStudent(
+    val idOperator : String = "",
+    val idstudent : String = "",
+    val laboratory: String = "",
+    val date: String = "",
+    val startTime: String = "",
+    val endTime: String = "",
 )
