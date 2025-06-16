@@ -15,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.labs.applabs.models.FormOperador
+import com.labs.applabs.models.ScheduleSelection
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.administrator.operator.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
@@ -27,6 +28,7 @@ import java.util.TimeZone
 import java.util.Calendar
 import kotlin.math.log
 import kotlinx.coroutines.tasks.await as await1
+
 
 class Provider {
 
@@ -120,6 +122,57 @@ class Provider {
         }
     }
 
+    suspend fun getApprovedOperatorFormIds(): List<Pair<String, String>> {
+        return try {
+            val snapshot = db.collection("formStudent")
+                .whereEqualTo("comment", "Aprobado")
+                .get().await()
+            snapshot.documents.mapNotNull { doc ->
+                val idStudent = doc.getString("idStudent")
+                val idFormOperator = doc.getString("idFormOperator")
+                if (idStudent != null && idFormOperator != null) Pair(idStudent, idFormOperator) else null
+            }
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error al obtener estudiantes aprobados", e)
+            emptyList()
+        }
+    }
+
+    suspend fun filterActiveOperatorStudents(pairs: List<Pair<String, String>>): List<String> {
+        val approvedStudents = mutableListOf<String>()
+        try {
+            for ((idStudent, idFormOperator) in pairs) {
+                val doc = db.collection("formOperator").document(idFormOperator).get().await()
+                val status = doc.getLong("activityStatus") ?: 0
+                if (status == 1L) {
+                    approvedStudents.add(idStudent)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error filtrando operadores activos", e)
+        }
+        return approvedStudents
+    }
+
+    data class OperatorUser(val id: String, val fullName: String)
+
+    suspend fun getOperatorNamesById(ids: List<String>): List<OperatorUser> {
+        val operatorNames = mutableListOf<OperatorUser>()
+        try {
+            for (id in ids) {
+                val doc = db.collection("users").document(id).get().await()
+                val userRole = doc.getLong("userRole")
+                if (userRole == 3L) {
+                    val name = doc.getString("name") ?: ""
+                    val surnames = doc.getString("surnames") ?: ""
+                    operatorNames.add(OperatorUser(id, "$name $surnames".trim()))
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error obteniendo nombres de operadores", e)
+        }
+        return operatorNames
+    }
     suspend fun getStudentName() : Map<String, String> {
         return try{
             val students = db.collection("users").whereEqualTo("userRole", 2).get().await1()
@@ -144,25 +197,94 @@ class Provider {
 
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
-        val historial = db.collection("historialOperadores").get().await1()
+        val historial = db.collection("operatorHistory").get().await()
         val lista = mutableListOf<OperadorCompleto>()
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
             val formId = doc.getString("formId") ?: continue
 
             // Fetch usuario
-            val userDoc = db.collection("users").document(userId).get().await1()
-            val carnet = userDoc.getString("studentCard") ?: ""
-            val nombre = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
-            val correo = userDoc.getString("email") ?: ""
+            val userDoc = db.collection("users").document(userId).get().await()
+            val studentCard = userDoc.getString("studentCard") ?: ""
+            val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
+            val email = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
-            val formDoc = db.collection("formStudent").document(formId).get().await1()
-            val carrera = formDoc.getString("degree") ?: ""
+            val formDoc = db.collection("formStudent").document(formId).get().await()
+            val degree = formDoc.getString("degree") ?: ""
 
-            lista.add(OperadorCompleto(userId, carnet, nombre, carrera, correo))
+            // Fetch assignSchedule (laboratorios y horarios)
+            val asignDoc = db.collection("assignSchedule").document(userId).get().await()
+            val labs: MutableMap<String, Map<String, List<String>>> = mutableMapOf()
+            val labsMap = asignDoc.get("labs") as? Map<*, *>
+            if (labsMap != null) {
+                for ((labName, diasObj) in labsMap) {
+                    val diasMap = diasObj as? Map<*, *> ?: continue
+                    val dias = mutableMapOf<String, List<String>>()
+                    for ((dia, horarioValue) in diasMap) {
+                        val listaHorarios = when (horarioValue) {
+                            is String -> listOf(horarioValue)
+                            is List<*> -> horarioValue.filterIsInstance<String>()
+                            else -> emptyList()
+                        }
+                        dias[dia.toString()] = listaHorarios
+                    }
+                    labs[labName.toString()] = dias
+                }
+            }
+
+            lista.add(
+                OperadorCompleto(
+                    userId = userId,
+                    carnet = studentCard,
+                    nombre = name,
+                    carrera = degree,
+                    correo = email,
+                    laboratorios = labs
+                )
+            )
         }
         return lista
+    }
+
+    suspend fun guardarAssignSchedulesEnFirebase(operatorSchedules: Map<String, Map<String, ScheduleSelection>>) {
+        val batch = db.batch()
+        for ((userId, labsMap) in operatorSchedules) {
+            // Construir estructura labs
+            val labs = mutableMapOf<String, MutableMap<String, List<String>>>()
+            for ((labName, schedule) in labsMap) {
+                for ((dia, turnos) in schedule.days) {
+                    labs.getOrPut(labName) { mutableMapOf() }[dia] = turnos.toList()
+                }
+            }
+            val docRef = db.collection("assignSchedule").document(userId)
+            batch.set(docRef, mapOf("userId" to userId, "labs" to labs))
+        }
+        batch.commit().await()
+    }
+
+    suspend fun cargarAssignSchedulesDesdeFirebase(): Map<String, Map<String, ScheduleSelection>> {
+        val snapshot = db.collection("assignSchedule").get().await()
+        val result = mutableMapOf<String, MutableMap<String, ScheduleSelection>>()
+
+        for (doc in snapshot.documents) {
+            val userId = doc.getString("userId") ?: continue
+            val labsMap = mutableMapOf<String, ScheduleSelection>()
+            val labsObj = doc.get("labs") as? Map<*, *> ?: continue
+            for ((labNameAny, daysAny) in labsObj) {
+                val labName = labNameAny as? String ?: continue
+                val daysMap = mutableMapOf<String, MutableSet<String>>()
+                val daysObj = daysAny as? Map<*, *> ?: continue
+                for ((diaAny, turnosAny) in daysObj) {
+                    val dia = diaAny as? String ?: continue
+                    val turnosList = (turnosAny as? List<*>)?.mapNotNull { it as? String } ?: continue
+                    daysMap[dia] = turnosList.toMutableSet()
+                }
+                labsMap[labName] = ScheduleSelection(daysMap)
+            }
+            result[userId] = labsMap
+        }
+        return result
     }
 
     suspend fun getUserInfo(userId: String?): DataClass? {
@@ -784,26 +906,42 @@ class Provider {
             false
         }
     }
-    //Si el formulario es aceptado cambia el estado de estudiante a operador
-     fun registrarNuevoOperador(
-        userId: String,
-        formId: String,
-        nombreUsuario: String,
-        correoUsuario: String,
-        nombreFormulario: String,
-        semestre: String
-    ) {
+    // Agrega esto dentro de tu clase Provider (puedes ponerlo cerca de otros métodos suspend)
+    suspend fun operatorRegister(formId: String) {
+        // Cambia estado en formStudent
+        db.collection("formStudent").document(formId)
+            .update("statusApplicationForm", 1, "comment", "Aprobado")
+            .await()
+
+        // Trae datos del formulario
+        val formSnap = db.collection("formStudent").document(formId).get().await()
+        val form = formSnap.data ?: return
+        val idStudent = form["idStudent"] as? String ?: return
+        val semester = form["semester"]?.toString() ?: ""
+
+        // Busca datos de usuario
+        val userSnap = db.collection("users").document(idStudent).get().await()
+        val name = "${userSnap.getString("name") ?: ""} ${userSnap.getString("surnames") ?: ""}".trim()
+        val email = userSnap.getString("email") ?: ""
+
+        // Cambia rol usando el id del documento
+        db.collection("users").document(idStudent).update("userRole", 3).await()
+
+        // Agrega/actualiza historial operador
         val operador = hashMapOf(
-            "userId" to userId,
+            "userId" to idStudent,
             "formId" to formId,
-            "nombreUsuario" to nombreUsuario,
-            "correoUsuario" to correoUsuario,
-            "nombreFormulario" to nombreFormulario,
-            "semestre" to semestre,
+            "nombreUsuario" to name,
+            "correoUsuario" to email,
+            "nombreFormulario" to "Formulario Operador",
+            "semestre" to semester,
             "fechaRegistro" to com.google.firebase.Timestamp.now()
         )
-
-        Firebase.firestore.collection("historialOperadores").add(operador)
+        // Usamos una clave única
+        db.collection("operatorHistory")
+            .document("$formId-$idStudent")
+            .set(operador, SetOptions.merge())
+            .await()
     }
 
     //Obtener el horario asignado del operador, validar si es rol 3
@@ -823,6 +961,65 @@ class Provider {
             null
         }
     }
+    // Obtener el horario asignado general como AssignedScheduleData
+    suspend fun obtenerHorariosAsignadosGeneral(): List<AssignedScheduleData> {
+        val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+        val snapshot = db.collection("assignSchedule").get().await()
+        val lista = mutableListOf<AssignedScheduleData>()
+
+        // Carga todos los usuarios solo una vez para no hacer n consultas
+        val allUsers = db.collection("users").get().await().documents.associateBy { it.id }
+
+        fun normalizarDia(dia: String): String = when (dia.trim().lowercase()) {
+            "lunes" -> "Lunes"
+            "martes" -> "Martes"
+            "miércoles" -> "Miércoles"
+            "jueves" -> "Jueves"
+            "viernes" -> "Viernes"
+            "sábado" -> "Sábado"
+            else -> dia
+        }
+        fun normalizarTurno(turno: String): String = when (turno.trim().lowercase()) {
+            "mañana" -> "7 a 12"
+            "tarde" -> "12 a 5"
+            "noche" -> "5 a 10"
+            else -> turno
+        }
+
+        for (doc in snapshot.documents) {
+            val userId = doc.getString("userId") ?: continue
+            val labs = doc.get("labs") as? Map<*, *> ?: continue
+
+            // Obtener nombre completo (si no existe pone "Sin nombre")
+            val userDoc = allUsers[userId]
+            val nombre = (userDoc?.getString("name") ?: "") + " " + (userDoc?.getString("surnames") ?: "")
+
+            for ((labKey, diasMap) in labs) {
+                val nombreLab = labKey.toString()
+                val diasTurnos = diasMap as? Map<*, *> ?: continue
+                for ((dia, turnos) in diasTurnos) {
+                    val diaNormal = normalizarDia(dia.toString())
+                    val turnosList = turnos as? List<*> ?: continue
+                    for (turno in turnosList) {
+                        val turnoNormal = normalizarTurno(turno.toString())
+                        lista.add(
+                            AssignedScheduleData(
+                                name = "",
+                                laboratory = nombreLab,
+                                shift = turnoNormal,
+                                day = diaNormal,
+                                operator = nombre.trim().ifEmpty { "Sin nombre" },
+                                scheduleMatrix = emptyMap()
+                            )
+                        )
+                    }
+                }
+            }
+        }
+        return lista
+    }
+
+
 
     suspend fun getStudentIdCarne(studentCard : String): String?{
         return try {
