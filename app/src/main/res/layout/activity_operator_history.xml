@@ -7,31 +7,19 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <!-- Logo y campanita bien distribuidos -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="109dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="8dp">
-
         <ImageView
-            android:layout_width="152dp"
-            android:layout_height="109dp"
+            android:id="@+id/backViewOperatorHistory"
+            android:layout_width="48dp"
+            android:onClick="backOperatorHistory"
+            android:layout_height="48dp"
             android:contentDescription="Logo"
-            android:src="@drawable/logo_compulabs" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/btnNotification"
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:contentDescription="Notificación"
-            android:src="@drawable/notification_icon" />
+            android:src="@drawable/arrow_back" />
     </LinearLayout>
 
     <!-- Título -->
@@ -39,7 +27,7 @@
         android:id="@+id/tvTitulo"
         style="@style/TextViewStyle"
         android:layout_width="match_parent"
-        android:layout_height="109dp"
+        android:layout_height="80dp"
         android:text="Gestión de Horarios I\nSemestre 2025"
         android:textAlignment="center"
         android:textSize="16sp"

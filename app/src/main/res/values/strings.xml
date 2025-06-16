@@ -210,6 +210,7 @@
     <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
     <string name="eveningAssignedTable">5 a 10pm</string>
     <string name="editSchedule">Editar horario</string>
+    <string name="applicationFormName">Solicitudes</string>
 
 
     <!-- Semesters -->

@@ -285,4 +285,8 @@ class HistorialOperadoresActivity : AppCompatActivity() {
         }
         dialog.show()
     }
+
+    fun backOperatorHistory(view: View) {
+        finish()
+    }
 }
