@@ -910,7 +910,7 @@ class Provider {
         }
     }
     // Agrega esto dentro de tu clase Provider (puedes ponerlo cerca de otros métodos suspend)
-    suspend fun operatorRegister(formId: String) {
+    suspend fun operatorRegister(formId: String, formIdOperator: String?) {
         // Cambia estado en formStudent
         db.collection("formStudent").document(formId)
             .update("statusApplicationForm", 1, "comment", "Aprobado")
@@ -934,6 +934,7 @@ class Provider {
         val operador = hashMapOf(
             "userId" to idStudent,
             "formId" to formId,
+            "formIdOperator" to formIdOperator,
             "nombreUsuario" to name,
             "correoUsuario" to email,
             "nombreFormulario" to "Formulario Operador",
