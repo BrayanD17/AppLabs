@@ -1,7 +1,10 @@
 package com.labs.applabs.operator
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +18,8 @@ import kotlinx.coroutines.launch
 class viewAssignedSchedule : AppCompatActivity() {
 
     private val provider: Provider = Provider()
+    val colors = listOf("#FF6F61", "#6B5B95", "#88B04B", "#F7CAC9", "#92A8D1")
+
     private companion object {
         private val daysMap = mapOf(
             "Lunes" to Triple(R.id.DataMondayMorning, R.id.DataMondayAfternoon, R.id.DataMondayEvening),
@@ -36,9 +41,36 @@ class viewAssignedSchedule : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        lifecycleScope.launch {
 
+        //Add data from checkboxes
+        lifecycleScope.launch {
+            val laboratoryNames = provider.getLaboratoryName()
+
+            val container = findViewById<LinearLayout>(R.id.containerCheckBoxes)
+            container.removeAllViews()
+
+            laboratoryNames.forEachIndexed { index, name ->
+                val color = colors.getOrElse(index) { "#000000" } // negro por defecto si faltan colores
+                val checkBox = CheckBox(this@viewAssignedSchedule).apply {
+                    text = name
+                    isChecked = true
+                    isClickable = false
+                    textAlignment= LinearLayout.TEXT_ALIGNMENT_TEXT_START
+                    setTextAppearance(this@viewAssignedSchedule, R.style.formMessageStyle)
+                    buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+
+                    ).apply {
+                        setMargins(8, 8, 8, 8)
+                    }
+                }
+                container.addView(checkBox)
+            }
         }
+
+
     }
 
     private fun getScheduleAssigned(schedule: List<ScheduleItem>) {
