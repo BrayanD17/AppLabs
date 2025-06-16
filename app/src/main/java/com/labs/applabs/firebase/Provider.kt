@@ -942,7 +942,7 @@ class Provider {
             .await()
     }
 
-    //Obtener el horario asignado del operador, validar si es rol operator
+    //Get operator assigned schedule data as an operator
     suspend fun getAssignedSchedule(): Map<String, Any>? {
         val operatorId = getAuthenticatedUserId()
         val rol = getUserInformation()
