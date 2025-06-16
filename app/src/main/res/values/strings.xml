@@ -216,9 +216,7 @@
     <string name="selectLab">Seleccionar laboratorio</string>
     <string name="confirmLab">Guardar cambio</string>
     <string name="labScheduleAssigned">Laboratorios asignados según horario</string>
-
-
-
+    <string name="infoOperatorView">Información del operador</string>
     <!-- Semesters -->
     <string name="semester1">I Semestre</string>
     <string name="semester2">II Semestre</string>

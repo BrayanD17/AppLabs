@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="nameOperator"
+        android:text="@string/infoOperatorView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,8 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="3dp"
-                    android:text="Camila porras" />
+                    android:layout_marginTop="3dp" />
 
                 <View
                     android:id="@+id/view"
@@ -98,8 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="3dp"
-                    android:text="208110186" />
+                    android:layout_marginTop="3dp" />
 
                 <View
                     android:id="@+id/view2"
@@ -123,8 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="3dp"
-                    android:text="ka@est" />
+                    android:layout_marginTop="3dp" />
 
                 <View
                     android:id="@+id/view3"
@@ -148,8 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="3dp"
-                    android:text="208110186" />
+                    android:layout_marginTop="3dp" />
 
                 <View
                     android:id="@+id/view4"
@@ -380,7 +376,19 @@
                     </TableRow>
                 </TableLayout>
 
-                
+                <TextView
+                    style="@style/viewTextForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/labScheduleAssigned"
+                    android:textAlignment="center" />
+
+                <LinearLayout
+                    android:id="@+id/containerInformationCheckBoxes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp" />
 
                 <LinearLayout
                     android:id="@+id/labSelectionContainer"
@@ -420,7 +428,7 @@
                     android:id="@+id/btnEditScheduleOperatorSaveChage"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/bg_button"
                     android:text="@string/editSchedule"
