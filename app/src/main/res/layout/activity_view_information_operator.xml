@@ -5,6 +5,463 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/baseActivityColor"
     tools:context=".administrator.operator.viewInformationOperator">
+
+    <ImageView
+        android:id="@+id/backInformationOperator"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameOperator"
+        style="@style/TextViewStyleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nameOperator"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:padding="8dp"
+        android:layout_marginTop="90dp"
+        app:layout_constraintTop_toTopOf="@+id/nameOperator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="44dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        app:cardBackgroundColor="@color/white"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewNameOperator"
+                style="@style/viewTextForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/infoName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textDataNameOperator"
+                style="@style/viewDataForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="3dp"
+                android:text="Camila porras"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewInfoName"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#CCCCCC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDataNameOperator"
+                app:layout_constraintVertical_bias="0.0"/>
+
+            <TextView
+                android:id="@+id/textViewIdOperator"
+                style="@style/viewTextForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/infoCardStudent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:layout_constraintVertical_bias="0.002" />
+
+            <TextView
+                android:id="@+id/textDataIdOperator"
+                style="@style/viewDataForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="3dp"
+                android:text="208110186"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewIdOperator"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#CCCCCC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDataIdOperator"
+                app:layout_constraintVertical_bias="0.0"/>
+
+            <TextView
+                android:id="@+id/textViewEmailOperator"
+                style="@style/viewTextForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/infoEmailStudent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:layout_constraintVertical_bias="0.002" />
+
+            <TextView
+                android:id="@+id/textDataEmailOperator"
+                style="@style/viewDataForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="3dp"
+                android:text="ka@est"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewEmailOperator"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#CCCCCC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDataEmailOperator"
+                app:layout_constraintVertical_bias="0.0"/>
+
+            <TextView
+                android:id="@+id/textViewPhoneOperator"
+                style="@style/viewTextForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/infoCellPhone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:layout_constraintVertical_bias="0.002" />
+
+            <TextView
+                android:id="@+id/textDataPhoneOperator"
+                style="@style/viewDataForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="3dp"
+                android:text="208110186"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPhoneOperator"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#CCCCCC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDataPhoneOperator"
+                app:layout_constraintVertical_bias="0.0"/>
+
+            <TextView
+                android:id="@+id/textViewScheduleOperator"
+                style="@style/viewTextForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/assignedSchedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:layout_constraintVertical_bias="0.002" />
+
+            <TableLayout
+                android:id="@+id/tableInformationOperator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@color/white"
+                android:padding="15dp"
+                android:stretchColumns="1,2,3">
+
+                <!-- Encabezado -->
+                <TableRow
+                    android:layout_margin="0dp"
+                    android:paddingVertical="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:text="" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/morningTable" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/afternoonTable" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/eveningAssignedTable" />
+                </TableRow>
+
+                <!-- Días de la semana -->
+                <!-- Lunes -->
+                <TableRow android:paddingVertical="2dp">
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/monday" />
+
+                    <CheckBox
+                        android:id="@+id/mondayMorningOperator"
+                        android:minHeight="48dp"
+                        android:minWidth="48dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/mondayAfternoonOperator"
+                        android:minHeight="48dp"
+                        android:minWidth="48dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/mondayEveningOperator"
+                        android:minHeight="48dp"
+                        android:minWidth="48dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Martes -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/tuesday" />
+
+                    <CheckBox
+                        android:id="@+id/tuesdayMorningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/tuesdayAfternoonOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/tuesdayEveningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Miércoles -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/wednesday" />
+
+                    <CheckBox
+                        android:id="@+id/wednesdayMorningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/wednesdayAfternoonOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/wednesdayEveningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Jueves -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/thursday" />
+
+                    <CheckBox
+                        android:id="@+id/thursdayMorningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/thursdayAfternoonOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/thursdayEveningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Viernes -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/friday" />
+
+                    <CheckBox
+                        android:id="@+id/fridayMorningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/fridayAfternoonOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/fridayEveningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Sábado -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/saturday" />
+
+                    <CheckBox
+                        android:id="@+id/saturdayMorningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/saturdayAfternoonOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/saturdayEveningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+                </TableRow>
+
+                <!-- Domingo -->
+                <TableRow android:paddingVertical="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="@string/sunday" />
+
+                    <CheckBox
+                        android:id="@+id/sundayMorningOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/sundayAfternoonOperator"
+                        android:minHeight="0dp"
+                        android:padding="0dp" />
+
+                    <CheckBox
+                        android:id="@+id/sundayEveningOperator"
+                        android:minHeight="0dp"
+                        android:clickable="false"
+                        android:padding="0dp" />
+                </TableRow>
+            </TableLayout>
+
+            <Button
+                android:id="@+id/btnEditScheduleOperatorSaveChage"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_button"
+                android:text="@string/editSchedule"
+                app:backgroundTint="@color/green"
+                android:layout_marginBottom="100dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
