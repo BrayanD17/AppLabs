@@ -191,18 +191,23 @@ class Provider {
         }
 
     }
-
-
+    
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
         val historial = db.collection("operatorHistory").get().await()
         val lista = mutableListOf<OperadorCompleto>()
+
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
             val formId = doc.getString("formId") ?: continue
 
             // Fetch usuario
             val userDoc = db.collection("users").document(userId).get().await()
+
+            // Verificar si el usuario tiene rol de operador (3)
+            val userRole = userDoc.getLong("userRole")?.toInt() ?: continue
+            if (userRole != 3) continue
+
             val studentCard = userDoc.getString("studentCard") ?: ""
             val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
             val email = userDoc.getString("email") ?: ""
