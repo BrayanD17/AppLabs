@@ -964,6 +964,49 @@ class Provider {
         }
     }
 
+    // Obtener horario asignado para un operador específico (para administradores)
+    suspend fun getAssignedScheduleForOperator(operatorId: String): Map<String, Any>? {
+        return try {
+            val doc = db.collection("assignSchedule").document(operatorId).get().await()
+            if (doc.exists()) {
+                doc.data
+            } else null
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener horario para $operatorId: ${e.message}")
+            null
+        }
+    }
+
+    // Actualizar horario de un operador
+    suspend fun updateOperatorSchedule(operatorId: String, labSchedules: List<LabSchedule>): Boolean {
+        return try {
+            // Convertir la lista de LabSchedule a un formato que Firestore pueda almacenar
+            val labsMap = mutableMapOf<String, Any>()
+
+            labSchedules.forEach { labSchedule ->
+                val daysMap = mutableMapOf<String, Any>()
+                labSchedule.days.forEach { (day, shifts) ->
+                    daysMap[day] = shifts
+                }
+                labsMap[labSchedule.labName] = daysMap
+            }
+
+            val scheduleData = mapOf(
+                "operatorId" to operatorId,
+                "labs" to labsMap
+            )
+
+            db.collection("assignSchedule").document(operatorId)
+                .set(scheduleData)
+                .await()
+
+            true
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al actualizar horario: ${e.message}")
+            false
+        }
+    }
+
     // Obtener el horario asignado general como AssignedScheduleData
     suspend fun obtenerHorariosAsignadosGeneral(): List<AssignedScheduleData> {
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()

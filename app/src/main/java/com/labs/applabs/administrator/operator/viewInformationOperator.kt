@@ -59,6 +59,7 @@ class viewInformationOperator : AppCompatActivity() {
         }
         operatorActiveId = id
         getOperatorInfo(operatorActiveId)
+        setCheckboxesEnabled(false)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -102,16 +103,22 @@ class viewInformationOperator : AppCompatActivity() {
         }
     }
 
-    private fun toggleLabSelection() {
-        if (labSelectionContainer.visibility == View.VISIBLE) {
-            labSelectionContainer.visibility = View.GONE
-            btnEditSchedule.text = getString(R.string.editSchedule)
-            btnEditSchedule.backgroundTintList= getColorStateList(R.color.green)
-        } else {
-            labSelectionContainer.visibility = View.VISIBLE
-            btnEditSchedule.text = getString(R.string.cancel)
-            btnEditSchedule.backgroundTintList= getColorStateList(R.color.red)
+    private fun setCheckboxesEnabled(enabled: Boolean) {
+        daysMap.values.forEach { (morningId, afternoonId, eveningId) ->
+            findViewById<android.widget.CheckBox>(morningId).isEnabled = enabled
+            findViewById<android.widget.CheckBox>(afternoonId).isEnabled = enabled
+            findViewById<android.widget.CheckBox>(eveningId).isEnabled = enabled
         }
+    }
+
+    private fun toggleLabSelection() {
+        val isEditing = labSelectionContainer.visibility != View.VISIBLE
+        labSelectionContainer.visibility = if (isEditing) View.VISIBLE else View.GONE
+        btnEditSchedule.text = if (isEditing) getString(R.string.cancel) else getString(R.string.editSchedule)
+        btnEditSchedule.backgroundTintList = getColorStateList(if (isEditing) R.color.red else R.color.green)
+
+        //Active checkbox
+        setCheckboxesEnabled(isEditing)
     }
 
     private suspend fun loadLaboratories() {
@@ -127,6 +134,7 @@ class viewInformationOperator : AppCompatActivity() {
                         btnConfirmLab.backgroundTintList= getColorStateList(R.color.green)
                         btnConfirmLab.background=getDrawable(R.drawable.bg_button)
                         btnConfirmLab.setOnClickListener {
+                            updateDataScheduleAssigned(operatorActiveId, laboratories[position])
                             Toast.makeText(this@viewInformationOperator, "Laboratorio seleccionado: ${laboratories[position]}", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -143,6 +151,16 @@ class viewInformationOperator : AppCompatActivity() {
                 Log.e("Laboratorios", "Error: ${e.message}")
             }
         }
+    }
+
+    //Show data schedule assigned and laboratories assigned
+    private fun showDataScheduleAssigned(operatorId: String){
+        lifecycleScope.launch {}
+    }
+
+    //Update data schedule assigned
+    private fun updateDataScheduleAssigned(operatorId: String, laboratoryName: String){
+        lifecycleScope.launch {}
     }
 
     fun backViewInformationOperator(view: android.view.View) {

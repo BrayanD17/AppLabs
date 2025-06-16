@@ -371,7 +371,6 @@
                             android:id="@+id/sundayEveningOperator"
                             android:minHeight="48dp"
                             android:minWidth="48dp"
-                            android:clickable="false"
                             android:padding="0dp" />
                     </TableRow>
                 </TableLayout>
