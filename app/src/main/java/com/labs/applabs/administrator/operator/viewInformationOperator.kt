@@ -18,4 +18,8 @@ class viewInformationOperator : AppCompatActivity() {
             insets
         }
     }
+
+    fun backViewInformationOperator(view: android.view.View) {
+        finish()
+    }
 }
