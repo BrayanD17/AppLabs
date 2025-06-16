@@ -51,8 +51,29 @@
             android:text="@string/carrera"
             android:padding="12dp"
             android:textSize="16sp" />
+
+        <!-- Nuevo filtro: Laboratorio -->
+        <RadioButton
+            android:fontFamily="@font/montserrat_regular"
+            android:id="@+id/rbLaboratorio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/laboratorio"
+            android:padding="12dp"
+            android:textSize="16sp" />
+
+        <!-- Nuevo filtro: Día y Horario -->
+        <RadioButton
+            android:fontFamily="@font/montserrat_regular"
+            android:id="@+id/rbDiaHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/d_a_y_horario"
+            android:padding="12dp"
+            android:textSize="16sp" />
     </RadioGroup>
 
+    <!-- Selección de Carrera -->
     <TextView
         android:id="@+id/tvSeleccionarCarrera"
         android:layout_width="wrap_content"
@@ -70,6 +91,49 @@
         android:layout_marginBottom="20dp"
         android:visibility="gone"/>
 
+    <!-- Selección de Laboratorio -->
+    <TextView
+        android:id="@+id/tvSeleccionarLaboratorio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_un_laboratorio"
+        android:textSize="15sp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
+
+    <Spinner
+        android:id="@+id/spinnerLaboratorios"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"/>
+
+    <!-- Selección de Día y Horario -->
+    <TextView
+        android:id="@+id/tvSeleccionarDiaHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_d_a_y_horario"
+        android:textSize="15sp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
+
+    <Spinner
+        android:id="@+id/spinnerDias"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <Spinner
+        android:id="@+id/spinnerHorarios"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"/>
+
     <Button
         android:id="@+id/btnAplicarFiltro"
         style="@style/ButtonStyle"
@@ -81,4 +145,5 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:backgroundTint="@color/marineBlue" />
+
 </LinearLayout>

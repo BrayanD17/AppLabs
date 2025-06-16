@@ -214,4 +214,7 @@
     <!-- Semesters -->
     <string name="semester1">I Semestre</string>
     <string name="semester2">II Semestre</string>
+    <string name="selecciona_d_a_y_horario">Selecciona día y horario</string>
+    <string name="selecciona_un_laboratorio">Selecciona un laboratorio</string>
+    <string name="d_a_y_horario">Día y Horario</string>
 </resources>
