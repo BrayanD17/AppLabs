@@ -942,23 +942,23 @@ class Provider {
             .await()
     }
 
-    //Obtener el horario asignado del operador, validar si es rol 3
-    suspend fun getAssignedSchedule():DataClass?{
+    //Obtener el horario asignado del operador, validar si es rol operator
+    suspend fun getAssignedSchedule(): Map<String, Any>? {
         val operatorId = getAuthenticatedUserId()
-        val rol=getUserInformation()
+        val rol = getUserInformation()
         return try {
-            if(rol?.rolUser!="Operador"){
-                val doc = db.collection("").document(operatorId).get().await()
-                if(doc.exists()){
-                    //Agregar extraccion de datos
-                    return null
-                }else null
-            }else null
-        }catch (e: Exception) {
+            if(rol?.rolUser == "Operador") {
+                val doc = db.collection("assignSchedule").document(operatorId).get().await()
+                if(doc.exists()) {
+                    doc.data
+                } else null
+            } else null
+        } catch (e: Exception) {
             Log.e("FirestoreProvider", "Error al obtener datos para $operatorId: ${e.message}")
             null
         }
     }
+
     // Obtener el horario asignado general como AssignedScheduleData
     suspend fun obtenerHorariosAsignadosGeneral(): List<AssignedScheduleData> {
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()

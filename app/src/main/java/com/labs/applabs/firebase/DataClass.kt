@@ -140,3 +140,8 @@ data class AssignedScheduleData(
     val scheduleMatrix: Map<String, List<String>>
 )
 
+data class LabSchedule(
+    val labName: String,
+    val days: Map<String, List<String>>
+)
+
