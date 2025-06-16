@@ -29,7 +29,7 @@ class FiltroDialogVisits : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_filters_misconduct, container, false)
+        return inflater.inflate(R.layout.dialog_filters_visit, container, false)
     }
 
     override fun onStart() {

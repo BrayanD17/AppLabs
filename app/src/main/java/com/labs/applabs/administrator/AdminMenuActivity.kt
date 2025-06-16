@@ -76,7 +76,7 @@ class AdminMenuActivity : AppCompatActivity() {
     fun viewAplicationForm() {
         val btnViewApplicationForm = findViewById<ImageButton>(R.id.btnAplicationForm)
         btnViewApplicationForm.setOnClickListener {
-            val intent = Intent(this, AdminVisitiMenuActivity::class.java)
+            val intent = Intent(this, SolicitudesListView::class.java)
             startActivity(intent)
         }
     }

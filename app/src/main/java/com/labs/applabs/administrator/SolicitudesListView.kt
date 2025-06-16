@@ -3,6 +3,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -31,7 +32,6 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
     private lateinit var filters : ImageView
     private var listaCompletaSolicitudes: List<Solicitud> = emptyList()
     private var listaFiltradaSolicitudes: List<Solicitud> = emptyList()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,14 +117,32 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
     }
 
     override fun onFilterApply(filterData: FilterData) {
-        val filtradas = listaCompletaSolicitudes.filter {
-            (filterData.carrera.isNullOrEmpty() || it.carrera == filterData.carrera) &&
-                    (filterData.semestres.isNullOrEmpty() || it.numeroSemestreOperador == filterData.semestres) &&
-                    (filterData.carnet.isNullOrEmpty() || it.carnet.contains(filterData.carnet, ignoreCase = true)) &&
-                    (filterData.estado.isNullOrEmpty() || it.estado == filterData.estado)
+        Log.d("FiltroData", "Datos del filtro: $filterData")
+
+        val filtradas = listaCompletaSolicitudes.filter { solicitud ->
+            val carreraOk = filterData.degree.isNullOrBlank() || solicitud.carrera.trim().equals(filterData.degree.trim(), ignoreCase = true)
+            val semestreOk = filterData.semester.isNullOrBlank() || solicitud.numeroSemestreOperador.trim() == filterData.semester.trim()
+            val carnetOk = filterData.cardStudent.isNullOrBlank() || solicitud.carnet.trim().contains(filterData.cardStudent.trim(), ignoreCase = true)
+            val estadoOk = filterData.status.isNullOrBlank() || solicitud.estado.trim().equals(filterData.status.trim(), ignoreCase = true)
+
+            Log.d("FiltroPaso", """
+            ---
+            Solicitud: ${solicitud.nombre}
+            Comparando:
+            carrera: '${solicitud.carrera}' vs '${filterData.degree}' = $carreraOk
+            semestre: '${solicitud.numeroSemestreOperador}' vs '${filterData.semester}' = $semestreOk
+            carnet: '${solicitud.carnet}' vs '${filterData.cardStudent}' = $carnetOk
+            estado: '${solicitud.estado}' vs '${filterData.status}' = $estadoOk
+        """.trimIndent())
+
+            carreraOk && semestreOk && carnetOk && estadoOk
         }
-        adapter.actualizarLista(filtradas)
+
+        Log.d("Filtro", "Total filtradas: ${filtradas.size}")
+        listaFiltradaSolicitudes = filtradas
+        adapter.actualizarLista(listaFiltradaSolicitudes)
     }
+
 
     override fun onFilterCancel() {
         adapter.actualizarLista(listaCompletaSolicitudes)

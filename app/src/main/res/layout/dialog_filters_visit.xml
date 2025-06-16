@@ -34,7 +34,7 @@
             android:id="@+id/editFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha (dd/MM/yyyy)"
+            android:hint="Fecha (dd-MM-yyyy)"
             android:inputType="date" />
 
 

@@ -1,5 +1,6 @@
 package com.labs.applabs.administrator
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -47,6 +48,7 @@ class MisconductListActivity : AppCompatActivity(), FiltroDialogMisconduct.Filte
         }
         recyclerView = findViewById(R.id.recycleViewMisconduct)
         initRecyclerView()
+        finishActivitySolicitudes()
 
         filters = findViewById(R.id.filterIcon)
         filters.setOnClickListener {
@@ -96,12 +98,36 @@ class MisconductListActivity : AppCompatActivity(), FiltroDialogMisconduct.Filte
     }
 
     override fun onFilterApply(filterData: FilterDataMisconduct) {
-        val filtradas = listaCompletaSolicitudes.filter {
-            (filterData.carnet.isNullOrEmpty() || it.cardStudent == filterData.carnet) ||
-                    (filterData.semestres.isNullOrEmpty() || it.semester == filterData.semestres) ||
-                    (filterData.laboratory.isNullOrEmpty() || it.laboratory == filterData.laboratory)
+        Log.d("FiltroMisconduct", "Datos del filtro: $filterData")
+
+        val filtradas = listaCompletaSolicitudes.filter { falta ->
+            val carnetOk = filterData.carnet.isNullOrBlank() || falta.cardStudent?.trim() == filterData.carnet.trim()
+            val semestreOk = filterData.semestres.isNullOrBlank() || falta.semester?.trim().equals(filterData.semestres.trim(), ignoreCase = true)
+            val laboratorioOk = filterData.laboratory.isNullOrBlank() || falta.laboratory?.trim().equals(filterData.laboratory.trim(), ignoreCase = true)
+
+            Log.d("FiltroPaso", """
+            ---
+            Falta: ${falta.cardStudent}
+            Comparando:
+            carnet: '${falta.cardStudent}' vs '${filterData.carnet}' = $carnetOk
+            semestre: '${falta.semester}' vs '${filterData.semestres}' = $semestreOk
+            laboratorio: '${falta.laboratory}' vs '${filterData.laboratory}' = $laboratorioOk
+        """.trimIndent())
+
+            carnetOk && semestreOk && laboratorioOk
         }
+
+        Log.d("FiltroMisconduct", "Total faltas filtradas: ${filtradas.size}")
         adapter.updateList(filtradas)
+    }
+
+    private fun finishActivitySolicitudes(){
+        val backView = findViewById<ImageView>(R.id.backViewMisconduct)
+        backView.setOnClickListener {
+            val intent = Intent(this, AdminVisitiMenuActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onFilterCancel() {

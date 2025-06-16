@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -125,12 +126,28 @@ class VisitsListActivity : AppCompatActivity(), FiltroDialogVisits.FilterListene
     }
 
     override fun onFilterApply(filterData: filterDataVisit) {
-        val filtradas = listaCompletaSolicitudes.filter {
-            (filterData.cardStudent.isNullOrEmpty() || it.cardStudent == filterData.cardStudent) ||
-                    (filterData.laboratory.isNullOrEmpty() || it.laboratory == filterData.laboratory) ||
-                    (filterData.date.isNullOrEmpty() || it.date.contains(filterData.date, ignoreCase = true))
+        Log.d("FiltroData", "Datos del filtro: $filterData")
+
+        val filtradas = listaCompletaSolicitudes.filter { visita ->
+            val carnetOk = filterData.cardStudent.isNullOrBlank() || visita.cardStudent?.trim() == filterData.cardStudent.trim()
+            val laboratorioOk = filterData.laboratory.isNullOrBlank() || visita.laboratory?.trim().equals(filterData.laboratory.trim(), ignoreCase = true)
+            val fechaOk = filterData.date.isNullOrBlank() || visita.date?.trim()?.contains(filterData.date.trim(), ignoreCase = true) == true
+
+            Log.d("FiltroPaso", """
+            ---
+            Visita: ${visita.cardStudent}
+            Comparando:
+            carnet: '${visita.cardStudent}' vs '${filterData.cardStudent}' = $carnetOk
+            laboratorio: '${visita.laboratory}' vs '${filterData.laboratory}' = $laboratorioOk
+            fecha: '${visita.date}' contiene '${filterData.date}' = $fechaOk
+        """.trimIndent())
+
+            carnetOk && laboratorioOk && fechaOk
         }
-        adapter.updateData(filtradas)
+
+        Log.d("Filtro", "Total visitas filtradas: ${filtradas.size}")
+        listaFiltradaSolicitudes = filtradas
+        adapter.updateData(listaFiltradaSolicitudes)
     }
 
     override fun onFilterCancel() {

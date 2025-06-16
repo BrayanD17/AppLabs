@@ -54,17 +54,18 @@ class FiltroDialogFragment : DialogFragment() {
 
         val etSemestres = view.findViewById<EditText>(R.id.et_semestres)
         val etCarnet = view.findViewById<EditText>(R.id.et_carnet)
-
+        val semestresInput = etSemestres.text.toString().takeIf { it.isNotBlank() }
+        val carnetInput = etCarnet.text.toString().takeIf { it.isNotBlank() }
 
         val btnAplicar = view.findViewById<Button>(R.id.btn_aplicar)
         val btnReiniciar = view.findViewById<Button>(R.id.btn_reiniciar)
 
         btnAplicar.setOnClickListener {
             val filterData = FilterData(
-                carrera = degreeSelected ?: "",
-                semestres = etSemestres.text.toString(),
-                carnet = etCarnet.text.toString(),
-                estado = (statusSpinner ?: "").toString()
+                degree = degreeSelected?.takeIf { it.isNotBlank() } ?: "",
+                semester = semestresInput,
+                cardStudent = carnetInput,
+                status = statusSelected?.takeIf { it.isNotBlank() } ?: ""
             )
             (activity as? FilterListener)?.onFilterApply(filterData)
             dismiss()
@@ -132,7 +133,13 @@ class FiltroDialogFragment : DialogFragment() {
                        position: Int,
                        id: Long
                    ) {
-                       statusSelected = statusList[position]
+                       statusSelected = when (statusList[position]) {
+                           "-- Seleccione estado --" -> ""
+                           "Aprobado" -> "1"
+                           "Denegada" -> "2"
+                           "Pendiente de revisión" -> "0"
+                           else -> "" // Por si llega otro valor inesperado
+                       }
                    }
 
                    override fun onNothingSelected(parent: AdapterView<*>?) {

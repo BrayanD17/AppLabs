@@ -675,7 +675,7 @@ class Provider {
                     uidForm = idFormOperator,
                     idFormStudent = formStudentId,
                     carnet = formStudentDoc.get("idCard")?.toString() ?: "Sin carnet",
-                    estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "Sin estado",
+                    estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "",
                     carrera = formStudentDoc.getString("degree") ?: "Sin carrera",
                     numeroSemestreOperador = formStudentDoc.get("semester")?.toString() ?: "Sin semestre"
                     //idStudent = studentId
@@ -788,7 +788,6 @@ class Provider {
 
     suspend fun uploadPdfToStorage(fileName: String): String {
         val storageRef = Firebase.storage.reference.child(fileName)
-        //val uploadTask = storageRef.putFile(uri).await()
         val downloadUrl = storageRef.downloadUrl.await1()
         return downloadUrl.toString()
     }

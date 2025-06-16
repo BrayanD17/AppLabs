@@ -67,11 +67,11 @@ data class Solicitud(
 )
 
 data class FilterData(
-    val carrera: String? = null,
-    val semestres: String? = null,
-    val nombre: String? = null,
-    val carnet: String? = null,
-    val estado: String? = null,
+    val degree: String? = null,
+    val semester: String? = null,
+    val name: String? = null,
+    val cardStudent: String? = null,
+    val status: String? = null,
 )
 
 data class FilterDataMisconduct(
