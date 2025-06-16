@@ -1,12 +1,15 @@
 package com.labs.applabs.administrator.operator.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.administrator.operator.OperadorCompleto
+import com.labs.applabs.administrator.operator.viewInformationOperator
 
 class HistorialOperadoresAdapter(
     private var operadores: List<OperadorCompleto>
@@ -20,7 +23,12 @@ class HistorialOperadoresAdapter(
 
         init {
             itemView.setOnClickListener {
-                onClick?.invoke(operadores[adapterPosition])
+                val operador = operadores[adapterPosition]
+                val context = itemView.context
+
+                val intent = Intent(context, viewInformationOperator::class.java)
+                intent.putExtra("operatorId", operador.userId)
+                context.startActivity(intent)
             }
         }
     }
