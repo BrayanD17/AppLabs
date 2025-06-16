@@ -74,6 +74,13 @@ data class FilterData(
     val estado: String? = null,
 )
 
+data class FilterDataMisconduct(
+    val nombre: String? = null,
+    val carnet: String? = null,
+    val semestres: String? = null,
+    val laboratory: String? = null,
+)
+
 data class dataUpdateStatus(
     val newStatusApplication: Int,
     val newComment: String = "",
@@ -133,6 +140,16 @@ data class ReportMisconducStudent(
     val semester: String = "",
     val comment: String = ""
 )
+
+data class MisconductStudent(
+    val student : String = "",
+    val email : String = "",
+    val semester: String = "",
+    val laboratory: String = "",
+    val cardStudent: String = "",
+    val id: String = "",  // uid del documento
+)
+
 
 data class ReportVisitStudent(
     val idOperator : String = "",

@@ -126,7 +126,7 @@ class Provider {
         return try {
             val snapshot = db.collection("formStudent")
                 .whereEqualTo("comment", "Aprobado")
-                .get().await()
+                .get().await1()
             snapshot.documents.mapNotNull { doc ->
                 val idStudent = doc.getString("idStudent")
                 val idFormOperator = doc.getString("idFormOperator")
@@ -142,7 +142,7 @@ class Provider {
         val approvedStudents = mutableListOf<String>()
         try {
             for ((idStudent, idFormOperator) in pairs) {
-                val doc = db.collection("formOperator").document(idFormOperator).get().await()
+                val doc = db.collection("formOperator").document(idFormOperator).get().await1()
                 val status = doc.getLong("activityStatus") ?: 0
                 if (status == 1L) {
                     approvedStudents.add(idStudent)
@@ -160,7 +160,7 @@ class Provider {
         val operatorNames = mutableListOf<OperatorUser>()
         try {
             for (id in ids) {
-                val doc = db.collection("users").document(id).get().await()
+                val doc = db.collection("users").document(id).get().await1()
                 val userRole = doc.getLong("userRole")
                 if (userRole == 3L) {
                     val name = doc.getString("name") ?: ""
@@ -197,24 +197,24 @@ class Provider {
 
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
-        val historial = db.collection("operatorHistory").get().await()
+        val historial = db.collection("operatorHistory").get().await1()
         val lista = mutableListOf<OperadorCompleto>()
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
             val formId = doc.getString("formId") ?: continue
 
             // Fetch usuario
-            val userDoc = db.collection("users").document(userId).get().await()
+            val userDoc = db.collection("users").document(userId).get().await1()
             val studentCard = userDoc.getString("studentCard") ?: ""
             val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
             val email = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
-            val formDoc = db.collection("formStudent").document(formId).get().await()
+            val formDoc = db.collection("formStudent").document(formId).get().await1()
             val degree = formDoc.getString("degree") ?: ""
 
             // Fetch assignSchedule (laboratorios y horarios)
-            val asignDoc = db.collection("assignSchedule").document(userId).get().await()
+            val asignDoc = db.collection("assignSchedule").document(userId).get().await1()
             val labs: MutableMap<String, Map<String, List<String>>> = mutableMapOf()
             val labsMap = asignDoc.get("labs") as? Map<*, *>
             if (labsMap != null) {
@@ -260,11 +260,11 @@ class Provider {
             val docRef = db.collection("assignSchedule").document(userId)
             batch.set(docRef, mapOf("userId" to userId, "labs" to labs))
         }
-        batch.commit().await()
+        batch.commit().await1()
     }
 
     suspend fun cargarAssignSchedulesDesdeFirebase(): Map<String, Map<String, ScheduleSelection>> {
-        val snapshot = db.collection("assignSchedule").get().await()
+        val snapshot = db.collection("assignSchedule").get().await1()
         val result = mutableMapOf<String, MutableMap<String, ScheduleSelection>>()
 
         for (doc in snapshot.documents) {
@@ -911,21 +911,21 @@ class Provider {
         // Cambia estado en formStudent
         db.collection("formStudent").document(formId)
             .update("statusApplicationForm", 1, "comment", "Aprobado")
-            .await()
+            .await1()
 
         // Trae datos del formulario
-        val formSnap = db.collection("formStudent").document(formId).get().await()
+        val formSnap = db.collection("formStudent").document(formId).get().await1()
         val form = formSnap.data ?: return
         val idStudent = form["idStudent"] as? String ?: return
         val semester = form["semester"]?.toString() ?: ""
 
         // Busca datos de usuario
-        val userSnap = db.collection("users").document(idStudent).get().await()
+        val userSnap = db.collection("users").document(idStudent).get().await1()
         val name = "${userSnap.getString("name") ?: ""} ${userSnap.getString("surnames") ?: ""}".trim()
         val email = userSnap.getString("email") ?: ""
 
         // Cambia rol usando el id del documento
-        db.collection("users").document(idStudent).update("userRole", 3).await()
+        db.collection("users").document(idStudent).update("userRole", 3).await1()
 
         // Agrega/actualiza historial operador
         val operador = hashMapOf(
@@ -941,7 +941,7 @@ class Provider {
         db.collection("operatorHistory")
             .document("$formId-$idStudent")
             .set(operador, SetOptions.merge())
-            .await()
+            .await1()
     }
 
     //Obtener el horario asignado del operador, validar si es rol 3
@@ -964,11 +964,11 @@ class Provider {
     // Obtener el horario asignado general como AssignedScheduleData
     suspend fun obtenerHorariosAsignadosGeneral(): List<AssignedScheduleData> {
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
-        val snapshot = db.collection("assignSchedule").get().await()
+        val snapshot = db.collection("assignSchedule").get().await1()
         val lista = mutableListOf<AssignedScheduleData>()
 
         // Carga todos los usuarios solo una vez para no hacer n consultas
-        val allUsers = db.collection("users").get().await().documents.associateBy { it.id }
+        val allUsers = db.collection("users").get().await1().documents.associateBy { it.id }
 
         fun normalizarDia(dia: String): String = when (dia.trim().lowercase()) {
             "lunes" -> "Lunes"
@@ -1079,6 +1079,53 @@ class Provider {
             false
         }
     }
+
+    suspend fun getMisconductStudents(): List<MisconductStudent> {
+        return try {
+            val misconductSnapshot = db.collection("misconducReportStudent")
+                .get()
+                .await1()
+
+            val misconductStudents = mutableListOf<MisconductStudent>()
+
+            for (doc in misconductSnapshot.documents) {
+                val uid = doc.id
+                val semester = doc.getString("semester") ?: continue
+                val studentUid = doc.getString("student") ?: continue
+                val laboratory = doc.getString("laboratory") ?: continue
+
+
+
+                // Buscar el usuario en la colección 'users' con ese UID
+                val userSnapshot = db.collection("users")
+                    .document(studentUid)
+                    .get()
+                    .await1()
+
+                val studentName = userSnapshot.getString("name") ?: ""
+                val surnames = userSnapshot.getString("surnames") ?: ""
+                val fullName = "$studentName $surnames".trim()
+                val email = userSnapshot.getString("email") ?: ""
+                val studentCard = userSnapshot.getString("studentCard") ?: ""
+
+                misconductStudents.add(
+                    MisconductStudent(
+                        id = uid,
+                        student = fullName,
+                        email = email,
+                        semester = semester,
+                        laboratory = laboratory,
+                        cardStudent = studentCard
+                    )
+                )
+            }
+            return misconductStudents
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener estudiantes con reporte: ${e.message}")
+            emptyList()
+        }
+    }
+
 
 }
 

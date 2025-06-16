@@ -35,7 +35,7 @@ class FiltroDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_filtros_dialog, container, false)
+        return inflater.inflate(R.layout.dialog_filters_admin, container, false)
     }
 
     override fun onStart() {
@@ -53,7 +53,6 @@ class FiltroDialogFragment : DialogFragment() {
         statusSpinner = view.findViewById(R.id.spinner_estado)
 
         val etSemestres = view.findViewById<EditText>(R.id.et_semestres)
-        val etNombre = view.findViewById<EditText>(R.id.et_nombre)
         val etCarnet = view.findViewById<EditText>(R.id.et_carnet)
 
 
@@ -64,7 +63,6 @@ class FiltroDialogFragment : DialogFragment() {
             val filterData = FilterData(
                 carrera = degreeSelected ?: "",
                 semestres = etSemestres.text.toString(),
-                nombre = etNombre.text.toString(),
                 carnet = etCarnet.text.toString(),
                 estado = (statusSpinner ?: "").toString()
             )
@@ -75,7 +73,6 @@ class FiltroDialogFragment : DialogFragment() {
         btnReiniciar.setOnClickListener {
             degreeSpinner.setSelection(0)
             etSemestres.text.clear()
-            etNombre.text.clear()
             etCarnet.text.clear()
             statusSpinner.setSelection(0)
             (activity as? FilterListener)?.onFilterCancel()

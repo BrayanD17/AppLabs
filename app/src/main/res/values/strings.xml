@@ -169,6 +169,7 @@
     <string name="SemesterTextView">Semestre en curso</string>
     <string name="CommentTextView">Comentario</string>
     <string name="btnSendReport">Enviar Reporte</string>
+    <string name="miscoductListTextView">Historial de Reportes de Mala Conducta</string>
 
 
     <string name="aplicar_filtro">Aplicar filtro</string>
@@ -219,6 +220,7 @@
     <string name="scannerLector">Lector de entradas y salidas de estudiantes</string>
     <string name="scannerBtnScan">Escanear carnet estudiantil</string>
     <string name="visitReportTextView">Reporte de Visita</string>
+
 
     <string name="selecciona_d_a_y_horario">Selecciona día y horario</string>
     <string name="selecciona_un_laboratorio">Selecciona un laboratorio</string>

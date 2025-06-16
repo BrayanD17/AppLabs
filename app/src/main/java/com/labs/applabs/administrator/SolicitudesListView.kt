@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.administrator.Adapter.SolicitudAdapter
 import com.labs.applabs.elements.FiltroDialogFragment
+import com.labs.applabs.elements.ToastType
+import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.FilterData
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.firebase.Solicitud
@@ -35,7 +37,7 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_solicitudes_list_view)
 
-        initViews()
+        recyclerView = findViewById(R.id.recycleView)
         setupRecyclerView()
         loadData()
 
@@ -50,9 +52,8 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
             )
         }
 
-        /// Configurar EditText para búsqueda
-        val etSearch = findViewById<EditText>(R.id.searchEditText)
 
+        val etSearch = findViewById<EditText>(R.id.searchEditText)
         // Filtrar mientras se escribe (puedes usar un TextWatcher)
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -71,10 +72,6 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
             }
         }
         finishActivitySolicitudes()
-    }
-
-    private fun initViews() {
-        recyclerView = findViewById(R.id.recycleView)
     }
 
     private fun setupRecyclerView() {
@@ -99,14 +96,11 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
                 listaCompletaSolicitudes = solicitudes
                 adapter.actualizarLista(solicitudes)
             } catch (e: Exception) {
-                showError(e.message ?: "Error desconocido")
+                toastMessage("Error al obtener los datos", ToastType.ERROR)
             }
         }
     }
 
-    private fun showError(message: String) {
-        Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
-    }
 
     private fun finishActivitySolicitudes(){
         val backView = findViewById<ImageView>(R.id.backViewSolicitudesList)
@@ -121,7 +115,6 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
         val filtradas = listaCompletaSolicitudes.filter {
             (filterData.carrera.isNullOrEmpty() || it.carrera == filterData.carrera) &&
                     (filterData.semestres.isNullOrEmpty() || it.numeroSemestreOperador == filterData.semestres) &&
-                    (filterData.nombre.isNullOrEmpty() || it.nombre.contains(filterData.nombre, ignoreCase = true)) &&
                     (filterData.carnet.isNullOrEmpty() || it.carnet.contains(filterData.carnet, ignoreCase = true)) &&
                     (filterData.estado.isNullOrEmpty() || it.estado == filterData.estado)
         }

@@ -37,13 +37,6 @@
             android:layout_margin="12dp" />
 
         <EditText
-            android:id="@+id/et_nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre del estudiante"
-            android:layout_margin="12dp" />
-
-        <EditText
             android:id="@+id/et_carnet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
