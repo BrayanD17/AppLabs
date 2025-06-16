@@ -964,7 +964,7 @@ class Provider {
         }
     }
 
-    // Obtener horario asignado para un operador específico (para administradores)
+    //Get assigned schedule data as an specific operator (from admin view)
     suspend fun getAssignedScheduleForOperator(operatorId: String): Map<String, Any>? {
         return try {
             val doc = db.collection("assignSchedule").document(operatorId).get().await()
@@ -977,10 +977,9 @@ class Provider {
         }
     }
 
-    // Actualizar horario de un operador
+    //Update schedule assigned operator (admin)
     suspend fun updateOperatorSchedule(operatorId: String, labSchedules: List<LabSchedule>): Boolean {
         return try {
-            // Convertir la lista de LabSchedule a un formato que Firestore pueda almacenar
             val labsMap = mutableMapOf<String, Any>()
 
             labSchedules.forEach { labSchedule ->
