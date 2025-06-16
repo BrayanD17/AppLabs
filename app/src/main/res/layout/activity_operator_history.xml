@@ -25,13 +25,11 @@
     <!-- Título -->
     <TextView
         android:id="@+id/tvTitulo"
-        style="@style/TextViewStyle"
+        style="@style/TextViewStyleTitle"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="Gestión de Horarios I\nSemestre 2025"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_height="50dp"
+        android:text="@string/operatorActiveName"
+        android:textAlignment="center" />
 
     <!-- Buscar, filtro y exportar -->
     <LinearLayout
@@ -84,24 +82,13 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"/>
 
-
-    <!-- Título de sección -->
-    <TextView
-        android:id="@+id/tvListaOperadores"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="Lista de Operadores"
-        style="@style/TextViewStyle"
-        android:textStyle="bold" />
-
     <!-- Lista de operadores -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOperadores"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="8dp" />
 
     <!-- Paginación -->
