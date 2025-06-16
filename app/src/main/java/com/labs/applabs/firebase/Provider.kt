@@ -1077,7 +1077,59 @@ class Provider {
     }
 
     //Get operator approved during semesters (history from admin of all operators)
+    suspend fun getHistoryOperatorSemesters(): List<historySemesterOperator> {
+        val listOSAll = mutableListOf<historySemesterOperator>()
 
+        try {
+            val historyDoc = db.collection("operatorHistory").get().await()
+
+            //Grouped from operatorHistory
+            val grouped: MutableMap<String, MutableList<String>> = mutableMapOf()
+            for (doc in historyDoc.documents) {
+                val userId        = doc.getString("userId")        ?: continue
+                val formIdOperator = doc.getString("formIdOperator") ?: continue
+                grouped.getOrPut(formIdOperator) { mutableListOf() }.add(userId)
+            }
+
+            //Each group, bring data from the form and build the object
+            for ((formIdOperator, listUsers) in grouped) {
+
+                val formDoc = db.collection("formOperator")
+                    .document(formIdOperator)
+                    .get()
+                    .await()
+
+                //Exist doc
+                if (!formDoc.exists()) continue
+
+                val semester = formDoc.getString("semester") ?: "No disponible"
+                val year     = formDoc.get("year")?.toString() ?: "No disponible"
+
+                //Get createdDate and format it
+                val dateStr = if (formDoc.contains("createdDate")) {
+                    val ts = formDoc.getTimestamp("createdDate")?.toDate()
+                    ts?.let { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it) } ?: ""
+                } else {
+                    ""
+                }
+
+                listOSAll.add(
+                    historySemesterOperator(
+                        semester = semester,
+                        year     = year,
+                        date     = dateStr,
+                        userId   = listUsers
+                    )
+                )
+            }
+
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error agrupando historial de operadores", e)
+        }
+
+        //Data order by descending
+        return listOSAll.sortedWith(compareByDescending<historySemesterOperator> { it.year }.thenByDescending { it.semester })
+    }
 
 }
 

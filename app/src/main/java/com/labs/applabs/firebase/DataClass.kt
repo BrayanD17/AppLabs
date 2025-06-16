@@ -145,3 +145,10 @@ data class LabSchedule(
     val days: Map<String, List<String>>
 )
 
+data class historySemesterOperator(
+    val semester: String,
+    val year: String,
+    val date: String,
+    val userId: List<String> = emptyList()
+)
+
