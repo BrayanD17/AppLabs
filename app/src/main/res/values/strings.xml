@@ -207,7 +207,7 @@
     <string name="assignedSchedule">Horario asignado</string>
     <string name="missConduct">Mala conducta</string>
     <string name="registerVisit">Registrar Visita</string>
-    <string name="nameScheduleAssigned">Historia semanal, asignado en el semestre</string>
+    <string name="nameScheduleAssigned">Horario semanal, asignado en el semestre</string>
     <string name="eveningAssignedTable">5 a 10pm</string>
     <string name="editSchedule">Editar horario</string>
     <string name="applicationFormName">Solicitudes</string>
@@ -215,6 +215,8 @@
     <string name="cancel">Cancelar</string>
     <string name="selectLab">Seleccionar laboratorio</string>
     <string name="confirmLab">Guardar cambio</string>
+    <string name="labScheduleAssigned">Laboratorios asignados según horario</string>
+
 
 
     <!-- Semesters -->
