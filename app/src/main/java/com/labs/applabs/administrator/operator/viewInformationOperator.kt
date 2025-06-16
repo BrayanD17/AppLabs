@@ -1,11 +1,14 @@
 package com.labs.applabs.administrator.operator
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -18,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import com.labs.applabs.R
 import com.labs.applabs.elements.ToastType
 import com.labs.applabs.elements.toastMessage
+import com.labs.applabs.firebase.LabSchedule
 import com.labs.applabs.firebase.Provider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,6 +64,7 @@ class viewInformationOperator : AppCompatActivity() {
         operatorActiveId = id
         getOperatorInfo(operatorActiveId)
         setCheckboxesEnabled(false)
+        showDataScheduleAssigned(operatorActiveId)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -80,7 +85,6 @@ class viewInformationOperator : AppCompatActivity() {
                 toggleLabSelection()
             }
         }
-
     }
 
     fun getOperatorInfo(operatorId: String) {
@@ -155,12 +159,154 @@ class viewInformationOperator : AppCompatActivity() {
 
     //Show data schedule assigned and laboratories assigned
     private fun showDataScheduleAssigned(operatorId: String){
-        lifecycleScope.launch {}
+        lifecycleScope.launch {
+            try {
+                val scheduleData = provider.getAssignedScheduleForOperator(operatorId)
+                if (scheduleData != null) {
+                    val labSchedules = parseScheduleData(scheduleData)
+                    displayScheduleTable(labSchedules)
+                    displayAssignedLabsOnly(labSchedules)
+                } else {
+                    Log.d("viewAssignedSchedule", "No se encontraron horarios asignados")
+                }
+            } catch (e: Exception) {
+                Log.e("viewAssignedSchedule", "Error al cargar horarios: ${e.message}")
+            }
+        }
+    }
+
+    private fun parseScheduleData(data: Map<String, Any>?): List<LabSchedule> {
+        val labSchedules = mutableListOf<LabSchedule>()
+
+        data?.let { scheduleData ->
+            val labsMap = scheduleData["labs"] as? Map<String, Map<String, Any>> ?: return labSchedules
+
+            labsMap.forEach { (labName, daysMap) ->
+                val days = mutableMapOf<String, List<String>>()
+
+                daysMap.forEach { (day, shifts) ->
+                    val shiftsList = when (shifts) {
+                        is String -> listOf(shifts)
+                        is List<*> -> shifts.filterIsInstance<String>()
+                        else -> emptyList()
+                    }
+                    days[day] = shiftsList
+                }
+                labSchedules.add(LabSchedule(labName, days))
+            }
+        }
+
+        return labSchedules
+    }
+
+    private fun displayScheduleTable(labSchedules: List<LabSchedule>) {
+        viewInformationOperator.daysMap.values.forEach { (morningId, afternoonId, eveningId) ->
+            resetCheckBox(morningId)
+            resetCheckBox(afternoonId)
+            resetCheckBox(eveningId)
+        }
+
+        labSchedules.forEachIndexed { labIndex, labSchedule ->
+            val color = colors.getOrElse(labIndex % colors.size) { "#000000" }
+
+            labSchedule.days.forEach { (dayName, shifts) ->
+                val dayKey = when (dayName.lowercase()) {
+                    "lunes" -> "Lunes"
+                    "martes" -> "Martes"
+                    "miercoles", "miércoles" -> "Miércoles"
+                    "jueves" -> "Jueves"
+                    "viernes" -> "Viernes"
+                    "sabado", "sábado" -> "Sábado"
+                    "domingo" -> "Domingo"
+                    else -> dayName
+                }
+
+                val (morningId, afternoonId, eveningId) = viewInformationOperator.daysMap[dayKey] ?: return@forEach
+
+                shifts.forEach { shift ->
+                    when {
+                        shift.contains("mañana", ignoreCase = true) ->
+                            setCheckBoxColor(morningId, color, labSchedule.labName)
+                        shift.contains("tarde", ignoreCase = true) ->
+                            setCheckBoxColor(afternoonId, color, labSchedule.labName)
+                        shift.contains("noche", ignoreCase = true) ->
+                            setCheckBoxColor(eveningId, color, labSchedule.labName)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun resetCheckBox(checkBoxId: Int) {
+        val checkBox = findViewById<CheckBox>(checkBoxId)
+        checkBox.isChecked = false
+        checkBox.tag = null
+    }
+
+    private fun setCheckBoxColor(checkBoxId: Int, color: String, labName: String) {
+        val checkBox = findViewById<CheckBox>(checkBoxId)
+        checkBox.isChecked = true
+        checkBox.buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
+        checkBox.tag = labName
+    }
+
+    private fun displayAssignedLabsOnly(labSchedules: List<LabSchedule>) {
+        val container = findViewById<LinearLayout>(R.id.containerInformationCheckBoxes)
+        container.removeAllViews()
+
+        labSchedules.forEachIndexed { index, labSchedule ->
+            val color = colors.getOrElse(index % colors.size) { "#000000" }
+            val checkBox = CheckBox(this).apply {
+                text = labSchedule.labName
+                isChecked = true
+                isClickable = false
+                textAlignment = LinearLayout.TEXT_ALIGNMENT_TEXT_START
+                setTextAppearance(this@viewInformationOperator, R.style.formMessageStyle)
+                buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                ).apply {
+                    setMargins(8, 8, 8, 8)
+                }
+
+                setOnClickListener {
+                    highlightLabSchedule(labSchedule.labName, color)
+                }
+            }
+            container.addView(checkBox)
+        }
+    }
+
+    private fun highlightLabSchedule(labName: String, color: String) {
+        viewInformationOperator.daysMap.values.forEach { (morningId, afternoonId, eveningId) ->
+            resetCheckBox(morningId)
+            resetCheckBox(afternoonId)
+            resetCheckBox(eveningId)
+        }
+
+        viewInformationOperator.daysMap.values.forEach { (morningId, afternoonId, eveningId) ->
+            val morningCheck = findViewById<CheckBox>(morningId)
+            val afternoonCheck = findViewById<CheckBox>(afternoonId)
+            val eveningCheck = findViewById<CheckBox>(eveningId)
+
+            if (morningCheck.tag == labName) {
+                morningCheck.buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
+            }
+            if (afternoonCheck.tag == labName) {
+                afternoonCheck.buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
+            }
+            if (eveningCheck.tag == labName) {
+                eveningCheck.buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
+            }
+        }
     }
 
     //Update data schedule assigned
     private fun updateDataScheduleAssigned(operatorId: String, laboratoryName: String){
-        lifecycleScope.launch {}
+        lifecycleScope.launch {
+
+        }
     }
 
     fun backViewInformationOperator(view: android.view.View) {

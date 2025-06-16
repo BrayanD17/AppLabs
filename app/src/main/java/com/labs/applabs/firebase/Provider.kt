@@ -992,7 +992,7 @@ class Provider {
             }
 
             val scheduleData = mapOf(
-                "operatorId" to operatorId,
+                "userId" to operatorId,
                 "labs" to labsMap
             )
 
