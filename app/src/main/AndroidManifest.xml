@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,6 +14,7 @@
         android:maxSdkVersion="29" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".firebase.App"
@@ -35,9 +40,11 @@
             android:name=".administrator.AdminSetTimeOperatorActivity"
             android:exported="false" />
         <activity
-            android:name=".operator.viewAssignedSchedule"
+            android:name=".administrator.AdminVisitiMenuActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".administrator.VisitsListActivity"
+            android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -48,6 +55,22 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity
+            android:name=".administrator.MisconductListActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+        <activity
+            android:name=".operator.ScannerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".administrator.AdminSetTimeOperatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".operator.viewAssignedSchedule"
+            android:exported="false" />
         <activity
             android:name=".operator.MenuOperatorActivity"
             android:exported="false" />

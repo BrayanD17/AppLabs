@@ -35,7 +35,7 @@ class FiltroDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_filtros_dialog, container, false)
+        return inflater.inflate(R.layout.dialog_filters_admin, container, false)
     }
 
     override fun onStart() {
@@ -53,20 +53,19 @@ class FiltroDialogFragment : DialogFragment() {
         statusSpinner = view.findViewById(R.id.spinner_estado)
 
         val etSemestres = view.findViewById<EditText>(R.id.et_semestres)
-        val etNombre = view.findViewById<EditText>(R.id.et_nombre)
         val etCarnet = view.findViewById<EditText>(R.id.et_carnet)
-
+        val semestresInput = etSemestres.text.toString().takeIf { it.isNotBlank() }
+        val carnetInput = etCarnet.text.toString().takeIf { it.isNotBlank() }
 
         val btnAplicar = view.findViewById<Button>(R.id.btn_aplicar)
         val btnReiniciar = view.findViewById<Button>(R.id.btn_reiniciar)
 
         btnAplicar.setOnClickListener {
             val filterData = FilterData(
-                carrera = degreeSelected ?: "",
-                semestres = etSemestres.text.toString(),
-                nombre = etNombre.text.toString(),
-                carnet = etCarnet.text.toString(),
-                estado = (statusSpinner ?: "").toString()
+                degree = degreeSelected?.takeIf { it.isNotBlank() } ?: "",
+                semester = semestresInput,
+                cardStudent = carnetInput,
+                status = statusSelected?.takeIf { it.isNotBlank() } ?: ""
             )
             (activity as? FilterListener)?.onFilterApply(filterData)
             dismiss()
@@ -75,7 +74,6 @@ class FiltroDialogFragment : DialogFragment() {
         btnReiniciar.setOnClickListener {
             degreeSpinner.setSelection(0)
             etSemestres.text.clear()
-            etNombre.text.clear()
             etCarnet.text.clear()
             statusSpinner.setSelection(0)
             (activity as? FilterListener)?.onFilterCancel()
@@ -135,7 +133,13 @@ class FiltroDialogFragment : DialogFragment() {
                        position: Int,
                        id: Long
                    ) {
-                       statusSelected = statusList[position]
+                       statusSelected = when (statusList[position]) {
+                           "-- Seleccione estado --" -> ""
+                           "Aprobado" -> "1"
+                           "Denegada" -> "2"
+                           "Pendiente de revisión" -> "0"
+                           else -> "" // Por si llega otro valor inesperado
+                       }
                    }
 
                    override fun onNothingSelected(parent: AdapterView<*>?) {
