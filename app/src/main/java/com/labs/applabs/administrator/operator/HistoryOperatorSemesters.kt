@@ -41,4 +41,6 @@ class HistoryOperatorSemesters : AppCompatActivity() {
             adapter.updateList(historyData)
         }
     }
+
+    fun backViewHistoryOperator(view: android.view.View) {finish()}
 }

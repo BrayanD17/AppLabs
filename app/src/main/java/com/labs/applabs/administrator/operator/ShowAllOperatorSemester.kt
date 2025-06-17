@@ -61,4 +61,6 @@ class ShowAllOperatorSemester : AppCompatActivity() {
             adapter.update(users)
         }
     }
+
+    fun backViewShowAllOperator(view: android.view.View) {finish()}
 }
