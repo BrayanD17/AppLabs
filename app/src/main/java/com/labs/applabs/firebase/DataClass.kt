@@ -1,7 +1,4 @@
-6package com.labs.applabs.firebase
-
-import java.time.LocalDate
-import java.time.LocalTime
+package com.labs.applabs.firebase
 
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
