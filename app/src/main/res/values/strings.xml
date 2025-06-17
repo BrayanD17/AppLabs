@@ -235,8 +235,9 @@
     <string name="textViweMenuVisits">¡Bienvenido a la gestion de visitas!</string>
 
 
-
     <string name="selecciona_d_a_y_horario">Selecciona día y horario</string>
     <string name="selecciona_un_laboratorio">Selecciona un laboratorio</string>
     <string name="d_a_y_horario">Día y Horario</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

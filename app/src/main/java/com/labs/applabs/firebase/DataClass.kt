@@ -201,4 +201,10 @@ data class OperatorItem(
     val data: DataClass
 )
 
+data class FilterShowAllOperator(
+    val carnetOperator: String? = null,
+    val emailOperator: String? = null,
+    val phoneOperator: String? = null
+)
+
 
