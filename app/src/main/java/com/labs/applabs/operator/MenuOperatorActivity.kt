@@ -88,9 +88,6 @@ class MenuOperatorActivity : AppCompatActivity() {
 
     //Agregar la vista para registrar una visita
     fun viewRegisterVisit(view: View) {
-        val intent = Intent(this, ScannerActivity::class.java)
-        startActivity(intent)
-
     }
 
 

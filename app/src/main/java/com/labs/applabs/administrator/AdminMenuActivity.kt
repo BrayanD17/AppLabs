@@ -65,7 +65,6 @@ class AdminMenuActivity : AppCompatActivity() {
         viewAplicationForm()
         viewHistorialOperadores()
         viewMenuOperator()
-        viewVisitsMenu()
     }
 
     fun callMenuForm(view: View) {
@@ -93,14 +92,6 @@ class AdminMenuActivity : AppCompatActivity() {
         val btnMenu = findViewById<ImageButton>(R.id.btnOperador)
         btnMenu.setOnClickListener {
             val intent = Intent(this, AdminMenuOperatorActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    fun viewVisitsMenu() {
-        val btnVisit = findViewById<ImageButton>(R.id.btnVisit)
-        btnVisit.setOnClickListener {
-            val intent = Intent(this, AdminVisitiMenuActivity::class.java)
             startActivity(intent)
         }
     }
