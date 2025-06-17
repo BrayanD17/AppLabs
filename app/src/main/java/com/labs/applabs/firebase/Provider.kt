@@ -31,6 +31,8 @@ import kotlin.math.log
 import kotlinx.coroutines.tasks.await as await1
 import kotlinx.coroutines.tasks.await
 
+
+
 class Provider {
 
     private val auth = FirebaseAuth.getInstance()
@@ -203,7 +205,6 @@ class Provider {
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
             val formId = doc.getString("formId") ?: continue
-            val operatorId = doc.getString("formIdOperator") ?: continue
 
             // Fetch usuario
             val userDoc = db.collection("users").document(userId).get().await()
@@ -211,16 +212,6 @@ class Provider {
             // Verificar si el usuario tiene rol de operador (3)
             val userRole = userDoc.getLong("userRole")?.toInt() ?: continue
             if (userRole != 3) continue
-
-            // Verificar si el formulario del operador está activo
-            val formOperatorDoc = try {
-                db.collection("formOperator").document(operatorId).get().await()
-            } catch (e: Exception) {
-                continue // Si no existe el documento, continuar con el siguiente operador
-            }
-
-            val activityStatus = formOperatorDoc.getLong("activityStatus")?.toInt() ?: 0
-            if (activityStatus != 1) continue // Saltar si el formulario no está activo
 
             val studentCard = userDoc.getString("studentCard") ?: ""
             val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
@@ -923,7 +914,7 @@ class Provider {
         }
     }
     // Agrega esto dentro de tu clase Provider (puedes ponerlo cerca de otros métodos suspend)
-    suspend fun operatorRegister(formId: String, formIdOperator: String?) {
+    suspend fun operatorRegister(formId: String) {
         // Cambia estado en formStudent
         db.collection("formStudent").document(formId)
             .update("statusApplicationForm", 1, "comment", "Aprobado")
@@ -947,7 +938,6 @@ class Provider {
         val operador = hashMapOf(
             "userId" to idStudent,
             "formId" to formId,
-            "formIdOperator" to formIdOperator,
             "nombreUsuario" to name,
             "correoUsuario" to email,
             "nombreFormulario" to "Formulario Operador",
@@ -1078,59 +1068,155 @@ class Provider {
         return lista
     }
 
-    //Get operator approved during semesters (history from admin of all operators)
-    suspend fun getHistoryOperatorSemesters(): List<historySemesterOperator> {
-        val listOSAll = mutableListOf<historySemesterOperator>()
 
+
+    suspend fun getStudentIdCarne(studentCard : String): String?{
+        return try {
+            val query = db.collection("users")
+                .whereEqualTo("studentCard", studentCard)
+                .get()
+                .await1()
+            return query.documents.firstOrNull()?.id.toString()
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error: ${e.message}")
+            null
+        }
+    }
+
+    suspend fun saveReportVisitStudent(report: ReportVisitStudent) : Boolean {
         try {
-            val historyDoc = db.collection("operatorHistory").get().await()
+            val user = getAuthenticatedUserId()
+            val data = hashMapOf(
+                "idOperator" to user,
+                "idStudent" to report.idstudent,
+                "laboratory" to report.laboratory,
+                "date" to report.date,
+                "startTime" to report.startTime,
+                "endTime" to report.endTime
+            )
 
-            //Grouped from operatorHistory
-            val grouped: MutableMap<String, MutableList<String>> = mutableMapOf()
-            for (doc in historyDoc.documents) {
-                val userId        = doc.getString("userId")        ?: continue
-                val formIdOperator = doc.getString("formIdOperator") ?: continue
-                grouped.getOrPut(formIdOperator) { mutableListOf() }.add(userId)
-            }
+            db.collection("reportVisit")
+                .add(data)
+                .await1()
+            return true
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error:  ${e.message}")
+            return false
+        }
+    }
 
-            //Each group, bring data from the form and build the object
-            for ((formIdOperator, listUsers) in grouped) {
 
-                val formDoc = db.collection("formOperator")
-                    .document(formIdOperator)
+    suspend fun updateEndTime(idStudent: String, targetDate: String): Boolean {
+        return try {
+            val query = db.collection("reportVisit")
+                .whereEqualTo("idStudent", idStudent)
+                .whereEqualTo("date", targetDate)
+                .orderBy("startTime", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .await1()
+
+            if (query.isEmpty) return false
+
+            val mostRecentReport = query.documents[0]
+            val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val time = LocalTime.now().format(formatterTime).toString()
+            mostRecentReport.reference.update("endTime", time).await1()
+            Log.d("Firestore", "Hora de salida actualizada correctamente")
+            true
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al actualizar hora de salida: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun getMisconductStudents(): List<MisconductStudent> {
+        return try {
+            val misconductSnapshot = db.collection("misconducReportStudent")
+                .get()
+                .await1()
+
+            val misconductStudents = mutableListOf<MisconductStudent>()
+
+            for (doc in misconductSnapshot.documents) {
+                val uid = doc.id
+                val semester = doc.getString("semester") ?: continue
+                val studentUid = doc.getString("student") ?: continue
+                val laboratory = doc.getString("laboratory") ?: continue
+
+
+
+                // Buscar el usuario en la colección 'users' con ese UID
+                val userSnapshot = db.collection("users")
+                    .document(studentUid)
                     .get()
-                    .await()
+                    .await1()
 
-                //Exist doc
-                if (!formDoc.exists()) continue
+                val studentName = userSnapshot.getString("name") ?: ""
+                val surnames = userSnapshot.getString("surnames") ?: ""
+                val fullName = "$studentName $surnames".trim()
+                val email = userSnapshot.getString("email") ?: ""
+                val studentCard = userSnapshot.getString("studentCard") ?: ""
 
-                val semester = formDoc.getString("semester") ?: "No disponible"
-                val year     = formDoc.get("year")?.toString() ?: "No disponible"
-
-                //Get createdDate and format it
-                val dateStr = if (formDoc.contains("createdDate")) {
-                    val ts = formDoc.getTimestamp("createdDate")?.toDate()
-                    ts?.let { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it) } ?: ""
-                } else {
-                    ""
-                }
-
-                listOSAll.add(
-                    historySemesterOperator(
+                misconductStudents.add(
+                    MisconductStudent(
+                        id = uid,
+                        student = fullName,
+                        email = email,
                         semester = semester,
-                        year     = year,
-                        date     = dateStr,
-                        userId   = listUsers
+                        laboratory = laboratory,
+                        cardStudent = studentCard
+                    )
+                )
+            }
+            return misconductStudents
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener estudiantes con reporte: ${e.message}")
+            emptyList()
+        }
+    }
+
+    suspend fun getVisitReport(): List<ReportVisit> {
+        return try {
+            val visitSnapshot = db.collection("reportVisit")
+                .get()
+                .await1()
+
+            val visitList = mutableListOf<ReportVisit>()
+
+            for (doc in visitSnapshot.documents) {
+                val idStudent = doc.getString("idStudent") ?: continue
+                val laboratory = doc.getString("laboratory") ?: continue
+                val date = doc.getString("date") ?: continue
+                val startTime = doc.getString("startTime") ?: continue
+                val endTime = doc.getString("endTime") ?: continue
+
+                val userStudent = db.collection("users")
+                    .document(idStudent)
+                    .get()
+                    .await1()
+                val studentName = userStudent.getString("name") ?: ""
+                val surnames = userStudent.getString("surnames") ?: ""
+                val fullName = "$studentName $surnames".trim()
+                val cardStudent = userStudent.getString("studentCard") ?: ""
+
+                visitList.add(
+                    ReportVisit(
+                        student = fullName,
+                        cardStudent = cardStudent,
+                        laboratory = laboratory,
+                        date = date,
+                        startTime = startTime,
+                        endTime = endTime
                     )
                 )
             }
 
-        } catch (e: Exception) {
-            Log.e("FirestoreProvider", "Error agrupando historial de operadores", e)
+            return visitList
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error: ${e.message}")
+            emptyList()
         }
-
-        //Data order by descending
-        return listOSAll.sortedWith(compareByDescending<historySemesterOperator> { it.year }.thenByDescending { it.semester })
     }
 
     suspend fun getStudentIdCarne(studentCard : String): String?{

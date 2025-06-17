@@ -110,7 +110,7 @@ class viewAssignedSchedule : AppCompatActivity() {
                     isChecked = true
                     isClickable = false
                     textAlignment= LinearLayout.TEXT_ALIGNMENT_TEXT_START
-                    setTextAppearance(this@viewAssignedSchedule, R.style.formMessageStyle)
+                    setTextAppearance(this@viewAssignedSchedule, R.style.TextViewStyleDescriptions)
                     buttonTintList = ColorStateList.valueOf(Color.parseColor(color))
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,

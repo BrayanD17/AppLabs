@@ -233,7 +233,7 @@ class DetailFormActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 if (statusText == "1") { // Aprobado
-                    provider.operatorRegister(formStudentId,formIdOperator)
+                    provider.operatorRegister(formStudentId)
                     toastMessage(
                         "Solicitud aprobada, operador registrado y rol actualizado",
                         ToastType.SUCCESS
