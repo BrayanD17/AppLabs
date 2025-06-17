@@ -169,6 +169,8 @@
     <string name="SemesterTextView">Semestre en curso</string>
     <string name="CommentTextView">Comentario</string>
     <string name="btnSendReport">Enviar Reporte</string>
+    <string name="miscoductListTextView">Historial de Reportes de Mala Conducta</string>
+    <string name="miscoductsListTextView">Mala Conducta</string>
 
 
     <string name="aplicar_filtro">Aplicar filtro</string>
@@ -212,10 +214,21 @@
     <string name="labScheduleAssigned">Laboratorios asignados según horario</string>
 
 
-
     <!-- Semesters -->
     <string name="semester1">I Semestre</string>
     <string name="semester2">II Semestre</string>
+
+    <!-- Visit Report -->
+    <string name="visitReport">Reporte de Visita</string>
+    <string name="scannerLector">Lector de entradas y salidas de estudiantes</string>
+    <string name="scannerBtnScan">Escanear carnet estudiantil</string>
+    <string name="visitReportTextView">Reporte de Visita</string>
+    <string name="visitReportsTextView">Reporte de Visitas</string>
+
+    <string name="textViweMenuVisits">¡Bienvenido a la gestion de visitas!</string>
+
+
+
     <string name="selecciona_d_a_y_horario">Selecciona día y horario</string>
     <string name="selecciona_un_laboratorio">Selecciona un laboratorio</string>
     <string name="d_a_y_horario">Día y Horario</string>
