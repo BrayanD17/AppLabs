@@ -3,12 +3,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.administrator.Adapter.SolicitudAdapter
 import com.labs.applabs.elements.FiltroDialogFragment
-import com.labs.applabs.elements.ToastType
-import com.labs.applabs.elements.toastMessage
 import com.labs.applabs.firebase.FilterData
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.firebase.Solicitud
@@ -34,11 +30,12 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
     private var listaFiltradaSolicitudes: List<Solicitud> = emptyList()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_solicitudes_list_view)
 
-        recyclerView = findViewById(R.id.recycleView)
+        initViews()
         setupRecyclerView()
         loadData()
 
@@ -53,12 +50,9 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
             )
         }
 
-        onBackPressedDispatcher.addCallback(this) {
-            finish()
-        }
-
-
+        /// Configurar EditText para búsqueda
         val etSearch = findViewById<EditText>(R.id.searchEditText)
+
         // Filtrar mientras se escribe (puedes usar un TextWatcher)
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -77,6 +71,10 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
             }
         }
         finishActivitySolicitudes()
+    }
+
+    private fun initViews() {
+        recyclerView = findViewById(R.id.recycleView)
     }
 
     private fun setupRecyclerView() {
@@ -101,11 +99,14 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
                 listaCompletaSolicitudes = solicitudes
                 adapter.actualizarLista(solicitudes)
             } catch (e: Exception) {
-                toastMessage("Error al obtener los datos", ToastType.ERROR)
+                showError(e.message ?: "Error desconocido")
             }
         }
     }
 
+    private fun showError(message: String) {
+        Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
+    }
 
     private fun finishActivitySolicitudes(){
         val backView = findViewById<ImageView>(R.id.backViewSolicitudesList)
@@ -117,32 +118,15 @@ class SolicitudesListView : AppCompatActivity(), FiltroDialogFragment.FilterList
     }
 
     override fun onFilterApply(filterData: FilterData) {
-        Log.d("FiltroData", "Datos del filtro: $filterData")
-
-        val filtradas = listaCompletaSolicitudes.filter { solicitud ->
-            val carreraOk = filterData.degree.isNullOrBlank() || solicitud.carrera.trim().equals(filterData.degree.trim(), ignoreCase = true)
-            val semestreOk = filterData.semester.isNullOrBlank() || solicitud.numeroSemestreOperador.trim() == filterData.semester.trim()
-            val carnetOk = filterData.cardStudent.isNullOrBlank() || solicitud.carnet.trim().contains(filterData.cardStudent.trim(), ignoreCase = true)
-            val estadoOk = filterData.status.isNullOrBlank() || solicitud.estado.trim().equals(filterData.status.trim(), ignoreCase = true)
-
-            Log.d("FiltroPaso", """
-            ---
-            Solicitud: ${solicitud.nombre}
-            Comparando:
-            carrera: '${solicitud.carrera}' vs '${filterData.degree}' = $carreraOk
-            semestre: '${solicitud.numeroSemestreOperador}' vs '${filterData.semester}' = $semestreOk
-            carnet: '${solicitud.carnet}' vs '${filterData.cardStudent}' = $carnetOk
-            estado: '${solicitud.estado}' vs '${filterData.status}' = $estadoOk
-        """.trimIndent())
-
-            carreraOk && semestreOk && carnetOk && estadoOk
+        val filtradas = listaCompletaSolicitudes.filter {
+            (filterData.carrera.isNullOrEmpty() || it.carrera == filterData.carrera) &&
+                    (filterData.semestres.isNullOrEmpty() || it.numeroSemestreOperador == filterData.semestres) &&
+                    (filterData.nombre.isNullOrEmpty() || it.nombre.contains(filterData.nombre, ignoreCase = true)) &&
+                    (filterData.carnet.isNullOrEmpty() || it.carnet.contains(filterData.carnet, ignoreCase = true)) &&
+                    (filterData.estado.isNullOrEmpty() || it.estado == filterData.estado)
         }
-
-        Log.d("Filtro", "Total filtradas: ${filtradas.size}")
-        listaFiltradaSolicitudes = filtradas
-        adapter.actualizarLista(listaFiltradaSolicitudes)
+        adapter.actualizarLista(filtradas)
     }
-
 
     override fun onFilterCancel() {
         adapter.actualizarLista(listaCompletaSolicitudes)

@@ -6,45 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/baseActivityColor"
-    tools:context=".administrator.MisconductListActivity">
+    tools:context=".administrator.operator.ShowAllOperatorSemester">
 
     <ImageView
-        android:id="@+id/backViewMisconduct"
+        android:id="@+id/backShowAllOperator"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="20dp"
         android:layout_marginStart="28dp"
         android:src="@drawable/arrow_back"
+        android:onClick="backViewShowAllOperator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
     <TextView
-        android:id="@+id/tvMisconductList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/miscoductListTextView"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/search"
+        android:id="@+id/titleTextShowAllOperator"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:text="eny"
+        style="@style/TextViewStyleTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backViewMisconduct" />
+        app:layout_constraintTop_toTopOf="@+id/backShowAllOperator"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMisconductList"
-        app:layout_constraintBottom_toTopOf="@+id/recycleViewMisconduct"
+        app:layout_constraintBottom_toTopOf="@+id/recycleViewShowAllOperator"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextShowAllOperator"
         app:layout_constraintVertical_bias="0.583"
         tools:layout_editor_absoluteX="0dp">
 
@@ -76,20 +74,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewShowAllOperator"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:padding="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/recycleViewMisconduct"
-        tools:listitem="@layout/item_misconduct"/>
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

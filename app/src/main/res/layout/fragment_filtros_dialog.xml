@@ -21,40 +21,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/etCarnet"
+        <Spinner
+            android:id="@+id/spinner_carrera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Número de Carné" />
-
+            android:layout_margin="12dp"
+            android:contentDescription="Seleccionar carrera" />
 
         <EditText
-            android:id="@+id/editFecha"
+            android:id="@+id/et_semestres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha (dd-MM-yyyy)"
-            android:inputType="date" />
+            android:inputType="number"
+            android:hint="Numero de semestres siendo operador"
+            android:layout_margin="12dp" />
 
+        <EditText
+            android:id="@+id/et_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del estudiante"
+            android:layout_margin="12dp" />
+
+        <EditText
+            android:id="@+id/et_carnet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de Carné"
+            android:layout_margin="12dp" />
 
         <Spinner
-            android:id="@+id/spinnerLaboratory"
+            android:id="@+id/spinner_estado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_margin="12dp"
             android:contentDescription="Seleccionar estado" />
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="25dp">
+            android:gravity="center">
 
             <Button
                 android:id="@+id/btn_reiniciar"

@@ -6,42 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/baseActivityColor"
-    tools:context=".administrator.VisitsListActivity">
+    tools:context=".administrator.operator.HistoryOperatorSemesters">
 
     <ImageView
-        android:id="@+id/backViewVisitList"
+        android:id="@+id/backViewHistoryOperator"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="20dp"
         android:layout_marginStart="28dp"
         android:src="@drawable/arrow_back"
+        android:onClick="backViewHistoryOperator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
-
     <TextView
-        android:id="@+id/tvVisitList"
+        android:id="@+id/titleTextViewHistoryOperator"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/visitReportTextView"
-        android:textSize="22sp"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/montserrat_regular"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:text="@string/historyOperatorName"
+        style="@style/TextViewStyleTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backViewVisitList"
-        />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backViewHistoryOperator"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/recycleViewVisits"
-        app:layout_constraintTop_toBottomOf="@+id/tvVisitList"
+        app:layout_constraintBottom_toTopOf="@+id/recycleViewHistoryOperator"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextViewHistoryOperator"
         app:layout_constraintVertical_bias="0.583"
         tools:layout_editor_absoluteX="0dp">
 
@@ -60,6 +61,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
@@ -73,10 +75,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewVisits"
+        android:id="@+id/recycleViewHistoryOperator"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="5dp"
@@ -84,8 +88,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
-        tools:listitem="@layout/item_visit"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

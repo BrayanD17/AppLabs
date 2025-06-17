@@ -1,8 +1,5 @@
 package com.labs.applabs.firebase
 
-import java.time.LocalDate
-import java.time.LocalTime
-
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
     val formOperator: FormOperator = FormOperator(),
@@ -67,18 +64,11 @@ data class Solicitud(
 )
 
 data class FilterData(
-    val degree: String? = null,
-    val semester: String? = null,
-    val name: String? = null,
-    val cardStudent: String? = null,
-    val status: String? = null,
-)
-
-data class FilterDataMisconduct(
+    val carrera: String? = null,
+    val semestres: String? = null,
     val nombre: String? = null,
     val carnet: String? = null,
-    val semestres: String? = null,
-    val laboratory: String? = null,
+    val estado: String? = null,
 )
 
 data class dataUpdateStatus(
@@ -141,40 +131,6 @@ data class ReportMisconducStudent(
     val comment: String = ""
 )
 
-data class MisconductStudent(
-    val student : String = "",
-    val email : String = "",
-    val semester: String = "",
-    val laboratory: String = "",
-    val cardStudent: String = "",
-    val id: String = "",  // uid del documento
-)
-
-data class ReportVisitStudent(
-    val idOperator : String = "",
-    val idstudent : String = "",
-    val laboratory: String = "",
-    val date: String = "",
-    val startTime: String = "",
-    val endTime: String = "",
-)
-
-data class ReportVisit(
-    val student : String = "",
-    val cardStudent: String = "",
-    val laboratory: String = "",
-    val date: String = "",
-    val startTime: String = "",
-    val endTime: String = "",
-)
-
-data class filterDataVisit(
-    val name: String? = null,
-    val cardStudent: String? = null,
-    val laboratory: String? = null,
-    val date: String? = null,
-)
-
 data class AssignedScheduleData(
     val name: String,
     val laboratory: String,
@@ -188,4 +144,17 @@ data class LabSchedule(
     val labName: String,
     val days: Map<String, List<String>>
 )
+
+data class historySemesterOperator(
+    val semester: String,
+    val year: String,
+    val date: String,
+    val userId: List<String> = emptyList()
+)
+
+data class OperatorItem(
+    val userId: String,
+    val data: DataClass
+)
+
 

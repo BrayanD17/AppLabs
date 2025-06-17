@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/baseActivityColor"
     tools:context="login.MainActivity">
@@ -39,25 +39,22 @@
     <TextView
         android:id="@+id/tv1"
         style="@style/TextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="21dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/users"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/tv2"
         style="@style/TextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_width="92dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,13 +110,29 @@
             android:src="@drawable/eye_hide" />
     </FrameLayout>
 
+    <CheckBox
+        android:id="@+id/cbRecordar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="118dp"
+        android:text="Recordar mis credenciales"
+        android:textColor="@color/black"
+        style="@style/ButtonOutlineStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
     <Button
         android:id="@+id/btn1"
         style="@style/ButtonOutlineStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="160dp"
         android:text="@string/forgetPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,13 +144,9 @@
     <Button
         android:id="@+id/btnLogin"
         style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="45dp"
-        android:paddingEnd="45dp"
-        android:paddingBottom="30dp"
-        android:paddingTop="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="234dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="4dp"
         android:onClick="activy"
         android:text="@string/login"
         app:backgroundTint="@color/marineBlue"
@@ -160,23 +169,9 @@
         android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.0" />
-
-
-    <CheckBox
-        android:id="@+id/cbRecordar"
-        style="@style/ButtonOutlineStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recordar mis credenciales"
-        android:textColor="@color/black"
-        android:textColorHint="@color/marineBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn3"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
