@@ -31,8 +31,6 @@ import kotlin.math.log
 import kotlinx.coroutines.tasks.await as await1
 import kotlinx.coroutines.tasks.await
 
-
-
 class Provider {
 
     private val auth = FirebaseAuth.getInstance()
@@ -196,7 +194,7 @@ class Provider {
         }
 
     }
-    
+
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
         val historial = db.collection("operatorHistory").get().await1()
@@ -205,6 +203,7 @@ class Provider {
         for (doc in historial.documents) {
             val userId = doc.getString("userId") ?: continue
             val formId = doc.getString("formId") ?: continue
+            val operatorId = doc.getString("formIdOperator") ?: continue
 
             // Fetch usuario
             val userDoc = db.collection("users").document(userId).get().await()
@@ -212,6 +211,16 @@ class Provider {
             // Verificar si el usuario tiene rol de operador (3)
             val userRole = userDoc.getLong("userRole")?.toInt() ?: continue
             if (userRole != 3) continue
+
+            // Verificar si el formulario del operador está activo
+            val formOperatorDoc = try {
+                db.collection("formOperator").document(operatorId).get().await()
+            } catch (e: Exception) {
+                continue // Si no existe el documento, continuar con el siguiente operador
+            }
+
+            val activityStatus = formOperatorDoc.getLong("activityStatus")?.toInt() ?: 0
+            if (activityStatus != 1) continue // Saltar si el formulario no está activo
 
             val studentCard = userDoc.getString("studentCard") ?: ""
             val name = userDoc.getString("name") + " " + (userDoc.getString("surnames") ?: "")
@@ -914,7 +923,7 @@ class Provider {
         }
     }
     // Agrega esto dentro de tu clase Provider (puedes ponerlo cerca de otros métodos suspend)
-    suspend fun operatorRegister(formId: String) {
+    suspend fun operatorRegister(formId: String, formIdOperator: String?) {
         // Cambia estado en formStudent
         db.collection("formStudent").document(formId)
             .update("statusApplicationForm", 1, "comment", "Aprobado")
@@ -938,6 +947,7 @@ class Provider {
         val operador = hashMapOf(
             "userId" to idStudent,
             "formId" to formId,
+            "formIdOperator" to formIdOperator,
             "nombreUsuario" to name,
             "correoUsuario" to email,
             "nombreFormulario" to "Formulario Operador",
@@ -1068,7 +1078,60 @@ class Provider {
         return lista
     }
 
+    //Get operator approved during semesters (history from admin of all operators)
+    suspend fun getHistoryOperatorSemesters(): List<historySemesterOperator> {
+        val listOSAll = mutableListOf<historySemesterOperator>()
 
+        try {
+            val historyDoc = db.collection("operatorHistory").get().await()
+
+            //Grouped from operatorHistory
+            val grouped: MutableMap<String, MutableList<String>> = mutableMapOf()
+            for (doc in historyDoc.documents) {
+                val userId        = doc.getString("userId")        ?: continue
+                val formIdOperator = doc.getString("formIdOperator") ?: continue
+                grouped.getOrPut(formIdOperator) { mutableListOf() }.add(userId)
+            }
+
+            //Each group, bring data from the form and build the object
+            for ((formIdOperator, listUsers) in grouped) {
+
+                val formDoc = db.collection("formOperator")
+                    .document(formIdOperator)
+                    .get()
+                    .await()
+
+                //Exist doc
+                if (!formDoc.exists()) continue
+
+                val semester = formDoc.getString("semester") ?: "No disponible"
+                val year     = formDoc.get("year")?.toString() ?: "No disponible"
+
+                //Get createdDate and format it
+                val dateStr = if (formDoc.contains("createdDate")) {
+                    val ts = formDoc.getTimestamp("createdDate")?.toDate()
+                    ts?.let { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it) } ?: ""
+                } else {
+                    ""
+                }
+
+                listOSAll.add(
+                    historySemesterOperator(
+                        semester = semester,
+                        year     = year,
+                        date     = dateStr,
+                        userId   = listUsers
+                    )
+                )
+            }
+
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error agrupando historial de operadores", e)
+        }
+
+        //Data order by descending
+        return listOSAll.sortedWith(compareByDescending<historySemesterOperator> { it.year }.thenByDescending { it.semester })
+    }
 
     suspend fun getStudentIdCarne(studentCard : String): String?{
         return try {

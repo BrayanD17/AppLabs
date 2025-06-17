@@ -219,6 +219,7 @@
     <string name="confirmLab">Guardar cambio</string>
     <string name="labScheduleAssigned">Laboratorios asignados según horario</string>
     <string name="infoOperatorView">Información del operador</string>
+    <string name="historyOperatorName">Historial de operadores</string>
 
     <!-- Semesters -->
     <string name="semester1">I Semestre</string>
@@ -232,7 +233,6 @@
     <string name="visitReportsTextView">Reporte de Visitas</string>
 
     <string name="textViweMenuVisits">¡Bienvenido a la gestion de visitas!</string>
-
 
 
     <string name="selecciona_d_a_y_horario">Selecciona día y horario</string>

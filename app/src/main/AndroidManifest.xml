@@ -60,9 +60,6 @@
             android:name=".operator.ScannerActivity"
             android:exported="false" />
         <activity
-            android:name=".administrator.AdminSetTimeOperatorActivity"
-            android:exported="false" />
-        <activity
             android:name=".operator.viewAssignedSchedule"
             android:exported="false" />
         <activity
