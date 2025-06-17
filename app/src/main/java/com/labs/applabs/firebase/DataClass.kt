@@ -152,3 +152,9 @@ data class historySemesterOperator(
     val userId: List<String> = emptyList()
 )
 
+data class OperatorItem(
+    val userId: String,
+    val data: DataClass
+)
+
+

@@ -28,6 +28,7 @@ class viewInformationOperator : AppCompatActivity() {
     private lateinit var btnConfirmLab: Button
     private lateinit var btnEditSchedule: Button
     private lateinit var operatorActiveId: String
+    private lateinit var userId: String
     private var operatorName: String = ""
 
     private val colors = listOf("#FF6F61", "#6B5B95", "#88B04B", "#F7CAC9", "#92A8D1")
@@ -49,32 +50,43 @@ class viewInformationOperator : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_view_information_operator)
 
-        //Get id operator from historyOperator
-        val id = intent.getStringExtra("operatorId")
-        if (id == null) {
-            toastMessage("ID del operador no recibido", ToastType.ERROR)
-            finish(); return
-        }
-        operatorActiveId = id
-
-        //Inicialization elements
+        //Initialize elements
         labSelectionContainer = findViewById(R.id.labSelectionContainer)
-        laboratorySpinner     = findViewById(R.id.laboratorySpinner)
-        btnConfirmLab         = findViewById(R.id.btnConfirmLab)
-        btnEditSchedule       = findViewById(R.id.btnEditScheduleOperatorSaveChage)
+        laboratorySpinner = findViewById(R.id.laboratorySpinner)
+        btnConfirmLab = findViewById(R.id.btnConfirmLab)
+        btnEditSchedule = findViewById(R.id.btnEditScheduleOperatorSaveChage)
+
+        val type = intent.getStringExtra("type")
+        if (type == "show") {
+            val id = intent.getStringExtra("userId")
+            if (id == null) {
+                toastMessage("ID del operador no recibido", ToastType.ERROR)
+                finish(); return
+            }
+            userId = id
+            operatorActiveId = userId
+            getOperatorInfo(userId)
+            btnEditSchedule.visibility = View.GONE
+        } else {
+            val id = intent.getStringExtra("operatorId")
+            if (id == null) {
+                toastMessage("ID del operador no recibido", ToastType.ERROR)
+                finish(); return
+            }
+            operatorActiveId = id
+            getOperatorInfo(operatorActiveId)
+        }
 
         //Data load activity
-        getOperatorInfo(operatorActiveId)
         setCheckboxesEnabled(false)
         showAllLabsReadOnly()
 
-        // Safe‑area padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val sb = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(sb.left, sb.top, sb.right, sb.bottom); insets
         }
 
-        //btn edit and cancel
+        //btn edit and cancel for edit schedule
         btnEditSchedule.setOnClickListener {
             lifecycleScope.launch {
                 loadLaboratories()
