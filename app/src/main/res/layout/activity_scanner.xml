@@ -11,9 +11,8 @@
 
     <ImageView
         android:id="@+id/backViewFormActivyty"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="5dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_margin="20dp"
         android:src="@drawable/arrow_back"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/backViewAssignedSchedule"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_margin="20dp"
         android:onClick="backViewAssignedSchedule"
         android:src="@drawable/arrow_back"
@@ -23,9 +23,9 @@
         android:id="@+id/cardAssignedSchedule"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="35dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
@@ -49,9 +49,10 @@
                 android:paddingTop="30dp">
 
                 <TextView
-                    style="@style/TextViewStyleDescriptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_regular"
                     android:text="@string/nameScheduleAssigned"
                     android:textAlignment="center" />
 
@@ -77,19 +78,19 @@
                             android:text="" />
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:padding="0dp"
                             android:text="@string/morningTable" />
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:padding="0dp"
                             android:text="@string/afternoonTable" />
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:padding="0dp"
                             android:text="@string/eveningAssignedTable" />
@@ -100,7 +101,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/monday" />
 
@@ -130,7 +131,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/tuesday" />
 
@@ -160,7 +161,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/wednesday" />
 
@@ -190,7 +191,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/thursday" />
 
@@ -220,7 +221,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/friday" />
 
@@ -250,7 +251,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/saturday" />
 
@@ -280,7 +281,7 @@
                     <TableRow android:paddingVertical="2dp">
 
                         <TextView
-                            style="@style/formMessageStyle"
+                            android:fontFamily="@style/TextViewStyleDescriptions"
                             android:gravity="center"
                             android:text="@string/sunday" />
 
@@ -308,7 +309,8 @@
                 </TableLayout>
 
                 <TextView
-                    style="@style/TextViewStyleDescriptions"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/labScheduleAssigned"
@@ -345,7 +347,7 @@
             android:padding="13dp"
             android:text="@string/assignedSchedule"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:fontFamily="@font/montserrat_regular" />
     </androidx.cardview.widget.CardView>
 
     <ImageView
