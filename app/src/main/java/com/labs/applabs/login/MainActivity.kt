@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.labs.applabs.R
 import com.labs.applabs.RegisterActivity
@@ -20,6 +22,7 @@ import com.labs.applabs.ResetPasswordActivity
 import com.labs.applabs.administrator.AdminMenuActivity
 import com.labs.applabs.firebase.Provider
 import com.labs.applabs.models.ValidadorCampos
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +43,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         // Solicitar permiso de notificación en Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -131,6 +133,16 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     provider.verificarRol(uid) { rol ->
+
+                        // Guardar el token al iniciar, para identificar el dispositivo
+                        lifecycleScope.launch {
+                            try {
+                                provider.saveFcmToken()
+                            } catch (e: Exception) {
+                                Log.e("MainActivity", "No se pudo guardar el token", e)
+                            }
+                        }
+
                         when (rol) {
                             1 -> startActivity(
                                 Intent(

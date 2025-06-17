@@ -605,7 +605,9 @@ class Provider {
         }
     }
 
-    suspend fun saveFcmToken(userId: String) {
+    suspend fun saveFcmToken() {
+        val userId=getAuthenticatedUserId()
+
         try {
             val token = FirebaseMessaging.getInstance().token.await1()
 
