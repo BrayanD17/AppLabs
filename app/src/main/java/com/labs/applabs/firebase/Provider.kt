@@ -19,13 +19,16 @@ import com.labs.applabs.models.ScheduleSelection
 import com.labs.applabs.models.Usuario
 import com.labs.applabs.administrator.operator.OperadorCompleto
 import com.labs.applabs.student.FormStudentData
-import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import java.util.Calendar
 import kotlin.math.log
+import kotlinx.coroutines.tasks.await as await1
 
 
 class Provider {
@@ -92,7 +95,7 @@ class Provider {
 
     suspend fun getCareerNames(): List<String> {
         return try {
-            val snapshot = db.collection("dataDefault").document("careers").get().await()
+            val snapshot = db.collection("dataDefault").document("careers").get().await1()
             snapshot.get("career") as? List<String> ?: emptyList()
         } catch (e: Exception) {
             Log.e("Firebase", "Error al cargar carreras", e)
@@ -102,7 +105,7 @@ class Provider {
 
     suspend fun getFormStatusData() : List<String> {
         return try{
-            val snapshot = db.collection("dataDefault").document("statusForm").get().await()
+            val snapshot = db.collection("dataDefault").document("statusForm").get().await1()
             snapshot.get("status") as? List<String> ?: emptyList()
         } catch (e : Exception){
             Log.e("Firebase", "Error al cargar estados", e)
@@ -112,7 +115,7 @@ class Provider {
 
     suspend fun getLaboratoryName() : List<String> {
         return try{
-            val laboratories = db.collection("dataDefault").document("laboratories").get().await()
+            val laboratories = db.collection("dataDefault").document("laboratories").get().await1()
             laboratories.get("laboratory") as? List<String> ?: emptyList()
         } catch (e : Exception){
             Log.e("Firebase", "Error al cargar laboratorios", e)
@@ -124,7 +127,7 @@ class Provider {
         return try {
             val snapshot = db.collection("formStudent")
                 .whereEqualTo("comment", "Aprobado")
-                .get().await()
+                .get().await1()
             snapshot.documents.mapNotNull { doc ->
                 val idStudent = doc.getString("idStudent")
                 val idFormOperator = doc.getString("idFormOperator")
@@ -140,7 +143,7 @@ class Provider {
         val approvedStudents = mutableListOf<String>()
         try {
             for ((idStudent, idFormOperator) in pairs) {
-                val doc = db.collection("formOperator").document(idFormOperator).get().await()
+                val doc = db.collection("formOperator").document(idFormOperator).get().await1()
                 val status = doc.getLong("activityStatus") ?: 0
                 if (status == 1L) {
                     approvedStudents.add(idStudent)
@@ -158,7 +161,7 @@ class Provider {
         val operatorNames = mutableListOf<OperatorUser>()
         try {
             for (id in ids) {
-                val doc = db.collection("users").document(id).get().await()
+                val doc = db.collection("users").document(id).get().await1()
                 val userRole = doc.getLong("userRole")
                 if (userRole == 3L) {
                     val name = doc.getString("name") ?: ""
@@ -173,7 +176,7 @@ class Provider {
     }
     suspend fun getStudentName() : Map<String, String> {
         return try{
-            val students = db.collection("users").whereEqualTo("userRole", 2).get().await()
+            val students = db.collection("users").whereEqualTo("userRole", 2).get().await1()
             students.documents.mapNotNull { doc ->
                 val name = doc.get("name")
                 val surNames = doc.get("surnames")
@@ -194,7 +197,7 @@ class Provider {
     
     suspend fun getAllOperadores(): List<OperadorCompleto> {
         val db = FirebaseFirestore.getInstance()
-        val historial = db.collection("operatorHistory").get().await()
+        val historial = db.collection("operatorHistory").get().await1()
         val lista = mutableListOf<OperadorCompleto>()
 
         for (doc in historial.documents) {
@@ -224,11 +227,11 @@ class Provider {
             val email = userDoc.getString("email") ?: ""
 
             // Fetch formStudent
-            val formDoc = db.collection("formStudent").document(formId).get().await()
+            val formDoc = db.collection("formStudent").document(formId).get().await1()
             val degree = formDoc.getString("degree") ?: ""
 
             // Fetch assignSchedule (laboratorios y horarios)
-            val asignDoc = db.collection("assignSchedule").document(userId).get().await()
+            val asignDoc = db.collection("assignSchedule").document(userId).get().await1()
             val labs: MutableMap<String, Map<String, List<String>>> = mutableMapOf()
             val labsMap = asignDoc.get("labs") as? Map<*, *>
             if (labsMap != null) {
@@ -274,11 +277,11 @@ class Provider {
             val docRef = db.collection("assignSchedule").document(userId)
             batch.set(docRef, mapOf("userId" to userId, "labs" to labs))
         }
-        batch.commit().await()
+        batch.commit().await1()
     }
 
     suspend fun cargarAssignSchedulesDesdeFirebase(): Map<String, Map<String, ScheduleSelection>> {
-        val snapshot = db.collection("assignSchedule").get().await()
+        val snapshot = db.collection("assignSchedule").get().await1()
         val result = mutableMapOf<String, MutableMap<String, ScheduleSelection>>()
 
         for (doc in snapshot.documents) {
@@ -304,7 +307,7 @@ class Provider {
     suspend fun getUserInfo(userId: String?): DataClass? {
         return try {
             if (userId == null) return null
-            val doc = db.collection("users").document(userId).get().await()
+            val doc = db.collection("users").document(userId).get().await1()
             if (doc.exists()) {
                 val studentInfo = StudentInfo(
                     studentName = doc.getString("name") ?: "",
@@ -351,7 +354,7 @@ class Provider {
 
             db.collection("formStudent")
                 .add(dataMap)
-                .await()
+                .await1()
 
             FormStudentData.clearAll()
             true
@@ -374,7 +377,7 @@ class Provider {
             }
             db.collection("misconducReportStudent")
                 .add(dataMapMisconductReport)
-                .await()
+                .await1()
             return true
         } catch (e : Exception){
             Log.e("Firebase", "Error al guardar el reporte de mala conducta.(${e.message})")
@@ -385,7 +388,7 @@ class Provider {
     //Obtener los datos del estudiente de formStudent por id de usuario
     suspend fun getFormStudent(formId: String): DataClass?  {
         return try {
-            val doc = db.collection("formStudent").document(formId).get().await()
+            val doc = db.collection("formStudent").document(formId).get().await1()
             if(doc.exists()){
                 val scheduleRaw = doc.get("scheduleAvailability") as? List<Map<String, Any>> ?: emptyList()
                 val scheduleAvailability = scheduleRaw.map {
@@ -421,7 +424,7 @@ class Provider {
             val userId = getAuthenticatedUserId() // Aquí deberías usar FirebaseAuth.getInstance().currentUser?.uid
 
             val docRef = db.collection("formStudent").document(formId)
-            val snapshot = docRef.get().await()
+            val snapshot = docRef.get().await1()
 
             if (!snapshot.exists()) {
                 Log.e("Firebase", "Formulario no encontrado")
@@ -451,7 +454,7 @@ class Provider {
                 })
             }
 
-            docRef.set(dataMap, SetOptions.merge()).await()
+            docRef.set(dataMap, SetOptions.merge()).await1()
             true
 
         } catch (e: Exception) {
@@ -463,7 +466,7 @@ class Provider {
     suspend fun getFormOperator(idFormOperator: String?): DataClass? {
         return try {
             if (idFormOperator == null) return null
-            val doc = db.collection("formOperator").document(idFormOperator).get().await()
+            val doc = db.collection("formOperator").document(idFormOperator).get().await1()
             if(doc.exists()){
                 val formOperator = FormOperator(
                     nameForm = doc.getString("nameForm") ?: "",
@@ -485,7 +488,7 @@ class Provider {
             formRef.update(
                 "statusApplicationForm", updateData.newStatusApplication,
                 "comment", updateData.newComment
-            ).await()
+            ).await1()
             generateNotificationMessage(updateData)
             true
         } catch (e: Exception) {
@@ -506,7 +509,7 @@ class Provider {
             "status" to 0
         )
 
-        notificationsCollection.add(newNotification).await()
+        notificationsCollection.add(newNotification).await1()
     }
 
     suspend fun getUserMessages(): List<getMessage> {
@@ -519,7 +522,7 @@ class Provider {
         val querySnapshot = notificationsRef
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
-            .await()
+            .await1()
 
         val formatter = SimpleDateFormat("d/M/yyyy h:mm a", Locale("es", "MX"))
         formatter.timeZone = TimeZone.getTimeZone("America/Mexico_City")
@@ -550,7 +553,7 @@ class Provider {
         val querySnapshot = notificationsRef
             .whereEqualTo("status", 0)
             .get()
-            .await()
+            .await1()
 
         //Update each unread message in a batch
         val batch = db.batch()
@@ -559,7 +562,7 @@ class Provider {
         }
 
         if (!querySnapshot.isEmpty) {
-            batch.commit().await()
+            batch.commit().await1()
         }
     }
 
@@ -570,8 +573,8 @@ class Provider {
         val pdfRef = storageRef.child(fileName)
 
         try {
-            pdfRef.putFile(pdfUri).await()
-            val downloadUrl = pdfRef.downloadUrl.await()
+            pdfRef.putFile(pdfUri).await1()
+            val downloadUrl = pdfRef.downloadUrl.await1()
             return downloadUrl.toString()
         } catch (e: Exception) {
             throw Exception("Error al subir el archivo: ${e.message}")
@@ -585,7 +588,7 @@ class Provider {
                 .whereEqualTo("activityStatus", 1)
                 .limit(1)
                 .get()
-                .await()
+                .await1()
 
             doc.documents.firstOrNull()?.let { document ->
                 FormOperatorData(
@@ -604,11 +607,11 @@ class Provider {
 
     suspend fun saveFcmToken(userId: String) {
         try {
-            val token = FirebaseMessaging.getInstance().token.await()
+            val token = FirebaseMessaging.getInstance().token.await1()
 
             db.collection("users").document(userId)
                 .set(mapOf("fcmToken" to token), SetOptions.merge())
-                .await()
+                .await1()
 
             Log.d("FCM", "Token guardado en campo")
         } catch (e: Exception) {
@@ -622,7 +625,7 @@ class Provider {
             val snapshot = db.collection("formOperator")
                 .whereEqualTo("activityStatus", 1) // Solo filtro por estado activo
                 .get()
-                .await()
+                .await1()
 
             snapshot.documents.mapNotNull { doc ->
                 // Extracción directa de datos (sin validar fechas)
@@ -655,7 +658,7 @@ class Provider {
             val formStudents = db.collection("formStudent")
                 .whereEqualTo("idFormOperator", idFormOperator)
                 .get()
-                .await()
+                .await1()
             Log.d("DEBUG", "Encontrados ${formStudents.size()} formularios llenados por estudiantes")
 
             if (formStudents.isEmpty) {
@@ -675,7 +678,7 @@ class Provider {
             val usersSnapshot = db.collection("users")
                 .whereIn(FieldPath.documentId(), studentIds)
                 .get()
-                .await()
+                .await1()
 
             val userMap = usersSnapshot.documents.associateBy { it.id }
 
@@ -688,7 +691,7 @@ class Provider {
                     uidForm = idFormOperator,
                     idFormStudent = formStudentId,
                     carnet = formStudentDoc.get("idCard")?.toString() ?: "Sin carnet",
-                    estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "Sin estado",
+                    estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "",
                     carrera = formStudentDoc.getString("degree") ?: "Sin carrera",
                     numeroSemestreOperador = formStudentDoc.get("semester")?.toString() ?: "Sin semestre"
                     //idStudent = studentId
@@ -716,7 +719,7 @@ class Provider {
             val threshold = currentYear - 4
 
             // 1. Obtener todos los formularios
-            val snapshot = db.collection("formOperator").get().await()
+            val snapshot = db.collection("formOperator").get().await1()
 
             // 2. Eliminar formularios con año menor al umbral
             for (doc in snapshot.documents) {
@@ -750,7 +753,7 @@ class Provider {
                 .whereEqualTo("semester", semester)
                 .whereEqualTo("year", year)
                 .get()
-                .await()
+                .await1()
 
             Log.d("DEBUG_QUERY", "Resultados: ${query.documents.size}")
             query.documents.firstOrNull()?.toObject(FormOperador::class.java)
@@ -774,7 +777,7 @@ class Provider {
                 .whereEqualTo("semester", semester.trim())
                 .whereEqualTo("year", year)
                 .get()
-                .await()
+                .await1()
 
             val doc = query.documents.firstOrNull()
             if (doc != null) {
@@ -793,7 +796,7 @@ class Provider {
     suspend fun deletePdfFromStorage(url: String) {
         try {
             val storageRef = Firebase.storage.getReferenceFromUrl(url)
-            storageRef.delete().await()
+            storageRef.delete().await1()
         } catch (e: Exception) {
             Log.e("FirebaseStorage", "Error al eliminar archivo", e)
         }
@@ -801,8 +804,7 @@ class Provider {
 
     suspend fun uploadPdfToStorage(fileName: String): String {
         val storageRef = Firebase.storage.reference.child(fileName)
-        //val uploadTask = storageRef.putFile(uri).await()
-        val downloadUrl = storageRef.downloadUrl.await()
+        val downloadUrl = storageRef.downloadUrl.await1()
         return downloadUrl.toString()
     }
 
@@ -814,13 +816,13 @@ class Provider {
             val snapshot = db.collection("formStudent")
                 .whereEqualTo("idStudent", id)
                 .get()
-                .await()
+                .await1()
 
             snapshot.documents.mapNotNull { doc ->
                 val formStudentDocId = doc.id
                 val formId = doc.getString("idFormOperator") ?: return@mapNotNull null
 
-                val listIdInfo = db.collection("formOperator").document(formId).get().await()
+                val listIdInfo = db.collection("formOperator").document(formId).get().await1()
                 if (!listIdInfo.exists()) return@mapNotNull null
 
                 val semester = listIdInfo.getString("semester") ?: ""
@@ -879,7 +881,7 @@ class Provider {
         val docRef = db.collection("users").document(uid)
 
         return try {
-            val snapshot = docRef.get().await()
+            val snapshot = docRef.get().await1()
             if (snapshot.exists()) {
                 val name = snapshot.getString("name") ?: ""
                 val surnames = snapshot.getString("surnames") ?: ""
@@ -912,7 +914,7 @@ class Provider {
                 .whereEqualTo("idStudent", studentId)
                 .whereEqualTo("idFormOperator", formId)
                 .get()
-                .await()
+                .await1()
 
             !query.isEmpty
         } catch (e: Exception) {
@@ -925,21 +927,21 @@ class Provider {
         // Cambia estado en formStudent
         db.collection("formStudent").document(formId)
             .update("statusApplicationForm", 1, "comment", "Aprobado")
-            .await()
+            .await1()
 
         // Trae datos del formulario
-        val formSnap = db.collection("formStudent").document(formId).get().await()
+        val formSnap = db.collection("formStudent").document(formId).get().await1()
         val form = formSnap.data ?: return
         val idStudent = form["idStudent"] as? String ?: return
         val semester = form["semester"]?.toString() ?: ""
 
         // Busca datos de usuario
-        val userSnap = db.collection("users").document(idStudent).get().await()
+        val userSnap = db.collection("users").document(idStudent).get().await1()
         val name = "${userSnap.getString("name") ?: ""} ${userSnap.getString("surnames") ?: ""}".trim()
         val email = userSnap.getString("email") ?: ""
 
         // Cambia rol usando el id del documento
-        db.collection("users").document(idStudent).update("userRole", 3).await()
+        db.collection("users").document(idStudent).update("userRole", 3).await1()
 
         // Agrega/actualiza historial operador
         val operador = hashMapOf(
@@ -956,7 +958,7 @@ class Provider {
         db.collection("operatorHistory")
             .document("$formId-$idStudent")
             .set(operador, SetOptions.merge())
-            .await()
+            .await1()
     }
 
     //Get operator assigned schedule data as an operator
@@ -1021,11 +1023,11 @@ class Provider {
     // Obtener el horario asignado general como AssignedScheduleData
     suspend fun obtenerHorariosAsignadosGeneral(): List<AssignedScheduleData> {
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
-        val snapshot = db.collection("assignSchedule").get().await()
+        val snapshot = db.collection("assignSchedule").get().await1()
         val lista = mutableListOf<AssignedScheduleData>()
 
         // Carga todos los usuarios solo una vez para no hacer n consultas
-        val allUsers = db.collection("users").get().await().documents.associateBy { it.id }
+        val allUsers = db.collection("users").get().await1().documents.associateBy { it.id }
 
         fun normalizarDia(dia: String): String = when (dia.trim().lowercase()) {
             "lunes" -> "Lunes"
@@ -1130,6 +1132,156 @@ class Provider {
         //Data order by descending
         return listOSAll.sortedWith(compareByDescending<historySemesterOperator> { it.year }.thenByDescending { it.semester })
     }
+
+    suspend fun getStudentIdCarne(studentCard : String): String?{
+        return try {
+            val query = db.collection("users")
+                .whereEqualTo("studentCard", studentCard)
+                .get()
+                .await1()
+            return query.documents.firstOrNull()?.id.toString()
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error: ${e.message}")
+            null
+        }
+    }
+
+    suspend fun saveReportVisitStudent(report: ReportVisitStudent) : Boolean {
+        try {
+            val user = getAuthenticatedUserId()
+            val data = hashMapOf(
+                "idOperator" to user,
+                "idStudent" to report.idstudent,
+                "laboratory" to report.laboratory,
+                "date" to report.date,
+                "startTime" to report.startTime,
+                "endTime" to report.endTime
+            )
+
+            db.collection("reportVisit")
+                .add(data)
+                .await1()
+            return true
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error:  ${e.message}")
+            return false
+        }
+    }
+
+
+    suspend fun updateEndTime(idStudent: String, targetDate: String): Boolean {
+        return try {
+            val query = db.collection("reportVisit")
+                .whereEqualTo("idStudent", idStudent)
+                .whereEqualTo("date", targetDate)
+                .orderBy("startTime", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .await1()
+
+            if (query.isEmpty) return false
+
+            val mostRecentReport = query.documents[0]
+            val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val time = LocalTime.now().format(formatterTime).toString()
+            mostRecentReport.reference.update("endTime", time).await1()
+            Log.d("Firestore", "Hora de salida actualizada correctamente")
+            true
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al actualizar hora de salida: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun getMisconductStudents(): List<MisconductStudent> {
+        return try {
+            val misconductSnapshot = db.collection("misconducReportStudent")
+                .get()
+                .await1()
+
+            val misconductStudents = mutableListOf<MisconductStudent>()
+
+            for (doc in misconductSnapshot.documents) {
+                val uid = doc.id
+                val semester = doc.getString("semester") ?: continue
+                val studentUid = doc.getString("student") ?: continue
+                val laboratory = doc.getString("laboratory") ?: continue
+
+
+
+                // Buscar el usuario en la colección 'users' con ese UID
+                val userSnapshot = db.collection("users")
+                    .document(studentUid)
+                    .get()
+                    .await1()
+
+                val studentName = userSnapshot.getString("name") ?: ""
+                val surnames = userSnapshot.getString("surnames") ?: ""
+                val fullName = "$studentName $surnames".trim()
+                val email = userSnapshot.getString("email") ?: ""
+                val studentCard = userSnapshot.getString("studentCard") ?: ""
+
+                misconductStudents.add(
+                    MisconductStudent(
+                        id = uid,
+                        student = fullName,
+                        email = email,
+                        semester = semester,
+                        laboratory = laboratory,
+                        cardStudent = studentCard
+                    )
+                )
+            }
+            return misconductStudents
+        } catch (e: Exception) {
+            Log.e("FirestoreProvider", "Error al obtener estudiantes con reporte: ${e.message}")
+            emptyList()
+        }
+    }
+
+    suspend fun getVisitReport(): List<ReportVisit> {
+        return try {
+            val visitSnapshot = db.collection("reportVisit")
+                .get()
+                .await1()
+
+            val visitList = mutableListOf<ReportVisit>()
+
+            for (doc in visitSnapshot.documents) {
+                val idStudent = doc.getString("idStudent") ?: continue
+                val laboratory = doc.getString("laboratory") ?: continue
+                val date = doc.getString("date") ?: continue
+                val startTime = doc.getString("startTime") ?: continue
+                val endTime = doc.getString("endTime") ?: continue
+
+                val userStudent = db.collection("users")
+                    .document(idStudent)
+                    .get()
+                    .await1()
+                val studentName = userStudent.getString("name") ?: ""
+                val surnames = userStudent.getString("surnames") ?: ""
+                val fullName = "$studentName $surnames".trim()
+                val cardStudent = userStudent.getString("studentCard") ?: ""
+
+                visitList.add(
+                    ReportVisit(
+                        student = fullName,
+                        cardStudent = cardStudent,
+                        laboratory = laboratory,
+                        date = date,
+                        startTime = startTime,
+                        endTime = endTime
+                    )
+                )
+            }
+
+            return visitList
+        } catch (e : Exception){
+            Log.e("FirestoreProvider", "Error: ${e.message}")
+            emptyList()
+        }
+    }
+
 
 }
 

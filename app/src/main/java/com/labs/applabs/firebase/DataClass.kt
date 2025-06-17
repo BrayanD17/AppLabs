@@ -1,5 +1,8 @@
 package com.labs.applabs.firebase
 
+import java.time.LocalDate
+import java.time.LocalTime
+
 data class DataClass(
     val studentInfo: StudentInfo = StudentInfo(),
     val formOperator: FormOperator = FormOperator(),
@@ -64,11 +67,18 @@ data class Solicitud(
 )
 
 data class FilterData(
-    val carrera: String? = null,
-    val semestres: String? = null,
+    val degree: String? = null,
+    val semester: String? = null,
+    val name: String? = null,
+    val cardStudent: String? = null,
+    val status: String? = null,
+)
+
+data class FilterDataMisconduct(
     val nombre: String? = null,
     val carnet: String? = null,
-    val estado: String? = null,
+    val semestres: String? = null,
+    val laboratory: String? = null,
 )
 
 data class dataUpdateStatus(
@@ -129,6 +139,40 @@ data class ReportMisconducStudent(
     val student : String = "",
     val semester: String = "",
     val comment: String = ""
+)
+
+data class MisconductStudent(
+    val student : String = "",
+    val email : String = "",
+    val semester: String = "",
+    val laboratory: String = "",
+    val cardStudent: String = "",
+    val id: String = "",  // uid del documento
+)
+
+data class ReportVisitStudent(
+    val idOperator : String = "",
+    val idstudent : String = "",
+    val laboratory: String = "",
+    val date: String = "",
+    val startTime: String = "",
+    val endTime: String = "",
+)
+
+data class ReportVisit(
+    val student : String = "",
+    val cardStudent: String = "",
+    val laboratory: String = "",
+    val date: String = "",
+    val startTime: String = "",
+    val endTime: String = "",
+)
+
+data class filterDataVisit(
+    val name: String? = null,
+    val cardStudent: String? = null,
+    val laboratory: String? = null,
+    val date: String? = null,
 )
 
 data class AssignedScheduleData(
