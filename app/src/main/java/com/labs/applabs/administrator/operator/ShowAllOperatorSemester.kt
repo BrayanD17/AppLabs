@@ -2,24 +2,16 @@ package com.labs.applabs.administrator.operator
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.labs.applabs.R
 import com.labs.applabs.administrator.operator.Adapter.AdapterShowAllOperator
-import com.labs.applabs.elements.FiltroDialogFragment
 import com.labs.applabs.firebase.OperatorItem
 import com.labs.applabs.firebase.Provider
-import com.labs.applabs.firebase.Solicitud
 import kotlinx.coroutines.launch
 
 class ShowAllOperatorSemester : AppCompatActivity() {
@@ -27,9 +19,6 @@ class ShowAllOperatorSemester : AppCompatActivity() {
     private val provider = Provider()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: AdapterShowAllOperator
-    private lateinit var filters : ImageView
-    private var listaCompletaSolicitudes: List<OperatorItem> = emptyList()
-    private var listaFiltradaSolicitudes: List<OperatorItem> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,52 +58,8 @@ class ShowAllOperatorSemester : AppCompatActivity() {
                     Log.e("ShowAllOperatorSemester", "Error con $userId: ${e.message}")
                 }
             }
-            listaCompletaSolicitudes = users
             adapter.update(users)
         }
-
-        filters = findViewById(R.id.filterIcon)
-        filters.setOnClickListener {
-            // Crea una instancia del DialogFragment
-            val filtroDialog = FiltroDialogFragment()
-            // Muestra el diálogo usando el FragmentManager
-            filtroDialog.show(
-                (this as FragmentActivity).supportFragmentManager,
-                "FiltroDialogFragment"
-            )
-        }
-
-        /// Configurar EditText para búsqueda
-        val etSearch = findViewById<EditText>(R.id.searchEditText)
-
-        // Filtrar mientras se escribe (puedes usar un TextWatcher)
-        etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterSearch(s.toString())
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
-        // Filtrar al presionar Enter en el teclado
-        etSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                filterSearch(etSearch.text.toString())
-                true
-            } else {
-                false
-            }
-        }
-    }
-
-    private fun filterSearch(text: String){
-        listaFiltradaSolicitudes = if (text.isEmpty()){
-            listaCompletaSolicitudes
-        }else{
-            listaCompletaSolicitudes.filter { solicitud ->
-                solicitud.data.studentInfo.studentName.contains(text, ignoreCase = true)
-            }
-        }
-        adapter.update(listaFiltradaSolicitudes)
     }
 
     fun backViewShowAllOperator(view: android.view.View) {finish()}
