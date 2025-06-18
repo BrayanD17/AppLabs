@@ -503,7 +503,7 @@ class Provider {
         val notificationsCollection = userMessagesRef.collection("notifications")
 
         val newNotification = hashMapOf(
-            "subject" to "Proceso de solicitud",
+            "subject" to updateData.subject,
             "message" to updateData.message,
             "timestamp" to FieldValue.serverTimestamp(),
             "status" to 0

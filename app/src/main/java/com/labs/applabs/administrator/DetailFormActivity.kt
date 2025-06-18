@@ -192,7 +192,6 @@ class DetailFormActivity : AppCompatActivity() {
     ) {
         val dataComment = findViewById<EditText>(R.id.textDataComment)
         var commentText = dataComment.text.toString().trim()
-        var newMessage: String
 
         val statusRadioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         val selectedStatusId = statusRadioGroup.checkedRadioButtonId
@@ -206,6 +205,7 @@ class DetailFormActivity : AppCompatActivity() {
         val isStatusChanged = statusText != originalStatus
         val isCommentUnchangedOrEmpty = commentText.isEmpty() || commentText == originalComment
 
+        // Asignar comentario por defecto si cambió el estado pero el comentario está vacío o sin cambios
         if (isStatusChanged && isCommentUnchangedOrEmpty) {
             commentText = when (statusText) {
                 "1" -> "Aprobado"
@@ -214,39 +214,50 @@ class DetailFormActivity : AppCompatActivity() {
             }
         }
 
-        val estadoMensaje = when (statusText) {
-            "1" -> "aprobada"
-            "2" -> "rechazada"
-            else -> "en revisión"
+        // Crear asunto y mensaje personalizados para la notificación según el estado
+        val newSubject = when (statusText) {
+            "1" -> "Solicitud aceptada"
+            "2" -> "Solicitud rechazada"
+            else -> "Solicitud en revisión"
         }
 
-        newMessage =
-            "Su solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator ha sido $estadoMensaje."
+        val newMessage = when (statusText) {
+            "1" -> """
+            Cuando ingrese a la aplicación su vista será como operador.
+            Solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator.
+        """.trimIndent()
+
+            "2" -> """
+            Su solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator ha sido rechazada.
+            Motivo: $commentText
+        """.trimIndent()
+
+            else -> """
+            Su solicitud realizada en $nameFormOperator para operador durante el $semesterFormOperator está en revisión.
+        """.trimIndent()
+        }
 
         val updateData = dataUpdateStatus(
             newStatusApplication = statusText.toInt(),
             newComment = commentText,
             userId = userId,
+            subject = newSubject,
             message = newMessage
         )
 
         lifecycleScope.launch {
             try {
-                if (statusText == "1") { // Aprobado
-                    provider.operatorRegister(formStudentId,formIdOperator)
-                    toastMessage(
-                        "Solicitud aprobada, operador registrado y rol actualizado",
-                        ToastType.SUCCESS
-                    )
-                } else {
-                    val updateSuccess =
-                        provider.updateFormStatusAndComment(formStudentId, updateData)
-                    if (updateSuccess) {
-                        toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
-                    } else {
-                        toastMessage("Error al actualizar los datos", ToastType.ERROR)
+                val updateSuccess = provider.updateFormStatusAndComment(formStudentId, updateData)
+                if (updateSuccess) {
+                    if (statusText == "1") {
+                        provider.operatorRegister(formStudentId, formIdOperator)
+                        toastMessage("Solicitud aprobada, operador registrado y rol actualizado", ToastType.SUCCESS)
                     }
+                    toastMessage("Datos actualizados correctamente", ToastType.SUCCESS)
+                } else {
+                    toastMessage("Error al actualizar los datos", ToastType.ERROR)
                 }
+
                 Handler(Looper.getMainLooper()).postDelayed({
                     startActivity(Intent(this@DetailFormActivity, SolicitudesListView::class.java))
                     finish()
@@ -256,8 +267,8 @@ class DetailFormActivity : AppCompatActivity() {
                 toastMessage("Error: ${e.message}", ToastType.ERROR)
             }
         }
-
     }
+
 
     private fun finishActivityDetailsForm() {
         val backView = findViewById<ImageView>(R.id.backViewAdminDetailActivity)

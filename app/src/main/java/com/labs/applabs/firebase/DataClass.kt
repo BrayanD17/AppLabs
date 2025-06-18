@@ -82,6 +82,7 @@ data class dataUpdateStatus(
     val newStatusApplication: Int,
     val newComment: String = "",
     val userId: String="",
+    val subject: String = "",
     val message: String = ""
 )
 
