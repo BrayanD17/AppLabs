@@ -692,7 +692,7 @@ class Provider {
                     correo = userDoc?.getString("email") ?: "Sin email",
                     uidForm = idFormOperator,
                     idFormStudent = formStudentId,
-                    carnet = formStudentDoc.get("idCard")?.toString() ?: "Sin carnet",
+                    carnet = userDoc?.getString("studentCard") ?: "Sin carnet",
                     estado = formStudentDoc.get("statusApplicationForm")?.toString() ?: "",
                     carrera = formStudentDoc.getString("degree") ?: "Sin carrera",
                     numeroSemestreOperador = formStudentDoc.get("semester")?.toString() ?: "Sin semestre"

@@ -54,13 +54,14 @@ class FiltroDialogFragment : DialogFragment() {
 
         val etSemestres = view.findViewById<EditText>(R.id.et_semestres)
         val etCarnet = view.findViewById<EditText>(R.id.et_carnet)
-        val semestresInput = etSemestres.text.toString().takeIf { it.isNotBlank() }
-        val carnetInput = etCarnet.text.toString().takeIf { it.isNotBlank() }
 
         val btnAplicar = view.findViewById<Button>(R.id.btn_aplicar)
         val btnReiniciar = view.findViewById<Button>(R.id.btn_reiniciar)
 
         btnAplicar.setOnClickListener {
+            val semestresInput = etSemestres.text.toString().takeIf { it.isNotBlank() }
+            val carnetInput = etCarnet.text.toString().takeIf { it.isNotBlank() }
+
             val filterData = FilterData(
                 degree = degreeSelected?.takeIf { it.isNotBlank() } ?: "",
                 semester = semestresInput,
