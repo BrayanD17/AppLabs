@@ -25,6 +25,7 @@ class AdminMenuOperatorActivity : AppCompatActivity() {
         }
 
         viewActiveOperator()
+        viewHistoryOperatorSemesters()
         viewGeneralSchedule()
     }
 
@@ -35,6 +36,14 @@ class AdminMenuOperatorActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    fun viewHistoryOperatorSemesters(){
+        val btnOperadorHistory = findViewById<ImageButton>(R.id.btnOperadorHistory)
+        btnOperadorHistory.setOnClickListener {
+            val intent = Intent(this, HistoryOperatorSemesters::class.java)
+            startActivity(intent)
+        }
+    }
+
     fun viewGeneralSchedule() {
         val btnGeneralSchedule = findViewById<ImageButton>(R.id.btnGeneralSchedule)
         btnGeneralSchedule.setOnClickListener {
@@ -42,7 +51,6 @@ class AdminMenuOperatorActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 
     fun callToSetTimeOperator(view: View) {
         val intent = Intent(this, AdminSetTimeOperatorActivity::class.java)

@@ -49,22 +49,36 @@ class viewInformationOperator : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_view_information_operator)
 
-        //Get id operator from historyOperator
-        val id = intent.getStringExtra("operatorId")
-        if (id == null) {
-            toastMessage("ID del operador no recibido", ToastType.ERROR)
-            finish(); return
-        }
-        operatorActiveId = id
 
-        //Inicialization elements
+        //Inicialización de vistas (mover esto antes de cualquier acceso a los botones o containers)
         labSelectionContainer = findViewById(R.id.labSelectionContainer)
-        laboratorySpinner     = findViewById(R.id.laboratorySpinner)
-        btnConfirmLab         = findViewById(R.id.btnConfirmLab)
-        btnEditSchedule       = findViewById(R.id.btnEditScheduleOperatorSaveChage)
+        laboratorySpinner = findViewById(R.id.laboratorySpinner)
+        btnConfirmLab = findViewById(R.id.btnConfirmLab)
+        btnEditSchedule = findViewById(R.id.btnEditScheduleOperatorSaveChage)
+
+        val type = intent.getStringExtra("type")
+        if (type == "show") {
+            val id = intent.getStringExtra("userId")
+            if (id == null) {
+                toastMessage("ID del operador no recibido", ToastType.ERROR)
+                finish(); return
+            }
+            userId = id
+            operatorActiveId = userId // <-- agregar esto
+            getOperatorInfo(userId)
+            btnEditSchedule.visibility = View.GONE
+        } else {
+            val id = intent.getStringExtra("operatorId")
+            if (id == null) {
+                toastMessage("ID del operador no recibido", ToastType.ERROR)
+                finish(); return
+            }
+            operatorActiveId = id
+            getOperatorInfo(operatorActiveId)
+        }
+
 
         //Data load activity
-        getOperatorInfo(operatorActiveId)
         setCheckboxesEnabled(false)
         showAllLabsReadOnly()
 
