@@ -4,7 +4,7 @@ const admin = require("firebase-admin");
 
 initializeApp();
 
-exports.checkUnreadMessages = onSchedule("every 3 minutes", async (event) => {
+exports.checkUnreadMessages = onSchedule("every 525600 minutes", async (event) => {
   try {
     const usersSnapshot = await admin.firestore().collection("users").get();
 
