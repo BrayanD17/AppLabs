@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppLabs</string>
+    <string name="app_name">CompuLabs</string>
     <string name="users">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="forgetPassword">¿Olvidaste tu contraseña?</string>
