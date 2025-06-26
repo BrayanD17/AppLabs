@@ -2,6 +2,11 @@ const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { initializeApp } = require("firebase-admin/app");
 const admin = require("firebase-admin");
 
+//Se debe volver a desplegar el servicio de firebase, para que se pueda usar
+//Navegar hasta carpeta functions, ejecutar: firebase deploy --only functions
+//Registro en cloud 
+//https://console.cloud.google.com/logs/query;query=%2528resource.type%3D%22cloud_function%22%20resource.labels.function_name%3D%2528%22checkUnreadMessages%22%2529%20resource.labels.region%3D%22us-central1%22%2529%20OR%20%2528resource.type%3D%22cloud_run_revision%22%20resource.labels.service_name%3D%2528%22checkunreadmessages%22%2529%20resource.labels.location%3D%22us-central1%22%2529;cursorTimestamp=2025-06-26T20:39:01.810964Z;duration=PT1H?authuser=0&project=compulab-ea5eb&hl=es-419&inv=1&invt=Ab1LdA
+
 initializeApp();
 
 exports.checkUnreadMessages = onSchedule("every 525600 minutes", async (event) => {
