@@ -28,6 +28,7 @@ class viewInformationOperator : AppCompatActivity() {
     private lateinit var btnConfirmLab: Button
     private lateinit var btnEditSchedule: Button
     private lateinit var operatorActiveId: String
+    private lateinit var userId: String
     private var operatorName: String = ""
 
     private val colors = listOf("#FF6F61", "#6B5B95", "#88B04B", "#F7CAC9", "#92A8D1")
@@ -48,7 +49,6 @@ class viewInformationOperator : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_view_information_operator)
-
 
         //Inicialización de vistas (mover esto antes de cualquier acceso a los botones o containers)
         labSelectionContainer = findViewById(R.id.labSelectionContainer)
